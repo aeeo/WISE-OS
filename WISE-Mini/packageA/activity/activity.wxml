@@ -1,0 +1,29 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}" showSite="{{false}}">
+  <view slot="content">活动</view>
+</cu-custom>
+
+<view class="cu-card dynamic shadow" bindtap="toActivityDetail" wx:for="{{activityList}}" wx:for-item="activityItem"
+  wx:key="id" data-activity="{{activityItem}}" style="margin-top: 20px;">
+  <view style="text-align:center;">{{activityItem.createTime}}</view>
+  <view class="cu-item shadow" style="border-radius: 25px;margin-bottom:0px">
+    <view class="grid flex-sub padding col-1" style="padding:0px">
+      <view class="bg-img only-img"
+        style="background-image:url({{UPLOAD_IMAGE}}{{activityItem.imageUrl}}{{ARTWORKNOWATER}});border-radius: 25px 25px 0px 0px">
+      </view>
+    </view>
+    <view class="grid flex-sub col-1" style="padding:0px">
+      <view class=""
+        style="min-height: 100rpx;font-size:30rpx;padding: 20px;padding-bottom: 15px;min-height: 50px;max-height: 60px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+        {{activityItem.title}}
+      </view>
+    </view>
+    <view class="grid flex-sub col-1" style="padding:0px">
+      <view class="text-grey " style="font-size:24rpx;padding: 20px;padding-top:0px;padding-bottom:15px">
+        活动时间：{{activityItem.startTime}}-{{activityItem.endTime}}
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 底部提示 -->
+<view class="cu-load {{!onReachBottomLoading?'loading':'over'}}" bindtouchstart='touchStart' bindtouchmove='touchMove'
+  bindtouchend='touchEnd'></view>

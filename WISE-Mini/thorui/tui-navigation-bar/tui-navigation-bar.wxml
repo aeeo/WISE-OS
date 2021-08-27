@@ -1,0 +1,5 @@
+<view class="tui-navigation-bar {{opcity > 0.85 && splitLine?'tui-bar-line':''}} {{isFixed?'tui-navbar-fixed':''}} {{backdropFilter?'tui-backdrop__filter':''}}" style="height:{{ height + 'px'}}; background-color: rgba({{backgroundColor}},{{opcity}})">
+	<view class="tui-status-bar" style="height: {{statusBarHeight + 'px'}}" wx:if="{{isImmersive}}"></view>
+	<view class="tui-navigation_bar-title" style="opacity: {{opcity}}; color: {{color}}; padding-top:{{ (top - statusBarHeight) + 'px'}}" wx:if="{{title && !isCustom}}">{{ title }}</view>
+	<slot />
+</view>

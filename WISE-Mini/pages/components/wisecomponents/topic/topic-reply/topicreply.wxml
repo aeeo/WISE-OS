@@ -1,0 +1,203 @@
+<view style="height:{{showType=='scrollView'?'600px':'100%'}};background-color:#00000000;">
+  <view class="bg-white padding-xs" style="height:25px;text-align:center">{{replyResult.total == null ?
+    0:replyResult.total}}条评论</view>
+  <scroll-view scroll-y="true" class="bg-white padding-sm" style="height:525px;bottom:55px;padding-bottom:0px"
+    bindscrolltolower="getFullReplysNext" bindrefresherrefresh="socallRefresh" refresher-enabled="true"
+    refresher-triggered="{{isPull}}" wx-if="{{showType=='scrollView'}}">
+    <view class="cu-list comment" style="top:0px;">
+      <view class="cu-item solid-bottom" style="" wx:for="{{fullReplys}}" wx:if="{{item.pid == 0}}" wx:key="id"
+        wx:for-index="bindex" id="{{item.id}}">
+        <view class="flex padding-left padding-top-sm padding-bottom-sm padding-right justify-between"
+          bindtap="relpyComment" bindlongpress="longpressComment" data-beReply="{{item}}"
+          data-parentReplyId="{{item.id}}">
+          <view class="flex justify-start">
+            <view class="cu-avatar round" style="background-image:url({{item.avatar}}">
+            </view>
+            <view class="radius">
+              <view class="margin-left content">
+                <view style="font-weight:bold;color:grey" class="text-df">{{item.realname}}</view>
+                <view class="text-content text-lg" style="max-width: 65vw;">
+                  {{item.content}}
+                </view>
+              </view>
+              <view class="margin-left text-sm" style="color:grey">{{item.createTime}}<text
+                  style="font-weight:bold;">　回复</text>
+              </view>
+            </view>
+          </view>
+          <view class="text-grey radius" style="text-align: center;">
+            <view class="text-lg">
+              <text class="praiseCount cuIcon-likefill cu-btn animation-{{item.exeCuteAnimation?scale-down:''}}"
+                hover-stop-propagation='true' catchtap="clickReplyPraise" id="{{item.id}}"
+                data-praiseCount="{{item.praise}}" wx:key="id" data-bindex="{{bindex}}"
+                style="color:{{item.userIsPraise?'#ec008c':''}};background: #00000000;width: 40px;">
+              </text>
+            </view>
+            <view class="text-df" style="margin-top: -10px;"><text wx:if="{{item.praise != 0}}">{{item.praise}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 子评论 -->
+        <view class="flex padding-left padding-right padding-bottom-sm justify-between" wx:for="{{item.childFullReply}}"
+          wx:for-item="childReplyList" wx:key="id" wx:for-index="bindexChild" id="{{childReplyList.id}}">
+          <view class="flex justify-start" bindtap="relpyComment" bindlongpress="longpressComment"
+            data-beReply="{{childReplyList}}" data-parentReplyId="{{item.id}}">
+            <view class="cu-avatar round" style="background-color:#00000000"></view>
+            <view class="cu-avatar sm round margin-left" style="background-image:url({{childReplyList.avatar}}">
+            </view>
+            <view class="radius">
+              <view class="margin-left-sm content">
+                <view style="font-weight:bold;color:grey" class="text-df">{{childReplyList.realname}} <text
+                    class="cuIcon-playfill text-grey"></text>
+                  {{childReplyList.beReplyRealname}}</view>
+                <view class="text-content text-lg" style="max-width: 58vw;">
+                  {{childReplyList.content}}
+                </view>
+                <view class="content text-sm" style="color:grey">
+                  <view class="">{{childReplyList.createTime}}<text style="font-weight:bold;">　回复</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="text-grey radius" style="text-align: center;">
+            <view class="text-lg">
+              <text
+                class="praiseCount cuIcon-likefill cu-btn animation-{{childReplyList.exeCuteAnimation?scale-down:''}}"
+                hover-stop-propagation='true' catchtap="clickChildReplyPraise" id="{{childReplyList.id}}"
+                data-praiseCount="{{childReplyList.praise}}" wx:key="id" data-bindex="{{bindex}}"
+                data-bindexChild="{{bindexChild}}"
+                style="color:{{childReplyList.userIsPraise?'#ec008c':''}};background: #00000000;width: 40px;">
+              </text>
+            </view>
+            <view class="text-df" style="margin-top: -10px;"><text
+                wx:if="{{childReplyList.praise != 0}}">{{childReplyList.praise}}</text></view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 底部提示 -->
+    <view class="cu-load {{replyResult.current == replyResult.pages?'over':'loading'}}"
+      hidden="{{replyResult.total == 0?true:false}}"></view>
+    <view style="text-align:center;margin-top:10rpx" wx:if="{{replyResult.total == 0}}">
+      <image src="/static/images/nodata.png" style="width: 140rpx;height:140rpx;"></image>
+      <view>啊哦，空空如也</view>
+    </view>
+  </scroll-view>
+  <view class="bg-white" wx-if="{{showType=='longList'}}">
+    <view class="cu-list comment" style="top:0px;">
+      <!-- 评论边框：border:1px solid #e03997; -->
+      <view class="cu-item solid-bottom" style="margin:8px;margin-bottom:0px;" wx:for="{{fullReplys}}"
+        wx:if="{{item.pid == 0}}" wx:key="id" wx:for-index="bindex" id="{{item.id}}">
+        <view class="flex padding-left padding-top-sm padding-bottom-sm padding-right justify-between"
+          bindtap="relpyComment" bindlongpress="longpressComment" data-beReply="{{item}}"
+          data-parentReplyId="{{item.id}}">
+          <view class="flex justify-start">
+            <view class="cu-avatar round" style="background-image:url({{item.avatar}}">
+            </view>
+            <view class="radius">
+              <view class="margin-left content">
+                <view style="font-weight:bold;color:grey" class="text-df">{{item.realname}}</view>
+                <view class="text-content text-lg" style="max-width: 65vw;">
+                  {{item.content}}
+                </view>
+              </view>
+              <view class="margin-left text-sm" style="color:grey">{{item.createTime}}<text
+                  style="font-weight:bold;">　回复</text>
+              </view>
+            </view>
+          </view>
+          <view class="text-grey radius" style="text-align: center;">
+            <view class="text-lg">
+              <text class="praiseCount cuIcon-likefill cu-btn animation-{{item.exeCuteAnimation?scale-down:''}}"
+                hover-stop-propagation='true' catchtap="clickReplyPraise" id="{{item.id}}"
+                data-praiseCount="{{item.praise}}" wx:key="id" data-bindex="{{bindex}}"
+                style="color:{{item.userIsPraise?'#ec008c':''}};background: #00000000;width: 40px;">
+              </text>
+            </view>
+            <view class="text-df" style="margin-top: -10px;"><text wx:if="{{item.praise != 0}}">{{item.praise}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 子评论 -->
+        <view class="flex padding-left padding-right padding-bottom-sm justify-between" wx:for="{{item.childFullReply}}"
+          wx:for-item="childReplyList" wx:key="id" wx:for-index="bindexChild" id="{{childReplyList.id}}">
+          <view class="flex justify-start" bindtap="relpyComment" bindlongpress="longpressComment"
+            data-beReply="{{childReplyList}}" data-parentReplyId="{{item.id}}">
+            <view class="cu-avatar round" style="background-color:#00000000"></view>
+            <view class="cu-avatar sm round margin-left" style="background-image:url({{childReplyList.avatar}}">
+            </view>
+            <view class="radius">
+              <view class="margin-left-sm content">
+                <view style="font-weight:bold;color:grey" class="text-df">{{childReplyList.realname}} <text
+                    class="cuIcon-playfill text-grey"></text>
+                  {{childReplyList.beReplyRealname}}</view>
+                <view class="text-content text-lg" style="max-width: 58vw;">
+                  {{childReplyList.content}}
+                </view>
+                <view class="content text-sm" style="color:grey">
+                  <view class="">{{childReplyList.createTime}}<text style="font-weight:bold;">　回复</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="text-grey radius" style="text-align: center;">
+            <view class="text-lg">
+              <text
+                class="praiseCount cuIcon-likefill cu-btn animation-{{childReplyList.exeCuteAnimation?scale-down:''}}"
+                hover-stop-propagation='true' catchtap="clickChildReplyPraise" id="{{childReplyList.id}}"
+                data-praiseCount="{{childReplyList.praise}}" wx:key="id" data-bindex="{{bindex}}"
+                data-bindexChild="{{bindexChild}}"
+                style="color:{{childReplyList.userIsPraise?'#ec008c':''}};background: #00000000;width: 40px;">
+              </text>
+            </view>
+            <view class="text-df" style="margin-top: -10px;"><text
+                wx:if="{{childReplyList.praise != 0}}">{{childReplyList.praise}}</text></view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 底部提示 -->
+    <view class="cu-load {{replyResult.current == replyResult.pages?'over':'loading'}}"
+      hidden="{{replyResult.total == 0?true:false}}"></view>
+    <view style="text-align:center;margin-top:10rpx" wx:if="{{replyResult.total == 0}}">
+      <image src="/static/images/nodata.png" style="width: 140rpx;height:140rpx;"></image>
+      <view>啊哦，空空如也</view>
+    </view>
+  </view>
+  <!-- 底部评论框 -->
+  <view class="cu-bar foot input bg-white" style="bottom:{{InputBottom}}px;">
+    <view class="action" bindtap="openEmojiPanel">
+      <text class="cuIcon-emojifill text-grey"></text>
+    </view>
+    <input class="solid-bottom" bindinput="replyContent" bindfocus="InputFocus" bindblur="InputBlur"
+      adjust-position="{{false}}" focus="{{InputFocus}}" maxlength="300" cursor-spacing="10"
+      value="{{replyContentInput}}" placeholder="{{replyPlaceholder}}"></input>
+    <button class="cu-btn bg-purple shadow" bindtap="comment">评论</button>
+  </view>
+  <!-- emoji表情面板 -->
+  <view class="foot input {{InputBottom!=0?'cur':''}}"
+    style="wideh:100%;height:250px;position: fixed;bottom: 0;z-index: 1024;" hidden="{{showEmojiPanel?false:true}}">
+    <view class="bg-white padding"
+      style="height:100%;width: 100vw;padding-bottom:0px;padding-top:0px;margin-bottom: 15px;">
+      <swiper class="swiper" current="{{currentClass}}" duration="200" bindchange="swiperChange"
+        easing-function="default" indicator-dots="true" style="height:100%">
+        <swiper-item class="cu-item" wx:for="{{emojiList}}" wx:for-index="emojiListIndex" wx:key="emojiListIndex"
+          data-id="{{index}}" style="height:100%">
+          <scroll-view class="" scroll-y="true" style="height:100%">
+            <!-- 表情 -->
+            <view class="grid col-8 margin-bottom text-center">
+              <view class="text-center padding-sm grid text-xl" wx:for="{{emojiList[emojiListIndex]}}"
+                wx:for-index="emojiListIndexIndex" wx:key="emojiListIndexIndex" wx:for-item="emojiListItem"
+                bindtap="inputEmoji" data-emoji="{{emojiListItem}}">{{emojiListItem}}</view>
+            </view>
+          </scroll-view>
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+  <!-- 评论长按提示框 -->
+  <mp-actionSheet title="按评论是想干嘛呀？" show="{{showCommentActionsheet}}" actions="{{actionCommentGroups}}"
+    bindactiontap="clickCommentAction"></mp-actionSheet>
+</view>

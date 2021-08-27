@@ -1,0 +1,16 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">关注公众号</view>
+</cu-custom>
+<official-account></official-account>
+<view class='margin-xl bg-white padding-xl radius shadow-lg'>
+  <!-- <view class='text-center margin-bottom text-lg  text-grey'>感谢关注行星万象公众号</view> -->
+  <view class='text-content'>
+    <view class='margin-top-sm'>这是我们的公众号</view>
+    <view class='margin-top-sm'>您的任何互动信息都会通过公众号第一时间推送给您，您也随时可以从公众号进入小程序</view>
+    <view class='margin-top-sm'>请长按保存或截屏扫描二维码关注。</view>
+    <image
+      src="{{UPLOAD_IMAGE}}{{weixingongzhonghao}}"
+      mode="aspectFit" bindtap="clickTopicImage" bindlongpress="clickTopicImage"></image>
+  </view>
+</view>

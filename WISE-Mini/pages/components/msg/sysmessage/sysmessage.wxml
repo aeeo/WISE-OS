@@ -1,0 +1,24 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}" showSite="{{false}}">
+  <view slot="content">系统消息</view>
+</cu-custom>
+
+<view class="cu-card dynamic shadow" bindtap="openMeiTuan" wx:for="{{userSysMessageList}}" wx:key="id"
+  style="margin-top: 20px;">
+  <view style="text-align:center;">{{item.createTime}}</view>
+  <view class="cu-item shadow" style="border-radius: 25px;margin-bottom:0px">
+    <view class="grid flex-sub padding col-1" style="padding:0px">
+      <view class="bg-img only-img"
+        style="background-image:url({{UPLOAD_IMAGE}}{{item.imageUrl}}{{ARTWORKNOWATER}});border-radius: 25px 25px 0px 0px">
+      </view>
+    </view>
+    <view class="grid flex-sub padding col-1" style="padding:0px">
+      <view class=""
+        style="min-height: 100rpx;font-size:30rpx;padding: 20px;min-height: 50px;max-height: 60px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+        {{item.title}}
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 底部提示 -->
+<view class="cu-load {{!onReachBottomLoading?'loading':'over'}}" bindtouchstart='touchStart' bindtouchmove='touchMove'
+  bindtouchend='touchEnd'></view>

@@ -1,0 +1,43 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}" showSite="{{false}}">
+  <view slot="content">好吃与好物</view>
+  <!-- <view class="action" slot="right">
+    <view class="cu-load load-icon {{!isLoad?'loading':'over'}}"></view>
+  </view> -->
+</cu-custom>
+
+<view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
+  <view class="cu-item {{menuArrow?'arrow':''}}">
+    <view class="content" style="width: 100%;overflow: hidden;text-overflow:ellipsis;white-space:nowrap;">
+      <text class="cuIcon-emoji text-yellow"></text>
+      <text class="text-grey">天天可领，基本做到25-5-8，吃饭不领券，付款贵一半。</text>
+    </view>
+  </view>
+</view>
+
+<view class="cu-card dynamic shadow" wx:for="{{waimaiList}}" bindtap="openMiniProgram" wx:key="id"
+  wx:for-item="waimaiItem" data-waimaiItem="{{waimaiItem}}">
+  <view class="cu-item shadow" style="border-radius: 25px;">
+    <view class="cu-list menu-avatar">
+      <view class="cu-item">
+        <view class="cu-avatar round"
+          style="background-image:url({{UPLOAD_IMAGE}}{{waimaiItem.logoUrl}}{{ARTWORKNOWATER}});"></view>
+        <view class="cu-bar content flex-sub" style="left:120rpx">
+          <view>
+            <view>{{waimaiItem.title}}</view>
+            <view class="cu-tag bg-yellow sm radius">
+              {{waimaiItem.tagline}}
+            </view>
+          </view>
+          <view>
+            <button class="cu-btn bg-red shadow round">免费领取</button>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="grid flex-sub padding col-1" style="padding-top:0px">
+      <view class="bg-img only-img"
+        style="background-image:url({{UPLOAD_IMAGE}}{{waimaiItem.masterUrl}}{{ARTWORKNOWATER}});border-radius: 25px;">
+      </view>
+    </view>
+  </view>
+</view>

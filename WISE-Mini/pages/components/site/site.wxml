@@ -1,0 +1,64 @@
+<scroll-view scroll-y class="DrawerPage {{modalName=='viewModal'?'show':''}}">
+  <view class="page-body">
+    <view class="page-section page-section-gap">
+      <map id="myMap" style="width: 100%;height:100vh;" bindcallouttap="showModal" bindmarkertap="showModal"
+        data-module="switchSiteModal" scale="{{scale}}" latitude="{{latitude}}" longitude="{{longitude}}"
+        markers="{{markers}}" circles="{{circle}}" covers="{{covers}}" show-location show-scale="{{showscale}}"
+        bindupdated="bindupdated"></map>
+    </view>
+  </view>
+  <view class='text-center' style="width:400rpx;position: absolute;left: 0;right: 0; bottom: 100rpx;margin: auto;">
+    <view class='cu-btn bg-blue lg block shadow round margin-xl' bindtap="showModal" data-module="viewModal"
+      data-target="viewModal">
+      切换列表查看
+    </view>
+  </view>
+</scroll-view>
+
+<view class="cu-modal {{switchSiteModal=='switchSiteModal'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">切换区域</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <text>本月剩余切换次数：3，请确认切换到：</text>
+      <text>
+        {{switchSiteModalMarkerName}}
+      </text>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-green" bindtap="hideModal">取消</button>
+        <button class="cu-btn bg-green margin-left" bindtap="hideModal">确定</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="DrawerClose {{modalName=='viewModal'?'show':''}}" bindtap="hideModal">
+  <text class="cuIcon-pullright"></text>
+</view>
+<!-- 选择列表 -->
+<scroll-view scroll-y class="DrawerWindow {{modalName=='viewModal'?'show':''}}">
+  <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg" style="margin-top: 84rpx;">
+    <view class="cu-item arrow">
+      <view class="title" style="margin-left:14rpx;font-weight: 900;">区域列表</view>
+      <picker mode="multiSelector" bindchange="MultiChange" bindcolumnchange="MultiColumnChange"
+        value="{{currentRegionIndex}}" range="{{currentRegion}}">
+        <view class="picker">
+          {{currentRegion[0][currentRegionIndex[0]]}}-{{currentRegion[1][currentRegionIndex[1]]}}
+        </view>
+      </picker>
+    </view>
+    <view class="cu-item arrow" wx:for="{{regionList}}" wx:key="id" wx:for-index="bindex" data-bindex="{{bindex}}"
+      bindtap="selectSite">
+      <view class="content">
+        <text class="cuIcon-locationfill text-pink"></text>
+        <text class="text-grey">{{item.fullName}}</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

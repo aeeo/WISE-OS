@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.version=exports.getCtx=void 0;var getCtx=function(e,t){var r=(1<arguments.length&&void 0!==t?t:getCurrentPages()[getCurrentPages().length-1]).selectComponent(e);if(!r)throw new Error("无法找到对应的组件，请按文档说明使用组件");return r};exports.getCtx=getCtx;var version="3.8.7";exports.version=version;

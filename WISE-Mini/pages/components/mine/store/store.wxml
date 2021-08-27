@@ -1,0 +1,195 @@
+<cu-custom bgColor="bg-pink" isBack="{{true}}" showSite="{{false}}">
+  <view slot="backText"></view>
+  <view slot="content">陨石兑换中心</view>
+</cu-custom>
+
+<!-- <view class="padding text-left">
+  <view class="padding-lr bg-white">
+    <view class="solid-bottom padding" >
+      <rich-text nodes="{{htmlSnip}}"></rich-text>
+    </view>
+  </view>
+</view> -->
+
+<scroll-view scroll-y class="scrollPage">
+  <view class="UCenter-bg">
+    <!-- 头像昵称begin -->
+    <view class='mytop-box'>
+      <view class="solid-right" bindtap="toStore">
+        <text class="text-sl" style="text-align: center;display:block;">{{USERRECORD.stoneCount}}</text>
+        <text class="text-xxl cuIcon-choicenessfill" style="text-align: center;display:block;"> 当前可用陨石</text>
+      </view>
+    </view>
+    <!-- <view>
+      陨石明细
+    </view> -->
+    <view bindtap="showAccessRole">
+      获取规则
+    </view>
+  </view>
+  <view class="flex text-center text-grey bg-white shadow-warp">
+
+  </view>
+
+</scroll-view>
+<view class="cu-list menu" bindtap="openConverRule">
+  <view class="cu-item">
+    <view class="content" style="width: 100%;overflow: hidden;text-overflow:ellipsis;white-space:nowrap;">
+      <text class="cuIcon-emoji text-yellow"></text>
+      <text class="text-grey">没有套路，没有运费，陨石数量够了直接兑换，只需要填写地址即可。</text>
+    </view>
+  </view>
+</view>
+<view class="goods-container" style="margin-top:30rpx">
+  <!-- 行李箱 -->
+  <view class="goods-box" bindtap="toDetailsTap" data-id="{{item.id}}">
+    <navigator url="plugin-private://wx34345ae5855f892d/pages/productDetail/productDetail?productId=26411716"
+      hover-class="none">
+      <view class="img-box">
+        <image src="{{UPLOAD_IMAGE}}sys/%E8%A1%8C%E6%9D%8E%E7%AE%B1.jpg" mode="aspectFill">
+          <!-- <image
+          src="https://img.alicdn.com/imgextra/i2/29535029/O1CN01QI83QN1n1KTJo411o_!!0-saturn_solar.jpg_468x468q75.jpg_.webp"
+          class="image" mode="aspectFill" /> -->
+        </image>
+      </view>
+      <view>
+        <view class="goods-title">原创设计米熙行李箱女小型20寸拉杆箱24ins网红旅行密码箱子男26</view>
+        <view style='display:flex;'>
+          <view class="goods-price">¥0 + 100000陨石</view>
+          <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price"
+            style='color:#aaa;text-decoration:line-through'>¥ 857</view>
+        </view>
+      </view>
+    </navigator>
+
+    <view style="text-align:center">
+      <button class="cu-btn bg-pink" style="width: 90%;" data-id="productId1" bindtap="goodConver">立即兑换</button>
+    </view>
+  </view>
+  <!-- 耳机 -->
+  <view class="goods-box" bindtap="toDetailsTap" data-id="{{item.id}}">
+    <navigator url="plugin-private://wx34345ae5855f892d/pages/productDetail/productDetail?productId=26386670"
+      hover-class="none">
+      <view class="img-box">
+        <image src="{{UPLOAD_IMAGE}}sys/%E8%80%B3%E6%9C%BA.jpg" mode="aspectFill">
+          <!-- <image
+          src="https://img.alicdn.com/imgextra/i2/29535029/O1CN01QI83QN1n1KTJo411o_!!0-saturn_solar.jpg_468x468q75.jpg_.webp"
+          class="image" mode="aspectFill" /> -->
+        </image>
+      </view>
+      <view>
+        <view class="goods-title">冇心漫步者联名款真无线蓝牙耳机无线蓝牙双耳入耳式安卓通用</view>
+        <view style='display:flex;'>
+          <view class="goods-price">¥0 + 100000陨石</view>
+          <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price"
+            style='color:#aaa;text-decoration:line-through'>¥ 857</view>
+        </view>
+      </view>
+    </navigator>
+    <view style="text-align:center">
+      <button class="cu-btn bg-pink" style="width: 90%;" data-id="productId1" bindtap="goodConver">立即兑换</button>
+    </view>
+  </view>
+  <!-- 牙刷 -->
+  <view class="goods-box" bindtap="toDetailsTap" data-id="{{item.id}}">
+    <navigator url="plugin-private://wx34345ae5855f892d/pages/productDetail/productDetail?productId=26395876"
+      hover-class="none">
+      <view class="img-box">
+        <image src="{{UPLOAD_IMAGE}}sys/%E7%89%99%E5%88%B7.jpg" mode="aspectFill">
+          <!-- <image
+          src="https://img.alicdn.com/imgextra/i2/29535029/O1CN01QI83QN1n1KTJo411o_!!0-saturn_solar.jpg_468x468q75.jpg_.webp"
+          class="image" mode="aspectFill" /> -->
+        </image>
+      </view>
+      <view>
+        <view class="goods-title">飞利浦电动牙刷全自动情侣套装成人声波官方旗舰店HX3226 HX3216</view>
+        <view style='display:flex;'>
+          <view class="goods-price">¥0 + 100000陨石</view>
+          <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price"
+            style='color:#aaa;text-decoration:line-through'>¥ 857</view>
+        </view>
+      </view>
+    </navigator>
+    <view style="text-align:center">
+      <button class="cu-btn bg-pink" style="width: 90%;" data-id="productId1" bindtap="goodConver">立即兑换</button>
+    </view>
+  </view>
+  <!-- 零食 -->
+  <view class="goods-box" bindtap="toDetailsTap" data-id="{{item.id}}">
+    <navigator url="plugin-private://wx34345ae5855f892d/pages/productDetail/productDetail?productId=26409470"
+      hover-class="none">
+      <view class="img-box">
+        <image src="{{UPLOAD_IMAGE}}sys/%E9%9B%B6%E9%A3%9F.jpg" mode="aspectFill">
+          <!-- <image
+          src="https://img.alicdn.com/imgextra/i2/29535029/O1CN01QI83QN1n1KTJo411o_!!0-saturn_solar.jpg_468x468q75.jpg_.webp"
+          class="image" mode="aspectFill" /> -->
+        </image>
+      </view>
+      <view>
+        <view class="goods-title">【三只松鼠_巨型零食大礼包/30包】网红爆款宿舍零食休闲食品小吃</view>
+        <view style='display:flex;'>
+          <view class="goods-price">¥0 + 100000陨石</view>
+          <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price"
+            style='color:#aaa;text-decoration:line-through'>¥ 857</view>
+        </view>
+      </view>
+    </navigator>
+    <view style="text-align:center">
+      <button class="cu-btn bg-pink" style="width: 90%;" data-id="productId1" bindtap="goodConver">立即兑换</button>
+    </view>
+  </view>
+</view>
+
+<!-- <view class="goods-container" wx:if="{{goodsRecommend.length > 0 && activeCategoryId == 0}}">
+  <view class="goods-box" wx:for="{{goodsRecommend}}" wx:key="id" bindtap="toDetailsTap" data-id="{{item.id}}">
+    <view class="img-box">
+      <image src="{{item.pic}}" class="image" mode="aspectFill" lazy-load="true" />
+    </view>
+    <view class="goods-title">{{item.name}}</view>
+    <view style='display:flex;'>
+      <view class="goods-price">¥ {{item.minPrice}}</view>
+      <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price"
+        style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
+    </view>
+  </view>
+</view> -->
+
+
+<!-- 陨石兑换规则 -->
+<view class="cu-modal {{converRule==true?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">陨石兑换说明</view>
+      <view class="action" bindtap="hideConverRule">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding text-left">
+      <view class="padding-lr bg-white">
+        <view class="solid-bottom padding">
+          <rich-text nodes="{{htmlSnip}}"></rich-text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<!-- 陨石获取规则弹框 -->
+<view class="cu-modal {{showAccessRole==true?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">陨石获取规则</view>
+      <view class="action" bindtap="hideAccessRole">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding text-left">
+      <view class="padding-lr bg-white">
+        <view class="solid-bottom padding">
+          <rich-text nodes="{{accessRole}}"></rich-text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

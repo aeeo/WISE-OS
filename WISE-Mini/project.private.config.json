@@ -1,0 +1,54 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "扫描大荔县",
+          "pathName": "pages/index/index",
+          "query": "regionCode=dlx-1",
+          "scene": 1007
+        },
+        {
+          "name": "扫描小程序码",
+          "pathName": "pages/index/index",
+          "query": "regionCod",
+          "scene": 1047
+        },
+        {
+          "name": "贴子分享",
+          "pathName": "pages/index/index",
+          "query": "topicId=1350415381262532609",
+          "scene": null
+        },
+        {
+          "name": "版本更新",
+          "pathName": "pages/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "扫描西安文理学院",
+          "pathName": "pages/index/index",
+          "query": "regionCode=xawlxy-1",
+          "scene": null
+        },
+        {
+          "name": "活动详情",
+          "pathName": "/pages/index/index",
+          "query": "activityId=1402824090915725314",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

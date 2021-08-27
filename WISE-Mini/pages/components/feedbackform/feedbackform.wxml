@@ -1,0 +1,47 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">问题反馈</view>
+	<view class="action" slot="right">
+		<view class="cu-load load-icon {{!isLoad?'loading':'over'}}"></view>
+	</view>
+</cu-custom>
+<form catchsubmit="formSubmit" catchreset="formReset">
+	<view class="cu-form-group margin-top">
+		<textarea name="content" maxlength="-1" style="height:8em" disabled="{{modalName!=null}}" bindinput="textareaAInput"
+			placeholder="输入您遇到的问题或对我们的建议，请确保描述清晰直观，我们一定会以最快时间响应您的反馈！"></textarea>
+	</view>
+	<view class="cu-bar bg-white margin-top">
+		<view class="action">
+			上传图片（可选）
+		</view>
+		<view class="action">
+			{{imgList.length}}/3
+		</view>
+	</view>
+	<view class="cu-form-group">
+		<view class="grid col-3 grid-square flex-sub">
+			<view class="bg-img" wx:for="{{imgList}}" wx:key="index" bindtap="ViewImage" data-url="{{imgList[index]}}">
+				<image src='{{imgList[index]}}' mode='aspectFill'></image>
+				<view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+					<text class="cuIcon-close"></text>
+				</view>
+			</view>
+			<view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<3}}">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
+	</view>
+	
+	<view class="cu-form-group">
+		<view class="title">联系方式（可选）</view>
+		<input name="contact" placeholder="请输入联系方式"></input>
+		<view class="cu-capsule radius">
+		</view>
+	</view>
+	<view class="cu-item">
+		<button class="content" formType="submit">
+			<text class="cuIcon-writefill text-cyan"></text>
+			<text class="text-grey">提交</text>
+		</button>
+	</view>
+</form>

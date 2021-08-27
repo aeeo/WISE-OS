@@ -1,0 +1,8 @@
+<view class="container">
+  <scroll-view scroll-y="true" style="height: 300rpx;" bindscrolltoupper="upper" bindscrolltolower="lower"
+    bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+    <view id="demo1" class="scroll-view-item demo-text-1"></view>
+    <view id="demo2" class="scroll-view-item demo-text-2"></view>
+    <view id="demo3" class="scroll-view-item demo-text-3"></view>
+  </scroll-view>
+</view>

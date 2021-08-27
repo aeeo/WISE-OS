@@ -1,0 +1,62 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{false}}" showSite="{{true}}">
+  <view slot="backText"></view>
+  <view slot="siteText" bindtap="showSiteIndex">{{USERRECORD.regionFullName}}</view>
+</cu-custom>
+<!-- 悬浮按钮 -->
+<component-fabbutton></component-fabbutton>
+<!-- <button bindtap="test">调用模板测试</button> -->
+
+<view scroll-y="{{modalName==null}}" class="page {{modalName!=null?'show':''}}" refresher-enabled="true"
+  style="height:calc({{windowHeight}}px - {{CustomBar}}px );">
+  <!-- grid -->
+  <view class="cu-list grid col-{{iconList.length}} {{gridBorder?'':'no-border'}}">
+    <view class="cu-item" wx:for="{{iconList}}" wx:key="index" wx:for-index="index" bindtap="gridClick"
+      data-index="{{index}}">
+      <view hover-class="none">
+        <view class="cuIcon-{{item.icon}} text-{{item.color}}">
+          <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
+            <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
+          </view>
+        </view>
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-orange "></text> 消息
+    </view>
+  </view>
+  <view class="cu-list menu-avatar">
+    <view class="cu-item" wx:for="{{conversationList}}" wx:key wx:for-index="index" wx:for-item="conversationItem"
+      wx:key="index" bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd"
+      data-target="move-box-{{index}}" bindtap="toChatDetail" data-conversationitem="{{conversationItem}}">
+      <view class="cu-avatar round lg"
+        style="background-image:url({{UPLOAD_IMAGE}}{{conversationItem.userProfile.avatar}}{{THUMBNAIL}});">
+      </view>
+      <view class="content">
+        <view class="text-grey">{{conversationItem.userProfile.nick}}</view>
+        <view class="text-gray text-sm">
+          <!-- <text class="cuIcon-infofill text-red"></text> -->
+          {{conversationItem.lastMessage.payload.text}}
+        </view>
+      </view>
+      <view class="action">
+        <view class="text-grey text-xs">{{conversationItem.lastMessage.lastTime}}</view>
+        <view class="cu-tag round bg-red sm" wx:if="{{conversationItem.unreadCount > 0}}">
+          {{conversationItem.unreadCount}}</view>
+      </view>
+      <view class="move">
+        <view class="bg-grey">置顶</view>
+        <view class="bg-red">删除</view>
+      </view>
+    </view>
+  </view>
+  <!-- 底部提示 -->
+  <!-- wx:if="{{conversationList.length == 0}}" -->
+  <view class="flex padding justify-center">
+    <view class="">暂时没有更多了</view>
+  </view>
+</view>
+
+<!-- <button class="weui-btn" type="primary" bindtap="toUserInfo">Open</button> -->

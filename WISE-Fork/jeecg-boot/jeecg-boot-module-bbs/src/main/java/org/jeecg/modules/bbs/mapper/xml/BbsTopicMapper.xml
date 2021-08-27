@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.bbs.mapper.BbsTopicMapper">
+
+    <select id="searchTopicByKeyword" parameterType="java.lang.String"
+            resultType="org.jeecg.modules.bbs.entity.BbsTopic">
+        SELECT id,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               class_code,
+               speciai_id,
+               title,
+               content,
+               enabled,
+               hits_count,
+               reply_count,
+               replied_by,
+               replied_time,
+               icon_id,
+               del_flag,
+               topic_image,
+               status,
+               contact,
+               site,
+               topic_type,
+               hot_reply,
+               praise_count,
+               star_count,
+               region_code,
+               region_full_name
+        FROM bbs_topic
+        WHERE (region_code = #{regionCode} AND (title LIKE #{keyword} OR content LIKE #{keyword}))
+        ORDER BY praise_count DESC;
+    </select>
+</mapper>

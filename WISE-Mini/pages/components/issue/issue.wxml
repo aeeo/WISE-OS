@@ -1,0 +1,100 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">发布</view>
+	<view class="action" slot="right">
+		<view class="cu-load load-icon {{!isLoad?'loading':'over'}}"></view>
+	</view>
+</cu-custom>
+<form catchsubmit="formSubmit" catchreset="formReset">
+	<view class="cu-form-group margin-top">
+		<view class="title">标题（可选）</view>
+		<input name="title" placeholder="{{formData.title == ''?'请输入标题':''}}" value="{{formData.title}}"></input>
+	</view>
+	<view class="cu-form-group margin-top">
+		<textarea name="content" maxlength="-1" style="height:8em" show-confirm-bar="{{false}}"
+			disabled="{{modalName!=null}}" bindinput="textareaAInput" placeholder="{{formData.content == ''?'内容总不能空着吧😅':''}}"
+			value="{{formData.content}}"></textarea>
+	</view>
+	<view class="cu-bar bg-white margin-top">
+		<view class="action">
+			图片（可选）
+		</view>
+		<view class="action">
+			{{imgList.length}}/9
+		</view>
+	</view>
+	<!-- 图片上传 -->
+	<view class="cu-form-group">
+		<view class="grid col-9 topic-image grid-square flex-sub">
+			<view class="bg-img" wx:for="{{imgList}}" wx:key="index" bindtap="ViewImage"
+				data-url="{{imgList[index].imageUrl}}">
+				<image
+					src="{{imgList[index].imageType == 0?imgList[index].imageTempUrl:UPLOAD_IMAGE+imgList[index].imageUrl+THUMBNAIL}}"
+					mode='aspectFill'></image>
+				<wux-circle style="display:{{ imgList[index].percent==100?'none':''}}" percent="{{ imgList[index].percent }}"
+					backgroundColor="#cccccc" color="#e03997" size="35" strokeWidth="3" speed="1000" animate="false">
+					<text style="color:white;font-size: 10px;">{{ imgList[index].percent + '%' }}</text>
+				</wux-circle>
+				<view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+					<text class="cuIcon-close"></text>
+				</view>
+			</view>
+			<view class="solids" bindtap="didPressChooesImage" wx:if="{{imgList.length<9}}">
+				<text class="cuIcon-cameraadd"></text>
+			</view>
+		</view>
+	</view>
+	<view class="cu-form-group margin-top">
+		<view class="title">版块（可选）</view>
+		<picker mode="selector" name="topicClass" bindchange="PickerChange" value="{{userSeleceTopicClassIndex}}"
+			range="{{topicClassList}}">
+			<view class="picker">
+				{{userSeleceTopicClassIndex?topicClassList[userSeleceTopicClassIndex]:'默认只在首页展示'}}
+			</view>
+			<!-- <view class="picker" wx:if="{{formData.topicClass == null}}">
+				1,{{topicClassList[formData.topicClass]}}
+			</view>
+			<view class="picker" wx:if="{{formData.topicClass != null}}">
+				{{formData.topicClass}},{{topicClassList[formData.topicClass]}}
+			</view> -->
+		</picker>
+	</view>
+	<!-- <view class="cu-form-group">
+		<view class="title">地址（可选）</view>
+		<picker name="site" mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
+			<view class="picker">
+				{{region[0]}}，{{region[1]}}，{{region[2]}}
+			</view>
+		</picker>
+	</view> -->
+	<!-- <view class="cu-form-group">
+		<view class="title">分类</view>
+		<picker bindchange="PickerChange" value="{{index}}" range="{{picker}}">
+			<view class="picker">
+				{{index?picker[index]:'选择分类'}}
+			</view>
+		</picker>
+	</view> -->
+	<view class="cu-form-group">
+		<view class="title">联系方式（可选）</view>
+		<input name="contact" placeholder="{{formData.contact == ''?'请输入联系方式':''}}" value="{{formData.contact}}"></input>
+		<view class="cu-capsule radius">
+			<!-- <view class="cu-tag bg-blue">
+				+86
+			</view> -->
+			<!-- <view class="cu-tag line-blue">
+				中国
+			</view> -->
+		</view>
+	</view>
+	<view class="cu-bar btn-group" wx:if="{{!isEdit}}">
+		<button class="cu-btn bg-grey shadow-blur" formType="submit" data-type="1">
+			<text class="text-cyan"></text>保存为草稿</button>
+		<button formType="submit" data-type="0" class="cu-btn bg-pink shadow-blur">
+			<text class="text-cyan"></text>发布</button>
+	</view>
+	<view class="padding flex flex-direction" wx:if="{{isEdit}}">
+		<button formType="submit" data-type="2" class="cu-btn bg-pink shadow-blur">
+			<text class="text-cyan"></text>提交修改</button>
+	</view>
+</form>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.bbs.mapper.BbsRegionMapper">
+    <select id="maxRegionId" resultType="int">
+        select max(region_id) from bbs_region
+    </select>
+</mapper>

@@ -1,0 +1,14 @@
+<!-- 图片 -->
+<view class="grid flex-sub padding-lr col-{{imageList.length}} topic-image">
+  <!-- <view class="bg-img" wx:for="{{imageList}}" wx:for-item="imageListItem" wx:key="id"
+    wx:if="{{imageListItem.topicImage != null}}"
+    style="background-image:url({{UPLOAD_IMAGE}}{{imageListItem.topicImage}}{{THUMBNAIL}});"
+    data-imagelist="{{imageList}}" catchtap="clickImage" hover-stop-propagation='true'>
+  </view> -->
+  <view class="bg-img" wx:for="{{imageList}}" wx:for-item="imageListItem" wx:key="id"
+    wx:if="{{imageListItem.topicImage != null}}" data-imagelist="{{imageList}}" data-imagelistitem="{{imageListItem}}"
+    catchtap="clickImage" hover-stop-propagation='true'>
+    <image lazy-load="true" src="{{UPLOAD_IMAGE}}{{imageListItem.topicImage}}{{THUMBNAIL}}"></image>
+  </view>
+
+</view>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.bbs.mapper.BbsUserTopicClickMapper">
+
+    <select id="queryRecently" parameterType="java.lang.String"
+            resultType="org.jeecg.modules.bbs.entity.BbsUserTopicClick">
+        SELECT topic_id, max(create_time) as create_time
+        from bbs_user_topic_click
+        where create_by = #{username}
+        GROUP BY topic_id
+        ORDER BY create_time DESC
+    </select>
+</mapper>

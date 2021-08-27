@@ -1,0 +1,15 @@
+## ide
+**/.idea
+*.iml
+
+## backend
+**/target
+**/logs
+
+## front
+**/*.lock
+
+
+**/target/
+**/node_modules/
+**/miniprogram_npm/

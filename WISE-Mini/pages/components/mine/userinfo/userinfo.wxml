@@ -1,0 +1,65 @@
+<cu-custom bgColor="bg-LINGMENGHONG" isBack="{{true}}">
+  <view slot="backText"></view>
+  <!-- <view slot="content">我的</view> -->
+</cu-custom>
+<view class="user-info">
+  <view class="flex padding align-center">
+    <view class="">
+      <view wx:if="{{USERALLINFO.avatar }}" class="cu-avatar round" catchtap="clickAvatarImage"
+        data-imagelist="{{USERALLINFO.avatar}}"
+        style="background-image:url({{UPLOAD_IMAGE}}{{USERALLINFO.avatar}});width:150rpx;height:150rpx"></view>
+      <open-data wx:if="{{USERALLINFO.avatar == ''}}" type="userAvatarUrl"></open-data>
+    </view>
+    <view class='padding-sm'>
+      <view class="text-xxl" style="font-weight: bold;" wx:if="{{USERALLINFO.createByName != ''}}">
+        {{USERALLINFO.createByName}}</view>
+      <open-data class="text-xxl" style="font-weight: bold;" wx:if="{{USERALLINFO.createByName == ''}}"
+        type="userAvatarUrl">
+      </open-data>
+      <view class="text-df">账号：988888</view>
+    </view>
+    <!-- <view class="bg-grey padding-sm margin-xs radius">center</view> -->
+  </view>
+  <view class="flex justify-between">
+    <view class="flex justify-start">
+      <view class="padding-sm margin-xs radius">
+        <view class="text-lg" style="font-weight: bold;">{{USERALLINFO.topicCount}}</view>
+        <view class="text-df">发布数量</view>
+      </view>
+      <view class="padding-sm margin-xs radius">
+        <view class="text-lg" style="font-weight: bold;">{{USERALLINFO.praiseCount}}</view>
+        <view class="text-df">点赞</view>
+      </view>
+      <view class="padding-sm margin-xs radius">
+        <view class="text-lg" style="font-weight: bold;">{{USERALLINFO.bePraiseCount}}</view>
+        <view class="text-df">被赞</view>
+      </view>
+      <view class="padding-sm margin-xs radius">
+        <view class="text-lg" style="font-weight: bold;">{{USERALLINFO.createTime}}</view>
+        <view class="text-df">天数</view>
+      </view>
+    </view>
+    <view class="padding-sm margin-xs radius" bindtap="toChatDetail">
+      <view class="text-lg" style="font-weight: bold;"><text class="cuIcon-message"></text></view>
+      <view class="text-df">私聊</view>
+    </view>
+  </view>
+</view>
+<view style="background-color: #d276a3;">
+  <view class="cu-bar bg-white" style="border-radius:30rpx 30rpx 0 0;margin-bottom: -20px;">
+    <view class="action">
+      发布
+    </view>
+  </view>
+  <!-- 置顶帖展示 -->
+  <wise-topic-card topicLists="{{topicLists}}" showMore="{{false}}" showRole="{{false}}" topicType="{{1}}"
+    showRegion="{{true}}" bindmyevent="myEventListener" showBottomBar="true">
+  </wise-topic-card>
+  <!-- 普通帖展示 -->
+  <wise-topic-card topicLists="{{topicLists}}" showMore="{{false}}" showRole="{{false}}" topicType="{{0}}"
+    showRegion="{{true}}" bindmyevent="myEventListener" showBottomBar="true">
+  </wise-topic-card>
+</view>
+
+<!-- 底部提示 -->
+<view class="cu-load {{load?'loading':'over'}}" style="margin-top:-1px;"></view>

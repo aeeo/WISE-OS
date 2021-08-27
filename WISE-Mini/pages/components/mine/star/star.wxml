@@ -1,0 +1,29 @@
+<!-- 进度条 -->
+<view class='load-progress {{loadProgressShow?"show":"hide"}}' style="top:{{CustomBar}}px;">
+  <view class='load-progress-bar bg-blue' style="transform: translate3d(-{{100-loadProgress}}%, 0px, 0px);"></view>
+  <!-- <view class='load-progress-spinner text-green'></view> -->
+</view>
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}" showSite="{{false}}">
+  <view slot="content">收藏</view>
+  <view class="action" slot="right">
+    <view class="cu-load load-icon {{!isLoad?'loading':'over'}}"></view>
+  </view>
+</cu-custom>
+<!-- 悬浮按钮 -->
+<component-fabbutton></component-fabbutton>
+<!-- 悬浮按钮 -->
+<view class="page">
+  <!-- 置顶帖展示-->
+  <wise-topic-card topicLists="{{topicLists}}" showRole="{{true}}" topicType="{{1}}"
+    showRegion="{{false}}" bindmyevent="myEventListener" showBottomBar="true">
+  </wise-topic-card>
+  <!-- 普通帖展示 -->
+  <wise-topic-card topicLists="{{topicLists}}" showRole="{{true}}" topicType="{{0}}"
+    showRegion="{{false}}" bindmyevent="myEventListener" showBottomBar="true">
+  </wise-topic-card>
+  <!-- 列表end -->
+</view>
+<view class="cu-load {{!onReachBottomLoading?'loading':'over'}}"></view>
+
+<!-- 收藏举报提示框 -->
+<mp-actionSheet show="{{showActionsheet}}" actions="{{actionGroups}}" bindactiontap="clickAction"></mp-actionSheet>

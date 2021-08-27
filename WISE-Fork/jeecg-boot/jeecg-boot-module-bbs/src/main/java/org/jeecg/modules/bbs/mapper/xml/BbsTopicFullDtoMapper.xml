@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.bbs.mapper.BbsTopicFullDtoMapper">
+    <select id="queryTopicFullDtoFix" resultMap="topicFullDtoList"
+            resultType="org.jeecg.modules.bbs.entity.BbsTopicFullDto">
+        SELECT a.id AS id,
+        a.create_by AS createBy,
+        a.create_time AS createTime,
+        a.update_by AS updateBy,
+        a.update_time AS updateTime,
+        a.class_code AS classCode,
+        a.speciai_id AS speciaiId,
+        a.title AS title,
+        a.content AS content,
+        a.enabled AS enabled,
+        a.hits_count AS hitsCount,
+        a.reply_count AS replyCount,
+        a.replied_by AS repliedBy,
+        a.replied_time AS repliedTime,
+        a.icon_id AS iconId,
+        a.del_flag AS delFlag,
+        a.public_time AS publicTime,
+        a.edit_time AS editTime,
+        a.sys_org_code AS sysOrgCode,
+        b.id AS imageId,
+        b.topic_image AS topicImage,
+        c.id AS tagId,
+        c.tag AS tag,
+        e.role_name AS userRole,
+        a.STATUS AS STATUS,
+        a.contact AS contact,
+        a.site AS Site,
+        a.topic_type AS topicType,
+        a.hot_reply AS hotReply,
+        a.praise_count AS praiseCount,
+        a.star_count AS starCount,
+        a.region_code AS regionCode,
+        a.region_full_name AS regionFullName,
+        f.realname AS realname,
+        f.avatar AS avatar,
+        f.sex AS sex
+        FROM (
+        SELECT id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        class_code,
+        speciai_id,
+        title,
+        content,
+        enabled,
+        hits_count,
+        reply_count,
+        replied_by,
+        replied_time,
+        icon_id,
+        del_flag,
+        STATUS,
+        contact,
+        site,
+        topic_type,
+        hot_reply,
+        praise_count,
+        star_count,
+        region_code,
+        region_full_name,
+        public_time,
+        edit_time,
+        sys_org_code
+        FROM bbs_topic
+        WHERE region_code = #{regionCode}
+        and status = 1
+        <if test="classCode != 'index' and classCode != ''">
+            and class_code = #{classCode}
+        </if>
+        <if test="topicType != null">
+            and topic_type IN
+            <foreach collection="topicType" item="topicTypeItem" index="index" open="(" close=")" separator=",">
+                #{topicTypeItem}
+            </foreach>
+        </if>
+        ORDER BY public_time DESC
+        LIMIT #{current},#{size}
+        ) a
+        LEFT JOIN bbs_topic_image AS b ON a.id = b.topic_id
+        LEFT JOIN bbs_topic_tag AS c ON a.id = c.topic_id
+        LEFT JOIN sys_user AS f ON a.create_by = f.username
+        LEFT JOIN sys_user_role AS d ON f.id = d.user_id
+        LEFT JOIN sys_role AS e ON d.role_id = e.id
+    </select>
+
+    <select id="queryUserPublishTopicFix" resultMap="topicFullDtoList"
+            resultType="org.jeecg.modules.bbs.entity.BbsTopicFullDto">
+        SELECT a.id AS id,
+        a.create_by AS createBy,
+        a.create_time AS createTime,
+        a.update_by AS updateBy,
+        a.update_time AS updateTime,
+        a.class_code AS classCode,
+        a.speciai_id AS speciaiId,
+        a.title AS title,
+        a.content AS content,
+        a.enabled AS enabled,
+        a.hits_count AS hitsCount,
+        a.reply_count AS replyCount,
+        a.replied_by AS repliedBy,
+        a.replied_time AS repliedTime,
+        a.icon_id AS iconId,
+        a.del_flag AS delFlag,
+        a.public_time AS publicTime,
+        a.edit_time AS editTime,
+        a.sys_org_code AS sysOrgCode,
+        b.id AS imageId,
+        b.topic_image AS topicImage,
+        c.id AS tagId,
+        c.tag AS tag,
+
+        g.id AS linkId,
+        g.title AS linkTitle,
+        g.link_type AS linkType,
+        g.link_url AS linkUrl,
+        g.topic_id AS topicId,
+        g.parameter AS parameter,
+        g.sort AS linkSort,
+
+        e.role_name AS userRole,
+        a.STATUS AS STATUS,
+        a.contact AS contact,
+        a.site AS Site,
+        a.topic_type AS topicType,
+        a.hot_reply AS hotReply,
+        a.praise_count AS praiseCount,
+        a.star_count AS starCount,
+        a.region_code AS regionCode,
+        a.region_full_name AS regionFullName,
+        f.realname AS realname,
+        f.avatar AS avatar,
+        f.sex AS sex
+        FROM (
+        SELECT id,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        class_code,
+        speciai_id,
+        title,
+        content,
+        enabled,
+        hits_count,
+        reply_count,
+        replied_by,
+        replied_time,
+        icon_id,
+        del_flag,
+        STATUS,
+        contact,
+        site,
+        topic_type,
+        hot_reply,
+        praise_count,
+        star_count,
+        region_code,
+        region_full_name,
+        public_time,
+        edit_time,
+        sys_org_code
+        FROM bbs_topic
+        WHERE status = 1
+        <if test="username != null">
+            and create_by = #{username}
+        </if>
+        <if test="topicType != null">
+            and topic_type IN
+            <foreach collection="topicType" item="topicTypeItem" index="index" open="(" close=")" separator=",">
+                #{topicTypeItem}
+            </foreach>
+        </if>
+        ORDER BY public_time DESC
+        LIMIT #{current},#{size}
+        ) a
+        LEFT JOIN bbs_topic_image AS b ON a.id = b.topic_id
+        LEFT JOIN bbs_topic_tag AS c ON a.id = c.topic_id
+        LEFT JOIN bbs_topic_link AS g ON a.id = g.topic_id
+
+        LEFT JOIN sys_user AS f ON a.create_by = f.username
+        LEFT JOIN sys_user_role AS d ON f.id = d.user_id
+        LEFT JOIN sys_role AS e ON d.role_id = e.id
+    </select>
+
+    <select id="queryTopicFullDtoFixById" resultMap="topicFullDtoList"
+            resultType="org.jeecg.modules.bbs.entity.BbsTopicFullDto">
+        SELECT a.id               AS id,
+               a.create_by        AS createBy,
+               a.create_time      AS createTime,
+               a.update_by        AS updateBy,
+               a.update_time      AS updateTime,
+               a.class_code       AS classCode,
+               a.speciai_id       AS speciaiId,
+               a.title            AS title,
+               a.content          AS content,
+               a.enabled          AS enabled,
+               a.hits_count       AS hitsCount,
+               a.reply_count      AS replyCount,
+               a.replied_by       AS repliedBy,
+               a.replied_time     AS repliedTime,
+               a.icon_id          AS iconId,
+               a.del_flag         AS delFlag,
+               b.id               AS imageId,
+               b.topic_image      AS topicImage,
+               c.id               AS tagId,
+               c.tag              AS tag,
+
+               g.id               AS linkId,
+               g.title            AS linkTitle,
+               g.link_type        AS linkType,
+               g.link_url         AS linkUrl,
+               g.topic_id         AS topicId,
+               g.parameter        AS parameter,
+               g.sort             AS linkSort,
+
+
+               e.role_name        AS userRole,
+               a.STATUS           AS STATUS,
+               a.contact          AS contact,
+               a.site             AS Site,
+               a.topic_type       AS topicType,
+               a.hot_reply        AS hotReply,
+               a.praise_count     AS praiseCount,
+               a.star_count       AS starCount,
+               a.region_code      AS regionCode,
+               a.region_full_name AS regionFullName,
+               f.realname         AS realname,
+               f.avatar           AS avatar,
+               f.sex              AS sex,
+               a.public_time      AS publicTime,
+               a.edit_time        AS editTime,
+               a.sys_org_code     AS sysOrgCode
+        FROM bbs_topic as a
+                 LEFT JOIN bbs_topic_image AS b ON a.id = b.topic_id
+                 LEFT JOIN bbs_topic_tag AS c ON a.id = c.topic_id
+
+                 LEFT JOIN bbs_topic_link AS g ON a.id = g.topic_id
+
+                 LEFT JOIN sys_user AS f ON a.create_by = f.username
+                 LEFT JOIN sys_user_role AS d ON f.id = d.user_id
+                 LEFT JOIN sys_role AS e ON d.role_id = e.id
+        where a.id = #{topicId}
+    </select>
+
+    <resultMap id="topicFullDtoList" type="org.jeecg.modules.bbs.entity.BbsTopicFullDto">
+        <id property="id" column="id"/>
+        <result property="id" column="id"/>
+        <result property="createBy" column="createBy"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateBy" column="updateBy"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="classCode" column="classCode"/>
+        <result property="speciaiId" column="speciaiId"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="enabled" column="enabled"/>
+        <result property="hitsCount" column="hitsCount"/>
+        <result property="replyCount" column="replyCount"/>
+        <result property="repliedBy" column="repliedBy"/>
+        <result property="repliedTime" column="repliedTime"/>
+        <result property="iconId" column="iconId"/>
+        <result property="delFlag" column="delFlag"/>
+        <result property="topicImage" column="topicImage"/>
+        <result property="userRole" column="userRole"/>
+        <result property="status" column="status"/>
+        <result property="contact" column="contact"/>
+        <result property="site" column="site"/>
+        <result property="topicType" column="topicType"/>
+        <result property="hotReply" column="hotReply"/>
+        <result property="praiseCount" column="praiseCount"/>
+        <result property="starCount" column="starCount"/>
+        <result property="regionCode" column="regionCode"/>
+        <result property="regionFullName" column="regionFullName"/>
+        <result property="bbsCreateByName" column="realname"/>
+        <result property="avatar" column="avatar"/>
+        <result property="sex" column="sex"/>
+        <result property="publicTime" column="publicTime"/>
+        <result property="editTime" column="editTime"/>
+        <result property="sysOrgCode" column="sysOrgCode"/>
+        <collection property="bbsTopicImageList" ofType="org.jeecg.modules.bbs.entity.BbsTopicImage">
+            <id property="id" column="imageId"/>
+            <result property="topicImage" column="topicImage"/>
+        </collection>
+        <collection property="bbsTopicTagList" ofType="org.jeecg.modules.bbs.entity.BbsTopicTag">
+            <id property="id" column="tagId"/>
+            <result property="tag" column="tag"/>
+        </collection>
+        <collection property="bbsTopicLinkList" ofType="org.jeecg.modules.bbs.entity.BbsTopicLink">
+            <id property="id" column="linkId"/>
+            <result property="linkType" column="linkType"/>
+            <result property="linkUrl" column="linkUrl"/>
+            <result property="topicId" column="topicId"/>
+            <result property="title" column="linkTitle"/>
+            <result property="parameter" column="parameter"/>
+            <result property="sort" column="linkSort"/>
+        </collection>
+    </resultMap>
+    <select id="queryTopicFullDtoFle" parameterType="java.lang.String" resultMap="topicFullDtoList"
+            resultType="org.jeecg.modules.bbs.entity.BbsTopicFullDto">
+        SELECT a.id as id,
+        a.topic_id as topicId,
+        a.create_by as createBy,
+        FROM bbs_user_star a
+        WHERE topic_id IN
+        <foreach collection="list" item="topicIdItem" index="index" open="(" close=")" separator=",">
+            #{topicIdItem}
+        </foreach>
+    </select>
+
+    <select id="queryTopicFullDtoUserStar" parameterType="java.util.List" resultMap="userIsStarList">
+        SELECT a.id as id,
+        a.topic_id as topicId,
+        a.create_by as createBy
+        FROM bbs_user_star a
+        WHERE create_by = #{username} and topic_id IN
+        <foreach collection="topicIdList" item="topicIdItem" index="index" open="(" close=")" separator=",">
+            #{topicIdItem}
+        </foreach>
+    </select>
+    <resultMap id="userIsStarList" type="org.jeecg.modules.bbs.entity.BbsUserStar">
+        <result property="id" column="id"/>
+        <result property="topicId" column="topicId"/>
+        <result property="createBy" column="createBy"/>
+    </resultMap>
+
+    <select id="queryTopicFullDtoUserPraise" parameterType="java.util.List" resultMap="userIsPraiseList">
+        SELECT a.id as id,
+        a.topic_id as topicId,
+        a.create_by as createBy
+        FROM bbs_user_praise a
+        WHERE create_by = #{username} and topic_id IN
+        <foreach collection="topicIdList" item="topicIdItem" index="index" open="(" close=")" separator=",">
+            #{topicIdItem}
+        </foreach>
+    </select>
+
+    <resultMap id="userIsPraiseList" type="org.jeecg.modules.bbs.entity.BbsUserPraise">
+        <result property="id" column="id"/>
+        <result property="topicId" column="topicId"/>
+        <result property="createBy" column="createBy"/>
+    </resultMap>
+</mapper>

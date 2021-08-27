@@ -1,0 +1,146 @@
+<!-- 骨架屏 -->
+<!-- <import src="index.skeleton.wxml"/> -->
+<!-- <template is="skeleton" wx-if="{{loading}}" data="{{hideCategory, hideGoods, hideFooter, hideBanner}}" /> -->
+<!-- <view scroll-y class="DrawerPage {{modalName=='viewModal'?'show':''}}"> -->
+<!-- 进度条 -->
+<view class='load-progress {{loadProgressShow?"show":"hide"}}' style="top:{{CustomBar}}px;">
+  <view class='load-progress-bar bg-blue' style="transform: translate3d(-{{100-loadProgress}}%, 0px, 0px);"></view>
+  <!-- <view class='load-progress-spinner text-green'></view> -->
+</view>
+<!--index.wxml-->
+<cu-custom bgColor="bg-gradual-pink" isBack="{{false}}" showSite="{{true}}">
+  <view slot="backText"></view>
+  <view slot="siteText" bindtap="showSiteIndex">{{USERRECORD.regionFullName}}</view>
+  <view slot="siteIcon" bindtap="showSiteIndex"></view>
+  <view slot="content"></view>
+</cu-custom>
+<!-- 悬浮按钮 -->
+<!-- <tui-fab btnList="{{btnList}}" maskClosable="{{true}}"></tui-fab> -->
+<component-fabbutton></component-fabbutton>
+<!-- 悬浮按钮 -->
+<view class="page" bindtouchstart='touchStart' bindtouchmove='touchMove' bindtouchend='touchEnd'
+  style="height:calc(100% - {{CustomBar}}px - 55px);">
+  <view class='btn' style="margin-top:10px;">
+    <!-- 置顶帖展示Start -->
+    <view wx:if="{{item.topicType==1}}" wx:for="{{topicLists}}" wx:key="id" wx:for-index="bindex"
+      data-topicitem='{{item}}' class="cu-card dynamic {{isCard?'no-card':''}} solid-bottom"
+      style="margin: 0 16rpx 16rpx 16rpx;border-radius: 10rpx;" bindtap="topicdetails" data-bindex="{{bindex}}">
+      <view class="cu-item shadow">
+        <view class="cu-list menu-avatar">
+          <view class="cu-item">
+            <view class="cu-avatar round lg" style="background-image:url({{UPLOAD_IMAGE}}{{item.avatar}});">
+            </view>
+            <view class="content flex-sub">
+              <view>
+                <view>{{item.bbsCreateByName}}</view>
+                <view class="cu-tag bg-{{item.userRole=='开发者'?'yellow':'grey'}} sm radius"
+                  style="display:{{item.userRole=='用户'?'none':''}}">{{item.userRole}}</view>
+                <view class="cu-tag bg-{{item.topicType=='1'?'red':'grey'}} sm radius"
+                  style="display:{{item.topicType!='1'?'none':''}}">置顶</view>
+                <view class="cu-tag bg-{{item.topicType=='2'?'red':'grey'}} sm radius"
+                  style="display:{{item.topicType!='2'?'none':''}}">精华</view>
+              </view>
+              <view class="text-gray text-sm flex justify-between">
+                {{item.updateTime}}
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="text-content">
+          <rich-text nodes="{{item.content}}"></rich-text>
+        </view>
+        <!-- 图片 -->
+        <view class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
+          <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url({{UPLOAD_IMAGE}}{{topicImages.topicImage}});"
+            wx:for="{{item.bbsTopicImageList}}" wx:for-item="topicImages" wx:key="index" id="{{topicImages.topicImage}}"
+            data-imagelist="{{item.bbsTopicImageList}}" catchtap="clickTopicImage" hover-stop-propagation='true'>
+          </view>
+        </view>
+        <view class="text-gray text text-right padding-xs" style="padding-right: 30rpx;">
+          <text
+            class="praiseCount cuIcon-appreciatefill cu-btn animation-{{item.exeCuteAnimation?animationItme.name:''}}"
+            catchtap="clickPraise" hover-stop-propagation='true' id="{{item.id}}" data-class="{{animationItme.name}}"
+            data-praiseCount="{{item.praiseCount}}" data-bindex="{{bindex}}" wx:for="{{list}}" wx:key="id"
+            wx:for-item="animationItme" style="color:{{item.userIsPraise?'#ec008c':''}};background: #00000000;">
+          </text>
+          <text class="praiseCount text cu-btn animation-{{item.exeCuteAnimation?animationItme.name:''}}"
+            catchtap="clickPraise" hover-stop-propagation='true' id="{{item.id}}" data-class="{{animationItme.name}}"
+            data-praiseCount="{{item.praiseCount}}" data-bindex="{{bindex}}" wx:for="{{list}}" wx:key="id"
+            wx:for-item="animationItme" style="background: #00000000;padding-right:16rpx">{{item.praiseCount}}
+          </text>
+          <text class="cuIcon-attentionfill text cu-btn" id="clickHitsCount" bindtap="clickHitsCount"
+            style="background: #00000000;padding: 16rpx;">{{item.hitsCount}}
+          </text>
+          <text class="cuIcon-messagefill text cu-btn" id="clickReplyCount" bindtap="clickReplyCount"
+            style="background: #00000000; padding-left: 16rpx;padding-right: 0rpx;">{{item.replyCount}}</text>
+        </view>
+      </view>
+    </view>
+    <!-- 置顶帖展示End -->
+    <!-- 列表start -->
+    <view wx:if="{{item.topicType==0}}" wx:for="{{topicLists}}" wx:key="id" wx:for-index="bindex"
+      data-topicitem='{{item}}' class="cu-card dynamic {{isCard?'no-card':''}} solid-bottom"
+      style="margin: 0 16rpx 16rpx 16rpx;border-radius: 10rpx;" bindtap="topicdetails" data-bindex="{{bindex}}">
+      <view class="cu-item shadow">
+        <view class="cu-list menu-avatar">
+          <view class="cu-item">
+            <view class="cu-avatar round lg" style="background-image:url({{UPLOAD_IMAGE}}{{item.avatar}});">
+            </view>
+            <view class="content flex-sub">
+              <view>
+                <view>{{item.bbsCreateByName}}</view>
+                <!-- <view class="padding-xs"> -->
+                <view class="cu-tag bg-{{item.userRole=='开发者'?'yellow':'grey'}} sm radius"
+                  style="display:{{item.userRole=='用户'?'none':''}}">{{item.userRole}}</view>
+                <view class="cu-tag bg-{{item.topicType=='1'?'red':'grey'}} sm radius"
+                  style="display:{{item.topicType!='1'?'none':''}}">置顶</view>
+                <view class="cu-tag bg-{{item.topicType=='2'?'red':'grey'}} sm radius"
+                  style="display:{{item.topicType!='2'?'none':''}}">精华</view>
+                <!-- </view> -->
+              </view>
+              <view class="text-gray text-sm flex justify-between">
+                {{item.createTime}}
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="text-content">
+          <!-- {{item.content}} -->
+          <rich-text nodes="{{item.content}}"></rich-text>
+        </view>
+        <!-- 图片 -->
+        <view class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
+          <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url({{UPLOAD_IMAGE}}{{topicImages.topicImage}});"
+            wx:for="{{item.bbsTopicImageList}}" wx:for-item="topicImages" wx:key="index" id="{{topicImages.topicImage}}"
+            data-imagelist="{{item.bbsTopicImageList}}" catchtap="clickTopicImage" hover-stop-propagation='true'>
+          </view>
+        </view>
+        <view class="text-gray text text-right padding-xs" style="padding-right: 30rpx;">
+          <text
+            class="praiseCount cuIcon-appreciatefill cu-btn animation-{{item.exeCuteAnimation?animationItme.name:''}}"
+            catchtap="clickPraise" hover-stop-propagation='true' id="{{item.id}}" data-class="{{animationItme.name}}"
+            data-praiseCount="{{item.praiseCount}}" data-bindex="{{bindex}}" wx:for="{{list}}" wx:key="id"
+            wx:for-item="animationItme" style="color:{{item.userIsPraise?'#ec008c':''}};background: #00000000;">
+          </text>
+          <text class="praiseCount text cu-btn animation-{{item.exeCuteAnimation?animationItme.name:''}}"
+            catchtap="clickPraise" hover-stop-propagation='true' id="{{item.id}}" data-class="{{animationItme.name}}"
+            data-praiseCount="{{item.praiseCount}}" data-bindex="{{bindex}}" wx:for="{{list}}" wx:key="id"
+            wx:for-item="animationItme" style="background: #00000000;padding-right:16rpx">{{item.praiseCount}}
+          </text>
+
+          <text class="cuIcon-attentionfill text cu-btn" id="clickHitsCount" bindtap="clickHitsCount"
+            style="background: #00000000;padding: 16rpx;">{{item.hitsCount}}
+          </text>
+          <text class="cuIcon-messagefill text cu-btn" id="clickReplyCount" bindtap="clickReplyCount"
+            style="background: #00000000; padding-left: 16rpx;padding-right: 0rpx;">{{item.replyCount}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 列表end -->
+  <!-- 底部提示 -->
+  <view class="cu-load {{!onReachBottomLoading?'loading':'over'}}" bindtouchstart='touchStart' bindtouchmove='touchMove'
+    bindtouchend='touchEnd'></view>
+</view>
+
+<!-- </view> -->

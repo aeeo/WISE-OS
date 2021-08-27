@@ -1,0 +1,135 @@
+<!-- <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">{{conversationUserProfile.nick}}</view>
+</cu-custom>
+<view class="cu-chat">
+  <view class="cu-item self">
+    <view class="main">
+      <view class="content bg-green shadow">
+        <text>喵喵喵！喵喵喵！喵喵喵！喵喵！喵喵！！喵！喵喵喵！</text>
+      </view>
+    </view>
+    <view class="cu-avatar radius"
+      style="background-image:url({{UPLOAD_IMAGE}}{{SYSUSER.avatar}}{{THUMBNAIL}});"></view>
+    <view class="date">2018年3月23日 13:23</view>
+  </view>
+  <view class="cu-info round">对方撤回一条消息!</view>
+  <view class="cu-item">
+    <view class="cu-avatar radius"
+      style="background-image:url({{UPLOAD_IMAGE}}{{conversationUserProfile.avatar}}{{THUMBNAIL}});"></view>
+    <view class="main">
+      <view class="content shadow">
+        <text>喵喵喵！喵喵喵！</text>
+      </view>
+    </view>
+    <view class="date "> 13:23</view>
+  </view>
+  <view class="cu-info">
+    <text class="cuIcon-roundclosefill text-red "></text> 对方拒绝了你的消息
+  </view>
+  <view class="cu-info">
+    对方开启了好友验证，你还不是他(她)的好友。请先发送好友验证请求，对方验证通过后，才能聊天。
+    <text class="text-blue">发送好友验证</text>
+  </view>
+  <view class="cu-item self">
+    <view class="main">
+      <image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg" class="radius" mode="widthFix">
+      </image>
+    </view>
+    <view class="cu-avatar radius"
+      style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big107000.jpg);"></view>
+    <view class="date"> 13:23</view>
+  </view>
+  <view class="cu-item self">
+    <view class="main">
+      <view class="action text-bold text-grey">
+        3"
+      </view>
+      <view class="content shadow">
+        <text class="cuIcon-sound text-xxl padding-right-xl"> </text>
+      </view>
+    </view>
+    <view class="cu-avatar radius"
+      style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big107000.jpg);"></view>
+    <view class="date">13:23</view>
+  </view>
+  <view class="cu-item self">
+    <view class="main">
+      <view class="action">
+        <text class="cuIcon-locationfill text-orange text-xxl"></text>
+      </view>
+      <view class="content shadow">
+        喵星球，喵喵市
+      </view>
+    </view>
+    <view class="cu-avatar radius"
+      style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big107000.jpg);"></view>
+    <view class="date">13:23</view>
+  </view>
+  <view class="cu-item">
+    <view class="cu-avatar radius"
+      style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big143004.jpg);"></view>
+    <view class="main">
+      <view class="content shadow">
+        @#$^&**
+      </view>
+      <view class="action text-grey">
+        <text class="cuIcon-warnfill text-red text-xxl"></text> <text class="text-sm margin-left-sm">翻译错误</text>
+      </view>
+    </view>
+    <view class="date">13:23</view>
+  </view>
+</view> -->
+
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">{{conversationUserProfile.nick}}</view>
+</cu-custom>
+
+<view class="cu-chat">
+  <scroll-view scroll-y="true" scroll-x="false" style="height:calc({{screenHeight}}px - {{CustomBar}}px - {{55}}px);"
+    scroll-into-view="{{toView}}" upper-threshold="50" bindscrolltoupper="scrolltoupper">
+    <view wx:for="{{messageList}}" wx:for-item="messageItem" wx:for-index="index" wx:key="index"
+      id='messageList-{{index}}'>
+      <view wx:if="{{messageItem.flow == 'out'}}">
+        <view class="cu-item self">
+          <view class="main">
+            <view class="content bg-pink shadow">
+              <text>{{messageItem.payload.text}}</text>
+            </view>
+          </view>
+          <view class="cu-avatar radius" style="background-image:url({{UPLOAD_IMAGE}}{{SYSUSER.avatar}}{{THUMBNAIL}});">
+          </view>
+          <view class="date">{{messageItem.formatTime}}</view>
+        </view>
+      </view>
+      <view wx:if="{{messageItem.flow == 'in'}}">
+        <view class="cu-item">
+          <view class="cu-avatar radius"
+            style="background-image:url({{UPLOAD_IMAGE}}{{conversationUserProfile.avatar}}{{THUMBNAIL}});"></view>
+          <view class="main">
+            <view class="content shadow">
+              <text>{{messageItem.payload.text}}</text>
+            </view>
+          </view>
+          <view class="date ">{{messageItem.formatTime}}</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+</view>
+
+
+
+<view class="cu-bar foot input {{InputBottom!=0?'cur':''}}" style="bottom:{{InputBottom}}px">
+  <view class="action">
+    <text class="cuIcon-sound text-grey"></text>
+  </view>
+  <input class="solid-bottom" bindfocus="InputFocus" bindblur="InputBlur" adjust-position="{{false}}" focus="{{false}}"
+    maxlength="300" cursor-spacing="10" bindinput="chatInput" value="{{currentChatContent}}"></input>
+  <view class="action">
+    <text class="cuIcon-emojifill text-grey"></text>
+  </view>
+  <button class="cu-btn bg-purple shadow" bindtap="sendTextMessage">发送</button>
+</view>

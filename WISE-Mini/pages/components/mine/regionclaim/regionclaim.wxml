@@ -1,0 +1,21 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">区域认领</view>
+</cu-custom>
+<view class='margin-xl bg-white padding-xl radius shadow-lg'>
+  <view class='text-center margin-bottom text-lg  text-grey'>认领</view>
+  <view class='text-content'>
+    <view class='margin-top-sm'>或许你也在经营一个类似的平台。</view>
+    <view>但是可能因为操作复杂、形式有限、无法变现等原因处处受到限制。</view>
+    <view>不如来认领一块行星区域吧，与你现有的渠道并不冲突。维护这片领地的秩序，站在行星万象的肩膀上实现你的抱负。</view>
+    <view>但在此之前我们需要一些能证明你能力的东西，以便我们能放心的将用户和区域托付给你。</view>
+    <view class='margin-top-sm'>请准备一份申请资料向我们证明你自己，发送至邮箱：</view>
+    <view>planet@no2.fun</view>
+    <view>或添加微信在线沟通：</view>
+    <view style="text-align: center;" class="padding-top">
+      <image style="height:150px;width: 150px;"
+        src="{{UPLOAD_IMAGE}}sys/wazgzt%E5%BE%AE%E4%BF%A1%E5%90%8D%E7%89%871000.png" mode="aspectFit"
+        bindtap="clickTopicImage" bindlongpress="clickTopicImage"></image>
+    </view>
+  </view>
+</view>

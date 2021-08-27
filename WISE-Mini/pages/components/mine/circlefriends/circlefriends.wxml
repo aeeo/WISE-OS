@@ -1,0 +1,15 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">加入朋友圈</view>
+</cu-custom>
+<view class='margin-xl bg-white padding-xl radius shadow-lg'>
+  <view class='text-center margin-bottom text-lg  text-grey'>{{regionInfo.fullName}}微信朋友圈</view>
+  <view class='text-content'>
+    <view>Hi！很高兴你能使用这款小程序！</view>
+    <view class='margin-top-sm'>下面是{{regionInfo.fullName}}的微信朋友圈，会将一些小程序中比较有趣的信息转发到过去，您可以长按保存或截屏扫描二维码添加。</view>
+    <view class="bg-img only-img" style="background-image:url({{UPLOAD_IMAGE}}weixinshoukuanma.jpg);">
+    </view>
+    <image src="{{UPLOAD_IMAGE}}{{regionInfo.circleFriendsImage}}" style="margin-top: 40rpx;" mode="aspectFit"
+      bindtap="clickTopicImage" bindlongpress="clickTopicImage"></image>
+  </view>
+</view>

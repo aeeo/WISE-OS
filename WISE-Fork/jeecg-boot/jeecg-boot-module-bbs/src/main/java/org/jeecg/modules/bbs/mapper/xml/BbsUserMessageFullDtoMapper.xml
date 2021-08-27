@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.bbs.mapper.BbsUserMessageFullDtoMapper">
+
+    <select id="queryUserMessageFullList" resultType="org.jeecg.modules.bbs.entity.BbsUserMessageFullDto">
+        select a.*, b.*, c.full_name as regionName
+        from bbs_user_message as a
+                 LEFT JOIN sys_user AS b ON a.create_by = b.username
+                 LEFT JOIN bbs_region AS c ON a.region_code = c.region_code
+        where a.receive_username = #{username}
+          and a.create_by != #{username}
+        order by a.create_time desc
+    </select>
+</mapper>

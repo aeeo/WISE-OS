@@ -1,0 +1,18 @@
+{
+  "name": "miniwise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apifm-wxapi": "^3.35.0",
+    "miniprogram-sm-crypto": "^0.2.1",
+    "tim-upload-plugin": "^1.0.1",
+    "tim-wx-sdk-ws": "^2.11.1",
+    "weui-miniprogram": "^1.0.6"
+  }
+}

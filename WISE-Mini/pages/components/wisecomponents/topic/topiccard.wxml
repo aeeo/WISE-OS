@@ -1,0 +1,83 @@
+<view wx:for="{{topicLists}}" wx:for-item="topicItem" wx:if="{{topicItem.topicType==topicType}}" wx:key="id"
+  wx:for-index="bindex" data-topicitem='{{topicItem}}' class="cu-card dynamic" style="" bindtap="topicdetails"
+  data-bindex="{{bindex}}">
+  <view class="cu-item solid-bottom" style="margin:0px 0px 0px 0px;border-radius:0rpx">
+    <view class="flex justify-between">
+      <view class="flex align-center">
+        <!-- 头像 -->
+        <!-- catchtap="clickAvatarImage" -->
+        <view class="cu-avatar round lg margin" catchtap="goUserInfo" hover-stop-propagation='true'
+          data-username="{{topicItem.createBy}}" data-imagelist="{{topicItem.avatar}}"
+          style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.avatar}}{{THUMBNAIL}});">
+        </view>
+        <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}">
+          <view class="flex align-center">
+            <view style="color:black;">{{topicItem.bbsCreateByName}}</view>
+            <!-- 角色 -->
+            <view wx:if="{{showRole}}"
+              class="cu-tag bg-{{topicItem.userRole=='开发者'?'yellow':(topicItem.userRole=='官方'?'red':'grey')}} sm radius"
+              style="display:{{topicItem.userRole=='用户'?'none':''}};margin-left:5px;">
+              {{topicItem.userRole}}
+            </view>
+            <!-- 类型 -->
+            <view class="cu-tag bg-{{topicItem.topicType=='1'?'green':'grey'}} sm radius"
+              style="display:{{topicItem.topicType!='1'?'none':''}};margin-left:5px;">
+              置顶
+            </view>
+            <view class="cu-tag bg-{{topicItem.topicType=='2'?'red':'grey'}} sm radius"
+              style="display:{{topicItem.topicType!='2'?'none':''}};margin-left:5px;">
+              精华
+            </view>
+            <!-- 区域 -->
+            <view class="cu-tag red sm radius" style="display:{{showRegion?'':'none'}};margin-left:5px;">
+              {{topicItem.regionFullName}}
+            </view>
+            <!-- 性别 -->
+            <view class="{{topicItem.sex==1?'cuIcon-male text-blue':'cuIcon-female text-pink'}}"
+              style="width:17px;height:17px;margin-left:5px;margin-bottom: 7px;border-radius:25px;"></view>
+          </view>
+          <view class="text-gray text-sm flex justify-between" wx:if="{{topicItem.topicType==1}}">
+            更新于：{{topicItem.editTime}}</view>
+          <view class="text-gray text-sm flex justify-between" wx:if="{{topicItem.topicType==0}}">
+            {{topicItem.publicTime}}</view>
+        </view>
+      </view>
+      <view class="flex align-center" style="margin-right: 10px;" wx:if="{{showMore}}">
+        <view class="padding-sm margin-xs radius" data-topicIndex="{{bindex}}" catchtap="clickMore"
+          hover-stop-propagation='true'>
+          <text class="iconfont icon-more2 text-grey cu-btn"
+            style="background: #00000000; padding-left: 16rpx;padding-right: 0rpx;font-size:60rpx"></text>
+        </view>
+      </view>
+    </view>
+    <view class="text-content">
+      <rich-text nodes="{{topicItem.content}}"></rich-text>
+    </view>
+    <!-- 图片 -->
+    <wise-topic-card-image imageList="{{topicItem.bbsTopicImageList}}" test="haha"></wise-topic-card-image>
+
+    <!-- 卡片底部条 -->
+    <view class="text-gray text padding-xs" style="padding:0 30rpx 0 30rpx;display:flex;justify-content:space-between"
+      wx:if="{{showBottomBar}}">
+      <text class="" id="clickHitsCount" bindtap="clickHitsCount"
+        style="background: #00000000;font-size:32rpx;">浏览{{topicItem.hitsCount}}次</text>
+      <view class="text-right flex align-center" style="color:grey;">
+        <view class="flex align-end">
+          <button class="cuIcon-appreciatefill cu-btn animation-{{topicItem.exeCuteAnimation?'scale-down':''}}"
+            catchtap="clickPraise" hover-stop-propagation='true' id="{{topicItem.id}}"
+            data-class="{{animationItme.name}}" data-praiseCount="{{topicItem.praiseCount}}" data-bindex="{{bindex}}"
+            style="color:{{topicItem.userIsPraise?'#ec008c':'grey'}};background: #00000000;padding: 0rpx;font-size:40rpx;"></button>
+          <!-- cuIcon-自带样式，取不存在的图标，抵充样式 -->
+          <text class="cuIcon-messagefill123 cu-btn text " catchtap="clickPraise" hover-stop-propagation='true'
+            id="{{topicItem.id}}" data-praiseCount="{{topicItem.praiseCount}}" data-bindex="{{bindex}}" wx:key="id"
+            style="color:grey;background: #00000000;font-size:40rpx;padding: 0rpx;">{{topicItem.praiseCount}}</text>
+        </view>
+        <view catchtap="clickReply" hover-stop-propagation='true' data-topicdetails="{{topicItem}}">
+          <text class="cuIcon-messagefill text cu-btn"
+            style="background: #00000000; padding-left: 32rpx;padding-right:8rpx;font-size:40rpx">{{topicItem.replyCount}}</text>
+        </view>
+
+      </view>
+    </view>
+  </view>
+</view>

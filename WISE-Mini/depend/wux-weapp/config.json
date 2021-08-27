@@ -1,0 +1,10 @@
+{
+    "components": [
+        "cell",
+        "fab-button",
+        "circle"
+    ],
+    "themes": {
+        "light": "white"
+    }
+}

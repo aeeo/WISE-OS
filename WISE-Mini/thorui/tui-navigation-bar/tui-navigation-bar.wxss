@@ -1,0 +1,42 @@
+.tui-navigation-bar {
+	width: 100%;
+}
+.tui-backdrop__filter {
+	/* Safari for macOS & iOS */
+	-webkit-backdrop-filter: blur(15px);
+	/* Google Chrome */
+	backdrop-filter: blur(15px);
+}
+
+.tui-navbar-fixed {
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 9998;
+}
+.tui-status-bar {
+	width: 100%;
+}
+.tui-navigation_bar-title {
+	width: 100%;
+	font-size: 17px;
+	line-height: 17px;
+	/* #ifndef APP-PLUS */
+	font-weight: 500;
+	/* #endif */
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.tui-bar-line::after {
+	content: '';
+	position: absolute;
+	border-bottom: 1rpx solid #eaeef1;
+	-webkit-transform: scaleY(0.5);
+	transform: scaleY(0.5);
+	bottom: 0;
+	right: 0;
+	left: 0;
+}

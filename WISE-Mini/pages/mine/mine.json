@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "wux-cell-group": "../../depend/wux-weapp/cell-group/index",
+    "wux-cell": "../../depend/wux-weapp/cell/index"
+  },
+  "enablePullDownRefresh": true
+}

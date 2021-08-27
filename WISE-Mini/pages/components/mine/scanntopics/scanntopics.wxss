@@ -1,0 +1,6 @@
+/* pages/components/publishtopics/publishtopics.wxss */
+.praiseCount{
+  /* margin: 0rpx 10rpx;
+   */
+  padding: 0rpx;
+}

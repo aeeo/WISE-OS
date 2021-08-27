@@ -1,0 +1,64 @@
+
+.grid.topic-image>view.bg-img image {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+.grid.topic-image>view {
+	margin-right: 20rpx;
+	margin-bottom: 20rpx;
+	border-radius: 6rpx;
+	position: relative;
+	overflow: hidden;
+}
+
+.grid.col-1.topic-image>view {
+	padding-bottom: calc((100% - 20rpx)/1.5);
+	height: 0;
+	width: calc((100% - 20rpx)/1.5);
+}
+
+.grid.col-2.topic-image>view {
+	padding-bottom: calc((100% - 20rpx)/2.5);
+	height: 0;
+	width: calc((100% - 20rpx)/2.5);
+}
+
+.grid.col-3.topic-image>view {
+	padding-bottom: calc((100% - 40rpx)/3);
+	height: 0;
+	width: calc((100% - 40rpx)/3);
+}
+
+.grid.col-4.topic-image>view {
+	padding-bottom: calc((100% - 20rpx)/2.5);
+	height: 0;
+	width: calc((100% - 20rpx)/2.5);
+}
+
+.grid.col-5.topic-image>view {
+	padding-bottom: calc((100% - 80rpx)/5);
+	height: 0;
+	width: calc((100% - 80rpx)/5);
+}
+
+.grid.col-8.topic-image>view {
+	padding-bottom: calc((100% - 140rpx)/8);
+	height: 0;
+	width: calc((100% - 140rpx)/8);
+}
+
+.grid.col-9.topic-image>view {
+	padding-bottom: calc((100% - 40rpx)/3);
+	height: 0;
+	width: calc((100% - 40rpx)/3);
+}
+
+.grid.col-2.topic-image>view:nth-child(2n),
+.grid.col-3.topic-image>view:nth-child(3n),
+.grid.col-4.topic-image>view:nth-child(2n),
+.grid.col-5.topic-image>view:nth-child(3n),
+.grid.col-8.topic-image>view:nth-child(3n),
+.grid.col-9.topic-image>view:nth-child(3n){
+	margin-right: 0;
+}

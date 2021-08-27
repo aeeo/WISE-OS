@@ -1,0 +1,127 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">详情</view>
+  <view class="action" slot="right">
+    <view class="cu-load load-icon {{!isLoad?'loading':'over'}}"></view>
+  </view>
+</cu-custom>
+<view class="cu-card dynamic {{isCard?'no-card':''}}" style="padding-bottom: 100rpx;">
+  <view class="cu-item shadow">
+    <view class="cu-list menu-avatar">
+      <view class="flex justify-between">
+        <view class="flex align-center" catchtap="goUserInfo" hover-stop-propagation='true'
+          data-username="{{topicdetails.createBy}}">
+          <view class="cu-avatar round lg margin" wx:if="{{topicdetails.avatar != null}}"
+            style="background-image:url({{UPLOAD_IMAGE}}{{topicdetails.avatar}}{{THUMBNAIL}});">
+          </view>
+          <view>
+            <view class="flex align-center">
+              <view style="color:black;font-weight:bold;">{{topicdetails.bbsCreateByName}}</view>
+              <!-- 角色 -->
+              <view
+                class="cu-tag bg-{{topicdetails.userRole=='开发者'?'yellow':(topicdetails.userRole=='官方'?'red':'grey')}} sm radius"
+                style="display:{{topicdetails.userRole=='用户'?'none':''}};margin-left:5px;">
+                {{topicdetails.userRole}}
+              </view>
+              <!-- 类型 -->
+              <view class="cu-tag bg-{{topicdetails.topicType=='1'?'green':'grey'}} sm radius"
+                style="display:{{topicdetails.topicType!='1'?'none':''}};margin-left:5px;">
+                置顶
+              </view>
+              <view class="cu-tag bg-{{topicdetails.topicType=='2'?'red':'grey'}} sm radius"
+                style="display:{{topicdetails.topicType!='2'?'none':''}};margin-left:5px;">
+                精华
+              </view>
+              <!-- 性别 -->
+              <view class="{{topicdetails.sex==1?'cuIcon-male text-blue':'cuIcon-female text-pink'}}"
+                style="width:17px;height:17px;margin-left:5px;margin-bottom: 7px;border-radius:25px;"></view>
+            </view>
+            <view class="text-gray text-sm flex justify-between" wx:if="{{topicdetails.topicType==1}}">
+              更新于：{{topicdetails.editTime}}</view>
+            <view class="text-gray text-sm flex justify-between" wx:if="{{topicdetails.topicType==0}}">
+              {{topicdetails.publicTime}}</view>
+          </view>
+        </view>
+        <view class="flex align-center" style="margin-right: 10px;">
+          <view class="padding-sm margin-xs radius" data-topicIndex="{{bindex}}" catchtap="clickMore"
+            hover-stop-propagation='true'>
+            <text class="iconfont icon-more2 text-grey cu-btn"
+              style="background: #00000000; padding-left: 16rpx;padding-right: 0rpx;font-size:60rpx"></text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="text-xl topicContent" hidden="{{topicdetails.title==''?true:false}}"
+      style="padding: 0 30rpx 0;font-weight: bold">
+      {{topicdetails.title}}
+    </view>
+    <view class="text-content" style="white-space: pre-line; max-height: 100%;margin-top: 30rpx;">
+      <!-- <rich-text nodes="{{topicdetails.content}}" space="emsp"></rich-text> -->
+      <mp-html content="{{topicdetails.content}}" selectable="true" />
+
+
+
+      <view class="cu-list menu card-menu margin-top margin-bottom" wx:if="{{topicdetails.bbsTopicLinkList.length!=0}}">
+        <view class="" wx:for="{{topicdetails.bbsTopicLinkList}}" wx:for-item="bbsTopicLinkItem" wx:key="id">
+          <view bindtap="goLink" data-bbsTopicLinkItem="{{bbsTopicLinkItem}}">
+            <text class="cuIcon-explorefill text-cyan"></text>
+            <text class="text-blue"> {{bbsTopicLinkItem.title}}</text>
+          </view>
+          <!-- <navigator class="content" url="./topicdetails?topicId={{navigateButtonListItem.topicId}}">
+            <text class="cuIcon-explorefill text-cyan"></text>
+            <text class="text-blue"> {{navigateButtonListItem.title}}</text>
+          </navigator> -->
+        </view>
+      </view>
+    </view>
+    <!-- 图片列表 -->
+    <wise-topic-card-image imageList="{{topicdetails.bbsTopicImageList}}"></wise-topic-card-image>
+    <!-- 复制联系方式 -->
+    <view style="margin:5px">
+      <button bindtap="copyContact" data-contact="{{topicdetails.contact}}" class="text text-pink"
+        style="display:{{topicdetails.contact?'':'none'}};font-size:34rpx;border-radius:12rpx;border:1px solid #e03997;width:100%;width: 20em;overflow: hidden;text-overflow:ellipsis;white-space:nowrap;">点击复制联系方式：{{topicdetails.contact}}</button>
+    </view>
+    <view class="text-gray text-lg text-right padding-xs" style="padding-right: 30rpx;">
+
+      <!-- 点赞 -->
+      <view class="text-gray text padding-xs" style="display:flex;justify-content:space-between;align-items:center">
+        <text class="" id="clickHitsCount" bindtap="clickHitsCount"
+          style="background: #00000000;padding: 16rpx;">浏览{{topicdetails.hitsCount}}次</text>
+        <view class="text-right  flex align-center" style="font-size:40rpx;color:grey;display: flex;align-items:center">
+          <view class="flex align-end" catchtap="clickPraise" hover-stop-propagation='true'
+            data-topicid="{{topicdetails.id}}" data-praiseCount="{{topicdetails.praiseCount}}" data-bindex="{{bindex}}"
+            wx:key="id">
+            <button
+              class="cuIcon-messagefill123 praiseCount cuIcon-appreciatefill cu-btn animation-{{topicdetails.exeCuteAnimation?'scale-down':''}}"
+              style="color:{{topicdetails.userIsPraise?'#ec008c':'grey'}};background: #00000000;">
+              <text class="praiseCount cu-btn"
+                style="color:grey;background: #00000000;padding-right:16rpx;font-size:36rpx">{{topicdetails.praiseCount}}</text>
+            </button>
+          </view>
+          <!-- 分享按钮 -->
+          <button open-type="share" class="praiseCount cu-btn "
+            style="color:grey;background: #00000000;display: flex;align-items:center">
+            <text class="iconfont icon-Artboard" style="font-size:44rpx;color:grey;padding-right:0rpx;"></text>
+            <text style="font-size:30rpx;color:grey;padding-right:0rpx;">分享</text>
+          </button>
+        </view>
+      </view>
+    </view>
+    <!-- 标签 -->
+    <!-- <view class="padding-sm flex flex-wrap">
+      <view class="padding-xs" wx:for="{{topicdetails.bbsTagList}}" wx:key="id">
+        <view class="cu-tag bg-mauve">{{item.dictType}}</view>
+      </view>
+    </view> -->
+    <!-- 评论 -->
+    <!-- <wise-topic-reply fullReplys="{{fullReplys}}" topicId="{{topicdetails}}"></wise-topic-reply> -->
+    <wise-topic-reply hidden="{{false}}" replyTopicDetails="{{topicdetails}}" showType="longList"
+      nextPage="{{nextPage}}"></wise-topic-reply>
+
+  </view>
+
+</view>
+
+
+<!-- 收藏举报提示框 -->
+<mp-actionSheet show="{{showActionsheet}}" actions="{{actionGroups}}" bindactiontap="clickAction"></mp-actionSheet>

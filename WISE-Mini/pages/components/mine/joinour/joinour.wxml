@@ -1,0 +1,40 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">加入我们</view>
+</cu-custom>
+<view class='margin-xl bg-white padding-xl radius shadow-lg'>
+  <view class='text-center margin-bottom text-lg  text-grey'>邀请函</view>
+  <view class='text-content'>
+    <view class='margin-top-sm'>很荣幸，</view>
+    <view>很荣幸你能加入我们。</view>
+    <view class='margin-top-sm'>英雄不问出处，</view>
+    <view>我们是一个新成立的团队，创意很多，待遇优渥，却奈何诸事纷扰，良将难遇。</view>
+    <!-- 或许，你来自计算机专业，机械专业；
+但是，你酷爱着计算机以及互联网技术，热衷于解决挑战性的问题，追求极致的用户体验；
+或许，你痴迷于数据结构和算法，热衷于ACM，常常为看到“accept”而兴奋的手足舞蹈；
+或许，你熟悉Unix/Linux/Win32环境下编程，并有相关开发经验，熟练使用调试工具，并熟悉Perl，Python，shell等脚本语言；
+或许，你熟悉网络编程和多线程编程，对TCP/IP，HTTP等网络协议有很深的理解，并了解XML和HTML语言；
+或许，你热衷于数据库技术，能够熟练编写SQL脚本，有MySql或Oracle应用开发经验；
+或许，你并不熟悉Java编程语言，更精通C，C++，PHP，.NET等编程语言中的一种或几种，但你有良好和快速的学习能力；
+有可能，你参加过大学生数学建模竞赛，“挑战杯”，机器人足球比赛等；
+也有可能，你在学校的时候作为骨干参与学生网站的建设和开发； -->
+    <view class='margin-top-sm'>或许，你书生意气，激扬文字</view>
+    <view>或许，你情商卓越，进退有度</view>
+    <view>或许，你经历丰富，二十不惑</view>
+    <view>或许，你满怀热情，不安于现状</view>
+    <view>又或许，你酷爱互联网，与时俱进</view>
+    <view class='margin-top-sm'>如此种种，</view>
+    <view>不要犹豫，我们期待你的加入！</view>
+    <view class='margin-top-sm'>请将简历发送至邮箱：</view>
+    <view>planet@no2.fun</view>
+    <view>或添加微信与HR交流：</view>
+    <view style="text-align: center;" class="padding-top">
+      <image style="height:150px;width: 150px;"
+        src="{{UPLOAD_IMAGE}}sys/wazgzt%E5%BE%AE%E4%BF%A1%E5%90%8D%E7%89%871000.png" mode="aspectFit"
+        bindtap="clickTopicImage" bindlongpress="clickTopicImage"></image>
+    </view>
+  </view>
+</view>
+<!-- 底部提示 -->
+<!-- <view class="cu-load {{!onReachBottomLoading?'loading':'over'}}" bindtouchstart='touchStart' bindtouchmove='touchMove'
+  bindtouchend='touchEnd'></view> -->

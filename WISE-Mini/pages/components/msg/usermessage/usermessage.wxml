@@ -1,0 +1,39 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}" showSite="{{false}}">
+  <view slot="content">互动消息</view>
+  <!-- <view class="action" slot="right">
+    <view class="cu-load load-icon {{!isLoad?'loading':'over'}}"></view>
+  </view> -->
+</cu-custom>
+
+<view class="cu-list menu-avatar solid-top" style="margin:10px">
+  <view class="cu-item solid-bottom" style="height:170rpx" wx:for="{{userMessageList}}" bindtap="topicdetails"
+    data-item="{{item}}" wx:key="id">
+    <view class="cu-avatar round lg" catchtap="goUserInfo" hover-stop-propagation='true'
+      data-username="{{item.createBy}}" style="background-image:url({{UPLOAD_IMAGE}}{{item.avatar}});">
+      <view class="cu-tag badge" style="display:{{item.status==1?'block':'none'}}"></view>
+    </view>
+    <view class="content">
+      <view class="text-grey text-df" style="font-weight:bold">{{item.realname}}
+        <!-- 区域 -->
+        <view class="cu-tag red sm radius" style="margin-left:5px;">
+          {{item.regionName}}
+        </view>
+      </view>
+
+      <view class="text-lg" style="block;overflow: hidden;white-space: nowrap;text-overflow:ellipsis;"><text
+          style="block;overflow: hidden;white-space: nowrap;text-overflow:ellipsis;">{{item.center}}</text>
+      </view>
+      <view class="text-sm" style="">{{item.createTime}}</view>
+    </view>
+    <view class="action" style="display:{{item.showUserMessageImage==true?'block':'none'}}">
+      <view class="cu-avatar radius lg" style="background-image:url({{item.topicImageUrl}});"></view>
+    </view>
+  </view>
+</view>
+<!-- 留言弹框 -->
+<mp-dialog title="留言内容" show="{{showMessageDialog}}" bindbuttontap="messageButtonTap" buttons="{{messageButton}}">
+  <view>{{messageContent}}</view>
+</mp-dialog>
+<!-- 底部提示 -->
+<view class="cu-load {{!onReachBottomLoading?'loading':'over'}}" bindtouchstart='touchStart' bindtouchmove='touchMove'
+  bindtouchend='touchEnd'></view>

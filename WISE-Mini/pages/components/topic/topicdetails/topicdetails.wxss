@@ -1,0 +1,11 @@
+@import "../../../../colorui/animation.wxss";
+/* @import "index.skeleton.wxss"; */
+image[class*="gif-"] {
+  border-radius: 6rpx;
+  display: block;
+}
+.praiseCount{
+  /* margin: 0rpx 10rpx;
+   */
+  padding: 0rpx;
+}

@@ -1,0 +1,103 @@
+<!-- 骨架屏 -->
+<import src="./msg.skeleton.wxml" />
+<!-- 骨架屏 -->
+<template is="skeleton" wx:if="{{showMsgSkeleton}}" />
+
+<cu-custom bgColor="bg-gradual-pink" isBack="{{false}}" showSite="{{true}}">
+  <view slot="backText"></view>
+  <view slot="siteText" bindtap="showSiteIndex">{{USERRECORD.regionFullName}}</view>
+</cu-custom>
+<!-- 悬浮按钮 -->
+<component-fabbutton></component-fabbutton>
+<!-- <button bindtap="test">调用模板测试</button> -->
+<scroll-view class="page">
+  <!-- grid -->
+  <view class="cu-list grid col-{{iconList.length}} {{gridBorder?'':'no-border'}}">
+    <view class="cu-item" wx:for="{{iconList}}" wx:key="index" wx:for-index="index" bindtap="gridClick"
+      data-index="{{index}}">
+      <view hover-class="none">
+        <view class="cuIcon-{{item.icon}} text-{{item.color}}">
+          <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
+            <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
+          </view>
+        </view>
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+<view class="cu-bar bg-white margin-top-sm">
+  <view class="action">
+    <!-- <text class="cuIcon-title text-orange "></text>当前在线人数：{{onlinePeopleNumber}}人 -->
+    <text class="cuIcon-title text-green"></text>留言板
+  </view>
+  <view class="action">
+    <button class="cu-btn bg-pink shadow cuIcon-creativefill" bindtap="showModal"
+      data-target="DialogModal1">我有话说</button>
+    <!-- <button class="cu-btn bg-blue shadow margin-left" bindtap="showModal" data-target="DialogModal2">Dialog</button> -->
+  </view>
+</view>
+<!-- 发布留言弹框 -->
+<view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">发布留言</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view style="padding:10px">
+      <form>
+        <textarea wx:if="{{modalName=='DialogModal1'}}" bindinput="messageInputContent" focus="{{msgFocus}}"
+          placeholder="" value="{{messageContent}}" show-confirm-bar="{{false}}" style="height:7em;width: 100%;"
+          maxlength='100' adjust-position="{{true}}" />
+        </form>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-pink" bindtap="hideModal">取消</button>
+        <button class="cu-btn bg-pink margin-left" bindtap="uploadMessage">确定</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<!-- 留言列表 -->
+<view class="bg-white" wx:if="{{!showMsgSkeleton}}">
+  <view class="cu-timeline" wx:for="{{bbsMessageList}}" wx:key="id" wx:for-index="bindex">
+    <view class="cu-item text-blue" style="padding: 5rpx 30rpx 24rpx 120rpx;">
+      <view class="content" style="padding-top: 20rpx; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);">
+        <view class="flex solid-bottom justify-between" style="">
+          <view style="display: flex;align-items:center">
+            <view class="cu-avatar round df" catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{item.createBy}}" 
+              style="background-image:url({{UPLOAD_IMAGE}}{{item.avatar}}{{THUMBNAIL}});margin-right:10rpx"></view>
+            <view class="radius">
+              <view class="text-sm">{{item.createByName}}</view>
+              <view class="flex justify-between text-xs">
+                <view class="text-gray">{{item.createTime}}</view>
+              </view>
+            </view>
+          </view>
+          <view class="text-gray text-xl">
+            <text class="text cu-btn animation-{{item.exeCuteAnimation?animationItme.name:''}} text-df padding-xs"
+              bindtap="clickPraise" id="{{item.id}}" data-class="{{animationItme.name}}"
+              data-praiseCount="{{item.praiseCount}}" data-bindex="{{bindex}}"
+              style="color:{{item.userIsPraise?'#ec008c':''}};background: #00000000;">{{item.praiseCount}}
+            </text>
+            <text
+              class="cuIcon-appreciatefill cu-btn animation-{{item.exeCuteAnimation?animationItme.name:''}} padding-xs"
+              bindtap="clickPraise" id="{{item.id}}" data-class="{{animationItme.name}}"
+              data-praiseCount="{{item.praiseCount}}" data-bindex="{{bindex}}" wx:for="{{list}}" wx:key="id"
+              wx:for-item="animationItme"
+              style="color:{{item.userIsPraise?'#ec008c':''}};background: #00000000;padding-left:0rpx">
+            </text>
+
+          </view>
+        </view>
+        <view style="margin-top: 10rpx;">{{item.content}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="cu-load {{!onReachBottomLoading?'loading':'over'}}"></view>
+</view>

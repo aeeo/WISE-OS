@@ -1,0 +1,5 @@
+<!--pages/components/msg/savemoney/pinduoduo/pinduoduo.wxml-->
+<block>
+  <web-view
+    src="https://p.pinduoduo.com/dFZc2Rjc" />
+</block>

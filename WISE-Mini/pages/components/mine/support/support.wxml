@@ -1,0 +1,32 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">赞赏支持</view>
+</cu-custom>
+<view class='margin-xl bg-white padding-xl radius shadow-lg'>
+  <view class='text-center margin-bottom text-lg text-grey'>支持我们</view>
+  <view class='text-content'>
+    <!-- <view>Hi！别来无恙。</view> -->
+    <view class='margin-top-sm'>我希望小程序是一个干净的地方，所以没有穿插任何广告，当然也因此没有任何收益。</view>
+    <view class='margin-top-sm'>目前租赁的服务器、数据库、存储、税务等都是由我们和大家的捐赠在支撑，如果您觉得这个平台有用的话，可以长按或截屏扫描二维码为服务器续命，无论是一毛还是两元都是我们继续下去的动力。
+    </view>
+    <view class="bg-img only-img" style="background-image:url({{UPLOAD_IMAGE}}weixinshoukuanma.jpg);">
+    </view>
+    <image src="{{UPLOAD_IMAGE}}{{shouKuanMa}}" mode="aspectFit" bindtap="clickTopicImage"
+      bindlongpress="clickTopicImage" style="margin-top: 40rpx;"></image>
+    <view class="bg-img only-img" style="background-image:url({{UPLOAD_IMAGE}}weixinshoukuanma.jpg);"
+      bindtap="clickTopicImage">
+    </view>
+  </view>
+</view>
+
+<view class="ptext-left">
+  <view class="bg-white" style="padding: 20rpx;">
+    <view class="margin-bottom text-lg text-grey">🍍 捐赠列表</view>
+    <view>注：排名不分先后，按捐赠时间排序。</view>
+    <scroll-view scroll-x>
+      <view class="">
+        <rich-text nodes="{{table}}"></rich-text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

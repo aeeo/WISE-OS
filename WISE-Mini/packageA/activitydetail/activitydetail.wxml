@@ -1,0 +1,88 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}" showSite="{{false}}">
+  <view slot="content">活动</view>
+</cu-custom>
+
+<view class="bg-white" wx:if="{{activity}}">
+  <view class="padding solids-bottom">
+    <view class="text-xxl padding-bottom">{{activity.title}}</view>
+    <mp-html id="activity" content="{{activity.content}}" />
+    <!-- <view class="padding solid-top text-xxl" style="padding-left:0px">活动信息</view> -->
+    <view class="padding-xs">
+      <text style="font-weight:bold">▶ 开始时间：</text>
+      <text>{{activity.startTime}}</text>
+    </view>
+    <view class="padding-xs">
+      <text style="font-weight:bold">▶ 结束时间：</text>
+      <text> {{activity.endTime}}</text>
+    </view>
+    <!-- <view class="padding-xs">
+      <text style="font-weight:bold">▶ 人数：</text>
+      <text> {{activity.needPeopleCount}}</text>
+    </view>
+    <view class="padding-xs">
+      <text style="font-weight:bold">▶ 地点：</text>
+      <text> {{activity.site}}</text>
+    </view>
+    <view class="padding-xs">
+      <text style="font-weight:bold">▶ 联系人：</text>
+      <text> {{activity.princiaplPeopleName}}</text>
+    </view>
+    <view class="padding-xs">
+      <text style="font-weight:bold">▶ 手机：</text>
+      <text> {{activity.phoneNumber}}</text>
+    </view>
+    <view class="padding-xs">
+      <text style="font-weight:bold">▶ 微信：</text>
+      <text> {{activity.wechat}}</text>
+    </view> -->
+
+    <!-- <view class="padding-xs">
+      <text style="font-weight:bold">▶ 已报名：</text>
+      <text> {{activity.applyCount}}</text>
+    </view> -->
+  </view>
+
+
+</view>
+<view class="padding" wx:if="{{activity.activityType == 1}}">
+  <form catchsubmit="formSubmit" catchreset="formReset">
+    <view class="text-xxl">报名</view>
+    <view class="page-section">
+      <view class="weui-cells__title"><text class="text-red">*</text>姓名</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__bd">
+            <input class="weui-input" name="chineseName" placeholder="请输入您的姓名" value="{{activity.applyChineseName}}"
+              disabled="{{activity.isApply}}" hold-keyboard="{{true}}" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="page-section">
+      <view class="weui-cells__title"><text class="text-red">*</text>手机：</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <input class="weui-input" name="phoneNumber" placeholder="请输入您的手机" value="{{activity.applyPhoneNumber}}"
+            disabled="{{activity.isApply}}" hold-keyboard="{{true}}" />
+        </view>
+      </view>
+    </view>
+    <!-- bindfocus="InputFocus" bindblur="InputBlur"  -->
+    <view class="section">
+      <view class="weui-cells__title">备注：</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <textarea bindblur="bindTextAreaBlur" name="remark" auto-height placeholder="请输入备注" hold-keyboard="{{true}}"
+            value="{{activity.applyRemark}}" disabled="{{activity.isApply}}" />
+        </view>
+      </view>
+    </view>
+    <view class="btn-area" wx:if="{{!activity.isApply}}">
+      <button class="bg-pink" style="margin: 30rpx 0" type="" formType="submit" data-type="1">提交</button>
+    </view>
+    <view class="btn-area" wx:if="{{activity.isApply}}">
+      <button class="bg-grey" style="margin: 30rpx 0" type="" formType="submit" data-type="2">取消报名</button>
+    </view>
+  </form>
+</view>

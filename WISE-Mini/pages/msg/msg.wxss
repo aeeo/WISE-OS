@@ -1,0 +1,22 @@
+@import "../../colorui/animation.wxss";
+@import "./msg.skeleton.wxss";
+.tower-swiper .tower-item {
+	transform: scale(calc(0.5 + var(--index) / 10));
+	margin-left: calc(var(--left) * 100rpx - 150rpx);
+	z-index: var(--index);
+}
+
+
+.messBack{
+	display: flex;
+}
+.cusMess{
+	flex:1;
+}
+.cusButton{
+	width: 80rpx;
+}
+.realname{
+	margin-left: 10rpx;
+}
+

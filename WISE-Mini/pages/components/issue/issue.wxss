@@ -1,0 +1,13 @@
+.cu-form-group .title {
+  min-width: calc(4em + 30rpx);
+}
+
+
+.grid.col-9.topic-image>view {
+	padding-bottom: calc((100% - 40rpx)/3);
+	height: 0;
+	width: calc((100% - 40rpx)/3);
+}
+.grid.col-9.topic-image>view:nth-child(3n){
+	margin-right: 0;
+}

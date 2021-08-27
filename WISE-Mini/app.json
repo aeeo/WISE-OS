@@ -1,0 +1,103 @@
+{
+  "window": {
+    "navigationStyle": "custom",
+    "enablePullDownRefresh": false,
+    "onReachBottomDistance": 50
+  },
+  "pages": [
+    "pages/index/index",
+    "pages/msg/msg",
+    "pages/mine/mine",
+    "pages/chat/chat",
+    "pages/components/topic/topicdetails/topicdetails",
+    "pages/components/topic/topicsearch/topicsearch",
+    "pages/components/chat/chatdetail/chatdetail",
+    "pages/components/drawer/drawer",
+    "pages/components/list/list",
+    "pages/components/issue/issue",
+    "pages/components/mine/store/store",
+    "pages/components/mine/scanntopics/scanntopics",
+    "pages/components/mine/publishtopics/publishtopics",
+    "pages/components/mine/support/support",
+    "pages/components/mine/officialaccounts/officialaccounts",
+    "pages/components/mine/joinour/joinour",
+    "pages/components/mine/regionclaim/regionclaim",
+    "pages/components/mine/star/star",
+    "pages/components/mine/circlefriends/circlefriends",
+    "pages/components/mine/userinfo/userinfo",
+    "pages/components/msg/sysmessage/sysmessage",
+    "pages/components/msg/savemoney/savemoney",
+    "pages/components/msg/usermessage/usermessage",
+    "pages/components/feedbackform/feedbackform",
+    "pages/components/feedback/feedback",
+    "pages/components/topic/topicsearchlist/topicsearchlist",
+    "pages/components/test/test",
+    "pages/components/msg/savemoney/pinduoduo/pinduoduo",
+    "pages/components/site/site"
+  ],
+  "subpackages": [
+    {
+      "root": "packageA",
+      "name": "pack2",
+      "pages": [
+        "activity/activity",
+        "activitydetail/activitydetail"
+      ]
+    }
+  ],
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "color": "#464b4b",
+    "selectedColor": "#9557ff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "selectedIconPath": "static/icons/yuque-mono/home2.png",
+        "iconPath": "static/icons/yuque-mono/home1.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "static/icons/yuque-mono/star1.png",
+        "iconPath": "static/icons/yuque-mono/star.png",
+        "pagePath": "pages/msg/msg",
+        "text": "留言板"
+      },
+      {
+        "selectedIconPath": "static/icons/yuque-mono/chat2.png",
+        "iconPath": "static/icons/yuque-mono/chat1.png",
+        "pagePath": "pages/chat/chat",
+        "text": "消息"
+      },
+      {
+        "selectedIconPath": "static/icons/yuque-mono/mine2.png",
+        "iconPath": "static/icons/yuque-mono/mine1.png",
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {
+    "wux-fab-button": "depend/wux-weapp/fab-button/index",
+    "component-fabbutton": "pages/components/fabbutton/fabbutton",
+    "cu-custom": "colorui/components/cu-custom",
+    "tui-button": "thorui/tui-button/tui-button",
+    "tui-fab": "pages/components/tui-fab/tui-fab",
+    "tui-no-data": "thorui/tui-no-data/tui-no-data",
+    "wise-topic-card": "pages/components/wisecomponents/topic/topiccard",
+    "wise-topic-reply": "pages/components/wisecomponents/topic/topic-reply/topicreply",
+    "wise-topic-card-image": "pages/components/wisecomponents/topic/card-image/topiccardimage",
+    "mp-actionSheet": "miniprogram_npm/weui-miniprogram/actionsheet/actionsheet"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "切换地区需要获取位置权限。"
+    }
+  },
+  "plugins": {
+    "mini-shop-plugin": {
+      "version": "1.2.26",
+      "provider": "wx34345ae5855f892d"
+    }
+  }
+}

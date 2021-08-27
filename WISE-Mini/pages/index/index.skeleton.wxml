@@ -1,0 +1,486 @@
+<!--
+此文件为开发者工具生成，生成时间: 2021/5/21 下午10:59:30
+使用方法：
+在 C:\custom\GitRepositories\WISE\Mini-WISE\pages\index\index.wxml 引入模板
+
+```
+<import src="index.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{loading}}" />
+```
+
+在 C:\custom\GitRepositories\WISE\Mini-WISE\pages\index\index.wxss 中引入样式
+```
+@import "./index.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <!-- <view is="colorui/components/cu-custom" style="opacity:0;">
+      <view class="cu-custom custom--cu-custom" style="height:84px;">
+        <view class="cu-bar custom--cu-bar fixed custom--fixed bg-gradual-pink custom--bg-gradual-pink sk-image"
+          style="height:84px;padding-top:44px;;margin-bottom:20px">
+          <view class="action custom--action">
+            <text class="cuIcon-location custom--cuIcon-location sk-pseudo sk-pseudo-circle"></text>
+            <view style="width: 20em;overflow: hidden;text-overflow:ellipsis;white-space:nowrap;"
+              class="sk-transparent sk-text-18-7500-26 sk-text">
+              大荔县</view>
+          </view>
+          <view class="content custom--content" style="top:44px;">
+            <view></view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view is="pages/components/fabbutton/fabbutton" >
+      <view is="miniprogram_npm/wux-weapp/fab-button/index">
+        <view
+          class=" wux-fab-button fab-button-index--wux-fab-button wux-fab-button--bottomRight fab-button-index--wux-fab-button--bottomRight wux-fab-button--royal fab-button-index--wux-fab-button--royal wux-fab-button--vertical fab-button-index--wux-fab-button--vertical">
+          <view hover-class="wux-fab-button--hover"
+            class="wux-fab-button__action fab-button-index--wux-fab-button__action wux-fab-button__action--hide-shadow fab-button-index--wux-fab-button__action--hide-shadow">
+            <image class="wux-fab-button__text fab-button-index--wux-fab-button__text sk-image"></image>
+          </view>
+          <button app-parameter="true"
+            class="wux-fab-button__button fab-button-index--wux-fab-button__button sk-button sk-pseudo sk-pseudo-circle"
+            data-index="0" data-label="发布信息" data-value="[object Object]" hover-class="wux-fab-button__button--hover"
+            hover-start-time="0" hover-stay-time="0" lang="true" open-type="getUserInfo" send-message-img="true"
+            send-message-path="true" send-message-title="true" session-from="true"
+            style="opacity: 0; transform: translate3d(0, 0, 0)">
+            <image class="wux-fab-button__icon fab-button-index--wux-fab-button__icon sk-image"></image>
+            <view
+              class="wux-fab-button__label fab-button-index--wux-fab-button__label sk-transparent sk-text-18-7500-907 sk-text">
+              发布信息</view>
+          </button>
+          <button app-parameter="true"
+            class="wux-fab-button__button fab-button-index--wux-fab-button__button sk-button sk-pseudo sk-pseudo-circle"
+            data-index="1" data-label="发布留言" data-value="[object Object]" hover-class="wux-fab-button__button--hover"
+            hover-start-time="0" hover-stay-time="0" lang="true" open-type="getUserInfo" send-message-img="true"
+            send-message-path="true" send-message-title="true" session-from="true"
+            style="opacity: 0; transform: translate3d(0, 0, 0)">
+            <image class="wux-fab-button__icon fab-button-index--wux-fab-button__icon sk-image"></image>
+            <view
+              class="wux-fab-button__label fab-button-index--wux-fab-button__label sk-transparent sk-text-18-7500-542 sk-text">
+              发布留言</view>
+          </button>
+          <button app-parameter="true"
+            class="wux-fab-button__button fab-button-index--wux-fab-button__button sk-button sk-pseudo sk-pseudo-circle"
+            data-index="2" data-label="问题反馈" data-value="[object Object]" hover-class="wux-fab-button__button--hover"
+            hover-start-time="0" hover-stay-time="0" lang="true" open-type="getUserInfo" send-message-img="true"
+            send-message-path="true" send-message-title="true" session-from="true"
+            style="opacity: 0; transform: translate3d(0, 0, 0)">
+            <image class="wux-fab-button__icon fab-button-index--wux-fab-button__icon sk-image"></image>
+            <view
+              class="wux-fab-button__label fab-button-index--wux-fab-button__label sk-transparent sk-text-18-7500-113 sk-text">
+              问题反馈</view>
+          </button>
+          <button app-parameter="true"
+            class="wux-fab-button__button fab-button-index--wux-fab-button__button sk-button sk-pseudo sk-pseudo-circle"
+            data-index="3" data-label="在线客服" data-value="[object Object]" hover-class="wux-fab-button__button--hover"
+            hover-start-time="0" hover-stay-time="0" lang="true" open-type="contact" send-message-img="true"
+            send-message-path="true" send-message-title="true" session-from="true"
+            style="opacity: 0; transform: translate3d(0, 0, 0)">
+            <image class="wux-fab-button__icon fab-button-index--wux-fab-button__icon sk-image"></image>
+            <view
+              class="wux-fab-button__label fab-button-index--wux-fab-button__label sk-transparent sk-text-18-7500-843 sk-text">
+              在线客服</view>
+          </button>
+        </view>
+      </view>
+      <view is="miniprogram_npm/wux-weapp/toast/index">
+        <view is="miniprogram_npm/wux-weapp/backdrop/index">
+          <view is="miniprogram_npm/wux-weapp/animation-group/index"></view>
+        </view>
+        <view is="miniprogram_npm/wux-weapp/animation-group/index"></view>
+      </view>
+    </view> -->
+    <view class="page" style="height:calc(100%);">
+      <!-- <view class="bg-gradual-pink flex justify-between sk-image" style="width:100%;height:35px;opacity:0;">
+        <view style="width:90%;height:40px;overflow:hidden;border-radius: 14px 0px 0px 0px;">
+          <scroll-view scroll-anchoring="true" scroll-with-animation="true" scroll-x="true" class="bg-white nav"
+            scroll-left="0" style="height:40px;">
+            <view class="flex align-center">
+              <view class="cu-item" data-id="0">
+                <view class="text-pink thisClass sk-transparent sk-text-21-0526-955 sk-text">首页</view>
+              </view>
+              <view class="cu-item" data-id="1">
+                <view class="sk-transparent sk-text-30-2632-895 sk-text">大荔</view>
+              </view>
+              <view class="cu-item" data-id="2">
+                <view class="sk-transparent sk-text-30-2632-37 sk-text">话题</view>
+              </view>
+              <view class="cu-item" data-id="3">
+                <view class="sk-transparent sk-text-30-2632-782 sk-text">吐槽</view>
+              </view>
+              <view class="cu-item" data-id="4">
+                <view class="sk-transparent sk-text-30-2632-903 sk-text">表白</view>
+              </view>
+              <view class="cu-item" data-id="5">
+                <view class="sk-transparent sk-text-30-2632-791 sk-text">活动</view>
+              </view>
+              <view class="cu-item" data-id="6">
+                <view class="sk-transparent sk-text-30-2632-514 sk-text">安利</view>
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+        <view class="text-pink cu-item cu-btn cuIcon-search bg-white sk-pseudo sk-pseudo-circle"
+          style="padding: 0px 5px;overflow:hidden;border-radius: 0px 14px 0px 0px;width:10%;height:40px;font-size:16px;">
+        </view>
+      </view> -->
+      <swiper class="swiper" current="0" duration="200" easing-function="default"
+        style="height: 100%;min-height:calc(100%);" autoplay="false">
+        <swiper-item class="cu-item" data-id="0"
+          style="position: absolute; width: 100%; height: 100%; transform: translate(0%, 0px) translateZ(0px);">
+          <scroll-view class="topicListItemContainer" refresher-enabled="true" scroll-y="true"
+            style="width: 100%;height:100%;-webkit-overflow-scrolling: touch">
+            <view class="topicListSwiper0">
+              <view is="pages/components/wisecomponents/topic/topiccard">
+                <view class="cu-card topiccard--cu-card dynamic topiccard--dynamic" data-bindex="0"
+                  data-topicitem="[object Object]" style="true">
+                  <view class="cu-item topiccard--cu-item" style="margin:0px 0px 1px 0px">
+                    <view class="flex topiccard--flex justify-between topiccard--justify-between">
+                      <view class="flex topiccard--flex align-center topiccard--align-center">
+                        <view
+                          class="cu-avatar topiccard--cu-avatar round topiccard--round lg topiccard--lg margin topiccard--margin sk-image"
+                          data-imagelist="[object Object]"
+                          style="background-image:url(https://qn.no2.fun/1365696104236396546_1620834300834.jfif-topicthum);">
+                        </view>
+                        <view>
+                          <view class="flex topiccard--flex align-center topiccard--align-center">
+                            <view style="color:black;" class="sk-transparent sk-text-18-7500-50 sk-text">行星万象</view>
+                            <view
+                              class="cu-tag topiccard--cu-tag bg-red topiccard--bg-red sm topiccard--sm radius topiccard--radius sk-transparent sk-text-18-7500-582 sk-text"
+                              style="display:;margin-left:5px;">
+                              官方
+                            </view>
+                            <view
+                              class="cu-tag topiccard--cu-tag bg-green topiccard--bg-green sm topiccard--sm radius topiccard--radius sk-transparent sk-text-18-7500-925 sk-text"
+                              style="display:;margin-left:5px;">
+                              置顶
+                            </view>
+                            <view
+                              class="cuIcon-male topiccard--cuIcon-male text-blue topiccard--text-blue sk-pseudo sk-pseudo-circle"
+                              style="width:17px;height:17px;margin-left:5px;margin-bottom: 7px;border-radius:25px;">
+                            </view>
+                          </view>
+                          <view
+                            class="text-gray topiccard--text-gray text-sm topiccard--text-sm flex topiccard--flex justify-between topiccard--justify-between sk-transparent sk-text-18-7500-766 sk-text">
+                            更新于：2分钟前</view>
+                        </view>
+                      </view>
+                      <view class="flex topiccard--flex align-center topiccard--align-center"
+                        style="margin-right: 10px;">
+                        <view
+                          class="padding-sm topiccard--padding-sm margin-xs topiccard--margin-xs radius topiccard--radius"
+                          data-topicindex="0" hover-stop-propagation="true">
+                          <text
+                            class="iconfont topiccard--iconfont icon-more2 topiccard--icon-more2 text-grey topiccard--text-grey cu-btn topiccard--cu-btn sk-pseudo sk-pseudo-circle"
+                            style="background: #00000000; padding-left: 8px;padding-right: 0px;font-size:33px"></text>
+                        </view>
+                      </view>
+                    </view>
+                    <view class="text-content topiccard--text-content  sk-text-18-7500-428 sk-text" style="height:70px">
+                      <rich-text nodes="这是一个有温度的聚集地，希望大家遵守规则，万一账号被冻结是很麻烦的事情。目前因为资金问题导致服务器负载较大，某些时候可能会造成卡顿，我们在努力解决，您也可以尝试稍后访问。如何匿名发布及其他问题请点击下方链接查看："></rich-text>
+                    </view>
+                    <view
+                      class="grid topiccard--grid flex-sub topiccard--flex-sub padding-lr topiccard--padding-lr col-3 topiccard--col-3 grid-square topiccard--grid-square">
+                    </view>
+                    <view class="text-gray topiccard--text-gray text topiccard--text padding-xs topiccard--padding-xs"
+                      style="padding-right: 16px;display:flex;justify-content:space-between">
+                      <text style="background: #00000000;padding: 8px;"
+                        class="sk-transparent sk-text-18-7500-331 sk-text">浏览2038次</text>
+                      <view
+                        class="text-right topiccard--text-right flex topiccard--flex align-center topiccard--align-center"
+                        style="color:grey;">
+                        <view class="flex topiccard--flex align-end topiccard--align-end">
+                          <button
+                            class="cuIcon-appreciatefill topiccard--cuIcon-appreciatefill cu-btn topiccard--cu-btn animation- topiccard--animation- sk-button sk-pseudo sk-pseudo-circle"
+                            data-bindex="1" data-class="scale-down" data-praisecount="0" hover-stop-propagation="true"
+                            style="color:grey;background: #00000000;padding: 0px;font-size:19px;"></button>
+                          <text
+                            class="cuIcon-messagefill123 topiccard--cuIcon-messagefill123 cu-btn topiccard--cu-btn text topiccard--text sk-transparent sk-opacity"
+                            data-bindex="1" data-praisecount="0"
+                            style="color:grey;background: #00000000;font-size:19px;padding: 0px;">0</text>
+                        </view>
+                        <text
+                          class="cuIcon-messagefill topiccard--cuIcon-messagefill text topiccard--text cu-btn topiccard--cu-btn sk-transparent sk-text-0-0000-355 sk-text sk-pseudo sk-pseudo-circle"
+                          style="background: 50% rgba(0, 0, 0, 0); padding-left: 8px; padding-right: 0px; font-size: 19px;">43</text>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+              <view is="pages/components/wisecomponents/topic/topiccard">
+                <view class="cu-card topiccard--cu-card dynamic topiccard--dynamic" data-bindex="1"
+                  data-topicitem="[object Object]" style="true">
+                  <view class="cu-item topiccard--cu-item" style="margin:0px 0px 1px 0px">
+                    <view class="flex topiccard--flex justify-between topiccard--justify-between">
+                      <view class="flex topiccard--flex align-center topiccard--align-center">
+                        <view
+                          class="cu-avatar topiccard--cu-avatar round topiccard--round lg topiccard--lg margin topiccard--margin sk-image"
+                          data-imagelist="[object Object]"
+                          style="background-image:url(https://qn.no2.fun/1377598826706644994_1609600764799.jpeg-topicthum);">
+                        </view>
+                        <view>
+                          <view class="flex topiccard--flex align-center topiccard--align-center">
+                            <view style="color:black;" class="sk-transparent sk-text-18-7500-428 sk-text">来一顿火锅吧</view>
+                            <view
+                              class="cuIcon-male topiccard--cuIcon-male text-blue topiccard--text-blue sk-pseudo sk-pseudo-circle"
+                              style="width:17px;height:17px;margin-left:5px;margin-bottom: 7px;border-radius:25px;">
+                            </view>
+                          </view>
+                          <view
+                            class="text-gray topiccard--text-gray text-sm topiccard--text-sm flex topiccard--flex justify-between topiccard--justify-between sk-transparent sk-text-18-7500-85 sk-text">
+                            23天前</view>
+                        </view>
+                      </view>
+                      <view class="flex topiccard--flex align-center topiccard--align-center"
+                        style="margin-right: 10px;">
+                        <view
+                          class="padding-sm topiccard--padding-sm margin-xs topiccard--margin-xs radius topiccard--radius"
+                          data-topicindex="1" hover-stop-propagation="true">
+                          <text
+                            class="iconfont topiccard--iconfont icon-more2 topiccard--icon-more2 text-grey topiccard--text-grey cu-btn topiccard--cu-btn sk-pseudo sk-pseudo-circle"
+                            style="background: #00000000; padding-left: 8px;padding-right: 0px;font-size:33px"></text>
+                        </view>
+                      </view>
+                    </view>
+                    <view class="text-content topiccard--text-content  sk-text-18-7500-428 sk-text">
+                      <rich-text nodes="这个app真的好用"></rich-text>
+                    </view>
+                    <view
+                      class="grid topiccard--grid flex-sub topiccard--flex-sub padding-lr topiccard--padding-lr col-3 topiccard--col-3 grid-square topiccard--grid-square">
+                    </view>
+                    <view class="text-gray topiccard--text-gray text topiccard--text padding-xs topiccard--padding-xs"
+                      style="padding-right: 16px;display:flex;justify-content:space-between">
+                      <text style="background: #00000000;padding: 8px;"
+                        class="sk-transparent sk-text-18-7500-46 sk-text">浏览426次</text>
+                      <view
+                        class="text-right topiccard--text-right flex topiccard--flex align-center topiccard--align-center"
+                        style="color:grey;">
+                        <view class="flex topiccard--flex align-end topiccard--align-end">
+                          <button
+                            class="cuIcon-appreciatefill topiccard--cuIcon-appreciatefill cu-btn topiccard--cu-btn animation- topiccard--animation- sk-button sk-pseudo sk-pseudo-circle"
+                            data-bindex="1" data-class="scale-down" data-praisecount="0" hover-stop-propagation="true"
+                            style="color:grey;background: #00000000;padding: 0px;font-size:19px;"></button>
+                          <text
+                            class="cuIcon-messagefill123 topiccard--cuIcon-messagefill123 cu-btn topiccard--cu-btn text topiccard--text sk-transparent sk-opacity"
+                            data-bindex="1" data-praisecount="0"
+                            style="color:grey;background: #00000000;font-size:19px;padding: 0px;">0</text>
+                        </view>
+                        <text
+                          class="cuIcon-messagefill topiccard--cuIcon-messagefill text topiccard--text cu-btn topiccard--cu-btn sk-transparent sk-text-0-0000-634 sk-text sk-pseudo sk-pseudo-circle"
+                          style="background: 50% rgba(0, 0, 0, 0); padding-left: 8px; padding-right: 0px; font-size: 19px;">0</text>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+                <view class="cu-card topiccard--cu-card dynamic topiccard--dynamic" data-bindex="2"
+                  data-topicitem="[object Object]" style="true">
+                  <view class="cu-item topiccard--cu-item" style="margin:0px 0px 1px 0px">
+                    <view class="flex topiccard--flex justify-between topiccard--justify-between">
+                      <view class="flex topiccard--flex align-center topiccard--align-center">
+                        <view
+                          class="cu-avatar topiccard--cu-avatar round topiccard--round lg topiccard--lg margin topiccard--margin sk-image"
+                          data-imagelist="[object Object]"
+                          style="background-image:url(https://qn.no2.fun/1377598826706644994_1609600764799.jpeg-topicthum);">
+                        </view>
+                        <view>
+                          <view class="flex topiccard--flex align-center topiccard--align-center">
+                            <view style="color:black;" class="sk-transparent sk-text-18-7500-434 sk-text">来一顿火锅吧</view>
+                            <view
+                              class="cuIcon-male topiccard--cuIcon-male text-blue topiccard--text-blue sk-pseudo sk-pseudo-circle"
+                              style="width:17px;height:17px;margin-left:5px;margin-bottom: 7px;border-radius:25px;">
+                            </view>
+                          </view>
+                          <view
+                            class="text-gray topiccard--text-gray text-sm topiccard--text-sm flex topiccard--flex justify-between topiccard--justify-between sk-transparent sk-text-18-7500-127 sk-text">
+                            23天前</view>
+                        </view>
+                      </view>
+                      <view class="flex topiccard--flex align-center topiccard--align-center"
+                        style="margin-right: 10px;">
+                        <view
+                          class="padding-sm topiccard--padding-sm margin-xs topiccard--margin-xs radius topiccard--radius"
+                          data-topicindex="2" hover-stop-propagation="true">
+                          <text
+                            class="iconfont topiccard--iconfont icon-more2 topiccard--icon-more2 text-grey topiccard--text-grey cu-btn topiccard--cu-btn sk-pseudo sk-pseudo-circle"
+                            style="background: #00000000; padding-left: 8px;padding-right: 0px;font-size:33px"></text>
+                        </view>
+                      </view>
+                    </view>
+                    <view class="text-content topiccard--text-content  sk-text-18-7500-428 sk-text">
+                      <rich-text nodes="表白这个微信的小程序"></rich-text>
+                    </view>
+                    <view
+                      class="grid topiccard--grid flex-sub topiccard--flex-sub padding-lr topiccard--padding-lr col-3 topiccard--col-3 grid-square topiccard--grid-square">
+                    </view>
+                    <view class="text-gray topiccard--text-gray text topiccard--text padding-xs topiccard--padding-xs"
+                      style="padding-right: 16px;display:flex;justify-content:space-between">
+                      <text style="background: #00000000;padding: 8px;"
+                        class="sk-transparent sk-text-18-7500-844 sk-text">浏览429次</text>
+                      <view
+                        class="text-right topiccard--text-right flex topiccard--flex align-center topiccard--align-center"
+                        style="color:grey;">
+                        <view class="flex topiccard--flex align-end topiccard--align-end">
+                          <button
+                            class="cuIcon-appreciatefill topiccard--cuIcon-appreciatefill cu-btn topiccard--cu-btn animation- topiccard--animation- sk-button sk-pseudo sk-pseudo-circle"
+                            data-bindex="2" data-class="scale-down" data-praisecount="0" hover-stop-propagation="true"
+                            style="color:grey;background: #00000000;padding: 0px;font-size:19px;"></button>
+                          <text
+                            class="cuIcon-messagefill123 topiccard--cuIcon-messagefill123 cu-btn topiccard--cu-btn text topiccard--text sk-transparent sk-opacity"
+                            data-bindex="2" data-praisecount="0"
+                            style="color:grey;background: #00000000;font-size:19px;padding: 0px;">0</text>
+                        </view>
+                        <text
+                          class="cuIcon-messagefill topiccard--cuIcon-messagefill text topiccard--text cu-btn topiccard--cu-btn sk-transparent sk-text-0-0000-70 sk-text sk-pseudo sk-pseudo-circle"
+                          style="background: 50% rgba(0, 0, 0, 0); padding-left: 8px; padding-right: 0px; font-size: 19px;">0</text>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+                <view class="cu-card topiccard--cu-card dynamic topiccard--dynamic" data-bindex="3"
+                  data-topicitem="[object Object]" style="true">
+                  <view class="cu-item topiccard--cu-item" style="margin:0px 0px 1px 0px">
+                    <view class="flex topiccard--flex justify-between topiccard--justify-between">
+                      <view class="flex topiccard--flex align-center topiccard--align-center">
+                        <view
+                          class="cu-avatar topiccard--cu-avatar round topiccard--round lg topiccard--lg margin topiccard--margin sk-image"
+                          data-imagelist="[object Object]"
+                          style="background-image:url(https://qn.no2.fun/1377598826706644994_1609600764799.jpeg-topicthum);">
+                        </view>
+                        <view>
+                          <view class="flex topiccard--flex align-center topiccard--align-center">
+                            <view style="color:black;" class="sk-transparent sk-text-18-7500-99 sk-text">来一顿火锅吧</view>
+                            <view
+                              class="cuIcon-male topiccard--cuIcon-male text-blue topiccard--text-blue sk-pseudo sk-pseudo-circle"
+                              style="width:17px;height:17px;margin-left:5px;margin-bottom: 7px;border-radius:25px;">
+                            </view>
+                          </view>
+                          <view
+                            class="text-gray topiccard--text-gray text-sm topiccard--text-sm flex topiccard--flex justify-between topiccard--justify-between sk-transparent sk-text-18-7500-69 sk-text">
+                            28天前</view>
+                        </view>
+                      </view>
+                      <view class="flex topiccard--flex align-center topiccard--align-center"
+                        style="margin-right: 10px;">
+                        <view
+                          class="padding-sm topiccard--padding-sm margin-xs topiccard--margin-xs radius topiccard--radius"
+                          data-topicindex="3" hover-stop-propagation="true">
+                          <text
+                            class="iconfont topiccard--iconfont icon-more2 topiccard--icon-more2 text-grey topiccard--text-grey cu-btn topiccard--cu-btn sk-pseudo sk-pseudo-circle"
+                            style="background: #00000000; padding-left: 8px;padding-right: 0px;font-size:33px"></text>
+                        </view>
+                      </view>
+                    </view>
+                    <view class="text-content topiccard--text-content  sk-text-18-7500-428 sk-text">
+                      <rich-text nodes="和H啊啊哈哈哈"></rich-text>
+                    </view>
+                    <view
+                      class="grid topiccard--grid flex-sub topiccard--flex-sub padding-lr topiccard--padding-lr col-3 topiccard--col-3 grid-square topiccard--grid-square">
+                    </view>
+                    <view class="text-gray topiccard--text-gray text topiccard--text padding-xs topiccard--padding-xs"
+                      style="padding-right: 16px;display:flex;justify-content:space-between">
+                      <text style="background: #00000000;padding: 8px;"
+                        class="sk-transparent sk-text-18-7500-489 sk-text">浏览434次</text>
+                      <view
+                        class="text-right topiccard--text-right flex topiccard--flex align-center topiccard--align-center"
+                        style="color:grey;">
+                        <view class="flex topiccard--flex align-end topiccard--align-end">
+                          <button
+                            class="cuIcon-appreciatefill topiccard--cuIcon-appreciatefill cu-btn topiccard--cu-btn animation- topiccard--animation- sk-button sk-pseudo sk-pseudo-circle"
+                            data-bindex="3" data-class="scale-down" data-praisecount="0" hover-stop-propagation="true"
+                            style="color:grey;background: #00000000;padding: 0px;font-size:19px;"></button>
+                          <text
+                            class="cuIcon-messagefill123 topiccard--cuIcon-messagefill123 cu-btn topiccard--cu-btn text topiccard--text sk-transparent sk-opacity"
+                            data-bindex="3" data-praisecount="0"
+                            style="color:grey;background: #00000000;font-size:19px;padding: 0px;">0</text>
+                        </view>
+                        <text
+                          class="cuIcon-messagefill topiccard--cuIcon-messagefill text topiccard--text cu-btn topiccard--cu-btn sk-transparent sk-text-0-0000-290 sk-text sk-pseudo sk-pseudo-circle"
+                          style="background: 50% rgba(0, 0, 0, 0); padding-left: 8px; padding-right: 0px; font-size: 19px;">0</text>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+                <view class="cu-card topiccard--cu-card dynamic topiccard--dynamic" data-bindex="4"
+                  data-topicitem="[object Object]" style="true">
+                  <view class="cu-item topiccard--cu-item" style="margin:0px 0px 1px 0px">
+                    <view class="flex topiccard--flex justify-between topiccard--justify-between">
+                      <view class="flex topiccard--flex align-center topiccard--align-center">
+                        <view
+                          class="cu-avatar topiccard--cu-avatar round topiccard--round lg topiccard--lg margin topiccard--margin sk-image"
+                          data-imagelist="[object Object]"
+                          style="background-image:url(https://qn.no2.fun/1377598826706644994_1609600764799.jpeg-topicthum);">
+                        </view>
+                        <view>
+                          <view class="flex topiccard--flex align-center topiccard--align-center">
+                            <view style="color:black;" class="sk-transparent sk-text-18-7500-658 sk-text">来一顿火锅吧</view>
+                            <view
+                              class="cuIcon-male topiccard--cuIcon-male text-blue topiccard--text-blue sk-pseudo sk-pseudo-circle"
+                              style="width:17px;height:17px;margin-left:5px;margin-bottom: 7px;border-radius:25px;">
+                            </view>
+                          </view>
+                          <view
+                            class="text-gray topiccard--text-gray text-sm topiccard--text-sm flex topiccard--flex justify-between topiccard--justify-between sk-transparent sk-text-18-7500-427 sk-text">
+                            28天前</view>
+                        </view>
+                      </view>
+                      <view class="flex topiccard--flex align-center topiccard--align-center"
+                        style="margin-right: 10px;">
+                        <view
+                          class="padding-sm topiccard--padding-sm margin-xs topiccard--margin-xs radius topiccard--radius"
+                          data-topicindex="4" hover-stop-propagation="true">
+                          <text
+                            class="iconfont topiccard--iconfont icon-more2 topiccard--icon-more2 text-grey topiccard--text-grey cu-btn topiccard--cu-btn sk-pseudo sk-pseudo-circle"
+                            style="background: #00000000; padding-left: 8px;padding-right: 0px;font-size:33px"></text>
+                        </view>
+                      </view>
+                    </view>
+                    <view class="text-content topiccard--text-content  sk-text-18-7500-428 sk-text">
+                      <rich-text nodes="这个小程序这真好用"></rich-text>
+                    </view>
+                    <view
+                      class="grid topiccard--grid flex-sub topiccard--flex-sub padding-lr topiccard--padding-lr col-3 topiccard--col-3 grid-square topiccard--grid-square">
+                      <view class="bg-img topiccard--bg-img  sk-image" data-imagelist="[object Object]"
+                        hover-stop-propagation="true"
+                        style="background-image:url(https://qn.no2.fun/userdata/1619235493228_1376532080369348609-topicthum);width:176px;height:176px;margin-right:0px;border-radius: 3px;;;">
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </scroll-view>
+        </swiper-item>
+      </swiper>
+    </view>
+    <view is="miniprogram_npm/weui-miniprogram/actionsheet/actionsheet">
+      <view class="weui-mask actionsheet--weui-mask weui-mask_hidden actionsheet--weui-mask_hidden"></view>
+    </view>
+    <view class="cu-modal sk-pseudo sk-pseudo-circle">
+      <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+          <view class="content sk-transparent sk-text-24-2424-843 sk-text" style="background-position-x: 50%;">首次使用须知
+          </view>
+          <view class="action">
+            <text class="cuIcon-close text-red sk-pseudo sk-pseudo-circle"></text>
+          </view>
+        </view>
+        <view class="padding-xl">
+          <rich-text nodes="行星万象是行星环绕工作室开发的本地生活小程序，用户可以在当下区域浏览发布各类信息，如话题、吐槽、找对象、失物招领等等。我们希望建立一个良性的交流环境，任何恶意发布反动、色情、租赁、诱导等信息的用户都将被永久封禁！每个人经历不同，自然会想法不同，看到三观不合的人或事，尽量理解，选择性接受，禁止互喷，否则管理员容易误伤。运营这个平台目的很单纯，不会用来盈利，不会插入广告。服务器及其他各项费用都是平台和大家的捐献在支撑，也欢迎各位去【我的-支持一下】为服务器蓄电。目前测试阶段，测试结束后所有用户获得内测头衔。哦对了，小程序角落有许多小彩蛋，能不能找到看你们的了。"></rich-text>
+        </view>
+        <view class="cu-bar bg-white justify-end">
+          <view class="action">
+            <button class="cu-btn line-pink text-pink sk-transparent sk-button sk-pseudo sk-pseudo-circle">取消</button>
+            <button class="cu-btn bg-pink margin-left sk-transparent sk-button sk-pseudo sk-pseudo-circle">确定</button>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="sk-loading-spinner">
+      <view class="circular"></view>
+    </view>
+  </view>
+</template>

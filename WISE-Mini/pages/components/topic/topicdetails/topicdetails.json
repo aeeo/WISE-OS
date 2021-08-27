@@ -1,0 +1,8 @@
+{
+  "onReachBottomDistance":50,
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "mp-actionSheet": "/miniprogram_npm/weui-miniprogram/actionsheet/actionsheet",
+    "mp-html": "../../../../depend/mp-html"
+  }
+}

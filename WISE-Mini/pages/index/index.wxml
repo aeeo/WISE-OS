@@ -1,0 +1,112 @@
+<!-- 骨架屏 -->
+<import src="index.skeleton.wxml" />
+
+
+
+<!-- index.wxml -->
+<!-- 　内测中 -->
+<cu-custom bgColor="bg-gradual-pink" isBack="{{false}}" showSite="{{true}}">
+  <view slot="backText"></view>
+  <view slot="siteText" bindtap="showSiteIndex"
+    style="width: 20em;overflow: hidden;text-overflow:ellipsis;white-space:nowrap;">
+    {{USERRECORD.regionFullName}}</view>
+  <view slot="siteIcon" bindtap="showSiteIndex"></view>
+  <view slot="content"></view>
+</cu-custom>
+<!-- 悬浮按钮 -->
+<!-- <tui-fab btnList="{{btnList}}" maskClosable="{{true}}"></tui-fab> -->
+<component-fabbutton></component-fabbutton>
+<view class="page" style="height:calc(100% - {{CustomBar}}px - 35px);">
+  <!-- 背景 -->
+  <view class="bg-gradual-pink flex justify-between" style="width:100%;height:35px;">
+    <view class="" style="width:90%;height:40px;overflow:hidden;border-radius: 26rpx 0rpx 0rpx 0rpx;">
+      <scroll-view scroll-x class="bg-white nav" style="height:40px;" scroll-with-animation scroll-anchoring
+        scroll-left="{{scrollLeft}}">
+        <view class="flex align-center">
+          <!-- 版块分类 -->
+          <view class="cu-item {{index==currentClass?'':''}}" wx:for="{{REGIONCLASS}}" wx:key="id" bindtap="tabSelect"
+            data-id="{{index}}">
+            <view class="{{index==currentClass?'text-pink thisClass':''}}">{{item.className}}</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="text-pink cu-item cu-btn cuIcon-search bg-white"
+      style="padding: 0px 5px;overflow:hidden;border-radius: 0rpx 26rpx 0rpx 0rpx;width:10%;height:40px;font-size:16px;"
+      bindtap="toSearch">
+    </view>
+  </view>
+
+  <!-- 列表start -->
+  <!-- 内容主体 -->
+  <!-- overflow-y:auto -->
+  <!-- height: {{topicListHeight[currentClass]}}px; -->
+  <swiper class="swiper" current="{{currentClass}}" duration="200" bindchange="swiperChange"
+    style="height: 100%;min-height:calc(100%);" circular="true">
+    <swiper-item class="cu-item" wx:for="{{REGIONCLASS}}" wx:key="id" bindtap="tabSelect" data-id="{{index}}">
+      <scroll-view class="topicListItemContainer" scroll-y="true" bindrefresherrefresh="scrollOnPull"
+        bindscrolltolower="scrollOnReachBottom" refresher-enabled="true" refresher-triggered="{{isPull}}"
+        style="width: 100%;height:100%;-webkit-overflow-scrolling: touch">
+        <view class='topicListSwiper{{index}}'>
+
+          <!-- 置顶帖展示 index为当前版块id-->
+          <wise-topic-card topicLists="{{topicLists[index].topicList}}" showRole="{{true}}" topicType="{{1}}"
+            showRegion="{{false}}" bindmyevent="myEventListener" showBottomBar="true">
+          </wise-topic-card>
+          <!-- 普通帖展示 -->
+          <wise-topic-card topicLists="{{topicLists[index].topicList}}" showRole="{{true}}" topicType="{{0}}"
+            showRegion="{{false}}" bindmyevent="myEventListener" showBottomBar="true">
+          </wise-topic-card>
+          <!-- 第一次加载骨架屏 -->
+          <template is="skeleton" wx-if="{{showSkelton}}" />
+          <!-- 骨架屏 -->
+          <template is="skeleton" wx-if="{{topicLists[index].needLoad}}" />
+          <!-- 底部提示 -->
+          <view class="cu-load {{startFooterLoading?'loading':'over'}}"
+            style="margin-top:-1px;display:{{!topicLists[index].needLoad&&!showSkelton?'':'none'}}"></view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+</view>
+<!-- 评论区域 -->
+<view class="animation-{{showReply?'fade':''}}"
+  style="position:absolute;height:calc({{screenHeight}}px);width:100%;bottom:0px;z-index: 10000;background-color:#00000050;"
+  hidden="{{!showReply}}">
+  <view bindtap="hideReply" style="height:calc({{screenHeight}}px - 600px);"></view>
+  <!-- 用hidden -->
+  <view style="z-index: 10001;position:absolute;bottom: 0px;width:100%;height:600px;">
+    <view class="animation-{{showReply?'slide-bottom':''}}"
+      style="border-radius: 20px 20px 0 0;overflow:hidden;background-color:#00000050;">
+      <!-- 评论 -->
+      <!-- <view class="bg-white" style="height:600px"></view> -->
+      <wise-topic-reply hidden="{{!showReply}}" replyTopicDetails="{{replyTopicDetails}}"></wise-topic-reply>
+    </view>
+  </view>
+</view>
+
+
+
+
+<!-- 收藏举报提示框 -->
+<mp-actionSheet show="{{showActionsheet}}" actions="{{actionGroups}}" bindactiontap="clickAction"></mp-actionSheet>
+<!-- 模态框 -->
+<view class="cu-modal {{modalName=='DevlopAsk'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">首次使用须知</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <rich-text nodes="{{DevAsk}}"></rich-text>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-pink text-pink" bindtap="hideModal">取消</button>
+        <button class="cu-btn bg-pink margin-left" bindtap="hideModal">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

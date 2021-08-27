@@ -1,0 +1,312 @@
+<!--
+此文件为开发者工具生成，生成时间: 2021/5/23 下午12:43:37
+使用方法：
+在 C:\custom\GitRepositories\WISE\Mini-WISE\pages\msg\msg.wxml 引入模板
+
+```
+<import src="msg.skeleton.wxml"/>
+<template is="skeleton" wx-if="{{loading}}" />
+```
+
+在 C:\custom\GitRepositories\WISE\Mini-WISE\pages\msg\msg.wxss 中引入样式
+```
+@import "./msg.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <view is="colorui/components/cu-custom" style="opacity:0;">
+      <view class="cu-custom custom--cu-custom" style="height:84px">
+        <view class="cu-bar custom--cu-bar fixed custom--fixed bg-gradual-pink custom--bg-gradual-pink sk-image"
+          style="height:84px;padding-top:44px;;margin-bottom:20px">
+          <view class="action custom--action">
+            <text class="cuIcon-location custom--cuIcon-location sk-pseudo sk-pseudo-circle"></text>
+            <view class="sk-transparent sk-text-18-7500-560 sk-text">大荔县</view>
+          </view>
+          <view class="content custom--content" style="top:44px"></view>
+        </view>
+      </view>
+    </view>
+    <view is="pages/components/fabbutton/fabbutton" style="opacity:0;">
+      <view is="miniprogram_npm/wux-weapp/fab-button/index">
+        <view
+          class=" wux-fab-button fab-button-index--wux-fab-button wux-fab-button--bottomRight fab-button-index--wux-fab-button--bottomRight wux-fab-button--royal fab-button-index--wux-fab-button--royal wux-fab-button--vertical fab-button-index--wux-fab-button--vertical">
+          <view hover-class="wux-fab-button--hover"
+            class="wux-fab-button__action fab-button-index--wux-fab-button__action wux-fab-button__action--hide-shadow fab-button-index--wux-fab-button__action--hide-shadow">
+            <image class="wux-fab-button__text fab-button-index--wux-fab-button__text sk-image"></image>
+          </view>
+          <button app-parameter="true"
+            class="wux-fab-button__button fab-button-index--wux-fab-button__button sk-button sk-pseudo sk-pseudo-circle"
+            data-index="0" data-label="发布信息" data-value="[object Object]" hover-class="wux-fab-button__button--hover"
+            hover-start-time="0" hover-stay-time="0" lang="true" open-type="true" send-message-img="true"
+            send-message-path="true" send-message-title="true" session-from="true"
+            style="opacity: 0; transform: translate3d(0, 0, 0)">
+            <image class="wux-fab-button__icon fab-button-index--wux-fab-button__icon sk-image"></image>
+            <view
+              class="wux-fab-button__label fab-button-index--wux-fab-button__label sk-transparent sk-text-18-7500-173 sk-text">
+              发布信息</view>
+          </button>
+          <button app-parameter="true"
+            class="wux-fab-button__button fab-button-index--wux-fab-button__button sk-button sk-pseudo sk-pseudo-circle"
+            data-index="1" data-label="问题反馈" data-value="[object Object]" hover-class="wux-fab-button__button--hover"
+            hover-start-time="0" hover-stay-time="0" lang="true" open-type="true" send-message-img="true"
+            send-message-path="true" send-message-title="true" session-from="true"
+            style="opacity: 0; transform: translate3d(0, 0, 0)">
+            <image class="wux-fab-button__icon fab-button-index--wux-fab-button__icon sk-image"></image>
+            <view
+              class="wux-fab-button__label fab-button-index--wux-fab-button__label sk-transparent sk-text-18-7500-446 sk-text">
+              问题反馈</view>
+          </button>
+          <button app-parameter="true"
+            class="wux-fab-button__button fab-button-index--wux-fab-button__button sk-button sk-pseudo sk-pseudo-circle"
+            data-index="2" data-label="在线客服" data-value="[object Object]" hover-class="wux-fab-button__button--hover"
+            hover-start-time="0" hover-stay-time="0" lang="true" open-type="contact" send-message-img="true"
+            send-message-path="true" send-message-title="true" session-from="true"
+            style="opacity: 0; transform: translate3d(0, 0, 0)">
+            <image class="wux-fab-button__icon fab-button-index--wux-fab-button__icon sk-image"></image>
+            <view
+              class="wux-fab-button__label fab-button-index--wux-fab-button__label sk-transparent sk-text-18-7500-670 sk-text">
+              在线客服</view>
+          </button>
+        </view>
+      </view>
+      <view is="miniprogram_npm/wux-weapp/toast/index">
+        <view is="miniprogram_npm/wux-weapp/backdrop/index">
+          <view is="miniprogram_npm/wux-weapp/animation-group/index"></view>
+        </view>
+        <view is="miniprogram_npm/wux-weapp/animation-group/index"></view>
+      </view>
+    </view>
+    <scroll-view class="page" style="opacity:0;">
+      <view class="cu-list grid col-3">
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-index="0">
+          <view hover-class="none">
+            <view class="cuIcon-noticefill text-olive sk-pseudo sk-pseudo-circle"></view>
+            <text class="sk-transparent sk-text-18-1818-559 sk-text" style="background-position-x: 50%;">系统消息</text>
+          </view>
+        </view>
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-index="1">
+          <view hover-class="none">
+            <view class="cuIcon-commentfill text-orange sk-pseudo sk-pseudo-circle"></view>
+            <text class="sk-transparent sk-text-18-1818-91 sk-text" style="background-position-x: 50%;">互动消息</text>
+          </view>
+        </view>
+        <view class="cu-item sk-pseudo sk-pseudo-circle" data-index="2">
+          <view hover-class="none">
+            <view class="cuIcon-presentfill text-red sk-pseudo sk-pseudo-circle"></view>
+            <text class="sk-transparent sk-text-18-1818-597 sk-text" style="background-position-x: 50%;">好吃与好物</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="cu-bar bg-white margin-top-sm" style="opacity:0;">
+      <view class="action sk-transparent">
+        <text class="cuIcon-title text-green sk-pseudo sk-pseudo-circle"></text>留言板
+      </view>
+      <view class="action">
+        <button class="cu-btn bg-pink shadow cuIcon-creativefill sk-transparent sk-button sk-pseudo sk-pseudo-circle"
+          data-target="DialogModal1">我有话说</button>
+      </view>
+    </view>
+    <view class="cu-modal sk-pseudo sk-pseudo-circle" style="opacity:0;">
+      <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+          <view class="content sk-transparent sk-text-24-2424-136 sk-text" style="background-position-x: 50%;">发布留言
+          </view>
+          <view class="action">
+            <text class="cuIcon-close text-red sk-pseudo sk-pseudo-circle"></text>
+          </view>
+        </view>
+        <view style="padding:10px">
+          <form></form>
+        </view>
+        <view class="cu-bar bg-white justify-end">
+          <view class="action">
+            <button class="cu-btn line-green text-pink sk-transparent sk-button sk-pseudo sk-pseudo-circle">取消</button>
+            <button class="cu-btn bg-pink margin-left sk-transparent sk-button sk-pseudo sk-pseudo-circle">确定</button>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="bg-white">
+      <view class="cu-timeline">
+        <view class="cu-item text-blue sk-pseudo sk-pseudo-circle" style="padding: 2px 16px 13px 66px;">
+          <view class="content" style="padding-top: 11px; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);">
+            <view class="flex solid-bottom justify-between sk-pseudo sk-pseudo-circle" style="true">
+              <view style="display: flex;align-items:center">
+                <view class="cu-avatar round df  sk-image"
+                  style="background-image:url(https://qn.no2.fun/1369275547718283266_1620876095641.jfif);margin-right:5px">
+                </view>
+                <view class="radius">
+                  <view class="text-sm sk-transparent sk-text-18-7500-53 sk-text">THE Phoenix</view>
+                  <view class="flex justify-between text-xs">
+                    <view class="text-gray sk-transparent sk-text-18-7500-509 sk-text">10天前</view>
+                  </view>
+                </view>
+              </view>
+              <view class="text-gray text-xl">
+                <text class="text cu-btn animation- text-df padding-xs sk-transparent sk-text-0-0000-802 sk-text"
+                  data-bindex="0" data-class="undefined" data-praisecount="0" id="1392995757117161473"
+                  style="background: 50% rgba(0, 0, 0, 0);">0
+                </text>
+                <text class="cuIcon-appreciatefill cu-btn animation- padding-xs sk-pseudo sk-pseudo-circle"
+                  data-bindex="0" data-class="scale-down" data-praisecount="0" id="1392995757117161473"
+                  style="color:;background: #00000000;padding-left:0px"></text>
+              </view>
+            </view>
+            <view style="margin-top: 5px;" class="sk-transparent sk-text-18-7500-10 sk-text">这个世上总有人站着茅坑不拉屎，旧💩生硬，如何浇灌天地
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="cu-timeline">
+        <view class="cu-item text-blue sk-pseudo sk-pseudo-circle" style="padding: 2px 16px 13px 66px;">
+          <view class="content" style="padding-top: 11px; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);">
+            <view class="flex solid-bottom justify-between sk-pseudo sk-pseudo-circle" style="true">
+              <view style="display: flex;align-items:center">
+                <view class="cu-avatar round df sk-image"
+                  style="background-image:url(https://qn.no2.fun/1377598826706644994_1609600764799.jpeg);margin-right:5px">
+                </view>
+                <view class="radius">
+                  <view class="text-sm sk-transparent sk-text-18-7500-393 sk-text">来一顿火锅吧</view>
+                  <view class="flex justify-between text-xs">
+                    <view class="text-gray sk-transparent sk-text-18-7500-393 sk-text">24天前</view>
+                  </view>
+                </view>
+              </view>
+              <view class="text-gray text-xl">
+                <text class="text cu-btn animation- text-df padding-xs sk-transparent sk-text-0-0000-881 sk-text"
+                  data-bindex="1" data-class="undefined" data-praisecount="0" id="1387710872517361666"
+                  style="background: 50% rgba(0, 0, 0, 0);">0
+                </text>
+                <text class="cuIcon-appreciatefill cu-btn animation- padding-xs sk-pseudo sk-pseudo-circle"
+                  data-bindex="1" data-class="scale-down" data-praisecount="0" id="1387710872517361666"
+                  style="color:;background: #00000000;padding-left:0px"></text>
+              </view>
+            </view>
+            <view style="margin-top: 5px;" class="sk-transparent sk-text-18-7500-617 sk-text">今天天气真好</view>
+          </view>
+        </view>
+      </view>
+      <view class="cu-timeline">
+        <view class="cu-item text-blue sk-pseudo sk-pseudo-circle" style="padding: 2px 16px 13px 66px;">
+          <view class="content" style="padding-top: 11px; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);">
+            <view class="flex solid-bottom justify-between sk-pseudo sk-pseudo-circle" style="true">
+              <view style="display: flex;align-items:center">
+                <view class="cu-avatar round df sk-image"
+                  style="background-image:url(https://qn.no2.fun/1377598826706644994_1609600764799.jpeg);margin-right:5px">
+                </view>
+                <view class="radius">
+                  <view class="text-sm sk-transparent sk-text-18-7500-988 sk-text">来一顿火锅吧</view>
+                  <view class="flex justify-between text-xs">
+                    <view class="text-gray sk-transparent sk-text-18-7500-513 sk-text">25天前</view>
+                  </view>
+                </view>
+              </view>
+              <view class="text-gray text-xl">
+                <text class="text cu-btn animation- text-df padding-xs sk-transparent sk-text-0-0000-12 sk-text"
+                  data-bindex="2" data-class="undefined" data-praisecount="2" id="1387463231179079681"
+                  style="background: 50% rgba(0, 0, 0, 0);">2
+                </text>
+                <text class="cuIcon-appreciatefill cu-btn animation- padding-xs sk-pseudo sk-pseudo-circle"
+                  data-bindex="2" data-class="scale-down" data-praisecount="2" id="1387463231179079681"
+                  style="color:;background: #00000000;padding-left:0px"></text>
+              </view>
+            </view>
+            <view style="margin-top: 5px;" class="sk-transparent sk-text-18-7500-827 sk-text">我其实挺开心的</view>
+          </view>
+        </view>
+      </view>
+      <view class="cu-timeline">
+        <view class="cu-item text-blue sk-pseudo sk-pseudo-circle" style="padding: 2px 16px 13px 66px;">
+          <view class="content" style="padding-top: 11px; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);">
+            <view class="flex solid-bottom justify-between sk-pseudo sk-pseudo-circle" style="true">
+              <view style="display: flex;align-items:center">
+                <view class="cu-avatar round df sk-image"
+                  style="background-image:url(https://qn.no2.fun/1377598826706644994_1609600764799.jpeg);margin-right:5px">
+                </view>
+                <view class="radius">
+                  <view class="text-sm sk-transparent sk-text-18-7500-573 sk-text">来一顿火锅吧</view>
+                  <view class="flex justify-between text-xs">
+                    <view class="text-gray sk-transparent sk-text-18-7500-602 sk-text">30天前</view>
+                  </view>
+                </view>
+              </view>
+              <view class="text-gray text-xl">
+                <text class="text cu-btn animation- text-df padding-xs sk-transparent sk-text-0-0000-864 sk-text"
+                  data-bindex="3" data-class="undefined" data-praisecount="1" id="1385807694192455682"
+                  style="background: 50% rgba(0, 0, 0, 0);">1
+                </text>
+                <text class="cuIcon-appreciatefill cu-btn animation- padding-xs sk-pseudo sk-pseudo-circle"
+                  data-bindex="3" data-class="scale-down" data-praisecount="1" id="1385807694192455682"
+                  style="color:;background: #00000000;padding-left:0px"></text>
+              </view>
+            </view>
+            <view style="margin-top: 5px;" class="sk-transparent sk-text-18-7500-153 sk-text">哈哈说</view>
+          </view>
+        </view>
+      </view>
+      <view class="cu-timeline">
+        <view class="cu-item text-blue sk-pseudo sk-pseudo-circle" style="padding: 2px 16px 13px 66px;">
+          <view class="content" style="padding-top: 11px; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);">
+            <view class="flex solid-bottom justify-between sk-pseudo sk-pseudo-circle" style="true">
+              <view style="display: flex;align-items:center">
+                <view class="cu-avatar round df sk-image"
+                  style="background-image:url(https://qn.no2.fun/1377598826706644994_1609600764799.jpeg);margin-right:5px">
+                </view>
+                <view class="radius">
+                  <view class="text-sm sk-transparent sk-text-18-7500-81 sk-text">来一顿火锅吧</view>
+                  <view class="flex justify-between text-xs">
+                    <view class="text-gray sk-transparent sk-text-18-7500-700 sk-text">30天前</view>
+                  </view>
+                </view>
+              </view>
+              <view class="text-gray text-xl">
+                <text class="text cu-btn animation- text-df padding-xs sk-transparent sk-text-0-0000-992 sk-text"
+                  data-bindex="4" data-class="undefined" data-praisecount="0" id="1385800485496696834"
+                  style="background: 50% rgba(0, 0, 0, 0);">0
+                </text>
+                <text class="cuIcon-appreciatefill cu-btn animation- padding-xs sk-pseudo sk-pseudo-circle"
+                  data-bindex="4" data-class="scale-down" data-praisecount="0" id="1385800485496696834"
+                  style="color:;background: #00000000;padding-left:0px"></text>
+              </view>
+            </view>
+            <view style="margin-top: 5px;" class="sk-transparent sk-text-18-7500-181 sk-text">哈哈哈哈</view>
+          </view>
+        </view>
+      </view>
+      <view class="cu-timeline">
+        <view class="cu-item text-blue sk-pseudo sk-pseudo-circle" style="padding: 2px 16px 13px 66px;">
+          <view class="content" style="padding-top: 11px; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);">
+            <view class="flex solid-bottom justify-between sk-pseudo sk-pseudo-circle" style="true">
+              <view style="display: flex;align-items:center">
+                <view class="cu-avatar round df sk-image"
+                  style="background-image:url(https://qn.no2.fun/1377598826706644994_1609600764799.jpeg);margin-right:5px">
+                </view>
+                <view class="radius">
+                  <view class="text-sm sk-transparent sk-text-18-7500-81 sk-text">来一顿火锅吧</view>
+                  <view class="flex justify-between text-xs">
+                    <view class="text-gray sk-transparent sk-text-18-7500-700 sk-text">30天前</view>
+                  </view>
+                </view>
+              </view>
+              <view class="text-gray text-xl">
+                <text class="text cu-btn animation- text-df padding-xs sk-transparent sk-text-0-0000-992 sk-text"
+                  data-bindex="4" data-class="undefined" data-praisecount="0" id="1385800485496696834"
+                  style="background: 50% rgba(0, 0, 0, 0);">0
+                </text>
+                <text class="cuIcon-appreciatefill cu-btn animation- padding-xs sk-pseudo sk-pseudo-circle"
+                  data-bindex="4" data-class="scale-down" data-praisecount="0" id="1385800485496696834"
+                  style="color:;background: #00000000;padding-left:0px"></text>
+              </view>
+            </view>
+            <view style="margin-top: 5px;" class="sk-transparent sk-text-18-7500-181 sk-text">哈哈哈哈</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="sk-loading"></view>
+  </view>
+</template>

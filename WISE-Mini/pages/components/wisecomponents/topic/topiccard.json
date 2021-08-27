@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "wise-topic-card-image": "./card-image/topiccardimage"
+  }
+}
