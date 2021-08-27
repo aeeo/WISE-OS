@@ -1,11 +1,5 @@
-# WISE-OS
-
-# 介绍
-开源微信小程序信息发布平台，后台使用Java【可改造表白墙、校园信息发布、帮打听、城市交流圈、大型朋友圈】，有一定难度，初学者慎重选择。
-
 # 简介
 一个信息发布类型的微信小程序，可以在线发布需求，例如寻人、寻物、打听，表白等。可改造表白墙、校园信息发布、帮打听、城市交流圈、大型朋友圈，废话不说，扫码查看小程序演示：
-
 ![请添加图片描述](https://img-blog.csdnimg.cn/2c761508b0db4afa9d2616e3f4b43886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25iY3Nkbg==,size_16,color_FFFFFF,t_70)
 
 行星万象后台管理系统，第一次加载会比较慢，正式地址，不提供体验账号密码：
@@ -23,7 +17,7 @@
 
 本项目所有的代码都可以拿去修改部署，免费使用，但是你必须要注明：
 
-> [PowerBy 陕西行星环绕信息科技有限公司](https://gitee.com/zhaoqizhi/WISE-OS)
+> [PowerBy 陕西行星环绕信息科技有限公司](https://gitee.com/vtep/WISE-OS.git)
 
 如果只是需要使用线上系统可以联系我，我帮你开通区域，但是硬件和资源成本还是希望能分担一下，我不凭借这个系统赚钱，但是也不想成为我的经济负担，具体联系：18700871300（同微信）。
 
@@ -51,7 +45,7 @@
 
 1. 下载源码，开源不易，务必Star。
 
-> [https://gitee.com/zhaoqizhi/WISE-OS](https://gitee.com/zhaoqizhi/WISE-OS)
+> [https://gitee.com/vtep/WISE-OS.git](https://gitee.com/vtep/WISE-OS.git)
 
 2. 初始化数据库
 
@@ -65,6 +59,7 @@
 3. 项目结构
 > WISE-Mini（小程序）
 > WISE-Fork（后台管理系统和后台服务）
+>
 
 > ant-design-vue-jeecg（后台管理系统）
 > jeecg-boot-parent（父POM： 项目依赖、modules组织） 
@@ -139,4 +134,4 @@
 3. 技术
 从我的角度这是一个对学生以及毕业生非常好的练手项目，因为在开始做这个项目的时候我还是一名西安文理学院的在校生，从架构从逻辑都是我一步步走过来的，用这个项目练手一是有我做的基础在不会无聊，二是各方面技术都有涉猎，三是系统可上线。
 # 常见问题
-一般大部分问题都可以在[**微信官网文档**](https://developers.weixin.qq.com/miniprogram/dev/framework/)和[**JeecgBoot开发文档**](http://doc.jeecg.com/2043872)中找到答案，请确保吃透官方文档，如果仍旧无法解决或无从下手可以进QQ群：702655687尝试询问。https://gitee.com/gitee-stars/)
+一般大部分问题都可以在[**微信官网文档**](https://developers.weixin.qq.com/miniprogram/dev/framework/)和[**JeecgBoot开发文档**](http://doc.jeecg.com/2043872)中找到答案，请确保吃透官方文档，如果仍旧无法解决或无从下手可以进QQ群：702655687尝试询问。
