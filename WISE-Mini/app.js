@@ -17,14 +17,13 @@ App({
     ARTWORKWATER: '-topicimagewater100', //原图有水印
     ARTWORKNOWATER: '-topicimagenowater', //原图无水印
 
+    // ********************************************************
     // 主机开发本地环境  配置本地静态ip方便调试
     // HOSTURL: 'http://本机IP:10002/wise-dev',
     // HOSTURL: 'http://本机IP:10001/wise',
-
-    // 线上正式环境  
-    // HOSTURL: 'https://域名/wise',
-    // 线上开发环境
-    // HOSTURL: 'https://域名/wise-dev',
+    // HOSTURL: 'https://域名/wise',                  // 线上正式环境 
+    // HOSTURL: 'https://域名/wise-dev',              // 线上开发环境
+    // ********************************************************
 
     SwitchRegion: false,
     ISAUTHORIZATION: false,

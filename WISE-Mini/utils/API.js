@@ -1,11 +1,9 @@
-// // 主机开发本地环境
-// const HOSTURL = 'http://本机IP:10002/wise-dev';
+// ********************************************************
+// const HOSTURL = 'http://本机IP:10002/wise-dev';              // 主机开发本地环境
 // // const HOSTURL = 'http://本机IP:10001/wise';
-
-// // 线上正式环境
-// // const HOSTURL = 'https://域名/wise';
-// // 线上开发环境
-// // const HOSTURL = 'https://域名/wise-dev';
+// // const HOSTURL = 'https://域名/wise';                      // 线上正式环境
+// // const HOSTURL = 'https://域名/wise-dev';                  // 线上开发环境
+// *********************************************************
 
 const API = {
   "message_board_add": {
