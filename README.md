@@ -50,7 +50,7 @@
 2. 初始化数据库
 
 初始化数据库，要求mysql5.7+，新建数据库wised，手工执行Sql脚本初始化数据。
-![在这里插入图片描述](https://img-blog.csdnimg.cn/0c33d1ce33e74e928262a4cce8fc4d9b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_14,color_FFFFFF,t_70,g_se,x_16 =300x250)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0c33d1ce33e74e928262a4cce8fc4d9b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_14,color_FFFFFF,t_70,g_se,x_16)
 
  
 
