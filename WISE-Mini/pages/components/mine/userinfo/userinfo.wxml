@@ -46,14 +46,14 @@
   </view>
 </view>
 <view style="background-color: #d276a3;">
-  <view class="cu-bar bg-white" style="border-radius:30rpx 30rpx 0 0;margin-bottom: -20px;">
+  <view class="cu-bar bg-white" style="border-radius:30rpx 30rpx 0 0;margin-bottom: {{topicLists.length==0?0:-20}}px;">
     <view class="action">
       发布
     </view>
   </view>
   <!-- 置顶帖展示 -->
   <wise-topic-card topicLists="{{topicLists}}" showMore="{{false}}" showRole="{{false}}" topicType="{{1}}"
-    showRegion="{{true}}" bindmyevent="myEventListener" showBottomBar="true">
+    showRegion="{{true}}" bindmyevent="myEventListener" showBottomBar="true" style="margin-top: -20px;">
   </wise-topic-card>
   <!-- 普通帖展示 -->
   <wise-topic-card topicLists="{{topicLists}}" showMore="{{false}}" showRole="{{false}}" topicType="{{0}}"

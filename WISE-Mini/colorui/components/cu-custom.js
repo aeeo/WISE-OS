@@ -31,6 +31,14 @@ Component({
       type: String,
       default: ''
     },
+    regionCode: {
+      type: String,
+      default: ''
+    },
+    showHome:{
+      type: [Boolean, String],
+      default: false
+    },
   },
   /**
    * 组件的初始数据
@@ -48,6 +56,14 @@ Component({
       wx.navigateBack({
         delta: 1
       });
+    },
+    GoHome(){
+      // wx.switchTab({
+      //   url: '/pages/index/index'
+      // })
+      wx.reLaunch({
+        url: '/pages/index/index?regionCode=' + this.data.regionCode,
+      })
     },
     toHome() {
       wx.reLaunch({

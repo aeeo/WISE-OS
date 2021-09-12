@@ -211,15 +211,27 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
         //removeTopicImageMap.put("topic_id", topicId);
         //bbsTopicImageService.removeByMap(removeTopicImageMap);
 
-        //4.用户记录发布贴子数量-1
-        BbsUserRecord userRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, loginUser.getUsername()).one();
-        bbsUserRecordService.lambdaUpdate().eq(BbsUserRecord::getCreateBy, loginUser.getUsername()).set(BbsUserRecord::getTopicCount, userRecord.getTopicCount() - 1).update();
+
 
         return Result.OK("删除成功!");
     }
 
+    @Override
+    @AutoLog
+    @Transactional
+    public void deletePublishTopicBatch(List<String> topicId) {
+        for (String item : topicId) {
+            deletePublishTopic(item);
+        }
+    }
+
     //删除帖子依赖关系
     private Boolean deleteTopicDependData(String topicId) {
+        BbsTopic byId = bbsTopicService.getById(topicId);
+        //4.用户记录发布贴子数量-1
+        BbsUserRecord userRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, byId.getCreateBy()).one();
+        bbsUserRecordService.lambdaUpdate().eq(BbsUserRecord::getCreateBy, byId.getCreateBy()).set(BbsUserRecord::getTopicCount, userRecord.getTopicCount() - 1).update();
+
         QueryWrapper<BbsUserTopicClick> eq = new QueryWrapper<>();
         eq.eq("topic_id", topicId);
         bbsUserTopicClickService.remove(eq);

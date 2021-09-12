@@ -55,7 +55,7 @@
     </view>
     <view class="cu-item arrow" wx:for="{{regionList}}" wx:key="id" wx:for-index="bindex" data-bindex="{{bindex}}"
       bindtap="selectSite">
-      <view class="content">
+      <view class="content" style="display: flex;">
         <text class="cuIcon-locationfill text-pink"></text>
         <text class="text-grey">{{item.fullName}}</text>
       </view>

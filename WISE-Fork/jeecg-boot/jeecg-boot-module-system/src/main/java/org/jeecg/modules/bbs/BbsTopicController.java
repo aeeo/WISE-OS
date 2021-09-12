@@ -824,4 +824,31 @@ public class BbsTopicController {
             return  true;
         }
     }
+
+    /**
+     * 通过id删除
+     *
+     * @param topicId
+     * @return
+     */
+    @AutoLog(value = "帖子-通过id删除")
+    @ApiOperation(value = "帖子-通过id删除", notes = "帖子-通过id删除")
+    @DeleteMapping(value = "/wise/back/delete")
+    public Result<?> deleteBackPublishTopic(@RequestParam(name = "id", required = true) String ids) {
+        bbsTopicService.deletePublishTopic(ids);
+        return Result.OK("删除成功!");
+    }
+    /**
+     * 通过id删除
+     *
+     * @param topicId
+     * @return
+     */
+    @AutoLog(value = "帖子-通过id删除")
+    @ApiOperation(value = "帖子-通过id删除", notes = "帖子-通过id删除")
+    @DeleteMapping(value = "/wise/back/deleteBatch")
+    public Result<?> deleteBackPublishTopicBatch(@RequestParam(name = "ids", required = true) String ids) {
+        bbsTopicService.deletePublishTopicBatch(Arrays.asList(ids.split(",")));
+        return Result.OK("删除成功!");
+    }
 }

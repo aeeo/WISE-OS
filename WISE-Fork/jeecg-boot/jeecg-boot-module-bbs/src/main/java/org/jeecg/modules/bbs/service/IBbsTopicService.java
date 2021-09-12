@@ -45,4 +45,5 @@ public interface IBbsTopicService extends IService<BbsTopic> {
 
     Result<?> deletePublishTopic(String topicId);
 
+    void deletePublishTopicBatch(List<String> list);
 }

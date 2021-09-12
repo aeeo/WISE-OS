@@ -5,6 +5,10 @@
       <text class="cuIcon-back"></text>
       <slot name="backText"></slot>
     </view>
+    <view class="action" bindtap="GoHome" wx:if="{{showHome}}">
+      <text class="cuIcon-homefill"></text>
+      <slot name="homeText"></slot>
+    </view>
     <view class="action" bindtap="showSite" wx:if="{{showSite}}">
       <text name="siteIcon" class="cuIcon-location"></text>
       <slot name="siteText"></slot>

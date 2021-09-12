@@ -95,7 +95,6 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
                 sysUserService.updateUserDepart(userByName.getUsername(), "A03A03A01A01");  //设置用户当前所在部门
             }
 
-
             //用户如果是通过分享进入，所在区域为分享链接中的区域，否则，不做设置
             if (null != regionCode && !"undefined".equals(regionCode)) {
                 BbsRegion regionOne = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, regionCode).one();
@@ -136,16 +135,17 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
         SysUser sysUser = sysUserService.lambdaQuery().eq(SysUser::getUsername, openid).one();
         bbsUserRecord.setCreateBy(sysUser.getUsername());
 
+
+        bbsUserRecordService.save(bbsUserRecord);
         //用户如果是通过分享进入，所在区域为分享链接中的区域，否则，不做设置
         if (null != regionCode && !"undefined".equals(regionCode)) {
             BbsRegion regionOne = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, regionCode).one();
             if (null != regionOne) {
-                bbsUserRecord.setRegionCode(regionCode);
+                bbsRegionController.switchRegion(regionOne,openid);
             }else{
                 //如果此区域不存在，则忽略
             }
         }
-        bbsUserRecordService.save(bbsUserRecord);
 
         //登录
         login = loginController.minilogin(sysLoginModel);

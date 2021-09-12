@@ -338,8 +338,10 @@ export default {
       url: {
         // list: "/bbs/bbsTopic/list",
         list: "/bbs/bbsTopic/wise/back/list",
-        delete: "/bbs/bbsTopic/delete",
-        deleteBatch: "/bbs/bbsTopic/deleteBatch",
+        // delete: "/bbs/bbsTopic/delete",
+        delete: "/bbs/bbsTopic/wise/back/delete",
+        // deleteBatch: "/bbs/bbsTopic/deleteBatch",
+        deleteBatch: "/bbs/bbsTopic/wise/back/deleteBatch",
         exportXlsUrl: "/bbs/bbsTopic/exportXls",
         importExcelUrl: "bbs/bbsTopic/importExcel",
 

@@ -14,15 +14,12 @@ Page({
     fullReplys: [],
     topicdetails: '',
     topicIndex: -1,
-
+    showHome: false,
     parentReplyId: 0,
     isLoad: true,
     hasReply: 'none', //空评论标志
     navigateButtonList: [], //贴子中链接跳转列表
-
-    backgroundColorList: [
-      "#ffecec", "#fffaec", "#f7ffec", "#ecffef", "#ecfffc", "#ecf2ff", "#f0ecff", "#f7ecff", "#ffecfb", "#ffecf0"
-    ],
+    regionCode:'',
     onReachBottomLoading: false,
     nextPage: false,
     showLoad: true,
@@ -65,6 +62,8 @@ Page({
         topicdetailsTmp.id = options.topicId
         that.setData({
           topicdetails: topicdetailsTmp,
+          showHome: true,
+          regionCode: options.regionCode
         })
       } else {
         // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
@@ -434,7 +433,7 @@ Page({
     // console.log(imageUrl)
     return {
       title: shareTitle,
-      query: "topicId=" + that.data.topicdetails.id,
+      query: "topicId=" + that.data.topicdetails.id + "&regionCode=" + that.data.topicdetails.regionCode,
       imageUrl: imageUrl
       // imageUrl: that.data.topicdetails.bbsTopicImageList.length == 0 ? '' : that.data.UPLOAD_IMAGE + that.data.topicdetails.bbsTopicImageList[0].topicImage + that.data.ARTWORKNOWATER
     }

@@ -47,6 +47,12 @@
           "pathName": "/pages/index/index",
           "query": "activityId=1402824090915725314",
           "scene": null
+        },
+        {
+          "name": "内蒙古",
+          "pathName": "pages/index/index",
+          "query": "regionCode=nmgmzyesfgdzkxx-1",
+          "scene": null
         }
       ]
     }
