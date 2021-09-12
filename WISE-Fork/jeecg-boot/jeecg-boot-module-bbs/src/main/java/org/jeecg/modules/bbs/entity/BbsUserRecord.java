@@ -192,6 +192,11 @@ public class BbsUserRecord implements Serializable {
     @Excel(name = "本月区域切换次数", width = 15)
     @ApiModelProperty(value = "本月区域切换次数")
     private java.lang.Integer regionSwitchCount;
+    /**
+     * 所属部门
+     */
+    @ApiModelProperty(value = "所属部门")
+    private java.lang.String sysOrgCode;
 
 
     // ****行星万象修改位置戳****

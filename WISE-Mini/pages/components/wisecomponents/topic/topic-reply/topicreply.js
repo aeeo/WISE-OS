@@ -56,7 +56,7 @@ Component({
     },
     'nextPage'(val) {
       // console.log("nextPage属性值变化时执行", this.data.replyPageNo, val)
-      
+
       if (val) {
         this.getFullReplysNext()
       } else {
@@ -250,6 +250,7 @@ Component({
           beReplyRealname: that.data.beReply.beReplyRealname,
           realname: realname,
           avatar: avatar,
+          sysOrgCode: that.data.replyTopicDetails.sysOrgCode
         }
         console.log(dataRequest)
         app.wxRequest('post', url, dataRequest).then(res => {
@@ -260,8 +261,8 @@ Component({
               replyContentInput: '',
               replyPlaceholder: '',
             })
-            //提交完成 beReply.id = 0
-            that.data.beReply.id = 0
+            //提交完成 beReply = 0
+            that.data.beReply = 0
 
           } else {
             wx.showToast({

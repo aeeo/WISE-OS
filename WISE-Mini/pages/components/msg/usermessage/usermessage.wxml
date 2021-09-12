@@ -13,10 +13,13 @@
       <view class="cu-tag badge" style="display:{{item.status==1?'block':'none'}}"></view>
     </view>
     <view class="content">
-      <view class="text-grey text-df" style="font-weight:bold">{{item.realname}}
+      <view class="text-grey text-df" style="font-weight:bold">
+        <view>{{item.realname}}</view>
         <!-- 区域 -->
-        <view class="cu-tag red sm radius" style="margin-left:5px;">
-          {{item.regionName}}
+        <view class="cu-tag red sm radius regionTag" style="margin-left:5px;max-width:50%">
+          <view style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+            {{item.regionName}}
+          </view>
         </view>
       </view>
 

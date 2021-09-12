@@ -29,8 +29,10 @@
               精华
             </view>
             <!-- 区域 -->
-            <view class="cu-tag red sm radius" style="display:{{showRegion?'':'none'}};margin-left:5px;">
-              {{topicItem.regionFullName}}
+            <view class="cu-tag red sm radius" style="display:{{showRegion?'':'none'}};max-width: 50%;">
+              <view style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                {{topicItem.regionFullName}}
+              </view>
             </view>
             <!-- 性别 -->
             <view class="{{topicItem.sex==1?'cuIcon-male text-blue':'cuIcon-female text-pink'}}"

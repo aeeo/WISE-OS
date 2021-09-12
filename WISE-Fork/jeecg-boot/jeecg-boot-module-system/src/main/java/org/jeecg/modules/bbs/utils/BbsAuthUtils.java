@@ -1,4 +1,4 @@
-package org.jeecg.modules.bbs;
+package org.jeecg.modules.bbs.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
@@ -34,18 +34,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
-
-/**
- * @Description: BBS认证
- * @Author: jeecg-boot
- * @Date: 2020-12-10
- * @Version: V1.0
- */
-@Api(tags = "BBS_认证")
-@RestController
-@RequestMapping("/bbs/bbsAuth")
-@Slf4j
-public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyService> {
+public class BbsAuthUtils {
 
     @Autowired
     WeiXinConfig weiXinConfig;

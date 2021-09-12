@@ -1,8 +1,9 @@
 <wux-fab-button position="{{ types[typeIndex] }}" theme="{{ colors[colorIndex] }}" direction="{{ dirs[dirIndex] }}"
     reverse="{{ reverse }}" spaceBetween="{{ spaceBetween }}" sAngle="{{ sAngle }}" eAngle="{{ eAngle }}"
-    buttons="{{ buttons }}" bind:change="onChange" bind:contact="onContact" bind:click="fabbuttonAction" defaultVisible="true"
-    hideShadow="true" duration="200" />
+    buttons="{{ buttons }}" bind:change="onChange" bind:contact="onContact" bind:click="fabbuttonAction"
+    hideShadow="false" duration="200" />
 <wux-toast id="wux-toast" />
+<!-- defaultVisible="false" visible="false" -->
 <!-- bind:click="onClick"  -->
 <!-- 
 <view class="page">

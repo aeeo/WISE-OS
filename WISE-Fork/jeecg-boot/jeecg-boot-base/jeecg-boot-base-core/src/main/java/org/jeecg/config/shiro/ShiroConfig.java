@@ -82,6 +82,7 @@ public class ShiroConfig {
 
         // 行星外卖免登录态
         filterChainDefinitionMap.put("/bbs/bbsWaimai/wise/mini/list/alone", "anon");
+        filterChainDefinitionMap.put("/bbs/bbsSys/wise/mini/queryValueByKey/anon", "anon");
 
         // 配置不会被拦截的链接 顺序判断
         filterChainDefinitionMap.put("/sys/cas/client/validateLogin", "anon"); //cas验证登录

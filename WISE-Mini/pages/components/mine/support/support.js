@@ -703,10 +703,16 @@ Page({
       USERRECORD: wx.getStorageSync('USERRECORD')
     })
 
-    let url = app.globalData.HOSTURL + '/bbs/bbsSys/wise/mini/queryValueByKey?sysKey=' + "shoukuanma"
+    // let url = app.globalData.HOSTURL + '/bbs/bbsSys/wise/mini/queryValueByKey?sysKey=' + "shoukuanma"
+    // app.wxRequest('get', url, '', 5000).then(res => {
+    //   that.setData({
+    //     shouKuanMa: res.data.result.string
+    //   })
+    // })
+    let url = app.globalData.HOSTURL + '/bbs/bbsRegion/wise/mini/queryByRegionCode?regionCode=' + this.data.USERRECORD.regionCode
     app.wxRequest('get', url, '', 5000).then(res => {
       that.setData({
-        shouKuanMa: res.data.result.string
+        regionInfo:res.data.result
       })
     })
   },
@@ -719,7 +725,7 @@ Page({
   clickTopicImage(event) {
     var imageList = []
     wx.previewImage({
-      urls: [this.data.UPLOAD_IMAGE + this.data.shouKuanMa], //需要预览的图片http链接列表，注意是数组
+      urls: [this.data.UPLOAD_IMAGE + this.data.regionInfo.payeeImage], //需要预览的图片http链接列表，注意是数组
       current: 0, // 当前显示图片的http链接，默认是第一个
       success: function (res) {},
       fail: function (res) {},

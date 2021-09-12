@@ -306,20 +306,20 @@ public class BbsRegionController {
      * 地区-切换
      *
      * @param bbsRegion
-     * @param username    用户在获取token的时候还可能会切换地区，但是此时shiro还取不到用户的信息，所以只能传username
+     * @param username  用户在获取token的时候还可能会切换地区，但是此时shiro还取不到用户的信息，所以只能传username
      * @return
      */
     @AutoLog(value = "地区-切换")
     @ApiOperation(value = "地区-切换", notes = "地区-切换")
     @PostMapping(value = "/wise/mini/switchRegion")
-    public Result<?> switchRegion(@RequestBody BbsRegion bbsRegion,@RequestParam(name = "username", defaultValue = "") String username) {
+    public Result<?> switchRegion(@RequestBody BbsRegion bbsRegion, @RequestParam(name = "username", defaultValue = "") String username) {
         BbsUserRecord bbsUserRecord = new BbsUserRecord();
 
         String currentUsername = "";
         if (!"".equals(username)) {
             bbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, username).one();
             currentUsername = username;
-        }else{
+        } else {
             LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
             bbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, sysUser.getUsername()).one();
             currentUsername = sysUser.getUsername();
@@ -331,6 +331,7 @@ public class BbsRegionController {
         }
         bbsUserRecordService.lambdaUpdate().eq(BbsUserRecord::getCreateBy, currentUsername)
                 .set(BbsUserRecord::getRegionCode, bbsRegion.getRegionCode())
+                .set(BbsUserRecord::getSysOrgCode, bbsRegion.getSysOrgCode())
                 .set(BbsUserRecord::getRegionSwitchCount, bbsUserRecord.getRegionSwitchCount() + 1)
                 .update();
 

@@ -1,8 +1,5 @@
 <!-- 骨架屏 -->
 <import src="index.skeleton.wxml" />
-
-
-
 <!-- index.wxml -->
 <!-- 　内测中 -->
 <cu-custom bgColor="bg-gradual-pink" isBack="{{false}}" showSite="{{true}}">

@@ -1,4 +1,4 @@
-package org.jeecg.modules.bbs.controller;
+package org.jeecg.modules.bbs;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -13,6 +13,7 @@ import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
+import org.jeecg.modules.bbs.BbsAuthController;
 import org.jeecg.modules.bbs.entity.*;
 import org.jeecg.modules.bbs.service.IBbsMessageBoardService;
 import org.jeecg.modules.bbs.service.IBbsUserRecordService;
@@ -43,6 +44,8 @@ import java.util.List;
 @RequestMapping("/bbs/bbsMessageBoard")
 @Slf4j
 public class BbsMessageBoardController extends JeecgController<BbsMessageBoard, IBbsMessageBoardService> {
+    @Autowired
+    private BbsTopicController bbsAuthController;
     @Autowired
     private IBbsMessageBoardService bbsMessageBoardService;
     @Autowired
@@ -247,6 +250,10 @@ public class BbsMessageBoardController extends JeecgController<BbsMessageBoard, 
     @PostMapping(value = "/wise/mini/add")
     public Result<?> add(@RequestBody BbsMessageBoard bbsMessageBoard,
                          HttpServletRequest req) {
+
+        if(!bbsAuthController.judgeMiniUserAuth()) {
+            return Result.error(1000, "未授权,无法发布。");
+        }
         //内容审核
         ContentCheck contentCheck = new ContentCheck();
         Result<?> result3 = contentCheck.checkBySensitiveWord(bbsMessageBoard.getContent());

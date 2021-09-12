@@ -11,7 +11,7 @@
     </view>
     <view class="bg-img only-img" style="background-image:url({{UPLOAD_IMAGE}}weixinshoukuanma.jpg);">
     </view>
-    <image src="{{UPLOAD_IMAGE}}{{shouKuanMa}}" mode="aspectFit" bindtap="clickTopicImage"
+    <image src="{{UPLOAD_IMAGE}}{{regionInfo.payeeImage}}" mode="aspectFit" bindtap="clickTopicImage"
       bindlongpress="clickTopicImage" style="margin-top: 40rpx;"></image>
     <view class="bg-img only-img" style="background-image:url({{UPLOAD_IMAGE}}weixinshoukuanma.jpg);"
       bindtap="clickTopicImage">

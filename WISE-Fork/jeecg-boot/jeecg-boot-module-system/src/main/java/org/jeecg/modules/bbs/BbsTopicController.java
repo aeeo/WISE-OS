@@ -1,4 +1,4 @@
-package org.jeecg.modules.bbs.controller;
+package org.jeecg.modules.bbs;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -540,9 +540,9 @@ public class BbsTopicController {
     public Result<?> add(@RequestBody BbsTopicPage bbsTopicPage,
                          HttpServletRequest req) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-        if(null == sysUser.getRealname()){
-            return Result.error(1000, "未授权");
-        }
+
+        if(!this.judgeMiniUserAuth())
+            return Result.error(1000, "未授权,无法发布。");
 
         BbsRegion regionOne = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, req.getHeader("regioncode")).one();
 
@@ -787,16 +787,41 @@ public class BbsTopicController {
     @ApiOperation(value = "帖子-添加", notes = "帖子-添加")
     @PostMapping(value = "/wise/back/add")
     public Result<?> addWiseBack(@RequestBody BbsTopicPage bbsTopicPage) {
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+
         BbsTopic bbsTopic = new BbsTopic();
         BeanUtils.copyProperties(bbsTopicPage, bbsTopic);
 
         //创建贴子如果是置顶帖，发布时间改为2100.1.1，版块为index,区域为用户当前所在区域
         if ("1".equals(bbsTopic.getTopicType())) {
             bbsTopic.setPublicTime(new Date());
+
         }
+
+        //添加区域、区域全名
+        BbsUserRecord bbsUserRecord = bbsUserRecordService.lambdaQuery()
+                .eq(BbsUserRecord::getCreateBy, sysUser.getUsername())
+                .one();
+        BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecord.getRegionCode()).one();
+        bbsTopic.setClassCode("index");
+        bbsTopic.setRegionCode(bbsUserRecord.getRegionCode());
+        bbsTopic.setRegionFullName(bbsRegion.getFullName());
 
         bbsTopicService.saveMain(bbsTopic, bbsTopicPage.getBbsTopicImageList(), bbsTopicPage.getBbsTopicTagList(), bbsTopicPage.getBbsTopicLinkList());
         return Result.OK("添加成功！");
     }
 
+
+
+    //判断微信小程序用户是否授权个人基本信息
+    public boolean judgeMiniUserAuth(){
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+
+        SysUser sysUser1 = sysUserService.lambdaQuery().eq(SysUser::getUsername, sysUser.getUsername()).one();
+        if(null == sysUser1.getRealname()){
+            return false;
+        }else{
+            return  true;
+        }
+    }
 }

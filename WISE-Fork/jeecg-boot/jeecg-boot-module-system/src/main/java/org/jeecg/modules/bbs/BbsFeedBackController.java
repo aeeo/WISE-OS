@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.bbs.entity.BbsFeedBack;
@@ -249,6 +250,7 @@ public class BbsFeedBackController extends JeecgController<BbsFeedBack, IBbsFeed
     @AutoLog(value = "用户反馈-分页列表查询")
     @ApiOperation(value = "用户反馈-分页列表查询", notes = "用户反馈-分页列表查询")
     @GetMapping(value = "/wise/back/list")
+    @PermissionData(pageComponent = "bbs/operator/feedback/BbsFeedBackList")
     public Result<?> queryPageListWiseBack(BbsFeedBack bbsFeedBack,
                                            @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                            @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,

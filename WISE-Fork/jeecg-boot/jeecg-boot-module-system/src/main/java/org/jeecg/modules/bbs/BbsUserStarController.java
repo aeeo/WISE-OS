@@ -292,6 +292,7 @@ public class BbsUserStarController extends JeecgController<BbsUserStar, IBbsUser
         BbsUserStar oneBbsUserStar = bbsUserStarService.lambdaQuery().eq(BbsUserStar::getCreateBy, sysUser.getUsername()).eq(BbsUserStar::getTopicId, topicId).one();
         BbsTopic oneBbsTopic = bbsTopicService.lambdaQuery().eq(BbsTopic::getId, topicId).one();
         BbsUserRecord oneBbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, sysUser.getUsername()).one();
+        BbsUserRecord beUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, oneBbsTopic.getCreateBy()).one();
         if (isStar) {
             //1、如果one1==null，BbsUserStar插入收藏记录，否则，提示
             if (null == oneBbsUserStar) {
@@ -310,6 +311,11 @@ public class BbsUserStarController extends JeecgController<BbsUserStar, IBbsUser
             bbsUserRecordService.lambdaUpdate().eq(BbsUserRecord::getCreateBy, sysUser.getUsername())
                     .set(BbsUserRecord::getStoneCount, oneBbsUserRecord.getStoneCount() + 5)
                     .set(BbsUserRecord::getStarCount, oneBbsUserRecord.getStarCount() + 1).update();
+
+            //被收藏用户记录 麦子+20 被收藏量+1
+            bbsUserRecordService.lambdaUpdate().eq(BbsUserRecord::getCreateBy, oneBbsTopic.getCreateBy())
+                    .set(BbsUserRecord::getStoneCount, beUserRecord.getStoneCount() + 20)
+                    .set(BbsUserRecord::getBeStarCount, beUserRecord.getBeStarCount() + 1).update();
         } else {
             //1、如果isStar==false，BbsUserStar删除
             if (null == oneBbsUserStar) {
@@ -330,6 +336,11 @@ public class BbsUserStarController extends JeecgController<BbsUserStar, IBbsUser
             boolean b = bbsUserRecordService.lambdaUpdate().eq(BbsUserRecord::getCreateBy, sysUser.getUsername())
                     .set(BbsUserRecord::getStoneCount, oneBbsUserRecord.getStoneCount() - 5)
                     .set(BbsUserRecord::getStarCount, oneBbsUserRecord.getStarCount() - 1).update();
+
+            //被收藏用户记录 麦子-20 被收藏量-1
+            bbsUserRecordService.lambdaUpdate().eq(BbsUserRecord::getCreateBy, oneBbsTopic.getCreateBy())
+                    .set(BbsUserRecord::getStoneCount, beUserRecord.getStoneCount() - 20)
+                    .set(BbsUserRecord::getBeStarCount, beUserRecord.getBeStarCount() - 1).update();
         }
         return Result.OK("成功！");
     }

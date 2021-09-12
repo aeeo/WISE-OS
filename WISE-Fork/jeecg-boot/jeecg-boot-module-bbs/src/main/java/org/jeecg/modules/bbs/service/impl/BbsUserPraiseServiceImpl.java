@@ -55,6 +55,8 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
         // 判断点赞数量是否超出限制
         // 用户记录
         BbsUserRecord bbsUserRecordOne = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, sysUser.getUsername()).one();
+
+
         // 查询用户所在区域设置
         BbsRegion regionOne = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecordOne.getRegionCode()).one();
         if (bbsUserRecordOne.getDayPublishPraise() >= regionOne.getDayPublishPraise()) {
@@ -78,6 +80,7 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
             BbsUserPraise oneBbsUserPraise = bbsUserPraiseService.lambdaQuery().eq(BbsUserPraise::getCreateBy, sysUser.getUsername()).eq(BbsUserPraise::getTopicId, topicId).one();
             BbsTopic oneBbsTopic = bbsTopicService.lambdaQuery().eq(BbsTopic::getId, topicId).one();
             BbsUserRecord oneBbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, sysUser.getUsername()).one();
+            BbsUserRecord beUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, oneBbsTopic.getCreateBy()).one();
             if (isPraise) {
                 //1、如果one1！=null，BbsUserPraise插入点赞记录，否则，提示
                 if (null == oneBbsUserPraise) {
@@ -99,6 +102,12 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
                         .set(BbsUserRecord::getPraiseCount, oneBbsUserRecord.getPraiseCount() + 1)
                         .set(BbsUserRecord::getDayPublishPraise, oneBbsUserRecord.getDayPublishPraise() + 1)
                         .set(BbsUserRecord::getWeekPublishPraise, oneBbsUserRecord.getWeekPublishPraise() + 1)
+                        .update();
+                //被点赞用户 陨石+2 被点赞量+1
+                boolean b1 = bbsUserRecordService.lambdaUpdate()
+                        .eq(BbsUserRecord::getCreateBy, oneBbsTopic.getCreateBy())
+                        .set(BbsUserRecord::getStoneCount, beUserRecord.getStoneCount() + 2)
+                        .set(BbsUserRecord::getBePraiseCount, beUserRecord.getBePraiseCount() + 1)
                         .update();
 
                 //4、贴子收到赞 用户接收信息表 插入一条点赞信息
@@ -130,7 +139,7 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
                 //2、帖子点赞量-1
                 oneBbsTopic.setPraiseCount(oneBbsTopic.getPraiseCount() - 1);
                 bbsTopicService.updateById(oneBbsTopic);
-                //3、用户记录 麦子-1 用户点赞量-1 日点赞数量-1 周点赞数量-1
+                //3、用户记录 陨石-1 用户点赞量-1 日点赞数量-1 周点赞数量-1 总点赞量-1
                 boolean b = bbsUserRecordService.lambdaUpdate()
                         .eq(BbsUserRecord::getCreateBy, sysUser.getUsername())
                         .set(BbsUserRecord::getStoneCount, oneBbsUserRecord.getStoneCount() - 1)
@@ -138,6 +147,13 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
                         .set(BbsUserRecord::getDayPublishPraise, oneBbsUserRecord.getDayPublishPraise() - 1)
                         .set(BbsUserRecord::getWeekPublishPraise, oneBbsUserRecord.getWeekPublishPraise() - 1)
                         .update();
+                //被点赞用户 陨石-2 被点赞量-1
+                boolean b1 = bbsUserRecordService.lambdaUpdate()
+                        .eq(BbsUserRecord::getCreateBy, oneBbsTopic.getCreateBy())
+                        .set(BbsUserRecord::getStoneCount, beUserRecord.getStoneCount() - 2)
+                        .set(BbsUserRecord::getBePraiseCount, beUserRecord.getBePraiseCount() - 1)
+                        .update();
+
                 //4、贴子取消赞 删除一条点赞信息
                 QueryWrapper<BbsUserMessage> userMessageQWrapper = new QueryWrapper<>();
                 userMessageQWrapper.eq("topic_id", topicId);
@@ -159,6 +175,7 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
             BbsUserPraise oneBbsUserPraise = bbsUserPraiseService.lambdaQuery().eq(BbsUserPraise::getCreateBy, sysUser.getUsername()).eq(BbsUserPraise::getMessageId, messageId).one();
             BbsMessageBoard oneBbsMessageBoard = bbsMessageBoardService.lambdaQuery().eq(BbsMessageBoard::getId, messageId).one();
             BbsUserRecord oneBbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, sysUser.getUsername()).one();
+            BbsUserRecord beUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, oneBbsMessageBoard.getCreateBy()).one();
             if (isPraise) {
                 //1、如果one1！=null，BbsUserPraise插入点赞记录，否则，提示
                 if (null == oneBbsUserPraise) {
@@ -180,6 +197,12 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
                         .set(BbsUserRecord::getPraiseCount, oneBbsUserRecord.getPraiseCount() + 1)
                         .set(BbsUserRecord::getDayPublishPraise, oneBbsUserRecord.getDayPublishPraise() + 1)
                         .set(BbsUserRecord::getWeekPublishPraise, oneBbsUserRecord.getWeekPublishPraise() + 1)
+                        .update();
+                //被点赞用户 陨石+2 被点赞量+1
+                boolean b1 = bbsUserRecordService.lambdaUpdate()
+                        .eq(BbsUserRecord::getCreateBy, oneBbsMessageBoard.getCreateBy())
+                        .set(BbsUserRecord::getStoneCount, beUserRecord.getStoneCount() + 2)
+                        .set(BbsUserRecord::getBePraiseCount, beUserRecord.getBePraiseCount() + 1)
                         .update();
 
                 //4、留言收到赞 插入一条点赞信息
@@ -216,6 +239,13 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
                         .set(BbsUserRecord::getDayPublishPraise, oneBbsUserRecord.getDayPublishPraise() - 1)
                         .set(BbsUserRecord::getWeekPublishPraise, oneBbsUserRecord.getWeekPublishPraise() - 1)
                         .update();
+                //被点赞用户 陨石-2 被点赞量-1
+                boolean b1 = bbsUserRecordService.lambdaUpdate()
+                        .eq(BbsUserRecord::getCreateBy, oneBbsMessageBoard.getCreateBy())
+                        .set(BbsUserRecord::getStoneCount, beUserRecord.getStoneCount() - 2)
+                        .set(BbsUserRecord::getBePraiseCount, beUserRecord.getBePraiseCount() - 1)
+                        .update();
+
                 //4、留言板取消赞 删除一条点赞信息
                 QueryWrapper<BbsUserMessage> userMessageQWrapper = new QueryWrapper<>();
                 userMessageQWrapper.eq("message_board_id", messageId);
@@ -262,6 +292,7 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
         BbsUserPraise oneBbsUserPraise = bbsUserPraiseService.lambdaQuery().eq(BbsUserPraise::getCreateBy, sysUser.getUsername()).eq(BbsUserPraise::getReplyId, replyId).one();
         BbsReply oneBbsReply = bbsReplyService.lambdaQuery().eq(BbsReply::getId, replyId).one();
         BbsUserRecord oneBbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, sysUser.getUsername()).one();
+        BbsUserRecord beUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, oneBbsReply.getCreateBy()).one();
         if (isPraise) {
             //1、如果one1！=null，BbsUserPraise插入点赞记录，否则，提示
             if (null == oneBbsUserPraise) {
@@ -276,7 +307,7 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
             //2、评论点赞量+1
             oneBbsReply.setPraise(oneBbsReply.getPraise() + 1);
             bbsReplyService.updateById(oneBbsReply);
-            //3、用户记录 不存在就创建 麦子+1 用户点赞量+1
+            //3、用户记录 麦子+1 用户点赞量+1
             bbsUserRecordService.lambdaUpdate()
                     .eq(BbsUserRecord::getCreateBy, sysUser.getUsername())
                     .set(BbsUserRecord::getStoneCount, oneBbsUserRecord.getStoneCount() + 1)
@@ -284,6 +315,13 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
                     .set(BbsUserRecord::getDayPublishPraise, oneBbsUserRecord.getDayPublishPraise() + 1)
                     .set(BbsUserRecord::getWeekPublishPraise, oneBbsUserRecord.getWeekPublishPraise() + 1)
                     .update();
+            //被点赞用户 陨石+2 被点赞量+1
+            boolean b1 = bbsUserRecordService.lambdaUpdate()
+                    .eq(BbsUserRecord::getCreateBy, oneBbsReply.getCreateBy())
+                    .set(BbsUserRecord::getStoneCount, beUserRecord.getStoneCount() + 2)
+                    .set(BbsUserRecord::getBePraiseCount, beUserRecord.getBePraiseCount() + 1)
+                    .update();
+
             //4、评论收到的赞 插入一条点赞信息
             //消息类型 1留言被点赞 2信息被点赞 3信息被评论 4评论收到赞
             BbsUserMessage bbsUserMessage = new BbsUserMessage();
@@ -324,6 +362,14 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
                     .set(BbsUserRecord::getDayPublishPraise, oneBbsUserRecord.getDayPublishPraise() - 1)
                     .set(BbsUserRecord::getWeekPublishPraise, oneBbsUserRecord.getWeekPublishPraise() - 1)
                     .update();
+
+            //被点赞用户 陨石-2 被点赞量-1
+            boolean b1 = bbsUserRecordService.lambdaUpdate()
+                    .eq(BbsUserRecord::getCreateBy, oneBbsReply.getCreateBy())
+                    .set(BbsUserRecord::getStoneCount, beUserRecord.getStoneCount() - 2)
+                    .set(BbsUserRecord::getBePraiseCount, beUserRecord.getBePraiseCount() - 1)
+                    .update();
+
             //4、评论取消赞 删除一条点赞信息
             QueryWrapper<BbsUserMessage> userMessageQWrapper = new QueryWrapper<>();
             userMessageQWrapper.eq("reply_id", replyId);

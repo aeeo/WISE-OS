@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
@@ -56,6 +57,7 @@ public class BbsActivityController extends JeecgController<BbsActivity, IBbsActi
     @AutoLog(value = "活动-分页列表查询")
     @ApiOperation(value = "活动-分页列表查询", notes = "活动-分页列表查询")
     @GetMapping(value = "/list")
+    @PermissionData(pageComponent = "bbs/operator/activity/BbsActivityList")
     public Result<?> queryPageList(BbsActivity bbsActivity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,

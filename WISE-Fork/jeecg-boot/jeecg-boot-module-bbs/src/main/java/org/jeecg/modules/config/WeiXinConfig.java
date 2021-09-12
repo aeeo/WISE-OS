@@ -1,17 +1,13 @@
 package org.jeecg.modules.config;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
-@Configuration
 @Data
+@Component
+@ConfigurationProperties(prefix = "weixin")
 public class WeiXinConfig {
-
-    @Value("${weixin.appid}")
     private String appid;
-
-    @Value("${weixin.secret}")
     private String secret;
-
 }

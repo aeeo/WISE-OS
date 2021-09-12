@@ -254,17 +254,27 @@ public class BbsRegionServiceImpl extends ServiceImpl<BbsRegionMapper, BbsRegion
     public void updateMain(BbsRegion bbsRegion, List<BbsClass> bbsClassList) {
         bbsRegionMapper.updateById(bbsRegion);
 
-        //1.先删除子表数据
-        bbsClassMapper.deleteByMainId(bbsRegion.getId());
-
-        //2.子表数据重新插入
-        if (bbsClassList != null && bbsClassList.size() > 0) {
-            for (BbsClass entity : bbsClassList) {
+        //1.先删除子表数据(版块无法删除，只能新增)
+        //bbsClassMapper.deleteByMainId(bbsRegion.getId());
+        for (BbsClass item : bbsClassList) {
+            BbsClass bbsClass = bbsClassService.lambdaQuery().eq(BbsClass::getClassCode, item.getClassCode()).eq(BbsClass::getRegionCode, bbsRegion.getRegionCode()).one();
+            if (null != bbsClass) {
+                //(版块无法删除，只能新增)
+                continue;
+            }else{
                 //外键设置
-                entity.setRegionCode(bbsRegion.getRegionCode());
-                bbsClassMapper.insert(entity);
+                item.setRegionCode(bbsRegion.getRegionCode());
+                bbsClassMapper.insert(item);
             }
         }
+        //2.子表数据重新插入
+        //if (bbsClassList != null && bbsClassList.size() > 0) {
+        //    for (BbsClass entity : bbsClassList) {
+        //        //外键设置
+        //        entity.setRegionCode(bbsRegion.getRegionCode());
+        //        bbsClassMapper.insert(entity);
+        //    }
+        //}
     }
 
     @Override

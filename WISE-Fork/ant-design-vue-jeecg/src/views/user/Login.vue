@@ -29,7 +29,8 @@
           </a-row>
         </a-tab-pane>
 
-        <a-tab-pane key="tab2" tab="手机号登录">
+        <!-- 关闭手机号登录 -->
+        <!-- <a-tab-pane key="tab2" tab="手机号登录">
           <a-form-model-item required prop="mobile">
             <a-input v-model="model.mobile" size="large" type="text" placeholder="请输入手机号">
               <a-icon slot="prefix" type="mobile" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -52,7 +53,7 @@
                 v-text="!state.smsSendBtn && '获取验证码' || (state.time+' s')"></a-button>
             </a-col>
           </a-row>
-        </a-tab-pane>
+        </a-tab-pane> -->
 
       </a-tabs>
 
@@ -74,7 +75,8 @@
 
     <two-step-captcha v-if="requiredTwoStepCaptcha"  :visible="stepCaptchaVisible"  @success="stepCaptchaSuccess"  @cancel="stepCaptchaCancel"></two-step-captcha>
     <login-select-tenant ref="loginSelect" @success="loginSelectOk"></login-select-tenant>
-    <third-login ref="thirdLogin"></third-login>
+    <!-- 关闭第三方登录 -->
+    <!-- <third-login ref="thirdLogin"></third-login> -->
   </div>
 </template>
 

@@ -182,7 +182,27 @@ public class BbsSysController extends JeecgController<BbsSys, IBbsSysService> {
     @GetMapping(value = "/wise/mini/queryValueByKey")
     public Result<?> queryValueByKey(@RequestParam(name = "sysKey", defaultValue = "") String sysKey) {
         BbsSys bbsSys = bbsSysService.lambdaQuery().eq(BbsSys::getSysKey, sysKey).one();
-
+        if (null == bbsSys) {
+            return Result.error(1000,"查询值不存在");
+        }
+        Map<String, String> stringHashMap = new HashMap<>();
+        stringHashMap.put("string", bbsSys.getSysValueString());
+        stringHashMap.put("rich", bbsSys.getSysValueRich());
+        return Result.OK(stringHashMap);
+    }
+    /**
+     * 分页列表查询
+     *
+     * @return
+     */
+    @AutoLog(value = "系统配置-根据Key查询值")
+    @ApiOperation(value = "系统配置-根据Key查询值", notes = "系统配置-根据Key查询值")
+    @GetMapping(value = "/wise/mini/queryValueByKey/anon")
+    public Result<?> queryValueByKeyNnon(@RequestParam(name = "sysKey", defaultValue = "") String sysKey) {
+        BbsSys bbsSys = bbsSysService.lambdaQuery().eq(BbsSys::getSysKey, sysKey).one();
+        if (null == bbsSys) {
+            return Result.error(1000,"查询值不存在");
+        }
         Map<String, String> stringHashMap = new HashMap<>();
         stringHashMap.put("string", bbsSys.getSysValueString());
         stringHashMap.put("rich", bbsSys.getSysValueRich());

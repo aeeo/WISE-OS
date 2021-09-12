@@ -25,7 +25,7 @@
             <view class="cu-avatar round lg" style="background-image:url({{item.userAvatar}});">
             </view>
             <view class="content flex-sub">
-              <view>{{item.userRealName}}</view>
+              <view>{{item.createByName}}</view>
               <view class="text-gray text-sm flex justify-between">
                 {{item.createTime}}
               </view>

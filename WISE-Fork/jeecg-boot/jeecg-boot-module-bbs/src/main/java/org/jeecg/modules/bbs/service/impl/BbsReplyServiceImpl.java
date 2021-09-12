@@ -2,24 +2,16 @@ package org.jeecg.modules.bbs.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeecg.common.exception.JeecgBootException;
-import org.jeecg.common.util.oConvertUtils;
-import org.jeecg.modules.bbs.entity.BbsReply;
-import org.jeecg.modules.bbs.mapper.BbsReplyMapper;
-import org.jeecg.modules.bbs.service.*;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.exception.JeecgBootException;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.bbs.entity.*;
-import org.jeecg.modules.bbs.entity.BbsReply;
 import org.jeecg.modules.bbs.mapper.BbsReplyMapper;
 import org.jeecg.modules.bbs.service.IBbsReplyService;
+import org.jeecg.modules.bbs.service.IBbsUserPraiseService;
+import org.jeecg.modules.bbs.service.IBbsUserRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,9 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -226,8 +215,6 @@ public class BbsReplyServiceImpl extends ServiceImpl<BbsReplyMapper, BbsReply> i
     }
 
 
-
-
     // ****行星万象修改位置戳****
 
     /**
@@ -263,22 +250,53 @@ public class BbsReplyServiceImpl extends ServiceImpl<BbsReplyMapper, BbsReply> i
                 .set(BbsUserRecord::getDayPublishReply, bbsUserRecordOne.getDayPublishReply() + 1)  //当天评论数+1
                 .set(BbsUserRecord::getWeekPublishReply, bbsUserRecordOne.getWeekPublishReply() + 1)  //本周评论数+1
                 .update();
+
+
         //被评论用户接受消息 用户收到的回复表 插入数据
         BbsUserMessage bbsUserMessage = new BbsUserMessage();
         bbsUserMessage.setCreateBy(sysUser.getUsername());
         bbsUserMessage.setMessageType("3");
-        BbsTopic one = bbsTopicService.lambdaQuery().eq(BbsTopic::getId, bbsReply.getTopicId()).one();
-        bbsUserMessage.setReceiveUsername(one.getCreateBy());
-        bbsUserMessage.setTopicId(bbsReply.getTopicId());
-        bbsUserMessage.setReplyContent(bbsReply.getContent());
-        bbsUserMessage.setRegionCode(bbsUserRecordOne.getRegionCode());
-        //封装一张贴子图片
-        List<BbsTopicImage> bbsTopicImageList = bbsTopicImageService.lambdaQuery().eq(BbsTopicImage::getTopicId, bbsReply.getTopicId()).list();
-        if (bbsTopicImageList.size() != 0) {
-            bbsUserMessage.setTopicImageUrl(bbsTopicImageList.get(0).getTopicImage());
+
+        //被评论用户更新
+        if (null != bbsReply.getBeReplyUsername()) {
+            bbsUserMessage.setReceiveUsername(bbsReply.getBeReplyUsername());
+            bbsUserMessage.setTopicId(bbsReply.getTopicId());
+            bbsUserMessage.setReplyContent(bbsReply.getContent());
+            bbsUserMessage.setRegionCode(bbsUserRecordOne.getRegionCode());
+            //封装一张贴子图片
+            List<BbsTopicImage> bbsTopicImageList = bbsTopicImageService.lambdaQuery().eq(BbsTopicImage::getTopicId, bbsReply.getTopicId()).list();
+            if (bbsTopicImageList.size() != 0) {
+                bbsUserMessage.setTopicImageUrl(bbsTopicImageList.get(0).getTopicImage());
+            }
+
+            BbsUserRecord beRecordOne = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, bbsReply.getBeReplyUsername()).one();
+            boolean b2 = bbsUserRecordService.lambdaUpdate()
+                    .eq(BbsUserRecord::getCreateBy, beRecordOne.getCreateBy())
+                    .set(BbsUserRecord::getStoneCount, beRecordOne.getStoneCount() + 10)
+                    .set(BbsUserRecord::getBeCommentCount, beRecordOne.getBeCommentCount() + 1)
+                    .update();
+        } else {
+            BbsTopic one = bbsTopicService.lambdaQuery().eq(BbsTopic::getId, bbsReply.getTopicId()).one();
+            bbsUserMessage.setReceiveUsername(one.getCreateBy());
+            bbsUserMessage.setTopicId(bbsReply.getTopicId());
+            bbsUserMessage.setReplyContent(bbsReply.getContent());
+            bbsUserMessage.setRegionCode(bbsUserRecordOne.getRegionCode());
+            //封装一张贴子图片
+            List<BbsTopicImage> bbsTopicImageList = bbsTopicImageService.lambdaQuery().eq(BbsTopicImage::getTopicId, bbsReply.getTopicId()).list();
+            if (bbsTopicImageList.size() != 0) {
+                bbsUserMessage.setTopicImageUrl(bbsTopicImageList.get(0).getTopicImage());
+            }
+            BbsUserRecord beRecordOne = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, one.getCreateBy()).one();
+
+            boolean b2 = bbsUserRecordService.lambdaUpdate()
+                    .eq(BbsUserRecord::getCreateBy, one.getCreateBy())
+                    .set(BbsUserRecord::getStoneCount, beRecordOne.getStoneCount() + 10)
+                    .set(BbsUserRecord::getBeCommentCount, beRecordOne.getBeCommentCount() + 1)
+                    .update();
         }
 
         //贴子评论数+1
+        BbsTopic one = bbsTopicService.lambdaQuery().eq(BbsTopic::getId, bbsReply.getTopicId()).one();
         bbsTopicService.lambdaUpdate().eq(BbsTopic::getId, bbsReply.getTopicId()).set(BbsTopic::getReplyCount, one.getReplyCount() + 1).update();
         bbsUserMessageService.saveOrUpdate(bbsUserMessage);
         return Result.OK("添加成功！");
@@ -335,11 +353,27 @@ public class BbsReplyServiceImpl extends ServiceImpl<BbsReplyMapper, BbsReply> i
         }
 
 
-
         //用户陨石数量-5
         BbsUserRecord sysUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, sysUser.getUsername()).one();
         sysUserRecord.setStoneCount(sysUserRecord.getStoneCount() - 5);
         bbsUserRecordService.updateById(sysUserRecord);
+
+
+        //评论删除暂时不更新
+        //if(null != bbsReply.getBeReplyUsername()){
+        //    BbsUserRecord beRecordOne = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, bbsReply.getBeReplyUsername()).one();
+        //    boolean b2 = bbsUserRecordService.lambdaUpdate()
+        //            .eq(BbsUserRecord::getCreateBy, beRecordOne.getCreateBy())
+        //            .set(BbsUserRecord::getStoneCount, bbsUserRecordOne.getStoneCount() + 10)
+        //            .set(BbsUserRecord::getBeCommentCount, bbsUserRecordOne.getBeCommentCount() + 1)
+        //            .update();
+        //}else {
+        //    boolean b2 = bbsUserRecordService.lambdaUpdate()
+        //            .eq(BbsUserRecord::getCreateBy, one.getCreateBy())
+        //            .set(BbsUserRecord::getStoneCount, bbsUserRecordOne.getStoneCount() + 10)
+        //            .set(BbsUserRecord::getBeCommentCount, bbsUserRecordOne.getBeCommentCount() + 1)
+        //            .update();
+        //}
     }
 
     @Override

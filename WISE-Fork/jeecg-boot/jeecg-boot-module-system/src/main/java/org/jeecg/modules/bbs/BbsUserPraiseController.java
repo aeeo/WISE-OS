@@ -35,6 +35,8 @@ import java.util.Arrays;
 @Slf4j
 public class BbsUserPraiseController extends JeecgController<BbsUserPraise, IBbsUserPraiseService> {
     @Autowired
+    private BbsTopicController bbsAuthController;
+    @Autowired
     private IBbsUserPraiseService bbsUserPraiseService;
     @Autowired
     private BbsTopicServiceImpl bbsTopicService;
@@ -176,6 +178,9 @@ public class BbsUserPraiseController extends JeecgController<BbsUserPraise, IBbs
     @ApiOperation(value = "用户点赞/取消赞", notes = "用户点赞/取消赞")
     @PostMapping(value = "/wise/mini/clickPraise")
     public Result<?> clickPraise(String topicId, @RequestParam(value = "isPraise") Boolean isPraise, String messageId) {
+        if (!bbsAuthController.judgeMiniUserAuth()) {
+            return Result.error(1000, "未授权,无法点赞。");
+        }
         return bbsUserPraiseService.clickPraise(topicId, isPraise, messageId);
     }
 
@@ -189,6 +194,9 @@ public class BbsUserPraiseController extends JeecgController<BbsUserPraise, IBbs
     @ApiOperation(value = "评论点赞/取消赞", notes = "评论点赞/取消赞")
     @PostMapping(value = "/wise/mini/clickReplyPraise")
     public Result<?> clickReplyPraise(String replyId, @RequestParam(value = "isPraise") Boolean isPraise) {
+        if (!bbsAuthController.judgeMiniUserAuth()) {
+            return Result.error(1000, "未授权,无法点赞。");
+        }
         return bbsUserPraiseService.clickReplyPraise(replyId, isPraise);
     }
 }

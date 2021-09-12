@@ -48,6 +48,8 @@ import java.util.List;
 @Slf4j
 public class BbsReplyController extends JeecgController<BbsReply, IBbsReplyService> {
     @Autowired
+    private BbsTopicController bbsAuthController;
+    @Autowired
     private IBbsReplyService bbsReplyService;
     @Autowired
     private ISysUserService sysUserService;
@@ -403,6 +405,9 @@ public class BbsReplyController extends JeecgController<BbsReply, IBbsReplyServi
     @ApiOperation(value = "帖子回复-添加", notes = "帖子回复-添加")
     @PostMapping(value = "/wise/mini/add")
     public Result<?> addWiseMini(@RequestBody BbsReply bbsReply) {
+        if (!bbsAuthController.judgeMiniUserAuth()) {
+            return Result.error(1000, "未授权,无法评论。");
+        }
         //内容审核
         ContentCheck contentCheck = new ContentCheck();
         Result<?> result3 = contentCheck.checkBySensitiveWord(bbsReply.getContent());

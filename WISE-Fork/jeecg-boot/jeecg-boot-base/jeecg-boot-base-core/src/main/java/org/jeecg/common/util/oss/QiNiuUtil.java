@@ -31,7 +31,6 @@ import java.io.InputStream;
 @Slf4j
 @Data
 public class QiNiuUtil {
-    private static QiNiuOssConfiguration qiNiuOssConfiguration = new QiNiuOssConfiguration();;
 
     /**
      * 基础配置

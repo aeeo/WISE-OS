@@ -1,6 +1,6 @@
 <view style="height:{{showType=='scrollView'?'600px':'100%'}};background-color:#00000000;">
   <view class="bg-white padding-xs" style="height:25px;text-align:center">{{replyResult.total == null ?
-    0:replyResult.total}}条评论</view>
+    '':replyResult.total}}条评论</view>
   <scroll-view scroll-y="true" class="bg-white padding-sm" style="height:525px;bottom:55px;padding-bottom:0px"
     bindscrolltolower="getFullReplysNext" bindrefresherrefresh="socallRefresh" refresher-enabled="true"
     refresher-triggered="{{isPull}}" wx-if="{{showType=='scrollView'}}">

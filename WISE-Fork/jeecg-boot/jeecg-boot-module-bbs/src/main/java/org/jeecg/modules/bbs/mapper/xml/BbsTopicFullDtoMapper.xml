@@ -51,7 +51,7 @@
         content,
         enabled,
         hits_count,
-        reply_count,
+        ( SELECT COUNT(1) FROM bbs_reply WHERE bbs_reply.topic_id = bbs_topic.id ) AS reply_count,
         replied_by,
         replied_time,
         icon_id,

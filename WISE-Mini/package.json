@@ -13,6 +13,6 @@
     "miniprogram-sm-crypto": "^0.2.1",
     "tim-upload-plugin": "^1.0.1",
     "tim-wx-sdk-ws": "^2.11.1",
-    "weui-miniprogram": "^1.0.6"
+    "weui-miniprogram": "^1.1.0"
   }
 }

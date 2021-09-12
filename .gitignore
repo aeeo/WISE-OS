@@ -9,7 +9,7 @@
 ## front
 **/*.lock
 
-
+**/dist/**
 **/target/
 **/node_modules/
 **/miniprogram_npm/

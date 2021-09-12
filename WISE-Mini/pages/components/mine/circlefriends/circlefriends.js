@@ -22,7 +22,7 @@ Page({
     let url = app.globalData.HOSTURL + '/bbs/bbsRegion/wise/mini/queryByRegionCode?regionCode=' + this.data.USERRECORD.regionCode
     app.wxRequest('get', url, '', 5000).then(res => {
       that.setData({
-        regionInfo:res.data.result
+        regionInfo: res.data.result
       })
     })
   },
@@ -77,9 +77,10 @@ Page({
   },
   //点击topic图片放大预览
   clickTopicImage(event) {
+    var that = this
     var imageList = []
     wx.previewImage({
-      urls: ['https://7769-wise-8gstknvn9fa40bf1-1304476647.tcb.qcloud.la/system_image/region-xawlxy-1-circle-friends.jpg?sign=3528c0f9ac3dcece144bcdf0d8337f2d&t=1611151993'], //需要预览的图片http链接列表，注意是数组
+      urls: [that.data.UPLOAD_IMAGE + that.data.regionInfo.circleFriendsImage], //需要预览的图片http链接列表，注意是数组
       current: 0, // 当前显示图片的http链接，默认是第一个
       success: function (res) { },
       fail: function (res) { },
