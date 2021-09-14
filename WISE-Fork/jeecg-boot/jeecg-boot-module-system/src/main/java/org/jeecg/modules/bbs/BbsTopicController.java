@@ -42,6 +42,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -794,8 +796,13 @@ public class BbsTopicController {
 
         //创建贴子如果是置顶帖，发布时间改为2100.1.1，版块为index,区域为用户当前所在区域
         if ("1".equals(bbsTopic.getTopicType())) {
-            bbsTopic.setPublicTime(new Date());
-
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date d = sdf.parse("2100-01-01 00:00:00");
+                bbsTopic.setPublicTime(d);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         //添加区域、区域全名
