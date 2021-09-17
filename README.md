@@ -4,7 +4,7 @@
 ![请添加图片描述](https://img-blog.csdnimg.cn/2c761508b0db4afa9d2616e3f4b43886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25iY3Nkbg==,size_16,color_FFFFFF,t_70)
 
 
-好项目应该被顶起来，可以的话给个Star鼓励下：
+好项目应该被顶起来，可以的话给个**Star**鼓励下：
 
 > Gitee：
 > > [Gitee：https://gitee.com/vtep/WISE-OS.git](https://gitee.com/vtep/WISE-OS.git)
@@ -15,7 +15,7 @@
 
 行星万象后台管理系统，第一次加载会比较慢，正式地址，不提供体验账号密码：
 
-> [行星万象后台管理系统](https://www.vtep.cn)
+> [行星万象后台管理系统：https://www.vtep.cn](https://www.vtep.cn)
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/b6074f3633774fa5b0505d187e032072.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16)
 
@@ -24,7 +24,7 @@
 > [JeecgBoot演示](http://boot.jeecg.com/user/login)
 > 账户/密码：jeecg/123456
 
-在此说一下，截止2021年8月25日，行星万象项目陆陆续续开发了近1年时间，到现在为止基本功能已经开发完毕，有时间的话把即时聊天功能集成进去，本项目我会一直维护下去，只是一个人精力有限，进展可能会比较慢，但是放心不会烂尾，为了让新人快速上手，我会在开发文档这边花比较多的精力，做到傻瓜式步骤，保证拿到代码先能跑起来。
+在此说一下，截止2021年8月25日，行星万象项目陆陆续续开发了近1年时间，到现在为止基本功能已经开发完毕，有时间的话把即时聊天功能集成进去，同时也保证会一直维护下去，丰满功能，只是一个人精力有限，进展可能会比较慢，但请放心绝不会烂尾，为了让新人快速上手，我会在开发文档这边花比较多的精力，做到傻瓜式步骤，保证拿到代码先能跑起来。
 
 本项目所有的代码都可以拿去修改部署，免费使用，但是你必须要注明：
 
