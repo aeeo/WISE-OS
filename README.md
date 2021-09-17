@@ -1,6 +1,14 @@
 # 简介
 一个信息发布类型的微信小程序，可以在线发布需求，例如寻人、寻物、打听，表白等。可改造表白墙、校园信息发布、帮打听、城市交流圈、大型朋友圈，废话不说，扫码查看小程序演示：
 ![请添加图片描述](https://img-blog.csdnimg.cn/2c761508b0db4afa9d2616e3f4b43886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25iY3Nkbg==,size_16,color_FFFFFF,t_70)
+好项目应该被顶起来，可以的话给个Star鼓励下：
+
+> Gitee：
+> > [Gitee：https://gitee.com/vtep/WISE-OS.git](https://gitee.com/vtep/WISE-OS.git)
+>
+> Github：
+>
+> > [https://github.com/geneedyou/WISE-OS.git](https://github.com/geneedyou/WISE-OS.git)
 
 行星万象后台管理系统，第一次加载会比较慢，正式地址，不提供体验账号密码：
 
@@ -17,7 +25,7 @@
 
 本项目所有的代码都可以拿去修改部署，免费使用，但是你必须要注明：
 
-> [PowerBy 陕西行星环绕信息科技有限公司](https://gitee.com/vtep/WISE-OS.git)
+> [PowerBy Https://gitee.com/vtep/WISE-OS](https://gitee.com/vtep/WISE-OS.git)
 
 如果只是需要使用线上系统可以联系我，我帮你开通区域，但是硬件和资源成本还是希望能分担一下，我不凭借这个系统赚钱，但是也不想成为我的经济负担，具体联系：18700871300（同微信）。
 
@@ -45,7 +53,12 @@
 
 1. 下载源码，开源不易，务必Star。
 
-> [https://gitee.com/vtep/WISE-OS.git](https://gitee.com/vtep/WISE-OS.git)
+> Gitee：
+> > [Gitee：https://gitee.com/vtep/WISE-OS.git](https://gitee.com/vtep/WISE-OS.git)
+>
+> Github：
+>
+> > [https://github.com/geneedyou/WISE-OS.git](https://github.com/geneedyou/WISE-OS.git)
 
 2. 初始化数据库
 
