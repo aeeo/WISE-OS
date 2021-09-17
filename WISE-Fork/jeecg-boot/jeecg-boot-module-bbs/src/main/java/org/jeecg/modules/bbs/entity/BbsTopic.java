@@ -1,23 +1,25 @@
 package org.jeecg.modules.bbs.entity;
 
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.jeecgframework.poi.excel.annotation.Excel;
+import org.jeecg.common.aspect.annotation.Dict;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import org.jeecg.common.aspect.annotation.Dict;
-import org.jeecgframework.poi.excel.annotation.Excel;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
 
 /**
  * @Description: 帖子
  * @Author: jeecg-boot
- * @Date: 2021-06-01
+ * @Date: 2021-09-17
  * @Version: V1.0
  */
 @ApiModel(value = "bbs_topic对象", description = "帖子")
@@ -169,6 +171,12 @@ public class BbsTopic implements Serializable {
     @ApiModelProperty(value = "收藏总数")
     private java.lang.Integer starCount;
     /**
+     * 举报次数
+     */
+    @Excel(name = "举报次数", width = 15)
+    @ApiModelProperty(value = "举报次数")
+    private java.lang.Integer informCount;
+    /**
      * 区域编码
      */
     @Excel(name = "区域编码", width = 15)
@@ -180,12 +188,6 @@ public class BbsTopic implements Serializable {
     @Excel(name = "区域全名", width = 15)
     @ApiModelProperty(value = "区域全名")
     private java.lang.String regionFullName;
-    /**
-     * 举报次数
-     */
-    @Excel(name = "举报次数", width = 15)
-    @ApiModelProperty(value = "举报次数")
-    private java.lang.Integer informCount;
     /**
      * 版块编码
      */
@@ -232,4 +234,12 @@ public class BbsTopic implements Serializable {
      */
     @TableField(exist = false)
     private java.lang.String className;
+
+    /**
+     * 是否匿名
+     */
+    @Excel(name = "是否匿名", width = 15, dicCode = "bbs_topic_anon")
+    @Dict(dicCode = "bbs_topic_anon")
+    @ApiModelProperty(value = "是否匿名")
+    private java.lang.Integer anon;
 }

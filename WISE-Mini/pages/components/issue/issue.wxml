@@ -87,6 +87,12 @@
 			</view> -->
 		</view>
 	</view>
+	<view class="cu-form-group">
+		<view class="title">匿名发布</view>
+		<checkbox-group bindchange="switchAnon">
+			<checkbox class="round" checked="{{isAnon}}"></checkbox>
+		</checkbox-group>
+	</view>
 	<view class="cu-bar btn-group" wx:if="{{!isEdit}}">
 		<button class="cu-btn bg-grey shadow-blur" formType="submit" data-type="1">
 			<text class="text-cyan"></text>保存为草稿</button>

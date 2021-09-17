@@ -49,6 +49,7 @@ Page({
     isLoad: true,
     UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE,
     THUMBNAIL: app.globalData.THUMBNAIL,
+    isAnon:false,       //是否匿名
 
     imageReturnList: [],
     // 图片上传（从相册）返回对象。上传完成后，此属性被赋值
@@ -244,6 +245,10 @@ Page({
     this.setData({
       textareaBValue: e.detail.value
     })
+  },
+  // mark: 是否匿名
+  switchAnon(e){
+    this.data.isAnon = !this.data.isAnon
   },
   /**
    * 表单上传
@@ -652,6 +657,7 @@ function wiseUpload(that, filePath) {
       cancelTask
     })
   );
+ 
 }
 
 // 文件上传（从客户端会话）方法，支持图片、视频、其余文件 (PDF(.pdf), Word(.doc/.docx), Excel(.xls/.xlsx), PowerPoint(.ppt/.pptx)等文件格式)
