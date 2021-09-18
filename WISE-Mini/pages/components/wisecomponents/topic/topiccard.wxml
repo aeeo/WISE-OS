@@ -8,7 +8,7 @@
         <!-- catchtap="clickAvatarImage" -->
         <view class="cu-avatar round lg margin" catchtap="goUserInfo" hover-stop-propagation='true'
           data-username="{{topicItem.createBy}}" data-imagelist="{{topicItem.avatar}}"
-          style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.avatar}}{{THUMBNAIL}});">
+          style="background-image:url({{UPLOAD_IMAGE}}{{anon == 0 ? topicItem.avatar : '1435532572659044354_1631533971540.jfif'}}{{THUMBNAIL}});">
         </view>
         <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}">
           <view class="flex align-center">
