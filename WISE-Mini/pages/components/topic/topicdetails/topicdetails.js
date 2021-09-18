@@ -19,7 +19,7 @@ Page({
     isLoad: true,
     hasReply: 'none', //空评论标志
     navigateButtonList: [], //贴子中链接跳转列表
-    regionCode:'',
+    regionCode: '',
     onReachBottomLoading: false,
     nextPage: false,
     showLoad: true,
@@ -35,8 +35,8 @@ Page({
 
     topicId: '',
     SHAREHOSTURL: '', //朋友圈分享的页面使用这个主机地址
-    isAnon: '' //是否调用匿名接口
-
+    isAnon: '', //是否调用匿名接口
+    hasTopicDetails: true     //是否能加载到信息，默认能
   },
   onLoad(options) {
     console.log(options)
@@ -60,9 +60,13 @@ Page({
       // url传参检测
       if (undefined != options.topicId) {
         topicdetailsTmp.id = options.topicId
+        if (obj.scene == 1155) {      //从朋友圈单页打开左上角显示返回主页
+          that.setData({
+            showHome: true
+          })
+        }
         that.setData({
           topicdetails: topicdetailsTmp,
-          showHome: true,
           regionCode: options.regionCode
         })
       } else {
@@ -144,45 +148,12 @@ Page({
           if (result.editTime) {
             result.editTime = formatUtil.showDate(new Date(result.editTime.replace(/-/g, '/')))
           }
-
-          // content 插入标志规则 !_SkipTopic_西安文理学院教务处_13453091178306887691_!
-          // 正则表达式替换内容 获取指定字符串之后：  (?<=指定字符串)获取指定字符串之前： (?=指定字符串)，实现
-          // /(?<=!_).+(?=_!)/
-          // 生成按钮列表
-
-          let navigateButtonListTmp = []
-          let navBtnList = result.content.match(/(?=!_).+(?:_!)+/g);
-          // let navBtnList = new RegExp().group().exec()
-          // --------
-          // if (null != navBtnList) {
-          //   navBtnList.forEach(item => {
-          //     let navBtnTmp = {}
-          //     let navBtnList = item.split("_")
-          //     navBtnTmp.title = navBtnList[2]
-          //     navBtnTmp.topicId = navBtnList[3]
-          //     navigateButtonListTmp.push(navBtnTmp)
-          //   })
-          //   // console.log(navBtnList)
-          //   // console.log(navigateButtonListTmp)
-          //   that.setData({
-          //     navigateButtonList: navigateButtonListTmp
-          //   })
-          //   result.content = result.content.replace(/(?=!_).+(?:_!)/g, '')
-          //   // result.content = result.content.replace("<p></p>", '')
-          //   result.content = result.content.replace(new RegExp('<p></p>', 'g'), '')
-          //   result.content = result.content.replace(new RegExp('\n', 'g'), '')
-          //   // result.content = result.content.replace("\n", '')
-          //   console.log(result.content)
-          // }
-          // --------
           that.setData({
             topicdetails: result,
             getTopicFlag: true,
-            isFirstGetTopicFlag: false
+            isFirstGetTopicFlag: false,
+            hasTopicDetails: true
           })
-          if (res.data) {
-
-          }
           if (that.data.isPullRefresh) {
             wx.showToast({
               title: '刷新成功',
@@ -191,7 +162,6 @@ Page({
             that.data.isPullRefresh = false
             wx.stopPullDownRefresh()
           }
-
         } else {
           that.setData({
             pageNo: this.data.pageNo - 1,
@@ -208,8 +178,11 @@ Page({
         }
       } else {
         wx.showToast({
-          title: '获取信息失败',
+          title: '获取信息失败',  
           icon: "none"
+        })
+        that.setData({
+          hasTopicDetails: false  //隐藏所有信息
         })
       }
     }, err => {
@@ -217,6 +190,9 @@ Page({
         wx.showToast({
           title: '刷新失败',
           icon: 'none'
+        })
+        that.setData({
+          hasTopicDetails: false      //隐藏所有信息
         })
         that.data.isPullRefresh = false
         wx.stopPullDownRefresh()
@@ -512,6 +488,10 @@ Page({
     } else if (bbsTopicLinkItem.linkType == 1) { //跳转功能页
       wx.navigateTo({
         url: bbsTopicLinkItem.linkUrl + bbsTopicLinkItem.parameter,
+      })
+    } else {
+      wx.showToast({
+        title: '跳转链接失效。',
       })
     }
   },

@@ -339,7 +339,8 @@ Page({
           replyCount: 0,
           hitsCount: 0,
           classCode: that.data.userSeleceTopicClassCode == "" ? "index" : that.data.userSeleceTopicClassCode,
-          regionCode: wx.getStorageSync('USERRECORD').regionCode
+          regionCode: wx.getStorageSync('USERRECORD').regionCode,
+          anon: that.data.isAnon ? 1 : 0      //1:匿名
         }
         this.setData({
           isLoad: false

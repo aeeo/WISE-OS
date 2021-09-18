@@ -8,11 +8,11 @@
         <!-- catchtap="clickAvatarImage" -->
         <view class="cu-avatar round lg margin" catchtap="goUserInfo" hover-stop-propagation='true'
           data-username="{{topicItem.createBy}}" data-imagelist="{{topicItem.avatar}}"
-          style="background-image:url({{UPLOAD_IMAGE}}{{anon == 1 ? topicItem.avatar : '1435532572659044354_1631533971540.jfif'}}{{THUMBNAIL}});">
+          style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.anon == 0 ? topicItem.avatar : (topicItem.sex==1 ? 'sys/anonboy.jfif' : 'sys/anongirl.jfif')}}{{THUMBNAIL}});">
         </view>
         <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}">
           <view class="flex align-center">
-            <view style="color:black;">{{anon == 1 ? topicItem.bbsCreateByName : '神秘嘉宾'}}{{}}</view>
+            <view style="color:black;">{{topicItem.anon == 0 ? topicItem.bbsCreateByName : (topicItem.sex==1 ? '行星小伙' : '行星小妹')}}</view>
             <!-- 角色 -->
             <view wx:if="{{showRole}}"
               class="cu-tag bg-{{topicItem.userRole=='开发者'?'yellow':(topicItem.userRole=='官方'?'red':'grey')}} sm radius"
@@ -59,8 +59,10 @@
       <view class="cuIcon-back"></view>
       <scroll-view style="width:90%;" scroll-x="true">
         <view class="flex">
-          <view class="padding-xs" wx:for-item="topicLinkItem"  wx:for="{{topicItem.bbsTopicLinkList}}">
-            <view class="cu-tag line-pink" catchtap="goTopicLink" hover-stop-propagation='true' data-topicLinkItem="{{topicLinkItem}}">{{topicLinkItem.title}}</view>
+          <view class="padding-xs" wx:key="linkIndex" wx:for-item="linkIndex" wx:for-item="topicLinkItem"
+            wx:for="{{topicItem.bbsTopicLinkList}}">
+            <view class="cu-tag line-pink" catchtap="g oTopicLink" hover-stop-propagation='true'
+              data-topicLinkItem="{{topicLinkItem}}">{{topicLinkItem.title}}</view>
           </view>
         </view>
       </scroll-view>
@@ -107,11 +109,11 @@
         <!-- catchtap="clickAvatarImage" -->
         <view class="cu-avatar round lg margin" catchtap="goUserInfo" hover-stop-propagation='true'
           data-username="{{topicItem.createBy}}" data-imagelist="{{topicItem.avatar}}"
-          style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.avatar}}{{THUMBNAIL}});">
+          style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.anon == 0 ? topicItem.avatar : (topicItem.sex==1 ? 'sys/anonboy.jfif' : 'sys/anongirl.jfif')}}{{THUMBNAIL}});">
         </view>
         <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}">
           <view class="flex align-center">
-            <view style="color:black;">{{topicItem.bbsCreateByName}}</view>
+            <view style="color:black;">{{topicItem.anon == 0 ? topicItem.bbsCreateByName : (topicItem.sex==1 ? '行星小伙' : '行星小妹')}}</view>
             <!-- 角色 -->
             <view wx:if="{{showRole}}"
               class="cu-tag bg-{{topicItem.userRole=='开发者'?'yellow':(topicItem.userRole=='官方'?'red':'grey')}} sm radius"

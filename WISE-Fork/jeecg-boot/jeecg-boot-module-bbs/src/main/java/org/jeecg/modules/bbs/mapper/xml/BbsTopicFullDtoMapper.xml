@@ -22,6 +22,7 @@
         a.public_time AS publicTime,
         a.edit_time AS editTime,
         a.sys_org_code AS sysOrgCode,
+        a.anon AS anon,
         b.id AS imageId,
         b.topic_image AS topicImage,
         c.id AS tagId,
@@ -72,7 +73,8 @@
         region_full_name,
         public_time,
         edit_time,
-        sys_org_code
+        sys_org_code,
+        anon
         FROM bbs_topic
         WHERE region_code = #{regionCode}
         and status = 1
@@ -117,6 +119,7 @@
         a.public_time AS publicTime,
         a.edit_time AS editTime,
         a.sys_org_code AS sysOrgCode,
+        a.anon AS anon,
         b.id AS imageId,
         b.topic_image AS topicImage,
         c.id AS tagId,
@@ -171,7 +174,8 @@
         region_full_name,
         public_time,
         edit_time,
-        sys_org_code
+        sys_org_code,
+        anon
         FROM bbs_topic
         WHERE status = 1
         <if test="username != null">
@@ -213,6 +217,7 @@
                a.replied_time     AS repliedTime,
                a.icon_id          AS iconId,
                a.del_flag         AS delFlag,
+               a.anon             AS anon,
                b.id               AS imageId,
                b.topic_image      AS topicImage,
                c.id               AS tagId,
@@ -290,6 +295,7 @@
         <result property="publicTime" column="publicTime"/>
         <result property="editTime" column="editTime"/>
         <result property="sysOrgCode" column="sysOrgCode"/>
+        <result property="anon" column="anon"/>
         <collection property="bbsTopicImageList" ofType="org.jeecg.modules.bbs.entity.BbsTopicImage">
             <id property="id" column="imageId"/>
             <result property="topicImage" column="topicImage"/>

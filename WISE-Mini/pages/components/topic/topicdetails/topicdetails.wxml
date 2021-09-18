@@ -6,7 +6,7 @@
     <view class="cu-load load-icon {{!isLoad?'loading':'over'}}"></view>
   </view>
 </cu-custom>
-<view class="cu-card dynamic {{isCard?'no-card':''}}" style="padding-bottom: 100rpx;">
+<view wx:if="{{hasTopicDetails}}" class="cu-card dynamic {{isCard?'no-card':''}}" style="padding-bottom: 100rpx;">
   <view class="cu-item shadow">
     <view class="cu-list menu-avatar">
       <view class="flex justify-between">
@@ -118,11 +118,12 @@
     <!-- <wise-topic-reply fullReplys="{{fullReplys}}" topicId="{{topicdetails}}"></wise-topic-reply> -->
     <wise-topic-reply hidden="{{false}}" replyTopicDetails="{{topicdetails}}" showType="longList"
       nextPage="{{nextPage}}"></wise-topic-reply>
-
   </view>
-
+  <!-- 收藏举报提示框 -->
+  <mp-actionSheet show="{{showActionsheet}}" actions="{{actionGroups}}" bindactiontap="clickAction"></mp-actionSheet>
 </view>
 
-
-<!-- 收藏举报提示框 -->
-<mp-actionSheet show="{{showActionsheet}}" actions="{{actionGroups}}" bindactiontap="clickAction"></mp-actionSheet>
+<view wx:if="{{!hasTopicDetails}}" style="text-align:center;margin-top:10rpx">
+  <image src="/static/images/nodata.png" style="width: 140rpx;height:140rpx;"></image>
+  <view>啊哦，内容找不到啦，返回吧</view>
+</view>

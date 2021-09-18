@@ -221,4 +221,8 @@ public class BbsTopicPage {
     @ApiModelProperty(value = "帖子跳转链接")
     private List<BbsTopicLink> bbsTopicLinkList;
 
+    @ExcelCollection(name = "是否匿名")
+    @ApiModelProperty(value = "是否匿名")
+    private int anon;
+
 }

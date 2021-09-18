@@ -252,11 +252,25 @@ Component({
         url: '/pages/components/mine/userinfo/userinfo?username=' + e.currentTarget.dataset.username,
       })
     },
-    goTopicLink(e){
-      console.log(e)
-      wx.navigateTo({
-        url: '/pages/components/mine/userinfo/userinfo?username=' + e.currentTarget.dataset.username,
-      })
+    goTopicLink(e) {
+      // 0：链接帖子 
+      // 1：链接功能页
+      let linkItem = e.target.dataset.topiclinkitem
+      console.log(e.target.dataset.topiclinkitem)
+      if (linkItem.linkType == 0) {
+        wx.navigateTo({
+          url: '/pages/components/topic/topicdetails/topicdetails?topicId=' + linkItem.linkUrl
+        })
+      } else if (linkItem.linkType == 1) {
+        wx.navigateTo({
+          url: linkItem.linkUrl + linkItem.parameter,
+        })
+      } else {
+        wx.showToast({
+          title: '跳转链接失效。',
+        })
+      }
     }
+
   },
 })
