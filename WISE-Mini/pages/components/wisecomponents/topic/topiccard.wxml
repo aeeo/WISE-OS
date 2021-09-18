@@ -59,8 +59,8 @@
       <view class="cuIcon-back"></view>
       <scroll-view style="width:90%;" scroll-x="true">
         <view class="flex">
-          <view class="padding-xs" wx:for="{{ColorList}}">
-            <view class="cu-tag line-pink">匿名发布，陨石兑换</view>
+          <view class="padding-xs" wx:for-item="topicLinkItem"  wx:for="{{topicItem.bbsTopicLinkList}}">
+            <view class="cu-tag line-pink" catchtap="goTopicLink" hover-stop-propagation='true' data-topicLinkItem="{{topicLinkItem}}">{{topicLinkItem.title}}</view>
           </view>
         </view>
       </scroll-view>
