@@ -7,9 +7,10 @@
         bindupdated="bindupdated"></map>
     </view>
   </view>
-  <view class='text-center' style="width:400rpx;position: absolute;left: 0;right: 0; bottom: 100rpx;margin: auto;">
+  <view class='text-center' style="width:450rpx;position: absolute;left: 0;right: 0; bottom: 100rpx;margin: auto;">
     <view class='cu-btn bg-blue lg block shadow round margin-xl' bindtap="showModal" data-module="viewModal"
       data-target="viewModal">
+      <view class="cuIcon-list" style="margin-right:20rpx"></view>
       切换列表查看
     </view>
   </view>
@@ -45,7 +46,9 @@
 <scroll-view scroll-y class="DrawerWindow {{modalName=='viewModal'?'show':''}}">
   <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg" style="margin-top: 84rpx;">
     <view class="cu-item arrow">
-      <view class="title" style="margin-left:14rpx;font-weight: 900;">区域列表</view>
+      <view class="title" style="margin-left:14rpx;font-weight: 900;display:flex">
+        <view class="cuIcon-list" style="margin-right:16rpx;display:flex"></view>区域列表
+      </view>
       <picker mode="multiSelector" bindchange="MultiChange" bindcolumnchange="MultiColumnChange"
         value="{{currentRegionIndex}}" range="{{currentRegion}}">
         <view class="picker">
