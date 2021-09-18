@@ -196,8 +196,6 @@ Page({
         url += "&topicType=" + topicType
         app.wxRequest('get', url, '', 5000).then(res => {
             if (res.data.code == 200) {
-                // 判断数据是否过期
-                // if (res.data.timestampRequest == that.data.dataVerify.timestampRequest[thisCurrentClass]) {
                 if (res.data.result.records.length > 0) {
                     res.data.result.records.forEach((item) => {
                         item.userRole = item.userRole.substring(4)

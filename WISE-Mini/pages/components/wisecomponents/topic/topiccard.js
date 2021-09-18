@@ -251,6 +251,12 @@ Component({
       wx.navigateTo({
         url: '/pages/components/mine/userinfo/userinfo?username=' + e.currentTarget.dataset.username,
       })
+    },
+    goTopicLink(e){
+      console.log(e)
+      wx.navigateTo({
+        url: '/pages/components/mine/userinfo/userinfo?username=' + e.currentTarget.dataset.username,
+      })
     }
   },
 })
