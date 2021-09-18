@@ -55,31 +55,42 @@
     <view class="text-content">
       <rich-text nodes="{{topicItem.content}}"></rich-text>
     </view>
-    <!-- 图片 -->
-    <wise-topic-card-image imageList="{{topicItem.bbsTopicImageList}}" test="haha"></wise-topic-card-image>
-
-    <!-- 卡片底部条 -->
-    <view class="text-gray text padding-xs" style="padding:0 30rpx 0 30rpx;display:flex;justify-content:space-between"
-      wx:if="{{showBottomBar}}">
-      <text class="" id="clickHitsCount" bindtap="clickHitsCount"
-        style="background: #00000000;font-size:32rpx;">浏览{{topicItem.hitsCount}}次</text>
-      <view class="text-right flex align-center" style="color:grey;">
-        <view class="flex align-end">
-          <button class="cuIcon-appreciatefill cu-btn animation-{{topicItem.exeCuteAnimation?'scale-down':''}}"
-            catchtap="clickPraise" hover-stop-propagation='true' id="{{topicItem.id}}"
-            data-class="{{animationItme.name}}" data-praiseCount="{{topicItem.praiseCount}}" data-bindex="{{bindex}}"
-            style="color:{{topicItem.userIsPraise?'#ec008c':'grey'}};background: #00000000;padding: 0rpx;font-size:40rpx;"></button>
-          <!-- cuIcon-自带样式，取不存在的图标，抵充样式 -->
-          <text class="cuIcon-messagefill123 cu-btn text " catchtap="clickPraise" hover-stop-propagation='true'
-            id="{{topicItem.id}}" data-praiseCount="{{topicItem.praiseCount}}" data-bindex="{{bindex}}" wx:key="id"
-            style="color:grey;background: #00000000;font-size:40rpx;padding: 0rpx;">{{topicItem.praiseCount}}</text>
+    <view class="flex align-center justify-center">
+      <view class="cuIcon-back"></view>
+      <scroll-view style="width:90%;" scroll-x="true">
+        <view class="flex">
+          <view class="padding-xs" wx:for="{{ColorList}}">
+            <view class="cu-tag line-pink">匿名发布，陨石兑换</view>
+          </view>
         </view>
-        <view catchtap="clickReply" hover-stop-propagation='true' data-topicdetails="{{topicItem}}">
-          <text class="cuIcon-messagefill text cu-btn"
-            style="background: #00000000; padding-left: 32rpx;padding-right:8rpx;font-size:40rpx">{{topicItem.replyCount}}</text>
-        </view>
+      </scroll-view>
+      <view class="cuIcon-right"></view>
+    </view>
+  </view>
+  <!-- 图片 -->
+  <wise-topic-card-image imageList="{{topicItem.bbsTopicImageList}}" test="haha"></wise-topic-card-image>
 
+  <!-- 卡片底部条 -->
+  <view class="bg-white text-gray text padding-xs"
+    style="padding:0 30rpx 0 30rpx;display:flex;justify-content:space-between" wx:if="{{showBottomBar}}">
+    <text class="" id="clickHitsCount" bindtap="clickHitsCount"
+      style="background: #00000000;font-size:32rpx;">浏览{{topicItem.hitsCount}}次</text>
+    <view class="text-right flex align-center" style="color:grey;">
+      <view class="flex align-end">
+        <button class="cuIcon-appreciatefill cu-btn animation-{{topicItem.exeCuteAnimation?'scale-down':''}}"
+          catchtap="clickPraise" hover-stop-propagation='true' id="{{topicItem.id}}" data-class="{{animationItme.name}}"
+          data-praiseCount="{{topicItem.praiseCount}}" data-bindex="{{bindex}}"
+          style="color:{{topicItem.userIsPraise?'#ec008c':'grey'}};background: #00000000;padding: 0rpx;font-size:40rpx;"></button>
+        <!-- cuIcon-自带样式，取不存在的图标，抵充样式 -->
+        <text class="cuIcon-messagefill123 cu-btn text " catchtap="clickPraise" hover-stop-propagation='true'
+          id="{{topicItem.id}}" data-praiseCount="{{topicItem.praiseCount}}" data-bindex="{{bindex}}" wx:key="id"
+          style="color:grey;background: #00000000;font-size:40rpx;padding: 0rpx;">{{topicItem.praiseCount}}</text>
       </view>
+      <view catchtap="clickReply" hover-stop-propagation='true' data-topicdetails="{{topicItem}}">
+        <text class="cuIcon-messagefill text cu-btn"
+          style="background: #00000000; padding-left: 32rpx;padding-right:8rpx;font-size:40rpx">{{topicItem.replyCount}}</text>
+      </view>
+
     </view>
   </view>
 </view>
