@@ -47,7 +47,11 @@ Component({
     showMore: {
       type: Boolean,
       value: true
-    }
+    },
+    hideAnon:{            //隐藏匿名信息
+      type: Boolean,
+      value: false
+    },
   },
   observers: {
     'topicLists'(val) {
@@ -248,6 +252,14 @@ Component({
     },
     goUserInfo(e) {
       console.log(e)
+      let topicItem = e.target.dataset.topicitem
+      if (topicItem.anon == 1) {
+        wx.showToast({
+          title: '匿名信息甭想看到◑.◑',
+          icon: 'none'
+        })
+        return
+      }
       wx.navigateTo({
         url: '/pages/components/mine/userinfo/userinfo?username=' + e.currentTarget.dataset.username,
       })

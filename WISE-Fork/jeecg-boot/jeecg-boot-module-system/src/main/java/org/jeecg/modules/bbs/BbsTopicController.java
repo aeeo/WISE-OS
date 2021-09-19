@@ -484,6 +484,9 @@ public class BbsTopicController {
     public Result<?> fullListById(@RequestParam(value = "topicId") String topicId,
                                   HttpServletRequest req) {
         BbsTopicFullDto bbsTopicFullDto = bbsTopicFullDtoService.queryTopicFullDtoById(topicId);
+        if(null == bbsTopicFullDto){
+            return  Result.error(1005,"id为" + topicId + "的贴子不存在。");
+        }
         return Result.OK(bbsTopicFullDto);
     }
     /**

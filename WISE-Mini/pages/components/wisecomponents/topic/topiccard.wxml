@@ -1,18 +1,19 @@
-<view wx:for="{{topicLists}}" wx:for-item="topicItem" wx:if="{{topicType==1 && topicItem.topicType==1}}" wx:key="id"
-  wx:for-index="bindex" data-topicitem='{{topicItem}}' class="cu-card dynamic" style="" bindtap="topicdetails"
-  data-bindex="{{bindex}}">
+<view wx:for="{{topicLists}}" wx:for-item="topicItem" wx:if="{{topicType==1 && topicItem.topicType==1 && (!hideAnon || (hideAnon && topicItem.anon==0))}}" wx:key="id" wx:for-index="bindex" data-topicitem='{{topicItem}}'
+  class="cu-card dynamic" style="" bindtap="topicdetails" data-bindex="{{bindex}}">
   <view class="cu-item solid-bottom" style="margin:0px 0px 0px 0px;border-radius:0rpx">
     <view class="flex justify-between">
       <view class="flex align-center">
         <!-- 头像 -->
         <!-- catchtap="clickAvatarImage" -->
         <view class="cu-avatar round lg margin" catchtap="goUserInfo" hover-stop-propagation='true'
-          data-username="{{topicItem.createBy}}" data-imagelist="{{topicItem.avatar}}"
+          data-username="{{topicItem.createBy}}" data-imagelist="{{topicItem.avatar}}" data-topicitem="{{topicItem}}"
           style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.anon == 0 ? topicItem.avatar : (topicItem.sex==1 ? 'sys/anonboy.jfif' : 'sys/anongirl.jfif')}}{{THUMBNAIL}});">
         </view>
-        <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}">
+        <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}"
+          data-topicitem="{{topicItem}}">
           <view class="flex align-center">
-            <view style="color:black;">{{topicItem.anon == 0 ? topicItem.bbsCreateByName : (topicItem.sex==1 ? '行星小伙' : '行星小妹')}}</view>
+            <view style="color:black;">{{topicItem.anon == 0 ? topicItem.bbsCreateByName : (topicItem.sex==1 ? '行星小伙' :
+              '行星小妹')}}</view>
             <!-- 角色 -->
             <view wx:if="{{showRole}}"
               class="cu-tag bg-{{topicItem.userRole=='开发者'?'yellow':(topicItem.userRole=='官方'?'red':'grey')}} sm radius"
@@ -44,6 +45,7 @@
             {{topicItem.publicTime}}</view>
         </view>
       </view>
+      <!-- 右上角更多按钮 -->
       <view class="flex align-center" style="margin-right: 10px;" wx:if="{{showMore}}">
         <view class="padding-sm margin-xs radius" data-topicIndex="{{bindex}}" catchtap="clickMore"
           hover-stop-propagation='true'>
@@ -53,15 +55,16 @@
       </view>
     </view>
     <view class="text-content">
-      <rich-text nodes="{{topicItem.content}}"></rich-text>
+      <rich-text style="text-align: justify;" nodes="{{topicItem.content}}"></rich-text>
     </view>
-    <view class="flex align-center justify-center">
+    <!-- Link链接 -->
+    <view class="flex align-center justify-center" wx-if="{{topicItem.bbsTopicLinkList.length > 0}}">
       <view class="cuIcon-back"></view>
       <scroll-view style="width:90%;" scroll-x="true">
         <view class="flex">
           <view class="padding-xs" wx:key="linkIndex" wx:for-item="linkIndex" wx:for-item="topicLinkItem"
             wx:for="{{topicItem.bbsTopicLinkList}}">
-            <view class="cu-tag line-pink" catchtap="g oTopicLink" hover-stop-propagation='true'
+            <view class="cu-tag line-pink" catchtap="goTopicLink" hover-stop-propagation='true'
               data-topicLinkItem="{{topicLinkItem}}">{{topicLinkItem.title}}</view>
           </view>
         </view>
@@ -99,21 +102,24 @@
 
 
 
-<view wx:for="{{topicLists}}" wx:for-item="topicItem" wx:if="{{topicType!=1 && topicItem.topicType!=1}}" wx:key="id"
-  wx:for-index="bindex" data-topicitem='{{topicItem}}' class="cu-card dynamic" style="" bindtap="topicdetails"
-  data-bindex="{{bindex}}">
+<view wx:for="{{topicLists}}" wx:for-item="topicItem"
+  wx:if="{{topicType!=1 && topicItem.topicType!=1 && (!hideAnon || (hideAnon && topicItem.anon==0))}}"
+  wx:key="id" wx:for-index="bindex" data-topicitem='{{topicItem}}' class="cu-card dynamic" style=""
+  bindtap="topicdetails" data-bindex="{{bindex}}">
   <view class="cu-item solid-bottom" style="margin:0px 0px 0px 0px;border-radius:0rpx">
     <view class="flex justify-between">
       <view class="flex align-center">
         <!-- 头像 -->
         <!-- catchtap="clickAvatarImage" -->
         <view class="cu-avatar round lg margin" catchtap="goUserInfo" hover-stop-propagation='true'
-          data-username="{{topicItem.createBy}}" data-imagelist="{{topicItem.avatar}}"
+          data-username="{{topicItem.createBy}}" data-imagelist="{{topicItem.avatar}}" data-topicitem="{{topicItem}}"
           style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.anon == 0 ? topicItem.avatar : (topicItem.sex==1 ? 'sys/anonboy.jfif' : 'sys/anongirl.jfif')}}{{THUMBNAIL}});">
         </view>
-        <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}">
+        <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}"
+          data-topicitem="{{topicItem}}">
           <view class="flex align-center">
-            <view style="color:black;">{{topicItem.anon == 0 ? topicItem.bbsCreateByName : (topicItem.sex==1 ? '行星小伙' : '行星小妹')}}</view>
+            <view style="color:black;">{{topicItem.anon == 0 ? topicItem.bbsCreateByName : (topicItem.sex==1 ? '行星小伙' :
+              '行星小妹')}}</view>
             <!-- 角色 -->
             <view wx:if="{{showRole}}"
               class="cu-tag bg-{{topicItem.userRole=='开发者'?'yellow':(topicItem.userRole=='官方'?'red':'grey')}} sm radius"

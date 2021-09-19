@@ -16,6 +16,7 @@ import lombok.Data;
  *   	1002	内容过短
  *   	1003	格式有误
  *   	1004	包含敏感信息
+ *   	1005	内容不存在
  *   1010	警告
  * @author scott
  * @email jeecgos@163.com

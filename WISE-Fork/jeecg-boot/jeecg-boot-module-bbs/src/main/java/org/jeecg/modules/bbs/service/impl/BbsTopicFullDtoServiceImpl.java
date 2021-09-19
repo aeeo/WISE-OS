@@ -162,6 +162,9 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         //查出固定不变的数据（已审核的贴子）
         //手动分页，先筛选帖子，再封装数据
         BbsTopicFullDto bbsTopicFullDtosList = bbsTopicFullDtoMapper.queryTopicFullDtoFixById(topicId);
+        if(null == bbsTopicFullDtosList){
+            return null;
+        }
         bbsTopicFullDtosList.getBbsTopicLinkList().sort((l, r) -> l.getSort().compareTo(r.getSort()));
 
         //只有1条，但还是封装list

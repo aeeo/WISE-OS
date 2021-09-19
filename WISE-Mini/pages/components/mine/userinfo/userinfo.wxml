@@ -53,11 +53,12 @@
   </view>
   <!-- 置顶帖展示 -->
   <wise-topic-card topicLists="{{topicLists}}" showMore="{{false}}" showRole="{{false}}" topicType="{{1}}"
-    showRegion="{{true}}" bindmyevent="myEventListener" showBottomBar="true" style="margin-top: -20px;">
+    showRegion="{{true}}" bindmyevent="myEventListener" showBottomBar="true" hideAnon="true"
+    style="margin-top: -20px;">
   </wise-topic-card>
   <!-- 普通帖展示 -->
   <wise-topic-card topicLists="{{topicLists}}" showMore="{{false}}" showRole="{{false}}" topicType="{{0}}"
-    showRegion="{{true}}" bindmyevent="myEventListener" showBottomBar="true">
+    showRegion="{{true}}" bindmyevent="myEventListener" showBottomBar="true" hideAnon="true">
   </wise-topic-card>
 </view>
 

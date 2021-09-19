@@ -42,11 +42,11 @@
       <view class="cu-item shadow">
         <view class="cu-list menu-avatar">
           <view class="cu-item">
-            <view class="cu-avatar round lg" style="background-image:url({{UPLOAD_IMAGE}}{{item.avatar}});">
+            <view class="cu-avatar round lg" style="background-image:url({{UPLOAD_IMAGE}}{{item.anon == 0 ? item.avatar : (item.sex==1 ? 'sys/anonboy.jfif' : 'sys/anongirl.jfif')}}{{THUMBNAIL}});">
             </view>
             <view class="content flex-sub">
               <view>
-                <view>{{item.bbsCreateByName}}</view>
+                <view>{{item.anon == 0 ? item.bbsCreateByName : (item.sex==1 ? '行星小伙' : '行星小妹')}}</view>
                 <!-- <view class="cu-tag bg-{{item.userRole=='开发者'?'yellow':'grey'}} sm radius"
                   style="display:{{item.userRole=='用户'?'none':''}}">{{item.userRole}}</view> -->
                 <view class="cu-tag bg-blue sm round light">{{item.regionFullName}}</view>

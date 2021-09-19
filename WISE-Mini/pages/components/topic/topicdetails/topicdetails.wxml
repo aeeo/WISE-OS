@@ -11,13 +11,13 @@
     <view class="cu-list menu-avatar">
       <view class="flex justify-between">
         <view class="flex align-center" catchtap="goUserInfo" hover-stop-propagation='true'
-          data-username="{{topicdetails.createBy}}">
+          data-username="{{topicdetails.createBy}}" data-topicitem="{{topicdetails}}">
           <view class="cu-avatar round lg margin" wx:if="{{topicdetails.avatar != null}}"
-            style="background-image:url({{UPLOAD_IMAGE}}{{topicdetails.avatar}}{{THUMBNAIL}});">
+            style="background-image:url({{UPLOAD_IMAGE}}{{topicdetails.anon == 0 ? topicdetails.avatar : (topicdetails.sex==1 ? 'sys/anonboy.jfif' : 'sys/anongirl.jfif')}}{{THUMBNAIL}});">
           </view>
           <view>
             <view class="flex align-center">
-              <view style="color:black;font-weight:bold;">{{topicdetails.bbsCreateByName}}</view>
+              <view style="color:black;font-weight:bold;">{{topicdetails.anon == 0 ? topicdetails.bbsCreateByName : (topicdetails.sex==1 ? '行星小伙' : '行星小妹')}}</view>
               <!-- 角色 -->
               <view
                 class="cu-tag bg-{{topicdetails.userRole=='开发者'?'yellow':(topicdetails.userRole=='官方'?'red':'grey')}} sm radius"

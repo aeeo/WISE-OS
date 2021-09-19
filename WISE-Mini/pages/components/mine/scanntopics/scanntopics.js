@@ -40,6 +40,11 @@ Page({
         USERRECORD: wx.getStorageSync('USERRECORD'),
         REGIONCLASS: wx.getStorageSync('REGIONCLASS'),
         CURRENTCLASSCODE: wx.getStorageSync('CURRENTCLASSCODE'), //当前所在版块Code
+        
+        UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE,
+        THUMBNAIL: app.globalData.THUMBNAIL,
+        ARTWORK: app.globalData.ARTWORK,
+        ARTWORKNOWATER: app.globalData.ARTWORKNOWATER,
         //动画
         list: [{
             name: 'scale-down',

@@ -24,7 +24,11 @@
 > [JeecgBoot演示](http://boot.jeecg.com/user/login)
 > 账户/密码：jeecg/123456
 
-在此说一下，截止2021年8月25日，行星万象项目陆陆续续开发了近1年时间，到现在为止基本功能已经开发完毕，有时间的话把即时聊天功能集成进去，同时也保证会一直维护下去，丰满功能，只是一个人精力有限，进展可能会比较慢，但请放心绝不会烂尾，为了让新人快速上手，我会在开发文档这边花比较多的精力，做到傻瓜式步骤，保证拿到代码先能跑起来。
+在此说一下，截止2021年8月25日，行星万象项目陆陆续续开发了近1年时间，到现在为止基本功能已经开发完毕，有时间的话把即时聊天功能集成进去，同时也保证会一直维护下去，丰满功能，只是一个人精力有限，进展可能会比较慢，但请放心绝不会烂尾，有下图为证：
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/434583ce50984a038b697e89edc3d4ea.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+为了让新人快速上手，我会在开发文档这边花比较多的精力，做到傻瓜式步骤，保证拿到代码先能跑起来。
 
 本项目所有的代码都可以拿去修改部署，免费使用，但是你必须要注明：
 
@@ -66,9 +70,8 @@
 2. 初始化数据库
 
 初始化数据库，要求mysql5.7+，新建数据库wised，手工执行Sql脚本初始化数据。
-![在这里插入图片描述](https://img-blog.csdnimg.cn/0c33d1ce33e74e928262a4cce8fc4d9b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_14,color_FFFFFF,t_70,g_se,x_16)
 
- 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0c33d1ce33e74e928262a4cce8fc4d9b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_14,color_FFFFFF,t_70,g_se,x_16)
 
 > WISE-OS\数据库脚本（在mysql中执行即可）\wised.sql
 

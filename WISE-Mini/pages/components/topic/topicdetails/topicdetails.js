@@ -178,7 +178,7 @@ Page({
         }
       } else {
         wx.showToast({
-          title: '获取信息失败',  
+          title: '获取信息失败',
           icon: "none"
         })
         that.setData({
@@ -497,6 +497,14 @@ Page({
   },
   goUserInfo(e) {
     console.log(e)
+    let topicItem = e.currentTarget.dataset.topicitem
+    if (topicItem.anon == 1) {
+      wx.showToast({
+        title: '匿名信息甭想看到◑.◑',
+        icon: 'none'
+      })
+      return
+    }
     wx.navigateTo({
       url: '/pages/components/mine/userinfo/userinfo?username=' + e.currentTarget.dataset.username,
     })

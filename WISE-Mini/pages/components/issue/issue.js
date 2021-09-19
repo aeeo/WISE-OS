@@ -49,7 +49,7 @@ Page({
     isLoad: true,
     UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE,
     THUMBNAIL: app.globalData.THUMBNAIL,
-    isAnon:false,       //是否匿名
+    isAnon: false, //是否匿名
 
     imageReturnList: [],
     // 图片上传（从相册）返回对象。上传完成后，此属性被赋值
@@ -65,7 +65,7 @@ Page({
     // 文件下载进度对象。用于文件在线查看前的预下载
     downloadFileProgress: {},
     // 此属性在qiniuUploader.upload()中被赋值，用于中断上传
-    cancelTask: function () { },
+    cancelTask: function () {},
   },
   onLoad(option) {
     var that = this
@@ -117,12 +117,14 @@ Page({
         "topicClass": null,
         "contact": "",
         "content": "",
-        "imgList": []
+        "imgList": [],
+        "anon": false
       }
     }
     this.setData({
       formData: topicFormData,
-      imgList: topicFormData.imgList
+      imgList: topicFormData.imgList,
+      isAnon: topicFormData.anon
     })
   },
   // 编辑加载
@@ -132,6 +134,7 @@ Page({
     let formDataTemp = {}
     formDataTemp.id = formData.id
     formDataTemp.title = formData.title
+    formDataTemp.anon = formData.anon //匿名
     let REGIONCLASS = wx.getStorageSync('REGIONCLASS')
     console.log(REGIONCLASS)
     for (const key in REGIONCLASS) {
@@ -142,21 +145,24 @@ Page({
     formDataTemp.contact = formData.contact
     formDataTemp.content = formData.content
     let imgList = []
-    formData.bbsTopicImageList.forEach(item => {
-      var imageListTem = {}
-      imageListTem.imageTempUrl = "" //本地临时路径
-      imageListTem.imageUrl = item.topicImage //OSS路径
-      imageListTem.percent = 100
-      imageListTem.imageType = 1 //0：临时路径，1：OSS路径
-      imgList.push(imageListTem)
-    })
+    if (formData.bbsTopicImageList) {
+      formData.bbsTopicImageList.forEach(item => {
+        var imageListTem = {}
+        imageListTem.imageTempUrl = "" //本地临时路径
+        imageListTem.imageUrl = item.topicImage //OSS路径
+        imageListTem.percent = 100
+        imageListTem.imageType = 1 //0：临时路径，1：OSS路径
+        imgList.push(imageListTem)
+      })
+    }
     formDataTemp.imgList = imgList
     console.log(formDataTemp)
     that.setData({
       formData: formDataTemp,
-      userSeleceTopicClassIndex: formDataTemp.topicClass,    //给版块id赋值，如果直接用formdata显示有问题
-      userSeleceTopicClassCode: that.data.topicClassList[formDataTemp.topicClass],    //给版块id赋值，如果直接用formdata显示有问题
-      imgList: imgList
+      userSeleceTopicClassIndex: formDataTemp.topicClass, //给版块id赋值，如果直接用formdata显示有问题
+      userSeleceTopicClassCode: that.data.topicClassList[formDataTemp.topicClass], //给版块id赋值，如果直接用formdata显示有问题
+      imgList: imgList,
+      isAnon: formDataTemp.anon //匿名
     })
   },
   // 图片上传（从相册）方法
@@ -247,7 +253,7 @@ Page({
     })
   },
   // mark: 是否匿名
-  switchAnon(e){
+  switchAnon(e) {
     this.data.isAnon = !this.data.isAnon
   },
   /**
@@ -263,6 +269,7 @@ Page({
     // mark:新增发布
     if (actionType == 1) {
       // 保存表单
+      data.anon = that.data.isAnon
       let imageListTem = that.data.imgList
       imageListTem.forEach(item => {
         item.imageType = 1 //0：临时路径，1：OSS路径
@@ -340,7 +347,7 @@ Page({
           hitsCount: 0,
           classCode: that.data.userSeleceTopicClassCode == "" ? "index" : that.data.userSeleceTopicClassCode,
           regionCode: wx.getStorageSync('USERRECORD').regionCode,
-          anon: that.data.isAnon ? 1 : 0      //1:匿名
+          anon: that.data.isAnon ? 1 : 0 //1:匿名
         }
         this.setData({
           isLoad: false
@@ -610,18 +617,18 @@ function wiseUpload(that, filePath) {
   // wx.chooseImage 目前微信官方尚未开放获取原图片名功能(2020.4.22)
   // 向七牛云上传
   qiniuUploader.upload(filePath, (res) => {
-    that.setData({
-      'imageObject': res
-    });
-    // console.log(res)
-    // var jsonO = {}
-    // jsonO.topicImage = res.key
-    // that.data.imageReturnList.push(jsonO)
-    // console.log('提示: wx.chooseImage 目前微信官方尚未开放获取原图片名功能(2020.4.22)');
-    // console.log('file url is: ' + res.fileURL);
-  }, (error) => {
-    console.error('error: ' + JSON.stringify(error));
-  },
+      that.setData({
+        'imageObject': res
+      });
+      // console.log(res)
+      // var jsonO = {}
+      // jsonO.topicImage = res.key
+      // that.data.imageReturnList.push(jsonO)
+      // console.log('提示: wx.chooseImage 目前微信官方尚未开放获取原图片名功能(2020.4.22)');
+      // console.log('file url is: ' + res.fileURL);
+    }, (error) => {
+      console.error('error: ' + JSON.stringify(error));
+    },
     // 此项为qiniuUploader.upload的第四个参数options。若想在单个方法中变更七牛云相关配置，可以使用上述参数。如果不需要在单个方法中变更七牛云相关配置，则可使用 null 作为参数占位符。推荐填写initQiniu()中的七牛云相关参数，然后此处使用null做占位符。
     // 若想自定义上传key，请把自定义key写入此处options的key值。如果在使用自定义key后，其它七牛云配置参数想维持全局配置，请把此处options除key以外的属性值置空。
     // 启用options参数请记得删除null占位符
@@ -658,7 +665,7 @@ function wiseUpload(that, filePath) {
       cancelTask
     })
   );
- 
+
 }
 
 // 文件上传（从客户端会话）方法，支持图片、视频、其余文件 (PDF(.pdf), Word(.doc/.docx), Excel(.xls/.xlsx), PowerPoint(.ppt/.pptx)等文件格式)
@@ -682,15 +689,15 @@ function didPressChooesMessageFile(that) {
       var fileName = res.tempFiles[0].name;
       // 向七牛云上传
       qiniuUploader.upload(filePath, (res) => {
-        res.fileName = fileName;
-        that.setData({
-          'messageFileObject': res
-        });
-        console.log('file name is: ' + fileName);
-        console.log('file url is: ' + res.fileURL);
-      }, (error) => {
-        console.error('error: ' + JSON.stringify(error));
-      },
+          res.fileName = fileName;
+          that.setData({
+            'messageFileObject': res
+          });
+          console.log('file name is: ' + fileName);
+          console.log('file url is: ' + res.fileURL);
+        }, (error) => {
+          console.error('error: ' + JSON.stringify(error));
+        },
         // 此项为qiniuUploader.upload的第四个参数options。若想在单个方法中变更七牛云相关配置，可以使用上述参数。如果不需要在单个方法中变更七牛云相关配置，则可使用 null 作为参数占位符。推荐填写initQiniu()中的七牛云相关参数，然后此处使用null做占位符。
         // 若想自定义上传key，请把自定义key写入此处options的key值。如果在使用自定义key后，其它七牛云配置参数想维持全局配置，请把此处options除key以外的属性值置空。
         // 启用options参数请记得删除null占位符
