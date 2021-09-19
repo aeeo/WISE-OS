@@ -65,9 +65,10 @@ Page({
     // 文件下载进度对象。用于文件在线查看前的预下载
     downloadFileProgress: {},
     // 此属性在qiniuUploader.upload()中被赋值，用于中断上传
-    cancelTask: function () {},
+    cancelTask: function () { },
   },
   onLoad(option) {
+    wx.cloud.init()
     var that = this
     console.log(option)
     // 草稿&编辑处理
@@ -254,7 +255,10 @@ Page({
   },
   // mark: 是否匿名
   switchAnon(e) {
-    this.data.isAnon = !this.data.isAnon
+    var that = this
+    this.setData({
+      isAnon: !that.data.isAnon
+    })
   },
   /**
    * 表单上传
@@ -512,54 +516,6 @@ Page({
       }
     }
   },
-  /**
-   * 图片上传
-   */
-  // async uploadImage(imgList) {
-  //   var that = this
-  //   var bbsTopicImageListForm = [];
-  //   for (var tempFilePath in imgList) {
-  //     await that.myUploadFile(imgList[tempFilePath], 'file').then(res => {
-  //       bbsTopicImageListForm.push(res)
-  //     })
-  //   }
-  //   return bbsTopicImageListForm
-  // },
-
-  /**
-   * 文件上传
-   */
-  // myUploadFile(filePath, name) {
-  //   return new Promise(function (resolve, reject) {
-  //     //压缩图片
-  //     wx.compressImage({
-  //       src: filePath, // 图片路径
-  //       quality: 30, // 压缩质量
-  //       success(res) {
-  //         wx.uploadFile({
-  //           header: {
-  //             'X-Access-Token': wx.getStorageSync('TOKEN')
-  //           },
-  //           url: app.globalData.HOSTURL + '/bbs/qiniuoss/upload',
-  //           filePath: res.tempFilePath,
-  //           name: name,
-  //           formData: {
-  //             'fileType': 'jfif'
-  //           },
-  //           success(res) {
-  //             let topicImageId1 = JSON.parse(res.data).message
-  //             var json = {}
-  //             json.topicImage = topicImageId1
-  //             resolve(json)
-  //           },
-  //           fail(err) {
-  //             reject(err)
-  //           }
-  //         })
-  //       }
-  //     })
-  //   })
-  // },
 
   PickerChange(e) {
     var that = this
@@ -570,6 +526,28 @@ Page({
       formdata: formData,
       userSeleceTopicClassIndex: e.detail.value,
       userSeleceTopicClassCode: that.data.REGIONCLASS[e.detail.value].classCode
+    })
+  },
+  getPhoneNumber(e) {
+    var that = this
+    let cloudID = e.detail.cloudID
+    wx.cloud.callFunction({
+      name: 'getOpenData',
+      data: {
+        weRunData: wx.cloud.CloudID(cloudID),
+        obj: {
+          shareInfo: wx.cloud.CloudID(cloudID)
+        }
+      }
+    }).then(res => {
+      console.log('云函数获取开放数据：', res)
+      let formDataTemp = that.data.formData
+      formDataTemp.contact = res.result.weRunData.data.phoneNumber
+      that.setData({
+        formData: formDataTemp
+      })
+    }).catch(err => {
+      console.log(err)
     })
   },
 })
@@ -617,18 +595,18 @@ function wiseUpload(that, filePath) {
   // wx.chooseImage 目前微信官方尚未开放获取原图片名功能(2020.4.22)
   // 向七牛云上传
   qiniuUploader.upload(filePath, (res) => {
-      that.setData({
-        'imageObject': res
-      });
-      // console.log(res)
-      // var jsonO = {}
-      // jsonO.topicImage = res.key
-      // that.data.imageReturnList.push(jsonO)
-      // console.log('提示: wx.chooseImage 目前微信官方尚未开放获取原图片名功能(2020.4.22)');
-      // console.log('file url is: ' + res.fileURL);
-    }, (error) => {
-      console.error('error: ' + JSON.stringify(error));
-    },
+    that.setData({
+      'imageObject': res
+    });
+    // console.log(res)
+    // var jsonO = {}
+    // jsonO.topicImage = res.key
+    // that.data.imageReturnList.push(jsonO)
+    // console.log('提示: wx.chooseImage 目前微信官方尚未开放获取原图片名功能(2020.4.22)');
+    // console.log('file url is: ' + res.fileURL);
+  }, (error) => {
+    console.error('error: ' + JSON.stringify(error));
+  },
     // 此项为qiniuUploader.upload的第四个参数options。若想在单个方法中变更七牛云相关配置，可以使用上述参数。如果不需要在单个方法中变更七牛云相关配置，则可使用 null 作为参数占位符。推荐填写initQiniu()中的七牛云相关参数，然后此处使用null做占位符。
     // 若想自定义上传key，请把自定义key写入此处options的key值。如果在使用自定义key后，其它七牛云配置参数想维持全局配置，请把此处options除key以外的属性值置空。
     // 启用options参数请记得删除null占位符
@@ -689,15 +667,15 @@ function didPressChooesMessageFile(that) {
       var fileName = res.tempFiles[0].name;
       // 向七牛云上传
       qiniuUploader.upload(filePath, (res) => {
-          res.fileName = fileName;
-          that.setData({
-            'messageFileObject': res
-          });
-          console.log('file name is: ' + fileName);
-          console.log('file url is: ' + res.fileURL);
-        }, (error) => {
-          console.error('error: ' + JSON.stringify(error));
-        },
+        res.fileName = fileName;
+        that.setData({
+          'messageFileObject': res
+        });
+        console.log('file name is: ' + fileName);
+        console.log('file url is: ' + res.fileURL);
+      }, (error) => {
+        console.error('error: ' + JSON.stringify(error));
+      },
         // 此项为qiniuUploader.upload的第四个参数options。若想在单个方法中变更七牛云相关配置，可以使用上述参数。如果不需要在单个方法中变更七牛云相关配置，则可使用 null 作为参数占位符。推荐填写initQiniu()中的七牛云相关参数，然后此处使用null做占位符。
         // 若想自定义上传key，请把自定义key写入此处options的key值。如果在使用自定义key后，其它七牛云配置参数想维持全局配置，请把此处options除key以外的属性值置空。
         // 启用options参数请记得删除null占位符

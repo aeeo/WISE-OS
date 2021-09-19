@@ -22,7 +22,7 @@ Component({
       'royal',
       'dark',
     ],
-    colorIndex: 7,
+    colorIndex:7,
     dirs: ['horizontal', 'vertical', 'circle'],
     dirIndex: 1,
     sAngle: 0,

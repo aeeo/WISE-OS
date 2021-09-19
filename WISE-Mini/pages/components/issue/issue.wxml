@@ -86,10 +86,12 @@
 				中国
 			</view> -->
 		</view>
+		<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"
+			class="getPhoneNumber cu-btn bg-grey shadow">自动填充</button>
 	</view>
-	<view class="cu-form-group">
+	<view class="cu-form-group" bindtap="switchAnon">
 		<view class="title">匿名发布</view>
-		<checkbox-group bindchange="switchAnon">
+		<checkbox-group>
 			<checkbox class="round" checked="{{isAnon}}"></checkbox>
 		</checkbox-group>
 	</view>

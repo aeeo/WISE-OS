@@ -32,7 +32,7 @@
 			style="{{ buttonStyle[index] }}"
 		>
 			<image class="{{ classes.icon }}" src="{{ button.icon }}" />
-			<view class="{{ classes.label }}" wx:if="{{ button.label }}">{{ button.label }}</view>
+			<view class="{{ classes.label }}" wx:if="{{ button.label }}" style="font-size: 36rpx;padding: 4rpx 10rpx;    color: #ffffff;">{{ button.label }}</view>
 		</button>
 	</block>
 </view>
