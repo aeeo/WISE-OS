@@ -16,7 +16,7 @@ import java.io.Serializable;
 /**
  * @Description: 地区
  * @Author: jeecg-boot
- * @Date: 2021-05-30
+ * @Date: 2021-09-19
  * @Version: V1.0
  */
 @ApiModel(value = "bbs_region对象", description = "地区")
@@ -248,4 +248,10 @@ public class BbsRegion implements Serializable {
     @Excel(name = "区域关联部门ID", width = 15)
     @ApiModelProperty(value = "区域关联部门ID")
     private java.lang.String regionDepartId;
+    /**
+     * 小商店ID
+     */
+    @Excel(name = "小商店ID", width = 15)
+    @ApiModelProperty(value = "小商店ID")
+    private java.lang.String miniStoreAppid;
 }

@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * @Description: 地区
  * @Author: jeecg-boot
- * @Date:   2021-05-30
+ * @Date:   2021-09-19
  * @Version: V1.0
  */
 @Data
@@ -172,6 +172,10 @@ public class BbsRegionPage {
 	@Excel(name = "区域关联部门ID", width = 15)
 	@ApiModelProperty(value = "区域关联部门ID")
     private java.lang.String regionDepartId;
+	/**小商店ID*/
+	@Excel(name = "小商店ID", width = 15)
+	@ApiModelProperty(value = "小商店ID")
+    private java.lang.String miniStoreAppid;
 
 	@ExcelCollection(name="版块")
 	@ApiModelProperty(value = "版块")

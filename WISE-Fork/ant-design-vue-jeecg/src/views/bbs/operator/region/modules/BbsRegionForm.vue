@@ -131,6 +131,11 @@
               <a-input v-model="model.regionDepartId" placeholder="请输入区域关联部门ID"></a-input>
             </a-form-model-item>
           </a-col>
+          <a-col :span="12">
+            <a-form-model-item label="小商店ID" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="miniStoreAppid">
+              <a-input v-model="model.miniStoreAppid" placeholder="请输入小商店ID"></a-input>
+            </a-form-model-item>
+          </a-col>
         </a-row>
       </a-form-model>
     </j-form-container>
@@ -138,15 +143,15 @@
     <a-tabs v-model="activeKey" @change="handleChangeTabs">
       <a-tab-pane tab="版块" :key="refKeys[0]" :forceRender="true">
         <j-editable-table
-          :ref="refKeys[0]"
-          :loading="bbsClassTable.loading"
-          :columns="bbsClassTable.columns"
-          :dataSource="bbsClassTable.dataSource"
-          :maxHeight="300"
-          :disabled="formDisabled"
-          :rowNumber="true"
-          :rowSelection="true"
-          :actionButton="true"/>
+            :ref="refKeys[0]"
+            :loading="bbsClassTable.loading"
+            :columns="bbsClassTable.columns"
+            :dataSource="bbsClassTable.dataSource"
+            :maxHeight="300"
+            :disabled="formDisabled"
+            :rowNumber="true"
+            :rowSelection="true"
+            :actionButton="true"/>
       </a-tab-pane>
     </a-tabs>
   </a-spin>

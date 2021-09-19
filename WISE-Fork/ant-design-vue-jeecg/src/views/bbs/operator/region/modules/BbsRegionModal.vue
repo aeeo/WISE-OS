@@ -1,13 +1,13 @@
 <template>
   <j-modal
-    :title="title"
-    :width="1200"
-    :visible="visible"
-    :maskClosable="false"
-    switchFullscreen
-    @ok="handleOk"
-    :okButtonProps="{ class:{'jee-hidden': disableSubmit} }"
-    @cancel="handleCancel">
+      :title="title"
+      :width="1200"
+      :visible="visible"
+      :maskClosable="false"
+      switchFullscreen
+      @ok="handleOk"
+      :okButtonProps="{ class:{'jee-hidden': disableSubmit} }"
+      @cancel="handleCancel">
     <bbs-region-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit"/>
   </j-modal>
 </template>
