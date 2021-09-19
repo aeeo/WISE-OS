@@ -29,7 +29,7 @@ Page({
       badge: '',
       name: '好吃与好物',
       url: "/pages/components/msg/savemoney/savemoney"
-    }, ],
+    },],
     skin: true,
     gridBorder: 'no-border',
     UPLOAD_IMAGE: '',
@@ -451,12 +451,13 @@ Page({
       //     }
       //   })
       // }
-      // wx.showToast({
-      //   title: '本区域商店系统暂未开放...',
-      //   icon: 'none'
-      // })
+      let appId = 'wx65d148a2004f8ff0'
+
+      if (!appId) {
+        appId = 'wx65d148a2004f8ff0'
+      }
       wx.navigateToMiniProgram({
-        appId: 'wx65d148a2004f8ff0',
+        appId: appId,
         path: 'pages/index/index',
         extraData: {
           foo: 'bar'
@@ -464,6 +465,13 @@ Page({
         // envVersion: 'develop',
         success(res) {
           // 打开成功
+        }, fail(e) {
+          if (e.errMsg != "navigateToMiniProgram:fail cancel") {
+            wx.showToast({
+              title: '商店打开出错。',
+              icon: 'none'
+            })
+          }
         }
       })
       return

@@ -3,6 +3,7 @@ package org.jeecg.modules.bbs;
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
@@ -13,9 +14,11 @@ import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.PasswordUtil;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.bbs.controller.BbsRegionController;
+import org.jeecg.modules.bbs.entity.BbsClass;
 import org.jeecg.modules.bbs.entity.BbsRegion;
 import org.jeecg.modules.bbs.entity.BbsReply;
 import org.jeecg.modules.bbs.entity.BbsUserRecord;
+import org.jeecg.modules.bbs.service.IBbsClassService;
 import org.jeecg.modules.bbs.service.IBbsRegionService;
 import org.jeecg.modules.bbs.service.IBbsReplyService;
 import org.jeecg.modules.bbs.service.IBbsUserRecordService;
@@ -33,6 +36,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -64,6 +68,8 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
     private BbsRegionController bbsRegionController;
     @Autowired
     private ISysDepartService sysDepartService;
+    @Autowired
+    private IBbsClassService bbsClassService;
 
     // ****行星万象修改位置戳****
     @GetMapping("/wise/mini/getToken")
@@ -99,8 +105,8 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
             if (null != regionCode && !"undefined".equals(regionCode)) {
                 BbsRegion regionOne = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, regionCode).one();
                 if (null != regionOne) {
-                    bbsRegionController.switchRegion(regionOne,openid);
-                }else{
+                    bbsRegionController.switchRegion(regionOne, openid);
+                } else {
                     //如果此区域不存在，则忽略
                 }
             }
@@ -119,14 +125,12 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
         user.setCreateTime(new Date());
         user.setPassword(passwordEncode);
         //邮箱和手机号不能重复
-        //user.setEmail("test@foxmail.com");
-        //user.setPhone("testTelephone");
         user.setStatus(CommonConstant.USER_UNFREEZE);
         user.setDelFlag(CommonConstant.DEL_FLAG_0);
         user.setActivitiSync(CommonConstant.ACT_SYNC_0);
 
         sysUserService.addUserWithRole(user, "1345343571064266754");//默认设置角色为BBS_普通用户 1345343571064266754
-        sysUserService.addUserWithDepart(user,"4ed96f554f9f4a219a7e282b7005e26f");//默认设置用户部门西安文理学院
+        sysUserService.addUserWithDepart(user, "4ed96f554f9f4a219a7e282b7005e26f");//默认设置用户部门西安文理学院
         SysUser userByName = sysUserService.getUserByName(user.getUsername());
         sysUserService.updateUserDepart(userByName.getUsername(), "A03A03A01A01");  //设置用户当前所在部门
 
@@ -138,11 +142,11 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
 
         bbsUserRecordService.save(bbsUserRecord);
         //用户如果是通过分享进入，所在区域为分享链接中的区域，否则，不做设置
-        if (null != regionCode && !"undefined".equals(regionCode)) {
+        if (null != regionCode && !"undefined".equals(regionCode) && !"".equals(regionCode)) {
             BbsRegion regionOne = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, regionCode).one();
             if (null != regionOne) {
-                bbsRegionController.switchRegion(regionOne,openid);
-            }else{
+                bbsRegionController.switchRegion(regionOne, openid);
+            } else {
                 //如果此区域不存在，则忽略
             }
         }
@@ -162,58 +166,9 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
     @GetMapping(value = "/wise/mini/userBehaviorLimit")
     public Result<?> queryPageList() {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-
         BbsUserRecord bbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, sysUser.getUsername()).one();
         BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecord.getRegionCode()).one();
-
-        JSONObject jsonObject = new JSONObject();
-
-        //发布贴子判断
-        if (bbsRegion.getDayPublishTopic() > bbsUserRecord.getDayPublishTopic()) {
-            jsonObject.put("canDayPunlishTopic", true);
-        } else {
-            jsonObject.put("canDayPunlishTopic", false);
-        }
-        if (bbsRegion.getWeekPublishTopic() > bbsUserRecord.getWeekPublishTopic()) {
-            jsonObject.put("canWeekPunlishTopic", true);
-        } else {
-            jsonObject.put("canWeekPunlishTopic", false);
-        }
-        //发布留言判断
-        if (bbsRegion.getDayPublishMessage() > bbsUserRecord.getDayPublishMessage()) {
-            jsonObject.put("canDayPunlishMessage", true);
-        } else {
-            jsonObject.put("canDayPunlishMessage", false);
-        }
-        if (bbsRegion.getWeekPublishMessage() > bbsUserRecord.getWeekPublishMessage()) {
-            jsonObject.put("canWeekPunlishMessage", true);
-        } else {
-            jsonObject.put("canWeekPunlishMessage", false);
-        }
-
-        //发布评论判断
-        if (bbsRegion.getDayPublishReply() > bbsUserRecord.getDayPublishReply()) {
-            jsonObject.put("canDayPunlishReply", true);
-        } else {
-            jsonObject.put("canDayPunlishReply", false);
-        }
-        if (bbsRegion.getWeekPublishReply() > bbsUserRecord.getWeekPublishReply()) {
-            jsonObject.put("canWeekPunlishReply", true);
-        } else {
-            jsonObject.put("canWeekPunlishReply", false);
-        }
-        //点赞判断
-        if (bbsRegion.getDayPublishPraise() > bbsUserRecord.getDayPublishPraise()) {
-            jsonObject.put("canDayPunlishparise", true);
-        } else {
-            jsonObject.put("canDayPunlishparise", false);
-        }
-        if (bbsRegion.getWeekPublishPraise() > bbsUserRecord.getWeekPublishPraise()) {
-            jsonObject.put("canWeekPunlishparise", true);
-        } else {
-            jsonObject.put("canWeekPunlishparise", false);
-        }
-        return Result.OK(jsonObject);
+        return Result.OK(convertLimit(bbsRegion, bbsUserRecord));
     }
 
     @RequestMapping(value = "/wise/mini/querySysUser", method = RequestMethod.GET)
@@ -229,4 +184,85 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
     public Result<?> perfectUser(@RequestBody Map<String, String> userInfo) {
         return sysUserService.perfectUser(userInfo);
     }
+
+
+    @AutoLog(value = "获取小程序缓存数据")
+    @ApiOperation(value = "获取小程序缓存数据", notes = "获取小程序缓存数据")
+    @PostMapping("/wise/mini/getMiNiStorage")
+    public Result<?> getMiNiStorageController() {
+        return Result.OK(getMiNiStorage());
+    }
+
+    public MiNiStorage getMiNiStorage() {
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        MiNiStorage miNiStorage = new MiNiStorage();
+        miNiStorage.setSysUser(sysUserService.getUserByName(sysUser.getUsername()));
+        BbsUserRecord bbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, sysUser.getUsername()).one();
+        miNiStorage.setBbsUserRecord(bbsUserRecord);
+        BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecord.getRegionCode()).one();
+        miNiStorage.setBbsRegion(bbsRegion);
+        List<BbsClass> bbsClassList = bbsClassService.lambdaQuery().eq(BbsClass::getRegionCode, bbsRegion.getRegionCode()).list();
+        miNiStorage.setBbsClassList(bbsClassList);
+        miNiStorage.setUserBehaviorLimit(convertLimit(bbsRegion, bbsUserRecord));
+        return miNiStorage;
+    }
+
+    //转化用户限制
+    public UserBehaviorLimit convertLimit(BbsRegion bbsRegion, BbsUserRecord bbsUserRecord) {
+        UserBehaviorLimit userBehaviorLimit = new UserBehaviorLimit();
+        //发布贴子判断
+        if (bbsRegion.getDayPublishTopic() > bbsUserRecord.getDayPublishTopic())
+            userBehaviorLimit.setCanDayPunlishTopic(true);
+        else userBehaviorLimit.setCanDayPunlishTopic(false);
+        if (bbsRegion.getWeekPublishTopic() > bbsUserRecord.getWeekPublishTopic())
+            userBehaviorLimit.setCanWeekPunlishTopic(true);
+        else userBehaviorLimit.setCanWeekPunlishTopic(false);
+        //发布留言判断
+        if (bbsRegion.getDayPublishMessage() > bbsUserRecord.getDayPublishMessage())
+            userBehaviorLimit.setCanDayPunlishMessage(true);
+        else userBehaviorLimit.setCanDayPunlishMessage(false);
+        if (bbsRegion.getWeekPublishMessage() > bbsUserRecord.getWeekPublishMessage())
+            userBehaviorLimit.setCanWeekPunlishMessage(true);
+        else userBehaviorLimit.setCanWeekPunlishMessage(false);
+        //发布评论判断
+        if (bbsRegion.getDayPublishReply() > bbsUserRecord.getDayPublishReply())
+            userBehaviorLimit.setCanDayPunlishReply(true);
+        else userBehaviorLimit.setCanDayPunlishReply(false);
+        if (bbsRegion.getWeekPublishReply() > bbsUserRecord.getWeekPublishReply())
+            userBehaviorLimit.setCanWeekPunlishReply(true);
+        else userBehaviorLimit.setCanWeekPunlishReply(false);
+        //点赞判断
+        if (bbsRegion.getDayPublishPraise() > bbsUserRecord.getDayPublishPraise())
+            userBehaviorLimit.setCanDayPunlishparise(true);
+        else userBehaviorLimit.setCanDayPunlishparise(false);
+        if (bbsRegion.getWeekPublishPraise() > bbsUserRecord.getWeekPublishPraise())
+            userBehaviorLimit.setCanWeekPunlishparise(true);
+        else userBehaviorLimit.setCanWeekPunlishparise(false);
+        return userBehaviorLimit;
+    }
+}
+
+
+/**
+ * 小程序需要缓存数据
+ */
+@Data
+class MiNiStorage {
+    private BbsRegion bbsRegion;
+    private SysUser sysUser;
+    private BbsUserRecord bbsUserRecord;
+    private UserBehaviorLimit userBehaviorLimit;        //用户限制
+    private List<BbsClass> bbsClassList;
+}
+
+@Data
+class UserBehaviorLimit {
+    private Boolean canDayPunlishMessage;
+    private Boolean canDayPunlishReply;
+    private Boolean canDayPunlishTopic;
+    private Boolean canDayPunlishparise;
+    private Boolean canWeekPunlishMessage;
+    private Boolean canWeekPunlishReply;
+    private Boolean canWeekPunlishTopic;
+    private Boolean canWeekPunlishparise;
 }

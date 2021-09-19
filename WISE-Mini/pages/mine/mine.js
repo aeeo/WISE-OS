@@ -24,7 +24,6 @@ Page({
     //获取用户信息  发布、点赞、商店、收藏数量
     getUserRecord() {
         var that = this
-
         // 获取用户Record，刷新tabbar提示
         app.getUserRecord().then(res => {
             that.setData({
@@ -32,42 +31,6 @@ Page({
             })
             app.setTabbarBadge()
         })
-        // let url = app.globalData.HOSTURL + '/bbs/bbsUserRecord/list';
-        // app.wxRequest('get', url, '').then(res => {
-        //     if (res.data.code != 200) {
-        //         wx.showToast({
-        //             title: '用户记录获取失败。',
-        //             icon: 'none'
-        //         })
-        //     } else {
-        //         wx.setStorageSync('USERRECORD', res.data.result.records[0])
-        //         that.setData({
-        //             USERRECORD: wx.getStorageSync('USERRECORD')
-        //         })
-        //         if (res.data.result.records[0].userMessageCount != 0 || res.data.result.records[0].userSysMessageCount != 0) {
-        //             console.log("set")
-        //             wx.setTabBarBadge({
-        //                 index: 1,
-        //                 text: '' + (res.data.result.records[0].userMessageCount + res.data.result.records[0].userSysMessageCount)
-        //             })
-        //         } else {
-        //             wx.removeTabBarBadge({
-        //                 index: 1,
-        //                 success(res) {
-        //                     // console.log("移除Badge成功", res)
-        //                 },
-        //                 fail(res) {
-        //                     // console.log("移除Badge失败", res)
-        //                 }
-        //             })
-        //         }
-        //     }
-        // }, err => {
-        //     wx.showToast({
-        //         title: '用户记录获取失败。',
-        //         icon: 'none'
-        //     })
-        // })
     },
     onReady() {
         var YiYanFlag = wx.getStorageSync('YiYanFlag');
