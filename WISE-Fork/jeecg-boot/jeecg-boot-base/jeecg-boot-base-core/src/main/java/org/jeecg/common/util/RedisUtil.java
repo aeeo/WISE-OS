@@ -110,6 +110,17 @@ public class RedisUtil {
     }
 
     /**
+     * 批量查询
+     * 实现命令：MGET key1 key2，返回 多个结果。
+     *
+     * @param keys
+     * @return value
+     */
+    public List<Object> mget(List<String> keys) {
+        return redisTemplate.opsForValue().multiGet(keys);
+    }
+
+    /**
      * 普通缓存放入
      *
      * @param key   键

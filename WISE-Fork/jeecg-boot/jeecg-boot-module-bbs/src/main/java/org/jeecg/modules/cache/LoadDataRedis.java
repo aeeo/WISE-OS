@@ -1,4 +1,4 @@
-package org.jeecg.modules.bbs.quartz;
+package org.jeecg.modules.cache;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,8 +11,6 @@ import org.jeecg.modules.bbs.service.IBbsClassService;
 import org.jeecg.modules.bbs.service.IBbsRegionService;
 import org.jeecg.modules.bbs.service.IBbsTopicFullDtoService;
 import org.jeecg.modules.bbs.service.impl.BbsUserRecordServiceImpl;
-import org.jeecg.modules.system.service.ISysDepartService;
-import org.jeecg.modules.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
@@ -34,10 +32,6 @@ public class LoadDataRedis {
     private IBbsClassService bbsClassService;
     @Autowired
     private BbsUserRecordServiceImpl bbsUserRecordService;
-    @Autowired
-    private ISysUserService sysUserService;
-    @Autowired
-    private ISysDepartService sysDepartService;
     @Autowired
     private IBbsTopicFullDtoService bbsTopicFullDtoService;
     @Autowired
@@ -106,6 +100,7 @@ public class LoadDataRedis {
                         redisUtil.zAdd(BBS_RANK_REGION_CLASS + bbsRegion.getRegionCode() + "_" + bbsClass.getClassCode(), topicFullDto.getId(), 10);
                     }
                     log.info("行星万象缓存加载排行：" + bbsClass.getClassCode() + topicFullDto.getContent());
+
                     //贴子
                     redisUtil.set(BBS_TOPIC_TOPICID + topicFullDto.getId(), topicFullDto, BBS_TOPIC_TOPICID_TIME);
                     log.info("行星万象缓存加载贴子：" + topicFullDto.getContent());

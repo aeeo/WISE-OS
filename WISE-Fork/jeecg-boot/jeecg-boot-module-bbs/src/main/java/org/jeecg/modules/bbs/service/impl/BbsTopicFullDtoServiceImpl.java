@@ -13,6 +13,7 @@ import org.jeecg.modules.bbs.entity.BbsUserStar;
 import org.jeecg.modules.bbs.mapper.BbsTopicFullDtoMapper;
 import org.jeecg.modules.bbs.mapper.BbsTopicMapper;
 import org.jeecg.modules.bbs.service.IBbsTopicFullDtoService;
+import org.jeecg.modules.cache.LoadDataRedis;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Description: 帖子
@@ -41,16 +43,23 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
 
     @Override
     public IPage<BbsTopicFullDto> queryTopicFullDto(Page<BbsTopicFullDto> page, String regionCode, String classCode, int[] topicType) {
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+
         //先从redis拿
-        Set<Object> bbsTopicFullDtos = redisUtil.zRange(LoadDataRedis.BBS_RANK_REGION_CLASS, page.getCurrent() - 1, page.getCurrent() + page.getSize());
-        List<BbsTopicFullDto> bbsTopicFullDtosList1 = new ArrayList<>();
-        while (bbsTopicFullDtos.iterator().hasNext()) {
-            bbsTopicFullDtosList1.add((BbsTopicFullDto) bbsTopicFullDtos.iterator().next());
+        Set<Object> bbsTopicFullDtos = redisUtil.zRange(LoadDataRedis.BBS_RANK_REGION_CLASS + regionCode + "_" + classCode, (page.getCurrent() - 1) * page.getSize(), page.getCurrent() * page.getSize() - 1);
+        List<BbsTopicFullDto> bbsTopicFullDtosList = new ArrayList<>();
+        Iterator<Object> iterator = bbsTopicFullDtos.iterator();
+        ArrayList<String> topicIdList1 = new ArrayList<>();
+        while (iterator.hasNext()) {
+            topicIdList1.add(LoadDataRedis.BBS_TOPIC_TOPICID + (String) iterator.next());
+        }
+        List<Object> bbsTopicFullDto1 = (List<Object>)redisUtil.mget(topicIdList1);
+        for (Object o : bbsTopicFullDto1) {
+            bbsTopicFullDtosList.add((BbsTopicFullDto) o);
         }
         IPage<BbsTopicFullDto> page1 = new Page<BbsTopicFullDto> ();
-        return page1.setRecords(bbsTopicFullDtosList1);
+        page1.setRecords(bbsTopicFullDtosList);
 
-        //LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         //
         //String classCodeDeal = classCode;
         //if ("index".equals(classCodeDeal)) {
@@ -79,31 +88,30 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         //
         //page.setRecords(bbsTopicFullDtosList);
         //
-        //List<String> topicIdList = new ArrayList<>();
-        //
-        //for (BbsTopicFullDto record : bbsTopicFullDtosList) {
-        //    topicIdList.add(record.getId());
-        //}
-        ////根据用户进行数据封装
-        //if (topicIdList.size() != 0) {
-        //    List<BbsUserStar> bbsUserStars = bbsTopicFullDtoMapper.queryTopicFullDtoUserStar(topicIdList, sysUser.getUsername());
-        //    List<BbsUserPraise> bbsUserPraises = bbsTopicFullDtoMapper.queryTopicFullDtoUserPraise(topicIdList, sysUser.getUsername());
-        //    //封装用户点赞和收藏信息
-        //    for (BbsTopicFullDto record : bbsTopicFullDtosList) {
-        //        for (BbsUserStar bbsUserStar : bbsUserStars) {
-        //            if (record.getId().equals(bbsUserStar.getTopicId())) {
-        //                record.setUserIsStar(true);
-        //            }
-        //        }
-        //        for (BbsUserPraise bbsUserPraise : bbsUserPraises) {
-        //            if (record.getId().equals(bbsUserPraise.getTopicId())) {
-        //                record.setUserIsPraise(true);
-        //            }
-        //        }
-        //    }
-        //}
-        //bbsTopicFullDtosList.sort((l, r) -> r.getCreateTime().compareTo(l.getCreateTime()));
-        //return page;
+        List<String> topicIdList = new ArrayList<>();
+        for (BbsTopicFullDto record : bbsTopicFullDtosList) {
+            topicIdList.add(record.getId());
+        }
+        //根据用户进行数据封装
+        if (topicIdList.size() != 0) {
+            List<BbsUserStar> bbsUserStars = bbsTopicFullDtoMapper.queryTopicFullDtoUserStar(topicIdList, sysUser.getUsername());
+            List<BbsUserPraise> bbsUserPraises = bbsTopicFullDtoMapper.queryTopicFullDtoUserPraise(topicIdList, sysUser.getUsername());
+            //封装用户点赞和收藏信息
+            for (BbsTopicFullDto record : bbsTopicFullDtosList) {
+                for (BbsUserStar bbsUserStar : bbsUserStars) {
+                    if (record.getId().equals(bbsUserStar.getTopicId())) {
+                        record.setUserIsStar(true);
+                    }
+                }
+                for (BbsUserPraise bbsUserPraise : bbsUserPraises) {
+                    if (record.getId().equals(bbsUserPraise.getTopicId())) {
+                        record.setUserIsPraise(true);
+                    }
+                }
+            }
+        }
+        bbsTopicFullDtosList.sort((l, r) -> r.getCreateTime().compareTo(l.getCreateTime()));
+        return page1;
     }
 
     @Override

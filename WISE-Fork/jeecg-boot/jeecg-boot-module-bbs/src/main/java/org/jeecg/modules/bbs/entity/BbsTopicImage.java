@@ -67,6 +67,8 @@ public class BbsTopicImage implements Serializable {
     @ApiModelProperty(value = "帖子ID")
     private java.lang.String topicId;
 
+    public BbsTopicImage() {
+    }
     public BbsTopicImage(String id, String createBy, Date createTime, String updateBy, Date updateTime, String topicImage, String topicId) {
         this.id = id;
         this.createBy = createBy;
