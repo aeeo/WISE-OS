@@ -13,8 +13,8 @@ const htmlSnip =
 	<br />
 </p>
 `
-const accessRole = 
-`
+const accessRole =
+	`
 <div align="center">
 	<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="265" style="width:198.9pt;border-collapse:collapse;border:none;">
 		<tbody>
@@ -250,7 +250,7 @@ Page({
 	 */
 	data: {
 		htmlSnip,
-		USERRECORD: wx.getStorageSync('USERRECORD'),
+		USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
 		showAccessRole: false,
 		accessRole
 	},
@@ -260,17 +260,14 @@ Page({
 	 */
 	onLoad: function (options) {
 		var that = this
-		// 获取token
-		app.getFirstLoginToken().then(res => {
-			app.getUserRecord().then(res => {
-				that.setData({
-					USERRECORD: res
-				})
+		app.getUserAllInfo().then(res => {
+			that.setData({
+				USERRECORD: res.bbsUserRecord
 			})
 		})
 		this.setData({
-      UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE
-    })
+			UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE
+		})
 	},
 
 	/**

@@ -2,34 +2,34 @@ var app = getApp();
 Page({
     data: {
         userInfo: '',
-        USERRECORD: wx.getStorageSync('USERRECORD'),
-        SYSUSER: wx.getStorageSync('SYSUSER'),
+        USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
+        SYSUSER: wx.getStorageSync('ALLINFO').susUser,
         UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE
     },
     onLoad() {
         var that = this
         // 更新成功刷新头像
-        app.getSysUser().then(res => {
+        // 获取用户Record，刷新tabbar提示
+        app.getUserAllInfo().then(res => {
             that.setData({
-                SYSUSER: res
+                SYSUSER: res.sysUser
             })
-        }, err => {
-
         })
     },
     onShow() {
         this.getYiYan()
-        this.getUserRecord()
+        this.getUserAllInfo()
     },
     //获取用户信息  发布、点赞、商店、收藏数量
-    getUserRecord() {
+    getUserAllInfo() {
         var that = this
         // 获取用户Record，刷新tabbar提示
-        app.getUserRecord().then(res => {
+        app.getUserAllInfo().then(res => {
             that.setData({
-                USERRECORD: res
+                USERRECORD: res.bbsUserRecord
             })
             app.setTabbarBadge()
+            wx.stopPullDownRefresh()
         })
     },
     onReady() {
@@ -47,9 +47,10 @@ Page({
         // console.log("mine监听tabbar")
         // 获取用户Record，刷新tabbar提示
         var that = this
-        app.getUserRecord().then(res => {
+        // 获取用户Record，刷新tabbar提示
+        app.getUserAllInfo().then(res => {
             that.setData({
-                USERRECORD: res
+                USERRECORD: res.bbsUserRecord
             })
             app.setTabbarBadge()
         })
@@ -67,10 +68,8 @@ Page({
         console.log("页面上拉触底事件的处理函数")
     },
     onPullDownRefresh() {
-        this.getUserRecord()
+        this.getUserAllInfo()
         this.getYiYan()
-        app.getSysUser()
-        wx.stopPullDownRefresh()
     },
 
     getYiYan() {
@@ -148,13 +147,10 @@ Page({
         app.getUserProfile().then(res => {
             console.log(res)
             // 更新成功刷新头像
-            app.getSysUser().then(res => {
-                // console.log(res)
+            app.getUserAllInfo().then(res => {
                 that.setData({
-                    SYSUSER: res
+                    SYSUSER: res.sysUser
                 })
-            }, err => {
-
             })
         }, err => {
             console.log("用户取消授权")

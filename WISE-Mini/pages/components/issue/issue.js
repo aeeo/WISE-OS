@@ -350,7 +350,7 @@ Page({
           replyCount: 0,
           hitsCount: 0,
           classCode: that.data.userSeleceTopicClassCode == "" ? "index" : that.data.userSeleceTopicClassCode,
-          regionCode: wx.getStorageSync('USERRECORD').regionCode,
+          regionCode: wx.getStorageSync('ALLINFO').bbsUserRecord.regionCode,
           anon: that.data.isAnon ? 1 : 0 //1:匿名
         }
         this.setData({
@@ -380,7 +380,7 @@ Page({
             })
             app.globalData.needReloadTopicList = true
             // 刷新用户限制数据
-            app.userBehaviorLimit()
+            app.getUserAllInfo()
             wx.showToast({
               title: '发布成功',
               icon: 'success',
@@ -459,7 +459,7 @@ Page({
           site: site,
           bbsTopicImageList: bbsTopicImageListForm,
           classCode: that.data.userSeleceTopicClassCode,
-          regionCode: wx.getStorageSync('USERRECORD').regionCode
+          regionCode: wx.getStorageSync('ALLINFO').bbsUserRecord.regionCode
         }
         this.setData({
           isLoad: false
@@ -488,7 +488,7 @@ Page({
             })
             app.globalData.needReloadTopicList = true
             // 刷新用户限制数据
-            app.userBehaviorLimit()
+            app.getUserAllInfo()
             wx.showToast({
               title: '更新成功',
               icon: 'success',
@@ -591,7 +591,7 @@ function didPressChooesImage(that) {
 function wiseUpload(that, filePath) {
   console.log(filePath)
   // 生成文件名
-  let fileName = new Date().getTime() + "_" + wx.getStorageSync('USERRECORD').createBy
+  let fileName = new Date().getTime() + "_" + wx.getStorageSync('ALLINFO').bbsUserRecord.createBy
   // wx.chooseImage 目前微信官方尚未开放获取原图片名功能(2020.4.22)
   // 向七牛云上传
   qiniuUploader.upload(filePath, (res) => {

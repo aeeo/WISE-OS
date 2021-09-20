@@ -74,7 +74,7 @@ Component({
         app.getUserProfile().then(res => {
           if (res.status) {
             // 判断是否能够发布
-            let userBehaviorLimit = wx.getStorageSync('userBehaviorLimit')
+            let userBehaviorLimit = wx.getStorageSync('ALLINFO').userBehaviorLimit
             if (userBehaviorLimit.canWeekPunlishTopic) {
               if (userBehaviorLimit.canDayPunlishTopic) {
                 wx.navigateTo({
@@ -98,7 +98,7 @@ Component({
         // 如果已经授权，则直接跳转相应表单
         if (e.detail.value.label == "发布信息") {
           // 判断是否能够发布
-          let userBehaviorLimit = wx.getStorageSync('userBehaviorLimit')
+          let userBehaviorLimit = wx.getStorageSync('ALLINFO').userBehaviorLimit
           if (userBehaviorLimit.canWeekPunlishTopic) {
             if (userBehaviorLimit.canDayPunlishTopic) {
               wx.navigateTo({

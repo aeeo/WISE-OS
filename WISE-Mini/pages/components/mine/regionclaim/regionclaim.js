@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    USERRECORD:wx.getStorageSync('USERRECORD')
+    USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord
   },
 
   /**
@@ -72,9 +72,9 @@ Page({
     wx.previewImage({
       urls: [that.data.UPLOAD_IMAGE + 'sys/wazgzt%E5%BE%AE%E4%BF%A1%E5%90%8D%E7%89%871000.png'], //需要预览的图片http链接列表，注意是数组
       current: 0, // 当前显示图片的http链接，默认是第一个
-      success: function (res) {},
-      fail: function (res) {},
-      complete: function (res) {},
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
     })
   },
 })

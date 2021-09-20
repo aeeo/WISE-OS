@@ -37,8 +37,7 @@ Page({
         StatusBar: app.globalData.StatusBar,
         CustomBar: app.globalData.CustomBar,
         Custom: app.globalData.Custom,
-        USERRECORD: wx.getStorageSync('USERRECORD'),
-        REGIONCLASS: wx.getStorageSync('REGIONCLASS'),
+        REGIONCLASS: wx.getStorageSync('ALLINFO').bbsClassList,
         CURRENTCLASSCODE: wx.getStorageSync('CURRENTCLASSCODE'), //当前所在版块Code
         
         UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE,
@@ -76,29 +75,9 @@ Page({
         that.setData({
             UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE
         })
-        /**
-         * 查看上一次登录时间，如果不是今天，重新登录并获取token、用户信息、贴子列表
-         */
-        if (wx.getStorageSync('LastLoginTime') != new Date().getDate()) {
-            console.log("获取token")
-            wx.setStorageSync("LastLoginTime", new Date().getDate())
-            // 获取token
-            app.getFirstLoginToken().then(res => {
-                app.getUserRecord().then(res => {
-                    that.setData({
-                        USERRECORD: res
-                    })
-                    that.waitTopicList()
-                })
-            })
-        } else {
-            app.getUserRecord().then(res => {
-                that.setData({
-                    USERRECORD: res
-                })
-                that.waitTopicList()
-            })
-        }
+        app.getUserAllInfo().then(res=>{
+            app.setTabbarBadge()
+        })
     },
     onReady() {
         var DevAskFlag = wx.getStorageSync('DevAskFlag');
@@ -114,7 +93,6 @@ Page({
         var that = this
         this.setData({
             topicLists: that.data.topicLists,
-            USERRECORD: wx.getStorageSync('USERRECORD')
         })
         if (app.globalData.SwitchRegion) {
             //刷新页面

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface IBbsTopicFullDtoService extends IService<BbsTopicFullDto> {
 
-    IPage<BbsTopicFullDto> queryTopicFullDto(Page<BbsTopicFullDto> page, HttpServletRequest req, int[] topicType);
+    IPage<BbsTopicFullDto> queryTopicFullDto(Page<BbsTopicFullDto> page, String regionCode, String classCode, int[] topicType);
 
     BbsTopicFullDto queryTopicFullDtoById(String topicId);
 

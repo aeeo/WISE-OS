@@ -13,7 +13,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    USERRECORD: wx.getStorageSync('USERRECORD'),
+    USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     windowHeight: app.globalData.windowHeight,
@@ -32,7 +32,8 @@ Page({
     }, {
       icon: 'commentfill',
       color: 'orange',
-      badge: wx.getStorageSync('USERRECORD').userMessageCount,
+      // badge: wx.getStorageSync('ALLINFO').bbsUserRecord.userMessageCount,
+      badge: 0,
       name: '互动消息',
       url: "/pages/components/msg/usermessage/usermessage"
     },],
@@ -143,14 +144,14 @@ Page({
 
 
     // 红点提示
-    let userMessageCount = wx.getStorageSync('USERRECORD').userMessageCount
-    let userSysMessageCount = wx.getStorageSync('USERRECORD').userSysMessageCount
+    let userMessageCount = wx.getStorageSync('ALLINFO').bbsUserRecord.userMessageCount
+    let userSysMessageCount = wx.getStorageSync('ALLINFO').bbsUserRecord.userSysMessageCount
     let iconListTmp = that.data.iconList
     iconListTmp[0].badge = userSysMessageCount
     iconListTmp[1].badge = userMessageCount
     that.setData({
       iconList: iconListTmp,
-      USERRECORD: wx.getStorageSync('USERRECORD')
+      USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
     })
   },
 
@@ -265,11 +266,11 @@ Page({
     console.log(e)
     // 清空grid badge
     if (e.currentTarget.dataset.index == 0) {
-      let USERRECORD = wx.getStorageSync('USERRECORD')
-      USERRECORD.userSysMessageCount = 0
-      wx.setStorageSync('USERRECORD', USERRECORD)
-      let userMessageCount = wx.getStorageSync('USERRECORD').userMessageCount
-      let userSysMessageCount = wx.getStorageSync('USERRECORD').userSysMessageCount
+      let ALLINFO = wx.getStorageSync('ALLINFO')
+      ALLINFO.bbsUserRecord.userSysMessageCount = 0
+      wx.setStorageSync('ALLINFO', ALLINFO)
+      let userMessageCount = wx.getStorageSync('ALLINFO').bbsUserRecord.userMessageCount
+      let userSysMessageCount = wx.getStorageSync('ALLINFO').bbsUserRecord.userSysMessageCount
       let iconListTmp = this.data.iconList
       iconListTmp[0].badge = userSysMessageCount
       this.setData({
@@ -293,11 +294,11 @@ Page({
       }
     }
     if (e.currentTarget.dataset.index == 1) {
-      let USERRECORD = wx.getStorageSync('USERRECORD')
-      USERRECORD.userSysMessageCount = 0
-      wx.setStorageSync('USERRECORD', USERRECORD)
-      let userMessageCount = wx.getStorageSync('USERRECORD').userMessageCount
-      let userSysMessageCount = wx.getStorageSync('USERRECORD').userSysMessageCount
+      let ALLINFO = wx.getStorageSync('ALLINFO')
+      ALLINFO.bbsUserRecord.userSysMessageCount = 0
+      wx.setStorageSync('ALLINFO', ALLINFO)
+      let userMessageCount = wx.getStorageSync('ALLINFO').bbsUserRecord.userMessageCount
+      let userSysMessageCount = wx.getStorageSync('ALLINFO').bbsUserRecord.userSysMessageCount
       let iconListTmp = this.data.iconList
       iconListTmp[1].badge = userMessageCount
       this.setData({

@@ -7,8 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    USERRECORD: wx.getStorageSync('USERRECORD'),
-    SYSUSER: wx.getStorageSync('SYSUSER'),
+    USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
+    SYSUSER: wx.getStorageSync('ALLINFO').sysUser,
     UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE,
     USERALLINFO: {},
     topicLists: [],

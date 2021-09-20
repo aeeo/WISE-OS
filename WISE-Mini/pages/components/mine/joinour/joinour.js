@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    USERRECORD:wx.getStorageSync('USERRECORD')
+    USERRECORD:wx.getStorageSync('ALLINFO').bbsUserRecord
   },
 
   /**

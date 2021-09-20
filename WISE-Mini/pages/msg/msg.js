@@ -4,7 +4,7 @@ const API = require('../../utils/API');
 
 Page({
   data: {
-    USERRECORD: wx.getStorageSync('USERRECORD'),
+    USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
 
@@ -20,7 +20,8 @@ Page({
     }, {
       icon: 'commentfill',
       color: 'orange',
-      badge: wx.getStorageSync('USERRECORD').userMessageCount,
+      badge: 0,
+      // badge: wx.getStorageSync('ALLINFO').bbsUserRecord.userMessageCount,
       name: '行星小商店',
       url: "/pages/components/msg/usermessage/usermessage"
     }, {
@@ -56,37 +57,36 @@ Page({
     this.setData({
       UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE,
       THUMBNAIL: app.globalData.THUMBNAIL,
-      USERRECORD: wx.getStorageSync('USERRECORD')
+      USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord
     })
     this.waitMessageList()
-    console.log(wx.getStorageSync('USERRECORD'))
   },
   onShow() {
     // 获取用户Record，刷新tabbar提示
     var that = this
-    app.getUserRecord().then(res => {
+    app.getUserAllInfo().then(res => {
       that.setData({
-        USERRECORD: res
+        USERRECORD: res.bbsUserRecord
       })
       app.setTabbarBadge()
     })
-    let userMessageCount = wx.getStorageSync('USERRECORD').userMessageCount
-    let userSysMessageCount = wx.getStorageSync('USERRECORD').userSysMessageCount
+    let userMessageCount = wx.getStorageSync('ALLINFO').bbsUserRecord.userMessageCount
+    let userSysMessageCount = wx.getStorageSync('ALLINFO').bbsUserRecord.userSysMessageCount
     let iconListTmp = this.data.iconList
     iconListTmp[0].badge = userSysMessageCount
     iconListTmp[1].badge = userMessageCount
     this.setData({
       iconList: iconListTmp,
-      USERRECORD: wx.getStorageSync('USERRECORD')
+      USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord
     })
   },
   onTabItemTap(item) {
     // console.log("msg监听tabbar")
-    // 获取用户Record，刷新tabbar提示
     var that = this
-    app.getUserRecord().then(res => {
+    // 获取用户Record，刷新tabbar提示
+    app.getUserAllInfo().then(res => {
       that.setData({
-        USERRECORD: res
+        USERRECORD: res.bbsUserRecord
       })
       app.setTabbarBadge()
     })
@@ -174,23 +174,21 @@ Page({
             getTopicFlag: true
           })
           // 获取用户Record，刷新tabbar提示
-          app.getUserRecord().then(res => {
+          app.getUserAllInfo().then(res => {
+            var userRecord = res.bbsUserRecord
             // 设置grid红点
-            let userMessageCount = res.userMessageCount
-            let userSysMessageCount = res.userSysMessageCount
+            let userMessageCount = userRecord.userMessageCount
+            let userSysMessageCount = userRecord.userSysMessageCount
             let iconListTmp = that.data.iconList
             iconListTmp[0].badge = userSysMessageCount
             iconListTmp[1].badge = userMessageCount
 
             that.setData({
               iconList: iconListTmp,
-              USERRECORD: res
+              USERRECORD: userRecord
             })
             app.setTabbarBadge()
           })
-
-
-
         } else {
           that.setData({
             pageNo: that.data.pageNo - 1,
@@ -392,11 +390,11 @@ Page({
     console.log(e)
     // 清空grid badge
     if (e.currentTarget.dataset.index == 0) {
-      // let USERRECORD = wx.getStorageSync('USERRECORD')
+      // let USERRECORD = wx.getStorageSync('ALLINFO').bbsUserRecord
       // USERRECORD.userSysMessageCount = 0
       // wx.setStorageSync('USERRECORD', USERRECORD)
-      // let userMessageCount = wx.getStorageSync('USERRECORD').userMessageCount
-      // let userSysMessageCount = wx.getStorageSync('USERRECORD').userSysMessageCount
+      // let userMessageCount = wx.getStorageSync('ALLINFO').bbsUserRecord.userMessageCount
+      // let userSysMessageCount = wx.getStorageSync('ALLINFO').bbsUserRecord.userSysMessageCount
       // let iconListTmp = this.data.iconList
       // iconListTmp[0].badge = userSysMessageCount
       // this.setData({
@@ -425,11 +423,11 @@ Page({
       // return
     }
     if (e.currentTarget.dataset.index == 1) {
-      // let USERRECORD = wx.getStorageSync('USERRECORD')
+      // let USERRECORD = wx.getStorageSync('ALLINFO').bbsUserRecord
       // USERRECORD.userSysMessageCount = 0
       // wx.setStorageSync('USERRECORD', USERRECORD)
-      // let userMessageCount = wx.getStorageSync('USERRECORD').userMessageCount
-      // let userSysMessageCount = wx.getStorageSync('USERRECORD').userSysMessageCount
+      // let userMessageCount = wx.getStorageSync('ALLINFO').bbsUserRecord.userMessageCount
+      // let userSysMessageCount = wx.getStorageSync('ALLINFO').bbsUserRecord.userSysMessageCount
       // let iconListTmp = this.data.iconList
       // iconListTmp[1].badge = userMessageCount
       // this.setData({

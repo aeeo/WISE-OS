@@ -236,7 +236,7 @@ Component({
           return
         }
         var that = this
-        var SYSUSER = wx.getStorageSync('SYSUSER')
+        var SYSUSER = wx.getStorageSync('ALLINFO').sysUser
         var realname = SYSUSER.realname
         var avatar = SYSUSER.avatar
         //beReply是用户当前被回复的信息，回复帖子0，回复评论1
@@ -404,7 +404,7 @@ Component({
             var bbsInform = {}
             bbsInform.replyId = beReply.id
             bbsInform.type = 2 //举报评论
-            bbsInform.informUsername = wx.getStorageSync('SYSUSER').username
+            bbsInform.informUsername = wx.getStorageSync('ALLINFO').sysUser.username
             bbsInform.beInformUsername = beReply.createBy
 
             let url = that.data.SHAREHOSTURL + '/bbs/bbsReply/wise/mini/informReply'

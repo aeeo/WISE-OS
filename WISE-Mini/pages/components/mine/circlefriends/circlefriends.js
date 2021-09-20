@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    USERRECORD: wx.getStorageSync('USERRECORD')
+    USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord
   },
 
   /**
@@ -17,7 +17,7 @@ Page({
       UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE,
       THUMBNAIL: app.globalData.THUMBNAIL,
       ARTWORK: app.globalData.ARTWORK,
-      USERRECORD: wx.getStorageSync('USERRECORD')
+      USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord
     })
     let url = app.globalData.HOSTURL + '/bbs/bbsRegion/wise/mini/queryByRegionCode?regionCode=' + this.data.USERRECORD.regionCode
     app.wxRequest('get', url, '', 5000).then(res => {

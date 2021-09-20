@@ -1,6 +1,7 @@
 package org.jeecg.modules.bbs.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jeecg.common.api.vo.Result;
 import org.jeecg.modules.bbs.entity.BbsUserRecord;
 
 /**
@@ -11,4 +12,5 @@ import org.jeecg.modules.bbs.entity.BbsUserRecord;
  */
 public interface IBbsUserRecordService extends IService<BbsUserRecord> {
 
+    BbsUserRecord getFullUserRecord(String username);
 }

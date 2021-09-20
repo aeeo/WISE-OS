@@ -193,7 +193,7 @@ Page({
         let actionGroups = []
 
         console.log(actionTopic)
-        let SYSUSER = wx.getStorageSync('SYSUSER')
+        let SYSUSER = wx.getStorageSync('ALLINFO').sysUser
         if (actionTopic.userIsStar) {
             let actionGroupItem = {
                 text: '取消收藏',

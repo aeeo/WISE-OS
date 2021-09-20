@@ -104,7 +104,7 @@ Page({
         // 插入记录
         that.addUserWaimai({
           'waimaiId': waimaiitem.id,
-          'regionCode': wx.getStorageSync("USERRECORD").regionCode,
+          'regionCode': wx.getStorageSync('ALLINFO').bbsUserRecord.regionCode,
           'useStatus': 1,
         })
       },
@@ -112,7 +112,7 @@ Page({
         // 插入记录
         that.addUserWaimai({
           'waimaiId': waimaiitem.id,
-          'regionCode': wx.getStorageSync("USERRECORD").regionCode,
+          'regionCode': wx.getStorageSync('ALLINFO').bbsUserRecord.regionCode,
           'useStatus': 0,
         })
         // console.log("打开失败")

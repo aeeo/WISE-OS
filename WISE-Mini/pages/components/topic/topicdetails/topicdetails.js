@@ -343,7 +343,7 @@ Page({
           bbsInform.topicId = that.data.topicdetails.id
           bbsInform.type = 1 //默认
           bbsInform.beInformUsername = that.data.topicdetails.createBy
-          bbsInform.informUsername = wx.getStorageSync('SYSUSER').username
+          bbsInform.informUsername = wx.getStorageSync('ALLINFO').sysUser.username
           let url = that.data.SHAREHOSTURL + '/bbs/bbsInform/wise/mini/informTopic'
           app.wxRequest('post', url, bbsInform).then(res => {
             wx.showToast({
@@ -430,7 +430,7 @@ Page({
   },
   clickMore() {
     let actionTopic = this.data.topicdetails
-    let SYSUSER = wx.getStorageSync('SYSUSER')
+    let SYSUSER = wx.getStorageSync('ALLINFO').sysUser
     let actionGroups = []
     if (actionTopic.userIsStar) {
       let actionGroupItem = {

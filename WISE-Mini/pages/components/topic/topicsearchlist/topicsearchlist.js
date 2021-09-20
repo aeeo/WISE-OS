@@ -10,8 +10,8 @@ Page({
         StatusBar: app.globalData.StatusBar,
         CustomBar: app.globalData.CustomBar,
         Custom: app.globalData.Custom,
-        USERRECORD: wx.getStorageSync('USERRECORD'),
-        REGIONCLASS: wx.getStorageSync('REGIONCLASS'),
+        USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
+        REGIONCLASS: wx.getStorageSync('ALLINFO').bbsClassList,
         CURRENTCLASSCODE: wx.getStorageSync('CURRENTCLASSCODE'), //当前所在版块Code
         //动画
         list: [{
@@ -77,7 +77,7 @@ Page({
     onShow() {
         var that = this
         this.setData({
-            USERRECORD: wx.getStorageSync('USERRECORD')
+            USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord
         })
         if (app.globalData.SwitchRegion) {
             console.log("切换区域刷新页面")

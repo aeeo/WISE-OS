@@ -1,7 +1,6 @@
 package org.jeecg.modules.system.controller;
 
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.crypto.SecureUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.exceptions.ClientException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -18,6 +17,7 @@ import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.*;
 import org.jeecg.common.util.encryption.EncryptedString;
+import org.jeecg.modules.bbs.entity.MiNiStorage;
 import org.jeecg.modules.system.entity.SysDepart;
 import org.jeecg.modules.system.entity.SysUser;
 import org.jeecg.modules.system.model.SysLoginModel;
@@ -119,63 +119,7 @@ public class LoginController {
         return result;
     }
 
-    @ApiOperation("微信小程序登录接口")
-    @RequestMapping(value = "/minilogin", method = RequestMethod.POST)
-    public Result<JSONObject> minilogin(@RequestBody SysLoginModel sysLoginModel) {
-        Result<JSONObject> result = new Result<JSONObject>();
-        String username = sysLoginModel.getUsername();
-        String password = sysLoginModel.getPassword();
-        //update-begin--Author:scott  Date:20190805 for：暂时注释掉密码加密逻辑，有点问题
-        //前端密码加密，后端进行密码解密
-        //password = AesEncryptUtil.desEncrypt(sysLoginModel.getPassword().replaceAll("%2B", "\\+")).trim();//密码解密
-        //update-begin--Author:scott  Date:20190805 for：暂时注释掉密码加密逻辑，有点问题
 
-        //update-begin-author:taoyan date:20190828 for:校验验证码
-        //String captcha = sysLoginModel.getCaptcha();
-        //if (captcha == null) {
-        //    result.error500("验证码无效");
-        //    return result;
-        //}
-        //String lowerCaseCaptcha = captcha.toLowerCase();
-        //String realKey = MD5Util.MD5Encode(lowerCaseCaptcha + sysLoginModel.getCheckKey(), "utf-8");
-        //Object checkCode = redisUtil.get(realKey);
-        //当进入登录页时，有一定几率出现验证码错误 #1714
-        //if (checkCode == null || !checkCode.toString().equals(lowerCaseCaptcha)) {
-        //    result.error500("验证码错误");
-        //    return result;
-        //}
-        //update-end-author:taoyan date:20190828 for:校验验证码
-
-        //1. 校验用户是否有效
-        //update-begin-author:wangshuai date:20200601 for: 登录代码验证用户是否注销bug，if条件永远为false
-        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(SysUser::getUsername, username);
-        SysUser sysUser = sysUserService.getOne(queryWrapper);
-        //update-end-author:wangshuai date:20200601 for: 登录代码验证用户是否注销bug，if条件永远为false
-        result = sysUserService.checkUserIsEffective(sysUser);
-        if (!result.isSuccess()) {
-            return result;
-        }
-
-        //2. 校验用户名或密码是否正确
-        String userpassword = PasswordUtil.encrypt(username, password, sysUser.getSalt());
-        String syspassword = sysUser.getPassword();
-        if (!syspassword.equals(userpassword)) {
-            result.error500("用户名或密码错误");
-            return result;
-        }
-
-        //用户登录信息
-        userInfo(sysUser, result);
-        //update-begin--Author:liusq  Date:20210126  for：登录成功，删除redis中的验证码
-        //redisUtil.del(realKey);
-        //update-begin--Author:liusq  Date:20210126  for：登录成功，删除redis中的验证码
-        LoginUser loginUser = new LoginUser();
-        BeanUtils.copyProperties(sysUser, loginUser);
-        baseCommonService.addLog("用户名: " + username + ",登录成功！", CommonConstant.LOG_TYPE_1, null, loginUser);
-        //update-end--Author:wangshuai  Date:20200714  for：登录日志没有记录人员
-        return result;
-    }
 
     /**
      * 退出登录
@@ -451,6 +395,8 @@ public class LoginController {
         result.success("登录成功");
         return result;
     }
+
+
 
     /**
      * 获取加密字符串

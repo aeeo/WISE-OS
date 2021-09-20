@@ -39,7 +39,7 @@ Page({
         that.data.northeast = res.northeast //东北  右上
         that.data.southwest = res.southwest //西南  左下
         that.getRegionList()
-        that.getUserRecord()
+        that.getUserAllInfo()
       }
     })
     this.bindEvent() //  聚合簇
@@ -87,7 +87,7 @@ Page({
       wx.showModal({
         cancelColor: 'cancelColor',
         title: "切换区域",
-        content: "本月剩余切换次数：" + (that.data.regionCount - wx.getStorageSync('USERRECORD').regionSwitchCount) + "，请确认切换到：" + that.data.markers[e.detail.markerId - 1].name,
+        content: "本月剩余切换次数：" + (that.data.regionCount - wx.getStorageSync('ALLINFO').bbsUserRecord.regionSwitchCount) + "，请确认切换到：" + that.data.markers[e.detail.markerId - 1].name,
         success(res) {
           if (res.confirm) {
             /**
@@ -98,8 +98,8 @@ Page({
              *    跳转到首页
              * 否：提示用户切换次数已达上限，无法切换
              */
-            if (that.data.regionCount - wx.getStorageSync('USERRECORD').regionSwitchCount > 0) {
-              if (wx.getStorageSync('USERRECORD').regionCode == that.data.regionList[e.detail.markerId - 1].regionCode) {
+            if (that.data.regionCount - wx.getStorageSync('ALLINFO').bbsUserRecord.regionSwitchCount > 0) {
+              if (wx.getStorageSync('ALLINFO').bbsUserRecord.regionCode == that.data.regionList[e.detail.markerId - 1].regionCode) {
                 wx.showToast({
                   title: "已经在" + that.data.markers[e.detail.markerId - 1].name + "，无需切换",
                   icon: "none"
@@ -229,7 +229,7 @@ Page({
           callout.bgColor = "#FFFFFFCC" //背景色
           callout.borderRadius = item.borderRadius
           // 当前区域文字提示
-          if (wx.getStorageSync('USERRECORD').regionCode == item.regionCode) {
+          if (wx.getStorageSync('ALLINFO').bbsUserRecord.regionCode == item.regionCode) {
             callout.content = "当前区域：" + item.content
           } else {
             callout.content = "Go：" + item.content
@@ -254,7 +254,7 @@ Page({
           circleTemItem.level = "abovelabels"
 
           // 当前区域高亮
-          if (wx.getStorageSync('USERRECORD').regionCode == item.regionCode) {
+          if (wx.getStorageSync('ALLINFO').bbsUserRecord.regionCode == item.regionCode) {
             // currentRegion = [item.province.split('-')[0], item.province.split('-')[1]]
             circleTemItem.color = '#32CD3288' //描边的颜色
             circleTemItem.fillColor = '#32CD3288' //填充颜色
@@ -295,12 +295,12 @@ Page({
     })
   },
   //获取用户信息
-  getUserRecord() {
+  getUserAllInfo() {
     var that = this
     // 获取token
-    app.getUserRecord().then(res => {
+    app.getUserAllInfo().then(res => {
       that.setData({
-        USERRECORD: res
+        USERRECORD: res.bbsUserRecord
       })
     })
   },
@@ -319,10 +319,10 @@ Page({
           icon: 'none'
         })
       } else {
-        var USERRECORD = wx.getStorageSync('USERRECORD')
-        USERRECORD.regionCode = region.regionCode
-        USERRECORD.regionFullName = region.fullName
-        wx.setStorageSync('USERRECORD', USERRECORD)
+        var ALLINFO = wx.getStorageSync('ALLINFO')
+        ALLINFO.bbsUserRecord.regionCode = region.regionCode
+        ALLINFO.bbsUserRecord.regionFullName = region.fullName
+        wx.setStorageSync('ALLINFO', ALLINFO)
         wx.showToast({
           title: '切换成功',
           icon: 'none'

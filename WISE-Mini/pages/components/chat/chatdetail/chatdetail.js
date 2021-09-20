@@ -14,8 +14,8 @@ Page({
     messageList: [],                    //本轮会话消息列表
     nextReqMessageID: 0,                // 用于续拉，分页续拉时需传入该字段。
     isCompleted: false,                 // 表示是否已经拉完所有消息。
-    SYSUSER: wx.getStorageSync('SYSUSER'),
-    USERRECORD: wx.getStorageSync('USERRECORD'),
+    SYSUSER: wx.getStorageSync('ALLINFO').sysUser,
+    USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
 
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
@@ -51,8 +51,8 @@ Page({
     }
 
     this.setData({
-      SYSUSER: wx.getStorageSync('SYSUSER'),
-      USERRECORD: wx.getStorageSync('USERRECORD'),
+      SYSUSER: wx.getStorageSync('ALLINFO').sysUser,
+      USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
     })
   },
   getMessageList(e) {

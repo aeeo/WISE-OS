@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    USERRECORD: wx.getStorageSync('USERRECORD'),
+    USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
     //分页
     pageNo: 1,
     // 触底
@@ -138,9 +138,9 @@ Page({
             tempList.push(resTopicList[item])
           }
           // 将records中的userMessageCount=0
-          let userRecord = wx.getStorageSync('USERRECORD')
-          userRecord.userMessageCount = 0
-          wx.setStorageSync("USERRECORD", userRecord)
+          let ALLINFO = wx.getStorageSync('ALLINFO')
+          ALLINFO.bbsUserRecord.userMessageCount = 0
+          wx.setStorageSync("ALLINFO", ALLINFO)
           console.log(tempList)
           that.setData({
             userMessageList: tempList,

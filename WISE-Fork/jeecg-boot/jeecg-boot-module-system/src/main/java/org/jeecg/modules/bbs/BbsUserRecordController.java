@@ -177,56 +177,16 @@ public class BbsUserRecordController extends JeecgController<BbsUserRecord, IBbs
     // ****行星万象修改位置戳****
 
     /**
-     * 分页列表查询
-     *
-     * @param bbsUserRecord
-     * @param pageNo
-     * @param pageSize
-     * @param req
-     * @return
+     * 获取完整用户记录信息
      */
-    @AutoLog(value = "用户信息记录-分页列表查询")
-    @ApiOperation(value = "用户信息记录-分页列表查询", notes = "用户信息记录-分页列表查询")
+    @AutoLog(value = "获取完整用户记录信息")
+    @ApiOperation(value = "获取完整用户记录信息", notes = "获取完整用户记录信息")
     @GetMapping(value = "/wise/mini/list")
-    public Result<?> queryPageListWiseMini(BbsUserRecord bbsUserRecordTemp,
-                                           @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-                                           HttpServletRequest req) {
+    public Result<?> getFullUserRecord() {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-
-        BbsUserRecord bbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, sysUser.getUsername()).one();
-
-        if (null == bbsUserRecord) {
-            return Result.error("用户信息记录不存在！");
-        }
-
-
-        /**未读收到的评论数量*/
-        int count1 = bbsUserMessageService.lambdaQuery().eq(BbsUserMessage::getReceiveUsername, sysUser.getUsername())
-                .eq(BbsUserMessage::getStatus, "1")
-                .ne(BbsUserMessage::getCreateBy, sysUser.getUsername()).count();
-        /**未读系统消息数量*/
-        int count2 = bbsUserSysMessageService.lambdaQuery()
-                .eq(BbsUserSysMessage::getReceiveUsername, sysUser.getUsername())
-                .eq(BbsUserSysMessage::getStatus, "1")
-                .in(BbsUserSysMessage::getRegionCode, bbsUserRecord.getRegionCode(), "all")
-                .eq(BbsUserSysMessage::getStatus, "1")
-                .count();
-
-        bbsUserRecord.setUserMessageCount(count1);
-        bbsUserRecord.setUserSysMessageCount(count2);
-
-        //区域名
-        BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecord.getRegionCode()).one();
-        bbsUserRecord.setRegionFullName(bbsRegion.getFullName());
-
-        bbsUserRecord.setCreateByName(sysUser.getRealname());
-        bbsUserRecord.setAvatar(sysUser.getAvatar());
-        bbsUserRecord.setSex(sysUser.getSex());
-
+        BbsUserRecord bbsUserRecord = bbsUserRecordService.getFullUserRecord(sysUser.getUsername());
         return Result.OK(bbsUserRecord);
     }
-
 
     /**
      * 分页列表查询

@@ -23,8 +23,8 @@ Page({
         windowHeight: app.globalData.windowHeight,
         screenHeight: app.globalData.screenHeight,
 
-        USERRECORD: wx.getStorageSync('USERRECORD'),
-        REGIONCLASS: wx.getStorageSync('REGIONCLASS'),
+        USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
+        REGIONCLASS: wx.getStorageSync('ALLINFO').bbsClassList,
         CURRENTCLASSCODE: wx.getStorageSync('CURRENTCLASSCODE'), //当前所在版块Code
         getTopicFlag: false,
         isFirstGetTopicFlag: true,
@@ -86,14 +86,11 @@ Page({
         })
         // 获取token
         app.getFirstLoginToken().then(res => {
-            app.getUserRecord().then(res => {
-                // console.log("获取Token和用户记录成功：", res)
-                that.setData({
-                    USERRECORD: res
-                })
-                that.getRegionClass()
-                that.waitTopicList()
+            that.setData({
+                USERRECORD: res.bbsUserRecord,
             })
+            that.getRegionClass(res.bbsClassList)
+            that.waitTopicList()
         })
     },
     onReady() {
@@ -107,10 +104,9 @@ Page({
         wx.setStorageSync("DevAskFlag", "yes")
     },
     onShow() {
-        // console.log("show")
         var that = this
         this.setData({
-            USERRECORD: wx.getStorageSync('USERRECORD')
+            USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord
         })
         /**
          * 切换区域后返回需要重新加载当前区域贴子列表
@@ -122,8 +118,13 @@ Page({
                 startFooterLoading: true,
                 topicLists: []
             })
-            this.getRegionClass()
-            this.waitTopicList()
+            app.getUserAllInfo().then(res => {
+                that.setData({
+                    USERRECORD: res.bbsUserRecord,
+                })
+                that.getRegionClass(res.bbsClassList)
+                // that.waitTopicList()             //currentClass改变会触发swipper加载，此处不需要加载
+            })
             app.globalData.SwitchRegion = false
         }
         /**
@@ -152,9 +153,9 @@ Page({
         // console.log("index监听tabbar")
         // 获取用户Record，刷新tabbar提示
         var that = this
-        app.getUserRecord().then(res => {
+        app.getUserAllInfo().then(res => {
             that.setData({
-                USERRECORD: res
+                USERRECORD: res.bbsUserRecord
             })
             app.setTabbarBadge()
         })
@@ -245,13 +246,12 @@ Page({
                 }
                 that.data.dataVerify.isGetTopicFinsh[thisCurrentClass] = true
                 // 获取用户Record，刷新tabbar提示
-                app.getUserRecord().then(res => {
+                app.getUserAllInfo().then(res=>{
                     that.setData({
-                        USERRECORD: res
+                        USERRECORD: res.bbsUserRecord
                     })
                     app.setTabbarBadge()
                 })
-
                 //数据加载成功
                 if (!that.data.isFirstGetTopicFlag && app.globalData.needReloadTopicList) {
                     wx.showToast({
@@ -361,34 +361,24 @@ Page({
         })
         wx.setStorageSync('CURRENTCLASSCODE', this.data.CURRENTCLASSCODE)
     },
-    //获取区域版块
-    getRegionClass() {
+    //mark:渲染区域下的版块
+    getRegionClass(bbsClassList) {
         var that = this
-        let url = app.globalData.HOSTURL + '/bbs/bbsClass/wise/mini/list'
-        app.wxRequest('get', url, '').then(res => {
-            wx.setStorage({
-                data: res.data.result.records,
-                key: 'REGIONCLASS',
-            })
-            // 初始化topicList数组 size
-            res.data.result.records.forEach(item => {
-                const arrItem = {}
-                const topicList = []
-                arrItem.topicList = topicList
-                arrItem.needLoad = true
-                arrItem.pageNo = 1
-                that.data.topicLists.push(arrItem)
-            })
-            that.setData({
-                topicLists: that.data.topicLists,
-                REGIONCLASS: res.data.result.records
-            })
-        }, err => {
-            wx.showToast({
-                title: '获取版块分类信息失败',
-                icon: "none"
-            })
+        // 初始化topicList数组 size
+        bbsClassList.forEach(item => {
+            const arrItem = {}
+            const topicList = []
+            arrItem.topicList = topicList
+            arrItem.needLoad = true
+            arrItem.pageNo = 1
+            that.data.topicLists.push(arrItem)
         })
+        that.setData({
+            topicLists: that.data.topicLists,
+            REGIONCLASS: bbsClassList,
+            currentClass: 0
+        })
+        wx.setStorageSync('CURRENTCLASSCODE', "index")
     },
     toSearch() {
         wx.navigateTo({
@@ -405,7 +395,10 @@ Page({
             scrollLeft: e.detail.current * 60,
         })
         wx.setStorageSync('CURRENTCLASSCODE', that.data.CURRENTCLASSCODE)
-        if (that.data.topicLists[that.data.currentClass].needLoad) {
+        
+         //从区域选择页面返回，不需要加载，在OnShow方法中已经处理
+        if (that.data.topicLists[that.data.currentClass].needLoad && !app.globalData.SwitchRegion) {
+            console.log("show++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
             that.waitTopicList()
         }
     },
@@ -440,7 +433,7 @@ Page({
             let actionTopic = this.data.topicLists[currentClassIndex].topicList[actionTopicIndex]
             let actionGroups = []
 
-            let SYSUSER = wx.getStorageSync('SYSUSER')
+            let SYSUSER = wx.getStorageSync('ALLINFO').sysUser
             if (actionTopic.userIsStar) {
                 let actionGroupItem = {
                     text: '取消收藏',
@@ -514,7 +507,7 @@ Page({
                     var bbsInform = {}
                     bbsInform.topicId = that.data.actionTopic.id
                     bbsInform.type = 1 //默认
-                    bbsInform.informUsername = wx.getStorageSync('SYSUSER').username
+                    bbsInform.informUsername = wx.getStorageSync('ALLINFO').sysUser.username
                     bbsInform.beInformUsername = that.data.actionTopic.createBy
                     console.log(bbsInform)
                     let url = app.globalData.HOSTURL + '/bbs/bbsInform/wise/mini/informTopic'

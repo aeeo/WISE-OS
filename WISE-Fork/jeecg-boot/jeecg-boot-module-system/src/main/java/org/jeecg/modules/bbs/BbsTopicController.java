@@ -14,7 +14,6 @@ import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.oConvertUtils;
-import org.jeecg.modules.bbs.BbsUserTopicClickController;
 import org.jeecg.modules.bbs.entity.*;
 import org.jeecg.modules.bbs.service.*;
 import org.jeecg.modules.bbs.service.impl.*;
@@ -347,7 +346,9 @@ public class BbsTopicController {
                                             @RequestParam(name = "pageSize", defaultValue = "15") Integer pageSize,
                                             HttpServletRequest req) {
         Page<BbsTopicFullDto> page = new Page<BbsTopicFullDto>(pageNo, pageSize);
-        IPage<BbsTopicFullDto> bbsTopicFullDtos12 = bbsTopicFullDtoService.queryTopicFullDto(page, req, topicType);
+        String regionCode = req.getHeader("regioncode");
+        String classCode = req.getHeader("classCode");
+        IPage<BbsTopicFullDto> bbsTopicFullDtos12 = bbsTopicFullDtoService.queryTopicFullDto(page, regionCode, classCode, topicType);
 
         //帖子浏览量+1
         ArrayList<BbsTopic> bbsTopics = new ArrayList<>();
@@ -484,11 +485,12 @@ public class BbsTopicController {
     public Result<?> fullListById(@RequestParam(value = "topicId") String topicId,
                                   HttpServletRequest req) {
         BbsTopicFullDto bbsTopicFullDto = bbsTopicFullDtoService.queryTopicFullDtoById(topicId);
-        if(null == bbsTopicFullDto){
-            return  Result.error(1005,"id为" + topicId + "的贴子不存在。");
+        if (null == bbsTopicFullDto) {
+            return Result.error(1005, "id为" + topicId + "的贴子不存在。");
         }
         return Result.OK(bbsTopicFullDto);
     }
+
     /**
      * 根据id查询完整帖子
      *
@@ -502,7 +504,7 @@ public class BbsTopicController {
     @ApiOperation(value = "帖子-根据id查询完整帖子", notes = "帖子-根据id查询完整帖子")
     @GetMapping(value = "/wise/mini/fullListById/anon")
     public Result<?> fullListByIdAnon(@RequestParam(value = "topicId") String topicId,
-                                  HttpServletRequest req) {
+                                      HttpServletRequest req) {
         BbsTopicFullDto bbsTopicFullDto = bbsTopicFullDtoService.queryTopicFullDtoByIdAnon(topicId);
         return Result.OK(bbsTopicFullDto);
     }
@@ -546,7 +548,7 @@ public class BbsTopicController {
                          HttpServletRequest req) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
-        if(!this.judgeMiniUserAuth())
+        if (!this.judgeMiniUserAuth())
             return Result.error(1000, "未授权,无法发布。");
 
         BbsRegion regionOne = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, req.getHeader("regioncode")).one();
@@ -774,7 +776,7 @@ public class BbsTopicController {
                     .eq(BbsClass::getClassCode, pageList.getRecords().get(i).getClassCode())
                     .eq(BbsClass::getRegionCode, pageList.getRecords().get(i).getRegionCode())
                     .one();
-            if(!pageList.getRecords().get(i).getTopicType().equals("5")){
+            if (!pageList.getRecords().get(i).getTopicType().equals("5")) {
                 pageList.getRecords().get(i).setClassName(bbsClass.getClassName());
             }
         }
@@ -822,16 +824,15 @@ public class BbsTopicController {
     }
 
 
-
     //判断微信小程序用户是否授权个人基本信息
-    public boolean judgeMiniUserAuth(){
+    public boolean judgeMiniUserAuth() {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
         SysUser sysUser1 = sysUserService.lambdaQuery().eq(SysUser::getUsername, sysUser.getUsername()).one();
-        if(null == sysUser1.getRealname()){
+        if (null == sysUser1.getRealname()) {
             return false;
-        }else{
-            return  true;
+        } else {
+            return true;
         }
     }
 
@@ -848,6 +849,7 @@ public class BbsTopicController {
         bbsTopicService.deletePublishTopic(ids);
         return Result.OK("删除成功!");
     }
+
     /**
      * 通过id删除
      *

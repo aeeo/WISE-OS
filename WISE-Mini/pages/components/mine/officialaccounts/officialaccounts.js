@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    USERRECORD: wx.getStorageSync('USERRECORD'),
+    USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
     weixingongzhonghao: ''
   },
 
@@ -18,7 +18,7 @@ Page({
       UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE,
       THUMBNAIL: app.globalData.THUMBNAIL,
       ARTWORK: app.globalData.ARTWORK,
-      USERRECORD: wx.getStorageSync('USERRECORD')
+      USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord
     })
 
     // let url = app.globalData.HOSTURL + '/bbs/bbsSys/wise/mini/queryValueByKey?sysKey=' + "weixingongzhonghao"

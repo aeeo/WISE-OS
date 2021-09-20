@@ -28,5 +28,42 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Service
 public class BbsUserRecordServiceImpl extends ServiceImpl<BbsUserRecordMapper, BbsUserRecord> implements IBbsUserRecordService {
+    @Autowired
+    private IBbsUserRecordService bbsUserRecordService;
+    @Autowired
+    private IBbsUserSysMessageService bbsUserSysMessageService;
+    @Autowired
+    private BbsUserMessageServiceImpl bbsUserMessageService;
+    @Autowired
+    private IBbsRegionService bbsRegionService;
+    @Autowired
+    private IBbsTopicFullDtoService bbsTopicFullDtoService;
 
+    @Override
+    public BbsUserRecord getFullUserRecord(String username) {
+        BbsUserRecord bbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, username).one();
+        if (null == bbsUserRecord) {
+            return null;
+        }
+        /**未读收到的评论数量*/
+        int count1 = bbsUserMessageService.lambdaQuery().eq(BbsUserMessage::getReceiveUsername,username)
+                .eq(BbsUserMessage::getStatus, "1")
+                .ne(BbsUserMessage::getCreateBy, username).count();
+        /**未读系统消息数量*/
+        int count2 = bbsUserSysMessageService.lambdaQuery()
+                .eq(BbsUserSysMessage::getReceiveUsername, username)
+                .eq(BbsUserSysMessage::getStatus, "1")
+                .in(BbsUserSysMessage::getRegionCode, bbsUserRecord.getRegionCode(), "all")
+                .eq(BbsUserSysMessage::getStatus, "1")
+                .count();
+        bbsUserRecord.setUserMessageCount(count1);
+        bbsUserRecord.setUserSysMessageCount(count2);
+        //区域名
+        BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecord.getRegionCode()).one();
+        bbsUserRecord.setRegionFullName(bbsRegion.getFullName());
+        //bbsUserRecord.setCreateByName(sysUser.getRealname());
+        //bbsUserRecord.setAvatar(sysUser.getAvatar());
+        //bbsUserRecord.setSex(sysUser.getSex());
+        return bbsUserRecord;
+    }
 }

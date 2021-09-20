@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -36,22 +35,20 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
 
 
     @Override
-    public IPage<BbsTopicFullDto> queryTopicFullDto(Page<BbsTopicFullDto> page, HttpServletRequest req, int[] topicType) {
+    public IPage<BbsTopicFullDto> queryTopicFullDto(Page<BbsTopicFullDto> page, String regionCode, String classCode, int[] topicType) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
-        String regionCode = req.getHeader("regioncode");
-        String classCode = req.getHeader("classCode");
-        if ("index".equals(classCode)) {
-            classCode = "";
+        String classCodeDeal = classCode;
+        if ("index".equals(classCodeDeal)) {
+            classCodeDeal = "";
         }
         //查出固定不变的数据（已审核的贴子）
         //手动分页，先筛选帖子，再封装数据
-        List<BbsTopicFullDto> bbsTopicFullDtosList = bbsTopicFullDtoMapper.queryTopicFullDtoFix((page.getCurrent() - 1) * page.getSize(), page.getSize(), regionCode, classCode, topicType);
+        List<BbsTopicFullDto> bbsTopicFullDtosList = bbsTopicFullDtoMapper.queryTopicFullDtoFix((page.getCurrent() - 1) * page.getSize(), page.getSize(), regionCode, classCodeDeal, topicType);
         //置顶帖只显示当前区域的
-        String classCode1 = req.getHeader("classCode");
         for (int i = 0; i < bbsTopicFullDtosList.size(); i++) {
             if (bbsTopicFullDtosList.get(i).getTopicType().equals("1")) {
-                if (!classCode1.equals(bbsTopicFullDtosList.get(i).getClassCode())) {
+                if (!regionCode.equals(bbsTopicFullDtosList.get(i).getClassCode())) {
                     bbsTopicFullDtosList.remove(i);
                 }
             }
@@ -98,7 +95,7 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
     }
 
     @Override
-    public IPage<BbsTopicFullDto> queryUserPublishTopicFullDto(Page<BbsTopicFullDto> page, HttpServletRequest req, int[] topicType,String username) {
+    public IPage<BbsTopicFullDto> queryUserPublishTopicFullDto(Page<BbsTopicFullDto> page, HttpServletRequest req, int[] topicType, String username) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
         String regionCode = req.getHeader("regioncode");
@@ -109,7 +106,6 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         //查出固定不变的数据（已审核的贴子）
         //手动分页，先筛选帖子，再封装数据
         List<BbsTopicFullDto> bbsTopicFullDtosList = bbsTopicFullDtoMapper.queryUserPublishTopicFix((page.getCurrent() - 1) * page.getSize(), page.getSize(), regionCode, classCode, topicType, username);
-
 
 
         //图片实体类加上构造方法，贴子如果没有图片，还是会返回一个空图片实体，去除
@@ -154,7 +150,6 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
     }
 
 
-
     @Override
     public BbsTopicFullDto queryTopicFullDtoById(String topicId) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
@@ -162,7 +157,7 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         //查出固定不变的数据（已审核的贴子）
         //手动分页，先筛选帖子，再封装数据
         BbsTopicFullDto bbsTopicFullDtosList = bbsTopicFullDtoMapper.queryTopicFullDtoFixById(topicId);
-        if(null == bbsTopicFullDtosList){
+        if (null == bbsTopicFullDtosList) {
             return null;
         }
         bbsTopicFullDtosList.getBbsTopicLinkList().sort((l, r) -> l.getSort().compareTo(r.getSort()));
@@ -186,6 +181,7 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
 
         return bbsTopicFullDtosList;
     }
+
     @Override
     public BbsTopicFullDto queryTopicFullDtoByIdAnon(String topicId) {
 

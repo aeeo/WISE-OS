@@ -60,7 +60,7 @@ Page({
         that.setData({
             getTopicFlag: false
         })
-        let url = app.globalData.HOSTURL + '/bbs/bbsTopic/wise/mini/queryPagePublishFullList?pageNo=' + this.data.pageNo + '&username=' + wx.getStorageSync('SYSUSER').username
+        let url = app.globalData.HOSTURL + '/bbs/bbsTopic/wise/mini/queryPagePublishFullList?pageNo=' + this.data.pageNo + '&username=' + wx.getStorageSync('ALLINFO').sysUser.username
         app.wxRequest('get', url, '').then(res => {
             res.data.result.records.forEach((item) => {
                 item.userRole = item.userRole.substring(4)
