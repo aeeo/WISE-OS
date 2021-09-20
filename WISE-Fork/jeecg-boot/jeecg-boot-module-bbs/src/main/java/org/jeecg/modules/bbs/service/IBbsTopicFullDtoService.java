@@ -15,7 +15,25 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface IBbsTopicFullDtoService extends IService<BbsTopicFullDto> {
 
+    /**
+     * 固定信息，包含是否点赞，是否收藏
+     * @param page
+     * @param regionCode
+     * @param classCode
+     * @param topicType
+     * @return
+     */
     IPage<BbsTopicFullDto> queryTopicFullDto(Page<BbsTopicFullDto> page, String regionCode, String classCode, int[] topicType);
+
+    /**
+     * 固定信息，不包含是否点赞，是否收藏
+     * @param page
+     * @param regionCode
+     * @param classCode
+     * @param topicType
+     * @return
+     */
+    IPage<BbsTopicFullDto> queryTopicFullDtoFix(Page<BbsTopicFullDto> page, String regionCode, String classCode, int[] topicType);
 
     BbsTopicFullDto queryTopicFullDtoById(String topicId);
 
