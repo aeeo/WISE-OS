@@ -17,7 +17,10 @@
           </view>
           <view>
             <view class="flex align-center">
-              <view style="color:black;font-weight:bold;">{{topicdetails.anon == 0 ? topicdetails.bbsCreateByName : (topicdetails.sex==1 ? '行星小伙' : '行星小妹')}}</view>
+              <view style="color:black;font-weight:bold;" wx:if="{{topicdetails.anon != 0}}">{{(topicdetails.sex==1 ?
+                '行星小伙' : '行星小妹')}}</view>
+              <view style="color:black;font-weight:bold;" wx:if="{{topicdetails.anon == 0}}">
+                {{topicdetails.bbsCreateByName}}</view>
               <!-- 角色 -->
               <view
                 class="cu-tag bg-{{topicdetails.userRole=='开发者'?'yellow':(topicdetails.userRole=='官方'?'red':'grey')}} sm radius"

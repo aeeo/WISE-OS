@@ -785,6 +785,20 @@ public class RedisUtil {
         return redisTemplate.opsForZSet().reverseRangeByScore(key, min, max, start, end);
     }
 
+
+    /**
+     * 根据索引查询集合元素和分值, 从大到小排序
+     * @param key
+     * @param min
+     * @param max
+     * @param start
+     * @param count
+     * @return
+     */
+    public Set<TypedTuple<Object>> zReverseRangeByScoreWithScoresLR(String key, double min, double max, long start, long count) {
+        return redisTemplate.opsForZSet().reverseRangeByScoreWithScores(key, min, max, start, count);
+    }
+
     /**
      * 根据score值获取集合元素数量
      *

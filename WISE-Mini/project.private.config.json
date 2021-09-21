@@ -55,10 +55,16 @@
           "scene": null
         },
         {
-          "name": "模拟更新",
+          "name": "单页",
+          "pathName": "/pages/components/topic/topicdetails/topicdetails",
+          "query": "topicId=1436663876947558401",
+          "scene": 1154
+        },
+        {
+          "name": "分享",
           "pathName": "pages/index/index",
           "query": "",
-          "scene": null
+          "scene": 1007
         }
       ]
     }

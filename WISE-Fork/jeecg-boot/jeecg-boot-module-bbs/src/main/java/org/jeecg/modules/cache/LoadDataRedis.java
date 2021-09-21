@@ -88,23 +88,20 @@ public class LoadDataRedis {
                 log.info("行星万象缓存加载版块：" + bbsClass.getClassName());
                 //贴子排行榜
                 Page<BbsTopicFullDto> page = new Page<BbsTopicFullDto>(1, Integer.MAX_VALUE);
+                //前面为最新
                 IPage<BbsTopicFullDto> bbsTopicFullDtoIPage = bbsTopicFullDtoService.queryTopicFullDtoFix(page, bbsRegion.getRegionCode(), bbsClass.getClassCode(), new int[]{0, 1, 2});
+                Double score = (double)Integer.MAX_VALUE;
                 for (BbsTopicFullDto topicFullDto : bbsTopicFullDtoIPage.getRecords()) {
-                    Set<ZSetOperations.TypedTuple<String>> typedTuples1 = redisUtil.getRedisTemplate().opsForZSet().reverseRangeWithScores(BBS_RANK_REGION_CLASS + bbsRegion.getRegionCode() + "_" + bbsClass.getClassCode(), 0, 0);
-                    Iterator<ZSetOperations.TypedTuple<String>> iterator = typedTuples1.iterator();
-                    if (iterator.hasNext()) {
-                        ZSetOperations.TypedTuple<String> next = iterator.next();
-                        Double score = next.getScore();
-                        redisUtil.zAdd(BBS_RANK_REGION_CLASS + bbsRegion.getRegionCode() + "_" + bbsClass.getClassCode(), topicFullDto.getId(), score + 1);
-                    }else {
-                        redisUtil.zAdd(BBS_RANK_REGION_CLASS + bbsRegion.getRegionCode() + "_" + bbsClass.getClassCode(), topicFullDto.getId(), 10);
-                    }
+                    //Set<ZSetOperations.TypedTuple<String>> typedTuples1 = redisUtil.getRedisTemplate().opsForZSet().rangeWithScores(BBS_RANK_REGION_CLASS + bbsRegion.getRegionCode() + "_" + bbsClass.getClassCode(), 0, 0);
+                    //Iterator<ZSetOperations.TypedTuple<String>> iterator = typedTuples1.iterator();
+                    //ZSetOperations.TypedTuple<String> next = iterator.next();
+                    redisUtil.zAdd(BBS_RANK_REGION_CLASS + bbsRegion.getRegionCode() + "_" + bbsClass.getClassCode(), topicFullDto.getId(), score);
                     log.info("行星万象缓存加载排行：" + bbsClass.getClassCode() + topicFullDto.getContent());
 
                     //贴子
                     redisUtil.set(BBS_TOPIC_TOPICID + topicFullDto.getId(), topicFullDto, BBS_TOPIC_TOPICID_TIME);
                     log.info("行星万象缓存加载贴子：" + topicFullDto.getContent());
-
+                    score--;
                 }
             }
         }

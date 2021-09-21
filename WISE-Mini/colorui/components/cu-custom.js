@@ -67,7 +67,7 @@ Component({
     },
     toHome() {
       wx.reLaunch({
-        url: '/pages/index/index',
+        url: '/pages/index/index'
       })
     },
     //展示定位地址

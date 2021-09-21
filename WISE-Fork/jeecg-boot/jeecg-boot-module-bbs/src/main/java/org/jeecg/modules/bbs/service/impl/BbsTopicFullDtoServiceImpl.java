@@ -45,8 +45,9 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
     public IPage<BbsTopicFullDto> queryTopicFullDto(Page<BbsTopicFullDto> page, String regionCode, String classCode, int[] topicType) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
-        //先从redis拿
-        Set<Object> bbsTopicFullDtos = redisUtil.zRange(LoadDataRedis.BBS_RANK_REGION_CLASS + regionCode + "_" + classCode, (page.getCurrent() - 1) * page.getSize(), page.getCurrent() * page.getSize() - 1);
+        //从redis拿
+        Set<Object> bbsTopicFullDtos = redisUtil.zReverseRange(LoadDataRedis.BBS_RANK_REGION_CLASS + regionCode + "_" + classCode, (page.getCurrent() - 1) * page.getSize(), page.getCurrent() * page.getSize() - 1);
+        Long zSize = redisUtil.zSize(LoadDataRedis.BBS_RANK_REGION_CLASS + regionCode + "_" + classCode);
         List<BbsTopicFullDto> bbsTopicFullDtosList = new ArrayList<>();
         Iterator<Object> iterator = bbsTopicFullDtos.iterator();
         ArrayList<String> topicIdList1 = new ArrayList<>();
@@ -57,8 +58,8 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         for (Object o : bbsTopicFullDto1) {
             bbsTopicFullDtosList.add((BbsTopicFullDto) o);
         }
-        IPage<BbsTopicFullDto> page1 = new Page<BbsTopicFullDto> ();
-        page1.setRecords(bbsTopicFullDtosList);
+        page.setRecords(bbsTopicFullDtosList);
+        page.setTotal(zSize);
 
         //
         //String classCodeDeal = classCode;
@@ -98,6 +99,8 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
             List<BbsUserPraise> bbsUserPraises = bbsTopicFullDtoMapper.queryTopicFullDtoUserPraise(topicIdList, sysUser.getUsername());
             //封装用户点赞和收藏信息
             for (BbsTopicFullDto record : bbsTopicFullDtosList) {
+                record.setUserIsStar(false);        //清空缓存的信息
+                record.setUserIsPraise(false);
                 for (BbsUserStar bbsUserStar : bbsUserStars) {
                     if (record.getId().equals(bbsUserStar.getTopicId())) {
                         record.setUserIsStar(true);
@@ -110,10 +113,18 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
                 }
             }
         }
-        bbsTopicFullDtosList.sort((l, r) -> r.getCreateTime().compareTo(l.getCreateTime()));
-        return page1;
+        bbsTopicFullDtosList.sort((l, r) -> r.getPublicTime().compareTo(l.getPublicTime()));
+        return page;
     }
 
+    /**
+     * redis加载专用
+     * @param page
+     * @param regionCode
+     * @param classCode
+     * @param topicType
+     * @return
+     */
     @Override
     public IPage<BbsTopicFullDto> queryTopicFullDtoFix(Page<BbsTopicFullDto> page, String regionCode, String classCode, int[] topicType) {
         String classCodeDeal = classCode;
@@ -147,7 +158,7 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         for (BbsTopicFullDto record : bbsTopicFullDtosList) {
             topicIdList.add(record.getId());
         }
-        bbsTopicFullDtosList.sort((l, r) -> r.getCreateTime().compareTo(l.getCreateTime()));
+        bbsTopicFullDtosList.sort((l, r) -> r.getPublicTime().compareTo(l.getPublicTime()));
         return page;
     }
 

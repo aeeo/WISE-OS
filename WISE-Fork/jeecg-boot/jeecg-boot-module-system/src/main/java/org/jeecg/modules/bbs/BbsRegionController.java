@@ -13,9 +13,11 @@ import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.oConvertUtils;
+import org.jeecg.modules.bbs.BbsAuthController;
 import org.jeecg.modules.bbs.entity.BbsClass;
 import org.jeecg.modules.bbs.entity.BbsRegion;
 import org.jeecg.modules.bbs.entity.BbsUserRecord;
+import org.jeecg.modules.bbs.entity.MiNiStorage;
 import org.jeecg.modules.bbs.service.IBbsClassService;
 import org.jeecg.modules.bbs.service.IBbsRegionService;
 import org.jeecg.modules.bbs.service.impl.BbsUserRecordServiceImpl;
@@ -66,6 +68,8 @@ public class BbsRegionController {
     private ISysUserService sysUserService;
     @Autowired
     private ISysDepartService sysDepartService;
+    @Autowired
+    private BbsAuthController bbsAuthController;
 
     /**
      * 分页列表查询
@@ -338,6 +342,8 @@ public class BbsRegionController {
         sysUserService.addUserWithDepart(userByName, bbsRegion.getRegionDepartId());    //修改用户在区域对应的部门,追加
         SysDepart sysDepartServiceById = sysDepartService.getById(bbsRegion.getRegionDepartId());
         sysUserService.updateUserDepart(userByName.getUsername(), sysDepartServiceById.getOrgCode());   //设置用户当前部门
+
+        bbsAuthController.getMiNiStorageFromSql();
         return Result.OK("切换区域成功");
     }
 

@@ -19,6 +19,7 @@ import org.jeecg.modules.bbs.service.*;
 import org.jeecg.modules.bbs.service.impl.*;
 import org.jeecg.modules.bbs.utils.ContentCheck;
 import org.jeecg.modules.bbs.vo.BbsTopicPage;
+import org.jeecg.modules.cache.BbsRedisUtils;
 import org.jeecg.modules.system.controller.SysRoleController;
 import org.jeecg.modules.system.controller.SysUserController;
 import org.jeecg.modules.system.entity.SysRole;
@@ -92,6 +93,10 @@ public class BbsTopicController {
     private BbsRegionServiceImpl bbsRegionService;
     @Autowired
     private ISysRoleService sysRoleService;
+    @Autowired
+    private BbsRedisUtils bbsRedisUtils;
+    @Autowired
+    private BbsAuthController bbsAuthController;
 
 
     /**
@@ -363,6 +368,7 @@ public class BbsTopicController {
         } catch (Exception e) {
             log.error(e.toString());
         }
+        bbsRedisUtils.updateTopic(bbsTopicFullDtos12.getRecords());     //缓存更新
 
         return TopicResult.OK(bbsTopicFullDtos12, timestampRequest, classIndex);
     }
@@ -488,6 +494,7 @@ public class BbsTopicController {
         if (null == bbsTopicFullDto) {
             return Result.error(1005, "id为" + topicId + "的贴子不存在。");
         }
+        bbsAuthController.getMiNiStorageFromSql();
         return Result.OK(bbsTopicFullDto);
     }
 
@@ -543,12 +550,11 @@ public class BbsTopicController {
     @AutoLog(value = "帖子-添加")
     @ApiOperation(value = "帖子-添加", notes = "帖子-添加")
     @PostMapping(value = "/wise/mini/add")
-    @Transactional
     public Result<?> add(@RequestBody BbsTopicPage bbsTopicPage,
                          HttpServletRequest req) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
-        if (!this.judgeMiniUserAuth())
+        if (!bbsAuthController.judgeMiniUserAuth())
             return Result.error(1000, "未授权,无法发布。");
 
         BbsRegion regionOne = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, req.getHeader("regioncode")).one();
@@ -601,7 +607,6 @@ public class BbsTopicController {
         BeanUtils.copyProperties(bbsTopicPage, bbsTopic);
         bbsTopicService.saveMain(bbsTopic, bbsTopicPage.getBbsTopicImageList(), bbsTopicPage.getBbsTopicTagList(), null);
 
-
         boolean b1 = bbsUserRecordService.lambdaUpdate()
                 .eq(BbsUserRecord::getCreateBy, sysUser.getUsername())
                 .set(BbsUserRecord::getStoneCount, bbsUserRecordOne.getStoneCount() + 20)
@@ -623,7 +628,6 @@ public class BbsTopicController {
     @AutoLog(value = "帖子-修改")
     @ApiOperation(value = "帖子-修改", notes = "帖子-修改")
     @PostMapping(value = "/wise/mini/edit")
-    @Transactional
     public Result<?> edit(@RequestBody BbsTopicPage bbsTopicPage,
                           HttpServletRequest req) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
@@ -656,8 +660,8 @@ public class BbsTopicController {
             result3.setMessage("内容" + result3.getMessage());
             return result3;
         }
-
         BbsTopic bbsTopic = new BbsTopic();
+
         //编辑时间
         bbsTopicPage.setEditTime(new Date());
         //添加区域、区域全名
@@ -666,7 +670,6 @@ public class BbsTopicController {
 
         BeanUtils.copyProperties(bbsTopicPage, bbsTopic);
         bbsTopicService.updateMain(bbsTopic, bbsTopicPage.getBbsTopicImageList(), bbsTopicPage.getBbsTopicTagList(), null);
-
         return Result.OK("编辑成功！");
     }
 
@@ -695,7 +698,6 @@ public class BbsTopicController {
     @AutoLog(value = "帖子-通过id删除")
     @ApiOperation(value = "帖子-通过id删除", notes = "帖子-通过id删除")
     @DeleteMapping(value = "/wise/mini/deletePublishTopic")
-    @Transactional
     public Result<?> deletePublishTopic(@RequestParam(name = "topicId", required = true) String topicId) {
 
         return bbsTopicService.deletePublishTopic(topicId);
@@ -815,7 +817,9 @@ public class BbsTopicController {
                 .eq(BbsUserRecord::getCreateBy, sysUser.getUsername())
                 .one();
         BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecord.getRegionCode()).one();
-        bbsTopic.setClassCode("index");
+        if (bbsTopic.getClassCode().isEmpty()) {
+            bbsTopic.setClassCode("index");
+        }
         bbsTopic.setRegionCode(bbsUserRecord.getRegionCode());
         bbsTopic.setRegionFullName(bbsRegion.getFullName());
 
@@ -824,17 +828,7 @@ public class BbsTopicController {
     }
 
 
-    //判断微信小程序用户是否授权个人基本信息
-    public boolean judgeMiniUserAuth() {
-        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
-        SysUser sysUser1 = sysUserService.lambdaQuery().eq(SysUser::getUsername, sysUser.getUsername()).one();
-        if (null == sysUser1.getRealname()) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     /**
      * 通过id删除

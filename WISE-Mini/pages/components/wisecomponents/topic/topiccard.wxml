@@ -1,5 +1,7 @@
-<view wx:for="{{topicLists}}" wx:for-item="topicItem" wx:if="{{topicType==1 && topicItem.topicType==1 && (!hideAnon || (hideAnon && topicItem.anon==0))}}" wx:key="id" wx:for-index="bindex" data-topicitem='{{topicItem}}'
-  class="cu-card dynamic" style="" bindtap="topicdetails" data-bindex="{{bindex}}">
+<view wx:for="{{topicLists}}" wx:for-item="topicItem"
+  wx:if="{{topicType==1 && topicItem.topicType==1 && (!hideAnon || (hideAnon && topicItem.anon==0))}}" wx:key="id"
+  wx:for-index="bindex" data-topicitem='{{topicItem}}' class="cu-card dynamic" style="" bindtap="topicdetails"
+  data-bindex="{{bindex}}">
   <view class="cu-item solid-bottom" style="margin:0px 0px 0px 0px;border-radius:0rpx">
     <view class="flex justify-between">
       <view class="flex align-center">
@@ -12,8 +14,10 @@
         <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}"
           data-topicitem="{{topicItem}}">
           <view class="flex align-center">
-            <view style="color:black;">{{topicItem.anon == 0 ? topicItem.bbsCreateByName : (topicItem.sex==1 ? '行星小伙' :
-              '行星小妹')}}</view>
+            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon != 0}}">{{(topicItem.sex==1 ?
+              '行星小伙' : '行星小妹')}}</view>
+            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon == 0}}">
+              {{topicItem.bbsCreateByName}}</view>
             <!-- 角色 -->
             <view wx:if="{{showRole}}"
               class="cu-tag bg-{{topicItem.userRole=='开发者'?'yellow':(topicItem.userRole=='官方'?'red':'grey')}} sm radius"
@@ -103,9 +107,9 @@
 
 
 <view wx:for="{{topicLists}}" wx:for-item="topicItem"
-  wx:if="{{topicType!=1 && topicItem.topicType!=1 && (!hideAnon || (hideAnon && topicItem.anon==0))}}"
-  wx:key="id" wx:for-index="bindex" data-topicitem='{{topicItem}}' class="cu-card dynamic" style=""
-  bindtap="topicdetails" data-bindex="{{bindex}}">
+  wx:if="{{topicType!=1 && topicItem.topicType!=1 && (!hideAnon || (hideAnon && topicItem.anon==0))}}" wx:key="id"
+  wx:for-index="bindex" data-topicitem='{{topicItem}}' class="cu-card dynamic" style="" bindtap="topicdetails"
+  data-bindex="{{bindex}}">
   <view class="cu-item solid-bottom" style="margin:0px 0px 0px 0px;border-radius:0rpx">
     <view class="flex justify-between">
       <view class="flex align-center">
@@ -118,8 +122,10 @@
         <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}"
           data-topicitem="{{topicItem}}">
           <view class="flex align-center">
-            <view style="color:black;">{{topicItem.anon == 0 ? topicItem.bbsCreateByName : (topicItem.sex==1 ? '行星小伙' :
-              '行星小妹')}}</view>
+            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon != 0}}">{{(topicItem.sex==1 ?
+              '行星小伙' : '行星小妹')}}</view>
+            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon == 0}}">
+              {{topicItem.bbsCreateByName}}</view>
             <!-- 角色 -->
             <view wx:if="{{showRole}}"
               class="cu-tag bg-{{topicItem.userRole=='开发者'?'yellow':(topicItem.userRole=='官方'?'red':'grey')}} sm radius"

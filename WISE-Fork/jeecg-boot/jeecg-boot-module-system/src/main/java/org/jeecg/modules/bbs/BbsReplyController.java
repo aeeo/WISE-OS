@@ -48,7 +48,7 @@ import java.util.List;
 @Slf4j
 public class BbsReplyController extends JeecgController<BbsReply, IBbsReplyService> {
     @Autowired
-    private BbsTopicController bbsAuthController;
+    private BbsAuthController bbsAuthController;
     @Autowired
     private IBbsReplyService bbsReplyService;
     @Autowired
@@ -421,6 +421,7 @@ public class BbsReplyController extends JeecgController<BbsReply, IBbsReplyServi
             result3.setMessage("评论" + result3.getMessage());
             return result3;
         }
+        bbsAuthController.getMiNiStorageFromSql();
         return bbsReplyService.addReply(bbsReply);
     }
 
@@ -435,7 +436,7 @@ public class BbsReplyController extends JeecgController<BbsReply, IBbsReplyServi
     @DeleteMapping(value = "/wise/mini/delete")
     public Result<?> deleteWiseMini(@RequestParam(name = "id", required = true) String id) {
         bbsReplyService.deleteBbsReplyWiseMini(id);
-
+        bbsAuthController.getMiNiStorageFromSql();
         return Result.OK("删除成功!");
     }
 

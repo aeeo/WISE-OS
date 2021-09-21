@@ -70,30 +70,20 @@ Page({
         },
         showActionsheet: false,
         actionGroups: [],
-        showReply: false,             //展示评论弹框
+        showReply: false, //展示评论弹框
         fullReplys: []
     },
     onLoad(options) {
-        // 通过其他分享渠道跳转至别的页面
-        this.shareNavigateTo(options)
-
-        var that = this
         this.setData({
             UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE,
             THUMBNAIL: app.globalData.THUMBNAIL,
             ARTWORK: app.globalData.ARTWORK,
             ARTWORKNOWATER: app.globalData.ARTWORKNOWATER, //原图无水印
-        })
-        // 获取token
-        app.getFirstLoginToken().then(res => {
-            that.setData({
-                USERRECORD: res.bbsUserRecord,
-            })
-            that.getRegionClass(res.bbsClassList)
-            that.waitTopicList()
+            options: options
         })
     },
     onReady() {
+        var that = this
         var DevAskFlag = wx.getStorageSync('DevAskFlag');
         if (DevAskFlag != "yes") {
             //首屏公告
@@ -102,6 +92,16 @@ Page({
             })
         }
         wx.setStorageSync("DevAskFlag", "yes")
+        // 获取token
+        app.getFirstLoginToken().then(res => {
+            that.setData({
+                USERRECORD: res.bbsUserRecord,
+            })
+            // 通过其他分享渠道跳转至别的页面,需要准备好后再跳转
+            that.shareNavigateTo(that.data.options)
+            that.getRegionClass(res.bbsClassList)
+            that.waitTopicList()
+        })
     },
     onShow() {
         var that = this
@@ -122,8 +122,11 @@ Page({
                 that.setData({
                     USERRECORD: res.bbsUserRecord,
                 })
+                let currentClass = that.data.currentClass
                 that.getRegionClass(res.bbsClassList)
-                // that.waitTopicList()             //currentClass改变会触发swipper加载，此处不需要加载
+                if (currentClass == 0) {
+                    that.waitTopicList() //currentClass改变会触发swipper加载,等于0不会触发，因此为零时此处补全
+                }
             })
             app.globalData.SwitchRegion = false
         }
@@ -219,7 +222,7 @@ Page({
                         tempList[thisCurrentClass].topicList.push(itemTopic)
                     }
                     // 设置页面属性
-                    tempList[thisCurrentClass].needLoad = false                 //设置不需要再次加载,隐藏骨架屏
+                    tempList[thisCurrentClass].needLoad = false //设置不需要再次加载,隐藏骨架屏
                     that.data.getTopicFlag = true
                     that.data.isFirstGetTopicFlag = false
 
@@ -227,13 +230,13 @@ Page({
                         topicLists: tempList,
                         showSkelton: false, //隐藏骨架屏
                         isPull: false,
-                        startFooterLoading: false
+                        // startFooterLoading: false
                     })
                 } else {
                     // 没有更多数据
                     let topicListsTmp = that.data.topicLists
                     topicListsTmp[thisCurrentClass].pageNo = topicListsTmp[thisCurrentClass].pageNo - 1
-                    topicListsTmp[thisCurrentClass].needLoad = false        //设置不需要再次加载，隐藏骨架屏
+                    topicListsTmp[thisCurrentClass].needLoad = false //设置不需要再次加载，隐藏骨架屏
 
                     that.data.getTopicFlag = true
                     that.setData({
@@ -246,7 +249,7 @@ Page({
                 }
                 that.data.dataVerify.isGetTopicFinsh[thisCurrentClass] = true
                 // 获取用户Record，刷新tabbar提示
-                app.getUserAllInfo().then(res=>{
+                app.getUserAllInfo().then(res => {
                     that.setData({
                         USERRECORD: res.bbsUserRecord
                     })
@@ -305,6 +308,7 @@ Page({
     // 触底
     onReachBottom: function () {
         var that = this
+        // let pageNo = that.data.topicLists[that.data.currentClass].pageNo
         if (that.data.dataVerify.isGetTopicFinsh[that.data.currentClass]) {
             let topicListsTmp = that.data.topicLists
             topicListsTmp[that.data.currentClass].pageNo = topicListsTmp[that.data.currentClass].pageNo + 1
@@ -395,8 +399,8 @@ Page({
             scrollLeft: e.detail.current * 60,
         })
         wx.setStorageSync('CURRENTCLASSCODE', that.data.CURRENTCLASSCODE)
-        
-         //从区域选择页面返回，不需要加载，在OnShow方法中已经处理
+
+        //从区域选择页面返回，不需要加载，在OnShow方法中已经处理
         if (that.data.topicLists[that.data.currentClass].needLoad && !app.globalData.SwitchRegion) {
             console.log("show++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
             that.waitTopicList()
@@ -407,21 +411,22 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function () {
+        let imageUrl = this.data.UPLOAD_IMAGE + wx.getStorageSync('ALLINFO').bbsRegion.regionImage + this.data.THUMBNAIL
         return {
             title: "『" + this.data.USERRECORD.regionFullName + "』" + '都在用的本地小程序',
             path: '/pages/index/index?regionCode=' + this.data.USERRECORD.regionCode,
-            // imageUrl:
+            imageUrl: imageUrl
         }
     },
-    // 朋友圈
-    onShareTimeline: function () {
-        return {
-            title: "『" + this.data.USERRECORD.regionFullName + "』" + '都在用的本地小程序',
-            path: '/pages/index/index?regionCode=' + this.data.USERRECORD.regionCode,
-            // 自定义图片路径，可以是本地文件或者网络图片。支持 PNG 及 JPG，显示图片长宽比是 1:1。	默认使用小程序 Logo	
-            // imageUrl: 
-        }
-    },
+    // 朋友圈       需要搞个匿名访问，或者进入后直接重新打开
+    // onShareTimeline: function () {
+    //     let imageUrl = this.data.UPLOAD_IMAGE + wx.getStorageSync('ALLINFO').bbsRegion.regionImage + this.data.THUMBNAIL
+    //     return {
+    //         title: "『" + this.data.USERRECORD.regionFullName + "』" + '都在用的本地小程序',
+    //         path: '/pages/index/index?regionCode=' + this.data.USERRECORD.regionCode,
+    //         imageUrl: imageUrl
+    //     }
+    // },
     // 组件监听
     myEventListener: function (e) {
         // console.log(e)
@@ -620,12 +625,12 @@ Page({
         // 从贴子分享跳过来需要跳转
         if (undefined != options.topicId && '' != options.topicId) {
             wx.navigateTo({
-                url: '/pages/components/topic/topicdetails/topicdetails?topicId=' + options.topicId,
+                url: '/pages/components/topic/topicdetails/topicdetails?topicId=' + options.topicId + '&forbidSkip=true',
                 success: function (res) {
-                    // console.log("跳转贴子：", res)
+                    console.log("跳转贴子：", res)
                 },
                 fail: function (res) {
-                    // console.log(res)
+                    console.log(res)
                 },
             })
         }

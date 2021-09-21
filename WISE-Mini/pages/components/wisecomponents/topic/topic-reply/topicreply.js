@@ -34,29 +34,27 @@ Component({
     },
     showType: {
       type: String,
-      value: 'scrollView'           //longList
+      value: 'scrollView' //longList
     },
     //longList类型需要从外面传页码
     nextPage: {
       type: Boolean,
       value: false
-    }
+    },
   },
   observers: {
     'replyTopicDetails'(val) {
-      // console.log("replyTopicDetails属性值变化时执行", this.data.topicId, val)
       if (null != val && this.data.topicId != val.id) {
         this.data.topicId = val.id
-        this.setData({          //如果查看不同贴子的列表，每次都需要重置带渲染，reload不带渲染
+        this.setData({ //如果查看不同贴子的列表，每次都需要重置带渲染，reload不带渲染
           fullReplys: []
         })
         this.reloadReply()
+        console.log("replyTopicDetails属性值变化时执行", this.data.topicId, val)
       }
-
     },
     'nextPage'(val) {
       // console.log("nextPage属性值变化时执行", this.data.replyPageNo, val)
-
       if (val) {
         this.getFullReplysNext()
       } else {
@@ -71,32 +69,23 @@ Component({
   data: {
     InputBottom: 0,
     InputFocus: false,
-
     beReply: 0, //被点击或被长按的评论，评论点赞、评论长按都会填充
-
     emojiList,
     showEmojiPanel: false, // emoji面板
     replyContentInput: '',
-
     replyPlaceholder: "讲两句？",
-
     replyPageNo: 1,
-    replyResult: {        //默认不相等，转圈
+    replyResult: { //默认不相等，转圈
       current: 1,
       pages: 999
     },
-
-
     fullReplys: [],
-
     UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE,
     THUMBNAIL: app.globalData.THUMBNAIL,
     ARTWORK: app.globalData.ARTWORK,
     ARTWORKNOWATER: app.globalData.ARTWORKNOWATER,
-
     SHAREHOSTURL: app.globalData.HOSTURL, //朋友圈分享的页面使用这个主机地址
     isAnon: '', //是否调用匿名接口
-
     // 评论长按提示
     showCommentActionsheet: false
   },
@@ -113,7 +102,6 @@ Component({
       console.log('来源信息参数appId:', obj.referrerInfo.appId)
       console.log('来源信息传过来的数据:', obj.referrerInfo.extraData)
       this.initEnterType(obj)
-
       if (null != this.data.topicId && "" != this.data.topicId && undefined != this.data.topicId) {
         this.getFullReplys(this.data.topicId, this.data.replyPageNo)
       }
@@ -264,6 +252,13 @@ Component({
             //提交完成 beReply = 0
             that.data.beReply = 0
 
+            wx.hideLoading()
+            that.reloadReply().then(res => {
+              wx.showToast({
+                title: '评论成功',
+                icon: "none"
+              })
+            })
           } else {
             wx.showToast({
               title: res.data.message,
@@ -271,15 +266,6 @@ Component({
               duration: 2000
             })
           }
-          //提交完成 beReply.id = 0
-          // this.data.beReply.id = 0
-          wx.hideLoading()
-          that.reloadReply().then(res => {
-            wx.showToast({
-              title: '评论成功',
-              icon: "none"
-            })
-          })
         }, err => {
           console.log(err)
           wx.showToast({
@@ -432,21 +418,29 @@ Component({
         }
       })
     },
-    // mark:获取评论列表
+    // mark:判断获取评论列表方法
     getFullReplys(topicId, replyPageNo) {
+      if (this.data.isAnon == '') {
+        console.log("------------------------------", "公开")
+        return this.getFullReplysList(topicId, replyPageNo)
+      } else {
+        // 朋友圈匿名
+        console.log("------------------------------", "匿名")
+        return this.getFullReplysListAnon(topicId, replyPageNo)
+      }
+    },
+    // mark:正常获取评论列表
+    getFullReplysList(topicId, replyPageNo) {
       if (null == topicId || "" == topicId || undefined == topicId) {
         return
       }
-      console.log("getFullReplys", topicId, replyPageNo)
       var that = this
       let bbsReply = {
         "topicId": topicId,
         "status": 1
       }
       const url = that.data.SHAREHOSTURL + '/bbs/bbsReply/wise/mini/rootFullList' + that.data.isAnon + '?pageNo=' + replyPageNo
-      // console.log(url)
       return app.wxRequest('post', url, bbsReply).then(res => {
-        console.log(res)
         that.setData({
           replyResult: res.data.result
         })
@@ -487,7 +481,73 @@ Component({
       }, err => {
         return false
       })
-    }, // 子评论点赞
+    },
+    // mark:匿名获取评论列表
+    getFullReplysListAnon(topicId, replyPageNo) {
+      if (null == topicId || "" == topicId || undefined == topicId) {
+        return
+      }
+      var that = this
+      let bbsReply = {
+        "topicId": topicId,
+        "status": 1
+      }
+      const url = that.data.SHAREHOSTURL + '/bbs/bbsReply/wise/mini/rootFullList' + that.data.isAnon + '?pageNo=' + replyPageNo
+
+      return new Promise(function (resolve, reject) {
+        wx.request({
+          url: url,
+          method: 'POST',
+          data: bbsReply,
+          dataType: 'json',
+          success: function (res) {
+            console.log(res)
+            that.setData({
+              replyResult: res.data.result
+            })
+            res.data.result.records.forEach(item => {
+              // 评论时间格式化
+              item.createTime = formatUtil.showReplyDate(new Date(item.createTime))
+              // 添加动画属性
+              item.exeCuteAnimation = item.userIsPraise
+              // 评论背景色
+              item.backgroundColorIndex = Math.floor(Math.random() * 10);
+              // 评论头像url拼接，这里不能在wxml里面拼接，因为在发布评论的时候拿的是微信的头像接口，微信返回的是全连接
+              item.avatar = that.data.UPLOAD_IMAGE + item.avatar + that.data.THUMBNAIL
+              // console.log(item.avatar)
+              // 子评论时间格式化
+              if (item.childFullReply.length != 0) {
+                item.childFullReply.forEach(itemChild => {
+                  // 子评论时间格式化
+                  itemChild.createTime = formatUtil.showReplyDate(new Date(itemChild.createTime))
+                  // 添加动画属性
+                  itemChild.exeCuteAnimation = itemChild.userIsPraise
+                  // 评论头像url拼接，这里不能在wxml里面拼接，因为在发布评论的时候拿的是微信的头像接口，微信返回的是全连接
+                  itemChild.avatar = that.data.UPLOAD_IMAGE + itemChild.avatar + that.data.THUMBNAIL
+                })
+              }
+            })
+            let fullReplysTem = that.data.fullReplys
+            for (var item in res.data.result.records) {
+              fullReplysTem.push(res.data.result.records[item])
+            }
+            // console.log(that.data.fullReplys)
+            // console.log(fullReplysTem)
+            that.setData({
+              fullReplys: fullReplysTem,
+              isPull: false
+            })
+            // console.log(that.data.fullReplys)
+            return true
+          },
+          fail: function (err) {
+            console.log(err)
+            return false
+          }
+        })
+      })
+    },
+    // 子评论点赞
     clickChildReplyPraise(e) {
       var that = this
       console.log(e)
@@ -584,8 +644,6 @@ Component({
       this.setData({
         replyResult: this.data.replyResult,
       })
-
-
       return this.getFullReplys(this.data.topicId, this.data.replyPageNo)
     }
   }

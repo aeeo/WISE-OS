@@ -14,6 +14,7 @@ import org.jeecg.common.util.oss.QiNiuUtil;
 import org.jeecg.modules.bbs.entity.*;
 import org.jeecg.modules.bbs.mapper.*;
 import org.jeecg.modules.bbs.service.*;
+import org.jeecg.modules.cache.BbsRedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,11 +82,16 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
     private IBbsUserSysMessageService bbsUserSysMessageService;
     @Autowired
     private IBbsInformService bbsInformService;
+    @Autowired
+    private BbsRedisUtils bbsRedisUtils;
 
     @Override
     @Transactional
     public void saveMain(BbsTopic bbsTopic, List<BbsTopicImage> bbsTopicImageList, List<BbsTopicTag> bbsTopicTagList, List<BbsTopicLink> bbsTopicLinkList) {
         bbsTopicMapper.insert(bbsTopic);
+        //加入redis           redis中存的是BbsTopicFullDto，但本质上和BbsTopicPage一样
+        bbsRedisUtils.addTopic(bbsTopicFullDtoService.queryTopicFullDtoById(bbsTopic.getId()));
+
         if (bbsTopicImageList != null && bbsTopicImageList.size() > 0) {
             for (BbsTopicImage entity : bbsTopicImageList) {
                 //外键设置
@@ -113,7 +119,8 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
     @Transactional
     public void updateMain(BbsTopic bbsTopic, List<BbsTopicImage> bbsTopicImageList, List<BbsTopicTag> bbsTopicTagList, List<BbsTopicLink> bbsTopicLinkList) {
         bbsTopicMapper.updateById(bbsTopic);
-
+        //加入redis           redis中存的是BbsTopicFullDto，但本质上和BbsTopicPage一样
+        bbsRedisUtils.addTopic(bbsTopicFullDtoService.queryTopicFullDtoById(bbsTopic.getId()));
         //1.先删除子表数据
         bbsTopicImageMapper.deleteByMainId(bbsTopic.getId());
         bbsTopicTagMapper.deleteByMainId(bbsTopic.getId());

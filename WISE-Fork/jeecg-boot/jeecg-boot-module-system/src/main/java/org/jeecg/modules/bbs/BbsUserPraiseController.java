@@ -35,7 +35,7 @@ import java.util.Arrays;
 @Slf4j
 public class BbsUserPraiseController extends JeecgController<BbsUserPraise, IBbsUserPraiseService> {
     @Autowired
-    private BbsTopicController bbsAuthController;
+    private BbsAuthController bbsAuthController;
     @Autowired
     private IBbsUserPraiseService bbsUserPraiseService;
     @Autowired
@@ -181,7 +181,9 @@ public class BbsUserPraiseController extends JeecgController<BbsUserPraise, IBbs
         if (!bbsAuthController.judgeMiniUserAuth()) {
             return Result.error(1000, "未授权,无法点赞。");
         }
-        return bbsUserPraiseService.clickPraise(topicId, isPraise, messageId);
+        Result<?> result = bbsUserPraiseService.clickPraise(topicId, isPraise, messageId);
+        bbsAuthController.getMiNiStorageFromSql();
+        return result;
     }
 
     /**

@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
@@ -117,7 +116,7 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
                     //如果此区域不存在，则忽略
                 }
             }
-            return Result.OK(getMiNiTokenStorage(token,openid));
+            return Result.OK(getMiNiTokenStorage(token, openid));
         }
         //添加用户，添加用户和用户记录，此处按理应该添加事务，等升级到微服务一起处理
         SysUser user = new SysUser();
@@ -160,7 +159,7 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
 
         //登录
         token = minilogin(sysLoginModel);
-        return Result.OK(getMiNiTokenStorage(token,openid));
+        return Result.OK(getMiNiTokenStorage(token, openid));
     }
 
     /**
@@ -204,12 +203,14 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
 
     /**
      * 每次打开小程序获取缓存数据，token需要生成
+     *
      * @param token
      * @return
      */
-    public MiNiStorage getMiNiTokenStorage(String token,String username) {
+    public MiNiStorage getMiNiTokenStorage(String token, String username) {
         MiNiStorage miNiStorageCache = (MiNiStorage) redisUtil.get(CommonConstant.PREFIX_MINI_USER_INFO + username);
-        if(null != miNiStorageCache){
+        if (null != miNiStorageCache) {
+            miNiStorageCache.setToken(token);
             return miNiStorageCache;
         }
 
@@ -232,19 +233,19 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
 
     /**
      * 获取小程序缓存数据，token已经缓存，不用返回
-     * @param token
+     *
      * @return
      */
     public MiNiStorage getMiNiStorage(String username) {
         MiNiStorage miNiStorageCache = (MiNiStorage) redisUtil.get(CommonConstant.PREFIX_MINI_USER_INFO + username);
-        if(null != miNiStorageCache){
+        if (null != miNiStorageCache) {
             return miNiStorageCache;
         }
         MiNiStorage miNiStorage = new MiNiStorage();
-        if(username.isEmpty()){
+        if (username.isEmpty()) {
             LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
             miNiStorage.setSysUser(sysUserService.getUserByName(loginUser.getUsername()));
-        }else{
+        } else {
             //第一次登录时没有token，只能根据用户名获取
             miNiStorage.setSysUser(sysUserService.getUserByName(username));
         }
@@ -256,9 +257,36 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
         miNiStorage.setBbsClassList(bbsClassList);
         miNiStorage.setUserBehaviorLimit(convertLimit(bbsRegion, bbsUserRecord));
 
+        setMiNiStorage(miNiStorage);
+        return miNiStorage;
+    }
+    /**
+     * 缓存小程序用户信息
+     * @return
+     */
+    public MiNiStorage setMiNiStorage(MiNiStorage miNiStorage) {
         // 设置token缓存有效时间
-        redisUtil.set(CommonConstant.PREFIX_MINI_USER_INFO + username, miNiStorage);
-        redisUtil.expire(CommonConstant.PREFIX_MINI_USER_INFO + username, 5 * 60 * 1000);           //5分钟
+        redisUtil.set(CommonConstant.PREFIX_MINI_USER_INFO + miNiStorage.getSysUser().getUsername(), miNiStorage);
+        redisUtil.expire(CommonConstant.PREFIX_MINI_USER_INFO + miNiStorage.getSysUser().getUsername(), 30 * 24 * 60 * 60 * 1000);           //30天
+        return miNiStorage;
+    }
+
+    /**
+     * 从数据库更新用户信息
+     * @return
+     */
+    public MiNiStorage getMiNiStorageFromSql( ) {
+        MiNiStorage miNiStorage = new MiNiStorage();
+        LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        miNiStorage.setSysUser(sysUserService.getUserByName(loginUser.getUsername()));
+        BbsUserRecord bbsUserRecord = bbsUserRecordService.getFullUserRecord(loginUser.getUsername());
+        miNiStorage.setBbsUserRecord(bbsUserRecord);
+        BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecord.getRegionCode()).one();
+        miNiStorage.setBbsRegion(bbsRegion);
+        List<BbsClass> bbsClassList = bbsClassService.lambdaQuery().eq(BbsClass::getRegionCode, bbsRegion.getRegionCode()).list();
+        miNiStorage.setBbsClassList(bbsClassList);
+        miNiStorage.setUserBehaviorLimit(convertLimit(bbsRegion, bbsUserRecord));
+        setMiNiStorage(miNiStorage);
         return miNiStorage;
     }
 
@@ -266,33 +294,17 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
     public UserBehaviorLimit convertLimit(BbsRegion bbsRegion, BbsUserRecord bbsUserRecord) {
         UserBehaviorLimit userBehaviorLimit = new UserBehaviorLimit();
         //发布贴子判断
-        if (bbsRegion.getDayPublishTopic() > bbsUserRecord.getDayPublishTopic())
-            userBehaviorLimit.setCanDayPunlishTopic(true);
-        else userBehaviorLimit.setCanDayPunlishTopic(false);
-        if (bbsRegion.getWeekPublishTopic() > bbsUserRecord.getWeekPublishTopic())
-            userBehaviorLimit.setCanWeekPunlishTopic(true);
-        else userBehaviorLimit.setCanWeekPunlishTopic(false);
+        userBehaviorLimit.setCanDayPunlishTopic(bbsRegion.getDayPublishTopic() > bbsUserRecord.getDayPublishTopic());
+        userBehaviorLimit.setCanWeekPunlishTopic(bbsRegion.getWeekPublishTopic() > bbsUserRecord.getWeekPublishTopic());
         //发布留言判断
-        if (bbsRegion.getDayPublishMessage() > bbsUserRecord.getDayPublishMessage())
-            userBehaviorLimit.setCanDayPunlishMessage(true);
-        else userBehaviorLimit.setCanDayPunlishMessage(false);
-        if (bbsRegion.getWeekPublishMessage() > bbsUserRecord.getWeekPublishMessage())
-            userBehaviorLimit.setCanWeekPunlishMessage(true);
-        else userBehaviorLimit.setCanWeekPunlishMessage(false);
+        userBehaviorLimit.setCanDayPunlishMessage(bbsRegion.getDayPublishMessage() > bbsUserRecord.getDayPublishMessage());
+        userBehaviorLimit.setCanWeekPunlishMessage(bbsRegion.getWeekPublishMessage() > bbsUserRecord.getWeekPublishMessage());
         //发布评论判断
-        if (bbsRegion.getDayPublishReply() > bbsUserRecord.getDayPublishReply())
-            userBehaviorLimit.setCanDayPunlishReply(true);
-        else userBehaviorLimit.setCanDayPunlishReply(false);
-        if (bbsRegion.getWeekPublishReply() > bbsUserRecord.getWeekPublishReply())
-            userBehaviorLimit.setCanWeekPunlishReply(true);
-        else userBehaviorLimit.setCanWeekPunlishReply(false);
+        userBehaviorLimit.setCanDayPunlishReply(bbsRegion.getDayPublishReply() > bbsUserRecord.getDayPublishReply());
+        userBehaviorLimit.setCanWeekPunlishReply(bbsRegion.getWeekPublishReply() > bbsUserRecord.getWeekPublishReply());
         //点赞判断
-        if (bbsRegion.getDayPublishPraise() > bbsUserRecord.getDayPublishPraise())
-            userBehaviorLimit.setCanDayPunlishparise(true);
-        else userBehaviorLimit.setCanDayPunlishparise(false);
-        if (bbsRegion.getWeekPublishPraise() > bbsUserRecord.getWeekPublishPraise())
-            userBehaviorLimit.setCanWeekPunlishparise(true);
-        else userBehaviorLimit.setCanWeekPunlishparise(false);
+        userBehaviorLimit.setCanDayPunlishparise(bbsRegion.getDayPublishPraise() > bbsUserRecord.getDayPublishPraise());
+        userBehaviorLimit.setCanWeekPunlishparise(bbsRegion.getWeekPublishPraise() > bbsUserRecord.getWeekPublishPraise());
         return userBehaviorLimit;
     }
 
@@ -335,8 +347,8 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
 
     /**
      * 小程序打开生成token和本地缓存信息
+     *
      * @param sysUser
-     * @param result
      * @return
      */
     private String loginAndGenerateToken(SysUser sysUser) {
@@ -348,5 +360,17 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
         redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
         redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME * 30);
         return token;
+    }
+
+    //判断微信小程序用户是否授权个人基本信息
+    public boolean judgeMiniUserAuth() {
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+
+        SysUser sysUser1 = sysUserService.lambdaQuery().eq(SysUser::getUsername, sysUser.getUsername()).one();
+        if (null == sysUser1.getRealname()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

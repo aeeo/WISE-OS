@@ -45,7 +45,7 @@ import java.util.List;
 @Slf4j
 public class BbsMessageBoardController extends JeecgController<BbsMessageBoard, IBbsMessageBoardService> {
     @Autowired
-    private BbsTopicController bbsAuthController;
+    private BbsAuthController bbsAuthController;
     @Autowired
     private IBbsMessageBoardService bbsMessageBoardService;
     @Autowired

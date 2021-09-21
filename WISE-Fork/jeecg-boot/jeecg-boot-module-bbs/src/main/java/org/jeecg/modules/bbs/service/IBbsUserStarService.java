@@ -1,5 +1,6 @@
 package org.jeecg.modules.bbs.service;
 
+import org.jeecg.common.api.vo.Result;
 import org.jeecg.modules.bbs.entity.BbsUserStar;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -11,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBbsUserStarService extends IService<BbsUserStar> {
 
+    Result<?> clickStar(String username, String topicId, Boolean isStar);
 }

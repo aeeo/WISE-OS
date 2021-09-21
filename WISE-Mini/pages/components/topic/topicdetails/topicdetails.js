@@ -39,6 +39,7 @@ Page({
     hasTopicDetails: true     //是否能加载到信息，默认能
   },
   onLoad(options) {
+
     console.log(options)
     var that = this
     let topicdetailsTmp = {}
@@ -54,13 +55,20 @@ Page({
 
       that.data.SHAREHOSTURL = app.globalData.HOSTURL
       that.data.isAnon = '/anon'
-      that.getBbsTopicById(that.data.SHAREHOSTURL)
+      that.getBbsTopicByIdAnon(that.data.SHAREHOSTURL)
     } else {
       that.data.SHAREHOSTURL = app.globalData.HOSTURL
       // url传参检测
       if (undefined != options.topicId) {
         topicdetailsTmp.id = options.topicId
         if (obj.scene == 1155) {      //从朋友圈单页打开左上角显示返回主页
+          if (options.forbidSkip == 'true') {
+
+          } else {
+            wx.reLaunch({
+              url: '/pages/index/index?topicId=' + options.topicId + "&regionCode=" + options.regionCode,
+            })
+          }
           that.setData({
             showHome: true
           })
@@ -130,52 +138,7 @@ Page({
     let url = SHAREHOSTURL + '/bbs/bbsTopic/wise/mini/fullListById' + that.data.isAnon + '?topicId=' + this.data.topicdetails.id
     app.wxRequest('get', url, '').then(res => {
       if (res.data.code == 200) {
-        if (res.data.result != null) {
-          let result = res.data.result
-          result.userRole = result.userRole.substring(4)
-          // 添加动画属性
-          result.exeCuteAnimation = result.userIsPraise
-
-          if (result.createTime) {
-            result.createTime = formatUtil.showDate(new Date(result.createTime.replace(/-/g, '/')))
-          }
-          if (result.updateTime) {
-            result.updateTime = formatUtil.showDate(new Date(result.updateTime.replace(/-/g, '/')))
-          }
-          if (result.publicTime) {
-            result.publicTime = formatUtil.showDate(new Date(result.publicTime.replace(/-/g, '/')))
-          }
-          if (result.editTime) {
-            result.editTime = formatUtil.showDate(new Date(result.editTime.replace(/-/g, '/')))
-          }
-          that.setData({
-            topicdetails: result,
-            getTopicFlag: true,
-            isFirstGetTopicFlag: false,
-            hasTopicDetails: true
-          })
-          if (that.data.isPullRefresh) {
-            wx.showToast({
-              title: '刷新成功',
-              icon: 'success'
-            })
-            that.data.isPullRefresh = false
-            wx.stopPullDownRefresh()
-          }
-        } else {
-          that.setData({
-            pageNo: this.data.pageNo - 1,
-            getTopicFlag: true
-          })
-          if (that.data.isPullRefresh) {
-            wx.showToast({
-              title: '刷新失败',
-              icon: 'none'
-            })
-            that.data.isPullRefresh = false
-            wx.stopPullDownRefresh()
-          }
-        }
+        that.apply(res)
       } else {
         wx.showToast({
           title: '获取信息失败',
@@ -203,6 +166,78 @@ Page({
         })
       }
     })
+  },
+  // mark:匿名获取帖子详情
+  getBbsTopicByIdAnon(SHAREHOSTURL) {
+    var that = this
+    that.setData({
+      getTopicFlag: false
+    })
+    let url = SHAREHOSTURL + '/bbs/bbsTopic/wise/mini/fullListById' + that.data.isAnon + '?topicId=' + this.data.topicdetails.id
+    wx.request({
+      url: url,
+      method: 'GET',
+      dataType: 'json',
+      success: function (res) {
+        that.apply(res)
+        console.log(res)
+      },
+      fail: function (err) {
+        console.log(err)
+      },
+      complete: function (params) {
+      }
+    })
+  },
+  //mark:渲染详情页面
+  apply(res) {
+    var that = this
+    if (res.data.result != null) {
+      let result = res.data.result
+      result.userRole = result.userRole.substring(4)
+      // 添加动画属性
+      result.exeCuteAnimation = result.userIsPraise
+
+      if (result.createTime) {
+        result.createTime = formatUtil.showDate(new Date(result.createTime.replace(/-/g, '/')))
+      }
+      if (result.updateTime) {
+        result.updateTime = formatUtil.showDate(new Date(result.updateTime.replace(/-/g, '/')))
+      }
+      if (result.publicTime) {
+        result.publicTime = formatUtil.showDate(new Date(result.publicTime.replace(/-/g, '/')))
+      }
+      if (result.editTime) {
+        result.editTime = formatUtil.showDate(new Date(result.editTime.replace(/-/g, '/')))
+      }
+      that.setData({
+        topicdetails: result,
+        getTopicFlag: true,
+        isFirstGetTopicFlag: false,
+        hasTopicDetails: true
+      })
+      if (that.data.isPullRefresh) {
+        wx.showToast({
+          title: '刷新成功',
+          icon: 'success'
+        })
+        that.data.isPullRefresh = false
+        wx.stopPullDownRefresh()
+      }
+    } else {
+      that.setData({
+        pageNo: this.data.pageNo - 1,
+        getTopicFlag: true
+      })
+      if (that.data.isPullRefresh) {
+        wx.showToast({
+          title: '刷新失败',
+          icon: 'none'
+        })
+        that.data.isPullRefresh = false
+        wx.stopPullDownRefresh()
+      }
+    }
   },
   //点击topic图片放大预览
   clickTopicImage(event) {
@@ -390,28 +425,21 @@ Page({
   // mark:分享朋友圈
   onShareTimeline: function () {
     var that = this
-
-    let shareTitle = ""
     let topicdetails = that.data.topicdetails
-    if (undefined == topicdetails.title || null == topicdetails.title || "" == topicdetails.title) {
-      shareTitle = topicdetails.content
-    } else {
-      shareTitle = topicdetails.title
-    }
-    // console.log(shareTitle)
+    let shareTitle = "【" + topicdetails.title + "】" + topicdetails.content.replace(/<.*?>/g, "")    //去除所有html标签
+    console.log(shareTitle)
     let imageList = that.data.topicdetails.bbsTopicImageList
     let imageUrl = ""
     if (0 == imageList.length || null == imageList[0].topicImage) {
-      imageUrl = ''
+      imageUrl = that.data.UPLOAD_IMAGE + wx.getStorageSync('ALLINFO').bbsRegion.regionImage + that.data.THUMBNAIL
     } else {
-      imageUrl = that.data.UPLOAD_IMAGE + imageList[0].topicImage + that.data.ARTWORKNOWATER
+      imageUrl = that.data.UPLOAD_IMAGE + imageList[0].topicImage + that.data.THUMBNAIL
     }
     // console.log(imageUrl)
     return {
       title: shareTitle,
       query: "topicId=" + that.data.topicdetails.id + "&regionCode=" + that.data.topicdetails.regionCode,
       imageUrl: imageUrl
-      // imageUrl: that.data.topicdetails.bbsTopicImageList.length == 0 ? '' : that.data.UPLOAD_IMAGE + that.data.topicdetails.bbsTopicImageList[0].topicImage + that.data.ARTWORKNOWATER
     }
   },
   // mark: 复制联系方式

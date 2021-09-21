@@ -8,15 +8,13 @@ import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.bbs.entity.*;
 import org.jeecg.modules.bbs.mapper.BbsUserPraiseMapper;
 import org.jeecg.modules.bbs.service.IBbsUserPraiseService;
+import org.jeecg.modules.cache.BbsRedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description: 用户点赞记录表
@@ -44,6 +42,8 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
     private BbsRegionServiceImpl bbsRegionService;
     @Resource
     private BbsUserPraiseMapper bbsUserPraiseMapper;
+    @Autowired
+    private BbsRedisUtils bbsRedisUtils;
 
     @Override
     @Transactional
@@ -95,6 +95,11 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
                 //2、帖子点赞量+1
                 oneBbsTopic.setPraiseCount(oneBbsTopic.getPraiseCount() + 1);
                 bbsTopicService.updateById(oneBbsTopic);
+
+                List<String> topicIds = new ArrayList<>();
+                topicIds.add(oneBbsTopic.getId());
+                bbsRedisUtils.updateTopicPraiseCount(topicIds,1);
+
                 //3、用户记录 不存在就创建 麦子+1 用户点赞量+1
                 boolean b = bbsUserRecordService.lambdaUpdate()
                         .eq(BbsUserRecord::getCreateBy, sysUser.getUsername())
@@ -139,6 +144,11 @@ public class BbsUserPraiseServiceImpl extends ServiceImpl<BbsUserPraiseMapper, B
                 //2、帖子点赞量-1
                 oneBbsTopic.setPraiseCount(oneBbsTopic.getPraiseCount() - 1);
                 bbsTopicService.updateById(oneBbsTopic);
+
+                List<String> topicIds = new ArrayList<>();
+                topicIds.add(oneBbsTopic.getId());
+                bbsRedisUtils.updateTopicPraiseCount(topicIds,-1);
+
                 //3、用户记录 陨石-1 用户点赞量-1 日点赞数量-1 周点赞数量-1 总点赞量-1
                 boolean b = bbsUserRecordService.lambdaUpdate()
                         .eq(BbsUserRecord::getCreateBy, sysUser.getUsername())
