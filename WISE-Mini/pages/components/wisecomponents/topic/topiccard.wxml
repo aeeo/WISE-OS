@@ -7,16 +7,23 @@
       <view class="flex align-center">
         <!-- 头像 -->
         <!-- catchtap="clickAvatarImage" -->
-        <view class="cu-avatar round lg margin" catchtap="goUserInfo" hover-stop-propagation='true'
-          data-username="{{topicItem.createBy}}" data-imagelist="{{topicItem.avatar}}" data-topicitem="{{topicItem}}"
-          style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.anon == 0 ? topicItem.avatar : (topicItem.sex==1 ? 'sys/anonboy.jfif' : 'sys/anongirl.jfif')}}{{THUMBNAIL}});">
+        <view wx:if="{{topicItem.anon != undefined && topicItem.anon == 0}}" class="cu-avatar round lg margin"
+          catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}"
+          data-imagelist="{{topicItem.avatar}}" data-topicitem="{{topicItem}}"
+          style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.avatar}}{{THUMBNAIL}});">
+        </view>
+        <view wx:if="{{topicItem.anon != undefined && topicItem.anon != 0}}" class="cu-avatar round lg margin"
+          catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}"
+          data-imagelist="{{topicItem.avatar}}" data-topicitem="{{topicItem}}"
+          style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.sex==1 ? 'sys/anonboy.jfif' : 'sys/anongirl.jfif'}}{{THUMBNAIL}});">
         </view>
         <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}"
           data-topicitem="{{topicItem}}">
           <view class="flex align-center">
-            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon != 0}}">{{(topicItem.sex==1 ?
+            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon != undefined && topicItem.anon != 0}}">
+              {{(topicItem.sex==1 ?
               '行星小伙' : '行星小妹')}}</view>
-            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon == 0}}">
+            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon != undefined && topicItem.anon == 0}}">
               {{topicItem.bbsCreateByName}}</view>
             <!-- 角色 -->
             <view wx:if="{{showRole}}"
@@ -115,16 +122,22 @@
       <view class="flex align-center">
         <!-- 头像 -->
         <!-- catchtap="clickAvatarImage" -->
-        <view class="cu-avatar round lg margin" catchtap="goUserInfo" hover-stop-propagation='true'
-          data-username="{{topicItem.createBy}}" data-imagelist="{{topicItem.avatar}}" data-topicitem="{{topicItem}}"
-          style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.anon == 0 ? topicItem.avatar : (topicItem.sex==1 ? 'sys/anonboy.jfif' : 'sys/anongirl.jfif')}}{{THUMBNAIL}});">
+        <view wx:if="{{topicItem.anon != undefined && topicItem.anon == 0}}" class="cu-avatar round lg margin"
+          catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}"
+          data-imagelist="{{topicItem.avatar}}" data-topicitem="{{topicItem}}"
+          style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.avatar}}{{THUMBNAIL}});">
+        </view>
+        <view wx:if="{{topicItem.anon != undefined && topicItem.anon != 0}}" class="cu-avatar round lg margin"
+          catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}"
+          data-imagelist="{{topicItem.avatar}}" data-topicitem="{{topicItem}}"
+          style="background-image:url({{UPLOAD_IMAGE}}{{topicItem.sex==1 ? 'sys/anonboy.jfif' : 'sys/anongirl.jfif'}}{{THUMBNAIL}});">
         </view>
         <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}"
           data-topicitem="{{topicItem}}">
           <view class="flex align-center">
-            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon != 0}}">{{(topicItem.sex==1 ?
-              '行星小伙' : '行星小妹')}}</view>
-            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon == 0}}">
+            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon != undefined && topicItem.anon != 0}}">
+              {{(topicItem.sex==1 ? '行星小伙' : '行星小妹')}}</view>
+            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon != undefined && topicItem.anon == 0}}">
               {{topicItem.bbsCreateByName}}</view>
             <!-- 角色 -->
             <view wx:if="{{showRole}}"

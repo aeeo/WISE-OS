@@ -336,11 +336,12 @@ Page({
       })
       let url = API.user_praise_clickPraise.url + '?messageId=' + e.target.id + '&isPraise=' + true
       app.wxRequest(API.user_praise_clickPraise.method, url, '', (res) => {
+
         resolve(res.data.result.records)
       }, (err) => {
         reject(err)
       }).then(res => {
-
+        app.getUserAllInfo()
       }, err => {
 
       })
@@ -370,6 +371,7 @@ Page({
       }, (err) => {
         reject(err)
       }).then(res => {
+        app.getUserAllInfo()
 
       }, err => {
 

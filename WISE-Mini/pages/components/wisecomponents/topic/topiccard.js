@@ -48,7 +48,7 @@ Component({
       type: Boolean,
       value: true
     },
-    hideAnon:{            //隐藏匿名信息
+    hideAnon: {            //隐藏匿名信息
       type: Boolean,
       value: false
     },
@@ -180,9 +180,12 @@ Component({
           })
           let url = app.globalData.HOSTURL + '/bbs/bbsUserPraise/wise/mini/clickPraise?topicId=' + e.target.id + '&isPraise=' + true
           app.wxRequest('post', url, '').then(res => {
-
+            app.getUserAllInfo()
           }, err => {
-
+            wx.showToast({
+              title: '失败，请稍后再试。',
+              icon: 'none'
+            })
           })
         } else {
           var topicListTem = that.data.topicLists
@@ -194,7 +197,7 @@ Component({
           })
           let url = app.globalData.HOSTURL + '/bbs/bbsUserPraise/wise/mini/clickPraise?topicId=' + e.target.id + '&isPraise=' + false
           app.wxRequest('post', url, '').then(res => {
-
+            app.getUserAllInfo()
           }, err => {
             wx.showToast({
               title: '失败，请稍后再试。',

@@ -41,6 +41,8 @@ public class BbsUserMessageController extends JeecgController<BbsUserMessage, IB
     private IBbsUserMessageFullDtoService bbsUserMessageFullDtoService;
     @Autowired
     private ISysUserService sysUserService;
+    @Autowired
+    private BbsAuthController bbsAuthController;
 
 
     /**
@@ -170,6 +172,7 @@ public class BbsUserMessageController extends JeecgController<BbsUserMessage, IB
         userMessageUrapper.eq("receive_username", sysUser.getUsername()).set("status", "0");
         bbsUserMessageService.update(userMessageUrapper);
         //查询后将状态置为已读
+        bbsAuthController.getMiNiStorageFromSql();
         return Result.OK(bbsUserMessageIPage);
     }
 }

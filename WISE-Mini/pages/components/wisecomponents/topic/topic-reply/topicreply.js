@@ -259,6 +259,7 @@ Component({
                 icon: "none"
               })
             })
+            app.getUserAllInfo()
           } else {
             wx.showToast({
               title: res.data.message,
@@ -421,11 +422,9 @@ Component({
     // mark:判断获取评论列表方法
     getFullReplys(topicId, replyPageNo) {
       if (this.data.isAnon == '') {
-        console.log("------------------------------", "公开")
         return this.getFullReplysList(topicId, replyPageNo)
       } else {
         // 朋友圈匿名
-        console.log("------------------------------", "匿名")
         return this.getFullReplysListAnon(topicId, replyPageNo)
       }
     },
@@ -562,7 +561,7 @@ Component({
         })
         let url = that.data.SHAREHOSTURL + '/bbs/bbsUserPraise/wise/mini/clickReplyPraise?replyId=' + e.target.id + '&isPraise=' + true
         app.wxRequest('post', url, '').then(res => {
-
+          app.getUserAllInfo()
         }, err => {
 
         })
@@ -576,7 +575,7 @@ Component({
         })
         let url = that.data.SHAREHOSTURL + '/bbs/bbsUserPraise/wise/mini/clickReplyPraise?replyId=' + e.target.id + '&isPraise=' + false
         app.wxRequest('post', url, '').then(res => {
-
+          app.getUserAllInfo()
         }, err => {
 
         })
@@ -596,7 +595,7 @@ Component({
         })
         let url = that.data.SHAREHOSTURL + '/bbs/bbsUserPraise/wise/mini/clickReplyPraise?replyId=' + e.target.id + '&isPraise=' + true
         app.wxRequest('post', url, '').then(res => {
-
+          app.getUserAllInfo()
         }, err => {
 
         })
@@ -610,7 +609,7 @@ Component({
         })
         let url = that.data.SHAREHOSTURL + '/bbs/bbsUserPraise/wise/mini/clickReplyPraise?replyId=' + e.target.id + '&isPraise=' + false
         app.wxRequest('post', url, '').then(res => {
-
+          app.getUserAllInfo()
         }, err => {
 
         })

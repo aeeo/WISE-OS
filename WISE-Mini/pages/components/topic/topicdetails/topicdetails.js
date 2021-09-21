@@ -77,6 +77,7 @@ Page({
           topicdetails: topicdetailsTmp,
           regionCode: options.regionCode
         })
+        that.getBbsTopicById(that.data.SHAREHOSTURL)
       } else {
         // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
         const eventChannel = this.getOpenerEventChannel()
@@ -85,12 +86,12 @@ Page({
             topicIndex: data.data.bindex,
             topicdetails: data.data.topicitem,
           })
+          that.getBbsTopicById(that.data.SHAREHOSTURL)
         })
       }
       // 获取token
-      app.getFirstLoginToken().then(res => {
-        that.getBbsTopicById(that.data.SHAREHOSTURL)
-      })
+      // app.getFirstLoginToken().then(res => {
+      // })
     }
 
   },
@@ -278,6 +279,7 @@ Page({
           title: '收藏成功',
           icon: "none"
         })
+        app.getUserAllInfo()
       }, err => {
         wx.showToast({
           title: '收藏失败',
@@ -301,6 +303,7 @@ Page({
           title: '取消收藏成功',
           icon: "none"
         })
+        app.getUserAllInfo()
       }, err => {
         wx.showToast({
           title: '取消收藏失败',
@@ -327,7 +330,7 @@ Page({
         })
         let url = that.data.SHAREHOSTURL + '/bbs/bbsUserPraise/wise/mini/clickPraise?topicId=' + topicId + '&isPraise=' + true
         app.wxRequest('post', url, '').then(res => {
-
+          app.getUserAllInfo()
         }, err => {
 
         })
@@ -341,7 +344,7 @@ Page({
         })
         let url = that.data.SHAREHOSTURL + '/bbs/bbsUserPraise/wise/mini/clickPraise?topicId=' + topicId + '&isPraise=' + false
         app.wxRequest('post', url, '').then(res => {
-
+          app.getUserAllInfo()
         }, err => {
           wx.showToast({
             title: '失败，请稍后再试。',
