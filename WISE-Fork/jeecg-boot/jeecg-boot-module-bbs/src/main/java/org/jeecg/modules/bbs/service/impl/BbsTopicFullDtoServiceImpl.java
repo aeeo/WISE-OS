@@ -220,6 +220,11 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
 
     @Override
     public BbsTopicFullDto queryTopicFullDtoById(String topicId) {
+        BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto)redisUtil.get(LoadDataRedis.BBS_TOPIC_TOPICID + topicId);
+        if (null != bbsTopicFullDto) {
+            return bbsTopicFullDto;
+        }
+
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
         //查出固定不变的数据（已审核的贴子）
@@ -228,12 +233,13 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         if (null == bbsTopicFullDtosList) {
             return null;
         }
-        bbsTopicFullDtosList.getBbsTopicLinkList().sort((l, r) -> l.getSort().compareTo(r.getSort()));
+        //更新redis
+        redisUtil.set(LoadDataRedis.BBS_TOPIC_TOPICID + topicId,bbsTopicFullDtosList);
 
+        bbsTopicFullDtosList.getBbsTopicLinkList().sort((l, r) -> l.getSort().compareTo(r.getSort()));
         //只有1条，但还是封装list
         List<String> topicIdList = new ArrayList<>();
         topicIdList.add(bbsTopicFullDtosList.getId());
-
         //根据用户进行数据封装
         if (topicIdList.size() != 0) {
             List<BbsUserStar> bbsUserStars = bbsTopicFullDtoMapper.queryTopicFullDtoUserStar(topicIdList, sysUser.getUsername());
@@ -246,12 +252,15 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
                 bbsTopicFullDtosList.setUserIsPraise(true);
             }
         }
-
         return bbsTopicFullDtosList;
     }
 
     @Override
     public BbsTopicFullDto queryTopicFullDtoByIdAnon(String topicId) {
+        BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto)redisUtil.get(LoadDataRedis.BBS_TOPIC_TOPICID + topicId);
+        if (null != bbsTopicFullDto) {
+            return bbsTopicFullDto;
+        }
 
         //查出固定不变的数据（已审核的贴子）
         //手动分页，先筛选帖子，再封装数据
