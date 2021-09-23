@@ -3,7 +3,7 @@ Page({
   data: {
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
-    REGIONCLASS: wx.getStorageSync('REGIONCLASS'),
+    REGIONCLASS: wx.getStorageSync('ALLINFO').bbsClassList,
     userSeleceTopicRegionCode: '', //用户提交表单版块编号
     index: null,
     multiIndex: [0, 0, 0],

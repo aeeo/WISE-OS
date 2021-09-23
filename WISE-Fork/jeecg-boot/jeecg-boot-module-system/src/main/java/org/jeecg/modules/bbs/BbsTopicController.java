@@ -17,6 +17,7 @@ import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.bbs.entity.*;
 import org.jeecg.modules.bbs.service.*;
 import org.jeecg.modules.bbs.service.impl.*;
+import org.jeecg.modules.bbs.utils.BbsAuthUtils;
 import org.jeecg.modules.bbs.utils.ContentCheck;
 import org.jeecg.modules.bbs.vo.BbsTopicPage;
 import org.jeecg.modules.cache.BbsRedisUtils;
@@ -97,6 +98,8 @@ public class BbsTopicController {
     private BbsRedisUtils bbsRedisUtils;
     @Autowired
     private BbsAuthController bbsAuthController;
+    @Autowired
+    private BbsAuthUtils bbsAuthUtils;
 
 
     /**
@@ -490,11 +493,13 @@ public class BbsTopicController {
     @GetMapping(value = "/wise/mini/fullListById")
     public Result<?> fullListById(@RequestParam(value = "topicId") String topicId,
                                   HttpServletRequest req) {
+        LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+
         BbsTopicFullDto bbsTopicFullDto = bbsTopicFullDtoService.queryTopicFullDtoById(topicId);
         if (null == bbsTopicFullDto) {
             return Result.error(1005, "id为" + topicId + "的贴子不存在。");
         }
-        bbsAuthController.getMiNiStorageFromSql();
+        bbsAuthUtils.getMiNiStorageFromSql(loginUser.getUsername());
         return Result.OK(bbsTopicFullDto);
     }
 
@@ -554,7 +559,7 @@ public class BbsTopicController {
                          HttpServletRequest req) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
-        if (!bbsAuthController.judgeMiniUserAuth())
+        if (!bbsAuthUtils.judgeMiniUserAuth())
             return Result.error(1000, "未授权,无法发布。");
 
         BbsRegion regionOne = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, req.getHeader("regioncode")).one();

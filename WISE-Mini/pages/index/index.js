@@ -81,17 +81,8 @@ Page({
             ARTWORKNOWATER: app.globalData.ARTWORKNOWATER, //原图无水印
             options: options
         })
-    },
-    onReady() {
         var that = this
-        var DevAskFlag = wx.getStorageSync('DevAskFlag');
-        if (DevAskFlag != "yes") {
-            //首屏公告
-            this.setData({
-                modalName: "DevlopAsk"
-            })
-        }
-        wx.setStorageSync("DevAskFlag", "yes")
+
         // 获取token
         app.getFirstLoginToken().then(res => {
             that.setData({
@@ -102,6 +93,17 @@ Page({
             that.getRegionClass(res.bbsClassList)
             that.waitTopicList()
         })
+    },
+    onReady() {
+        var DevAskFlag = wx.getStorageSync('DevAskFlag');
+        if (DevAskFlag != "yes") {
+            //首屏公告
+            this.setData({
+                modalName: "DevlopAsk"
+            })
+        }
+        wx.setStorageSync("DevAskFlag", "yes")
+        
     },
     onShow() {
         var that = this
@@ -415,7 +417,7 @@ Page({
         return {
             title: "『" + this.data.USERRECORD.regionFullName + "』" + '都在用的本地小程序',
             path: '/pages/index/index?regionCode=' + this.data.USERRECORD.regionCode,
-            imageUrl: imageUrl
+            // imageUrl: imageUrl
         }
     },
     // 朋友圈       需要搞个匿名访问，或者进入后直接重新打开

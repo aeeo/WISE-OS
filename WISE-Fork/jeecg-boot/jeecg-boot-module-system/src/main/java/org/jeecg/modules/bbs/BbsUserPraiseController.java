@@ -6,15 +6,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.bbs.entity.BbsUserPraise;
 import org.jeecg.modules.bbs.service.IBbsUserPraiseService;
 import org.jeecg.modules.bbs.service.impl.BbsMessageBoardServiceImpl;
 import org.jeecg.modules.bbs.service.impl.BbsTopicServiceImpl;
 import org.jeecg.modules.bbs.service.impl.BbsUserRecordServiceImpl;
+import org.jeecg.modules.bbs.utils.BbsAuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,7 +47,8 @@ public class BbsUserPraiseController extends JeecgController<BbsUserPraise, IBbs
     private BbsUserRecordServiceImpl bbsUserRecordService;
     @Autowired
     private BbsMessageBoardServiceImpl bbsMessageBoardService;
-
+    @Autowired
+    private BbsAuthUtils bbsAuthUtils;
 
     /**
      * 分页列表查询
@@ -178,11 +182,13 @@ public class BbsUserPraiseController extends JeecgController<BbsUserPraise, IBbs
     @ApiOperation(value = "用户点赞/取消赞", notes = "用户点赞/取消赞")
     @PostMapping(value = "/wise/mini/clickPraise")
     public Result<?> clickPraise(String topicId, @RequestParam(value = "isPraise") Boolean isPraise, String messageId) {
-        if (!bbsAuthController.judgeMiniUserAuth()) {
+        LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+
+        if (!bbsAuthUtils.judgeMiniUserAuth()) {
             return Result.error(1000, "未授权,无法点赞。");
         }
         Result<?> result = bbsUserPraiseService.clickPraise(topicId, isPraise, messageId);
-        bbsAuthController.getMiNiStorageFromSql();
+        bbsAuthUtils.getMiNiStorageFromSql(loginUser.getUsername());
         return result;
     }
 
@@ -196,7 +202,7 @@ public class BbsUserPraiseController extends JeecgController<BbsUserPraise, IBbs
     @ApiOperation(value = "评论点赞/取消赞", notes = "评论点赞/取消赞")
     @PostMapping(value = "/wise/mini/clickReplyPraise")
     public Result<?> clickReplyPraise(String replyId, @RequestParam(value = "isPraise") Boolean isPraise) {
-        if (!bbsAuthController.judgeMiniUserAuth()) {
+        if (!bbsAuthUtils.judgeMiniUserAuth()) {
             return Result.error(1000, "未授权,无法点赞。");
         }
         return bbsUserPraiseService.clickReplyPraise(replyId, isPraise);

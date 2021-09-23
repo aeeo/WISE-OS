@@ -7,7 +7,7 @@
     <view class="cu-list comment" style="top:0px;">
       <view class="cu-item solid-bottom" style="" wx:for="{{fullReplys}}" wx:if="{{item.pid == 0}}" wx:key="id"
         wx:for-index="bindex" id="{{item.id}}">
-        <view class="flex padding-left padding-top-sm padding-bottom-sm padding-right justify-between"
+        <view class="flex padding-left-sm padding-top-sm padding-bottom-sm padding-right justify-between"
           bindtap="relpyComment" bindlongpress="longpressComment" data-beReply="{{item}}"
           data-parentReplyId="{{item.id}}">
           <view class="flex justify-start">
@@ -30,7 +30,7 @@
               <text class="praiseCount cuIcon-likefill cu-btn animation-{{item.exeCuteAnimation?scale-down:''}}"
                 hover-stop-propagation='true' catchtap="clickReplyPraise" id="{{item.id}}"
                 data-praiseCount="{{item.praise}}" wx:key="id" data-bindex="{{bindex}}"
-                style="color:{{item.userIsPraise?'#ec008c':''}};background: #00000000;width: 40px;">
+                style="color:{{item.userIsPraise?'#ec008c':''}};background: #00000000;width: 15px;">
               </text>
             </view>
             <view class="text-df" style="margin-top: -10px;"><text wx:if="{{item.praise != 0}}">{{item.praise}}</text>
@@ -38,8 +38,9 @@
           </view>
         </view>
         <!-- 子评论 -->
-        <view class="flex padding-left padding-right padding-bottom-sm justify-between" wx:for="{{item.childFullReply}}"
-          wx:for-item="childReplyList" wx:key="id" wx:for-index="bindexChild" id="{{childReplyList.id}}">
+        <view class="flex padding-left-sm padding-right padding-bottom-sm justify-between"
+          wx:for="{{item.childFullReply}}" wx:for-item="childReplyList" wx:key="id" wx:for-index="bindexChild"
+          id="{{childReplyList.id}}">
           <view class="flex justify-start" bindtap="relpyComment" bindlongpress="longpressComment"
             data-beReply="{{childReplyList}}" data-parentReplyId="{{item.id}}">
             <view class="cu-avatar round" style="background-color:#00000000"></view>
@@ -67,7 +68,7 @@
                 hover-stop-propagation='true' catchtap="clickChildReplyPraise" id="{{childReplyList.id}}"
                 data-praiseCount="{{childReplyList.praise}}" wx:key="id" data-bindex="{{bindex}}"
                 data-bindexChild="{{bindexChild}}"
-                style="color:{{childReplyList.userIsPraise?'#ec008c':''}};background: #00000000;width: 40px;">
+                style="color:{{childReplyList.userIsPraise?'#ec008c':''}};background: #00000000;width: 15px;">
               </text>
             </view>
             <view class="text-df" style="margin-top: -10px;"><text
@@ -89,7 +90,7 @@
       <!-- 评论边框：border:1px solid #e03997; -->
       <view class="cu-item solid-bottom" style="margin:8px;margin-bottom:0px;" wx:for="{{fullReplys}}"
         wx:if="{{item.pid == 0}}" wx:key="id" wx:for-index="bindex" id="{{item.id}}">
-        <view class="flex padding-left padding-top-sm padding-bottom-sm padding-right justify-between"
+        <view class="flex padding-left-sm padding-top-sm padding-bottom-sm padding-right-sm justify-between"
           bindtap="relpyComment" bindlongpress="longpressComment" data-beReply="{{item}}"
           data-parentReplyId="{{item.id}}">
           <view class="flex justify-start">
@@ -112,7 +113,7 @@
               <text class="praiseCount cuIcon-likefill cu-btn animation-{{item.exeCuteAnimation?scale-down:''}}"
                 hover-stop-propagation='true' catchtap="clickReplyPraise" id="{{item.id}}"
                 data-praiseCount="{{item.praise}}" wx:key="id" data-bindex="{{bindex}}"
-                style="color:{{item.userIsPraise?'#ec008c':''}};background: #00000000;width: 40px;">
+                style="color:{{item.userIsPraise?'#ec008c':''}};background: #00000000;width: 15px;">
               </text>
             </view>
             <view class="text-df" style="margin-top: -10px;"><text wx:if="{{item.praise != 0}}">{{item.praise}}</text>
@@ -120,8 +121,9 @@
           </view>
         </view>
         <!-- 子评论 -->
-        <view class="flex padding-left padding-right padding-bottom-sm justify-between" wx:for="{{item.childFullReply}}"
-          wx:for-item="childReplyList" wx:key="id" wx:for-index="bindexChild" id="{{childReplyList.id}}">
+        <view class="flex padding-left-sm padding-bottom-sm padding-right-sm justify-between"
+          wx:for="{{item.childFullReply}}" wx:for-item="childReplyList" wx:key="id" wx:for-index="bindexChild"
+          id="{{childReplyList.id}}">
           <view class="flex justify-start" bindtap="relpyComment" bindlongpress="longpressComment"
             data-beReply="{{childReplyList}}" data-parentReplyId="{{item.id}}">
             <view class="cu-avatar round" style="background-color:#00000000"></view>
@@ -149,7 +151,7 @@
                 hover-stop-propagation='true' catchtap="clickChildReplyPraise" id="{{childReplyList.id}}"
                 data-praiseCount="{{childReplyList.praise}}" wx:key="id" data-bindex="{{bindex}}"
                 data-bindexChild="{{bindexChild}}"
-                style="color:{{childReplyList.userIsPraise?'#ec008c':''}};background: #00000000;width: 40px;">
+                style="color:{{childReplyList.userIsPraise?'#ec008c':''}};background: #00000000;width: 15px;">
               </text>
             </view>
             <view class="text-df" style="margin-top: -10px;"><text

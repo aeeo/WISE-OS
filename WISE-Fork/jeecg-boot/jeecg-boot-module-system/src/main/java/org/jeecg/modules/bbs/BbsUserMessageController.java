@@ -15,6 +15,7 @@ import org.jeecg.modules.bbs.entity.BbsUserMessage;
 import org.jeecg.modules.bbs.entity.BbsUserMessageFullDto;
 import org.jeecg.modules.bbs.service.IBbsUserMessageFullDtoService;
 import org.jeecg.modules.bbs.service.IBbsUserMessageService;
+import org.jeecg.modules.bbs.utils.BbsAuthUtils;
 import org.jeecg.modules.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,8 @@ public class BbsUserMessageController extends JeecgController<BbsUserMessage, IB
     private ISysUserService sysUserService;
     @Autowired
     private BbsAuthController bbsAuthController;
-
+    @Autowired
+    private BbsAuthUtils bbsAuthUtils;
 
     /**
      * 添加
@@ -172,7 +174,7 @@ public class BbsUserMessageController extends JeecgController<BbsUserMessage, IB
         userMessageUrapper.eq("receive_username", sysUser.getUsername()).set("status", "0");
         bbsUserMessageService.update(userMessageUrapper);
         //查询后将状态置为已读
-        bbsAuthController.getMiNiStorageFromSql();
+        bbsAuthUtils.getMiNiStorageFromSql(sysUser.getUsername());
         return Result.OK(bbsUserMessageIPage);
     }
 }

@@ -12,7 +12,7 @@
 	</view>
 	<view class="cu-form-group margin-top">
 		<textarea name="content" maxlength="-1" style="height:8em" show-confirm-bar="{{false}}"
-			disabled="{{modalName!=null}}" bindinput="textareaAInput" placeholder="{{formData.content == ''?'内容总不能空着吧😅':''}}"
+			disabled="{{modalName!=null}}" placeholder="{{formData.content == ''?'内容总不能空着吧😅':''}}"
 			value="{{formData.content}}"></textarea>
 	</view>
 	<view class="cu-bar bg-white margin-top">
@@ -77,7 +77,7 @@
 	</view> -->
 	<view class="cu-form-group">
 		<view class="title">联系方式（可选）</view>
-		<input name="contact" placeholder="{{formData.contact == ''?'请输入联系方式':''}}" value="{{formData.contact}}"></input>
+		<input name="contact" placeholder="{{formData.contact == ''?'请输入联系方式':''}}" value="{{contact}}"></input>
 		<view class="cu-capsule radius">
 			<!-- <view class="cu-tag bg-blue">
 				+86
@@ -90,7 +90,7 @@
 			class="getPhoneNumber cu-btn bg-grey shadow">自动填充</button>
 	</view>
 	<view class="cu-form-group" bindtap="switchAnon">
-		<view class="title">匿名发布</view>
+		<view class="title">使用系统内置头像</view>
 		<checkbox-group>
 			<checkbox class="round" checked="{{isAnon}}"></checkbox>
 		</checkbox-group>

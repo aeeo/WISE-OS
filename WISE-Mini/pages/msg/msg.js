@@ -511,21 +511,22 @@ Page({
   //  * 用户点击右上角分享
   //  */
   onShareAppMessage: function () {
+    let imageUrl = this.data.UPLOAD_IMAGE + wx.getStorageSync('ALLINFO').bbsRegion.regionImage + this.data.THUMBNAIL
     return {
       title: "『" + this.data.USERRECORD.regionFullName + "』" + '都在用的本地小程序',
       path: '/pages/index/index?regionCode=' + this.data.USERRECORD.regionCode,
-      // imageUrl:
+      // imageUrl: imageUrl
     }
   },
   // 朋友圈
-  onShareTimeline: function () {
-    return {
-      title: "『" + this.data.USERRECORD.regionFullName + "』" + '都在用的本地小程序',
-      path: '/pages/index/index?regionCode=' + this.data.USERRECORD.regionCode,
-      // 自定义图片路径，可以是本地文件或者网络图片。支持 PNG 及 JPG，显示图片长宽比是 1:1。	默认使用小程序 Logo
-      // imageUrl:
-    }
-  },
+  // onShareTimeline: function () {
+  //   return {
+  //     title: "『" + this.data.USERRECORD.regionFullName + "』" + '都在用的本地小程序',
+  //     path: '/pages/index/index?regionCode=' + this.data.USERRECORD.regionCode,
+  //     // 自定义图片路径，可以是本地文件或者网络图片。支持 PNG 及 JPG，显示图片长宽比是 1:1。	默认使用小程序 Logo
+  //     // imageUrl:
+  //   }
+  // },
   goUserInfo(e) {
     console.log(e)
     wx.navigateTo({

@@ -21,6 +21,7 @@ import org.jeecg.modules.bbs.service.IBbsReplyService;
 import org.jeecg.modules.bbs.service.IBbsTopicService;
 import org.jeecg.modules.bbs.service.impl.BbsInformServiceImpl;
 import org.jeecg.modules.bbs.service.impl.BbsUserPraiseServiceImpl;
+import org.jeecg.modules.bbs.utils.BbsAuthUtils;
 import org.jeecg.modules.bbs.utils.ContentCheck;
 import org.jeecg.modules.system.entity.SysUser;
 import org.jeecg.modules.system.service.ISysUserService;
@@ -59,7 +60,8 @@ public class BbsReplyController extends JeecgController<BbsReply, IBbsReplyServi
     private BbsInformServiceImpl bbsInformService;
     @Autowired
     private IBbsTopicService bbsTopicService;
-
+    @Autowired
+    private BbsAuthUtils bbsAuthUtils;
 
     /**
      * 分页列表查询
@@ -405,7 +407,9 @@ public class BbsReplyController extends JeecgController<BbsReply, IBbsReplyServi
     @ApiOperation(value = "帖子回复-添加", notes = "帖子回复-添加")
     @PostMapping(value = "/wise/mini/add")
     public Result<?> addWiseMini(@RequestBody BbsReply bbsReply) {
-        if (!bbsAuthController.judgeMiniUserAuth()) {
+        LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+
+        if (!bbsAuthUtils.judgeMiniUserAuth()) {
             return Result.error(1000, "未授权,无法评论。");
         }
         //内容审核
@@ -421,7 +425,7 @@ public class BbsReplyController extends JeecgController<BbsReply, IBbsReplyServi
             result3.setMessage("评论" + result3.getMessage());
             return result3;
         }
-        bbsAuthController.getMiNiStorageFromSql();
+        bbsAuthUtils.getMiNiStorageFromSql(loginUser.getUsername());
         return bbsReplyService.addReply(bbsReply);
     }
 
@@ -435,8 +439,10 @@ public class BbsReplyController extends JeecgController<BbsReply, IBbsReplyServi
     @ApiOperation(value = "帖子回复-通过id删除", notes = "帖子回复-通过id删除")
     @DeleteMapping(value = "/wise/mini/delete")
     public Result<?> deleteWiseMini(@RequestParam(name = "id", required = true) String id) {
+        LoginUser loginUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+
         bbsReplyService.deleteBbsReplyWiseMini(id);
-        bbsAuthController.getMiNiStorageFromSql();
+        bbsAuthUtils.getMiNiStorageFromSql(loginUser.getUsername());
         return Result.OK("删除成功!");
     }
 

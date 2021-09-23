@@ -1,6 +1,6 @@
-<cu-custom bgColor="bg-gradual-pink" isBack="{{!showHome}}" showHome="{{showHome}}" regionCode="{{regionCode}}">
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}" regionCode="{{regionCode}}">
   <view slot="backText">返回</view>
-  <view slot="homeText">点击回到主页</view>
+  <!-- <view slot="homeText">点击回到主页</view> -->
   <view slot="content">详情</view>
   <view class="action" slot="right">
     <view class="cu-load load-icon {{!isLoad?'loading':'over'}}"></view>

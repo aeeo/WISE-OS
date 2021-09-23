@@ -33,10 +33,11 @@ Page({
   data: {
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
-    REGIONCLASS: wx.getStorageSync('REGIONCLASS'),
+    REGIONCLASS: wx.getStorageSync('ALLINFO').bbsClassList,
     topicClassList: [],
     userSeleceTopicClassIndex: null,
     userSeleceTopicClassCode: '', //用户提交表单版块编号
+    contact: '',
     multiIndex: [0, 0, 0],
     time: '12:01',
     date: '2018-12-25',
@@ -76,7 +77,7 @@ Page({
 
     // 版块处理
     this.setData({
-      REGIONCLASS: wx.getStorageSync('REGIONCLASS')
+      REGIONCLASS: wx.getStorageSync('ALLINFO').bbsClassList
     })
     var topicCodeListsTmp = []
     for (var item in this.data.REGIONCLASS) {
@@ -125,7 +126,8 @@ Page({
     this.setData({
       formData: topicFormData,
       imgList: topicFormData.imgList,
-      isAnon: topicFormData.anon
+      isAnon: topicFormData.anon,
+      contact: topicFormData.contact
     })
   },
   // 编辑加载
@@ -136,7 +138,7 @@ Page({
     formDataTemp.id = formData.id
     formDataTemp.title = formData.title
     formDataTemp.anon = formData.anon //匿名
-    let REGIONCLASS = wx.getStorageSync('REGIONCLASS')
+    let REGIONCLASS = wx.getStorageSync('ALLINFO').bbsClassList
     console.log(REGIONCLASS)
     for (const key in REGIONCLASS) {
       if (REGIONCLASS[key].classCode == formData.classCode) {
@@ -163,7 +165,8 @@ Page({
       userSeleceTopicClassIndex: formDataTemp.topicClass, //给版块id赋值，如果直接用formdata显示有问题
       userSeleceTopicClassCode: that.data.topicClassList[formDataTemp.topicClass], //给版块id赋值，如果直接用formdata显示有问题
       imgList: imgList,
-      isAnon: formDataTemp.anon //匿名
+      isAnon: formDataTemp.anon, //匿名
+      contact: formDataTemp.contact //匿名
     })
   },
   // 图片上传（从相册）方法
@@ -243,16 +246,7 @@ Page({
       }
     })
   },
-  textareaAInput(e) {
-    this.setData({
-      textareaAValue: e.detail.value
-    })
-  },
-  textareaBInput(e) {
-    this.setData({
-      textareaBValue: e.detail.value
-    })
-  },
+
   // mark: 是否匿名
   switchAnon(e) {
     var that = this
@@ -274,6 +268,7 @@ Page({
     if (actionType == 1) {
       // 保存表单
       data.anon = that.data.isAnon
+      data.contact = that.data.contact
       let imageListTem = that.data.imgList
       imageListTem.forEach(item => {
         item.imageType = 1 //0：临时路径，1：OSS路径
@@ -531,6 +526,9 @@ Page({
   getPhoneNumber(e) {
     var that = this
     let cloudID = e.detail.cloudID
+    wx.showLoading({
+      title: '请稍等...',
+    })
     wx.cloud.callFunction({
       name: 'getOpenData',
       data: {
@@ -541,12 +539,17 @@ Page({
       }
     }).then(res => {
       console.log('云函数获取开放数据：', res)
-      let formDataTemp = that.data.formData
-      formDataTemp.contact = res.result.weRunData.data.phoneNumber
+      // let formDataTemp = that.data.formData
+      // formDataTemp.contact = res.result.weRunData.data.phoneNumber
+      // that.setData({
+      //   formData: formDataTemp
+      // })
       that.setData({
-        formData: formDataTemp
+        contact: res.result.weRunData.data.phoneNumber
       })
+      wx.hideLoading()
     }).catch(err => {
+      wx.hideLoading()
       console.log(err)
     })
   },

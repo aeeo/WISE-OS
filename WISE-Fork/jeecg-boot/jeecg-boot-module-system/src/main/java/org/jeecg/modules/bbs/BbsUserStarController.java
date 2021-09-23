@@ -18,6 +18,7 @@ import org.jeecg.modules.bbs.service.IBbsUserStarService;
 import org.jeecg.modules.bbs.service.impl.BbsTopicServiceImpl;
 import org.jeecg.modules.bbs.service.impl.BbsUserPraiseServiceImpl;
 import org.jeecg.modules.bbs.service.impl.BbsUserRecordServiceImpl;
+import org.jeecg.modules.bbs.utils.BbsAuthUtils;
 import org.jeecg.modules.system.controller.SysRoleController;
 import org.jeecg.modules.system.controller.SysUserController;
 import org.jeecg.modules.system.entity.SysRole;
@@ -68,6 +69,8 @@ public class BbsUserStarController extends JeecgController<BbsUserStar, IBbsUser
     private ISysRoleService sysRoleService;
     @Autowired
     private BbsAuthController bbsAuthController;
+    @Autowired
+    private BbsAuthUtils bbsAuthUtils;
 
 
     /**
@@ -283,7 +286,7 @@ public class BbsUserStarController extends JeecgController<BbsUserStar, IBbsUser
         }
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         Result<?> result = bbsUserStarService.clickStar(sysUser.getUsername(), topicId, isStar);
-        bbsAuthController.getMiNiStorageFromSql();
+        bbsAuthUtils.getMiNiStorageFromSql(sysUser.getUsername());
         return result;
     }
 }

@@ -14,7 +14,7 @@ Page({
     fullReplys: [],
     topicdetails: '',
     topicIndex: -1,
-    showHome: false,
+    // showHome: false,
     parentReplyId: 0,
     isLoad: true,
     hasReply: 'none', //空评论标志
@@ -69,9 +69,9 @@ Page({
               url: '/pages/index/index?topicId=' + options.topicId + "&regionCode=" + options.regionCode,
             })
           }
-          that.setData({
-            showHome: true
-          })
+          // that.setData({
+          //   showHome: true
+          // })
         }
         that.setData({
           topicdetails: topicdetailsTmp,
@@ -128,7 +128,11 @@ Page({
     // this.data.topicdetails = ''
     this.data.fullReplys = []
     this.data.isPullRefresh = true
-    this.getBbsTopicById(that.data.SHAREHOSTURL)
+    if(this.data.isAnon == ""){
+      this.getBbsTopicById(that.data.SHAREHOSTURL)
+    }else{
+      this.getBbsTopicByIdAnon(that.data.SHAREHOSTURL)
+    }
   },
   // mark:获取帖子详情
   getBbsTopicById(SHAREHOSTURL) {

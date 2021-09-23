@@ -21,6 +21,7 @@ import org.jeecg.modules.bbs.entity.MiNiStorage;
 import org.jeecg.modules.bbs.service.IBbsClassService;
 import org.jeecg.modules.bbs.service.IBbsRegionService;
 import org.jeecg.modules.bbs.service.impl.BbsUserRecordServiceImpl;
+import org.jeecg.modules.bbs.utils.BbsAuthUtils;
 import org.jeecg.modules.bbs.vo.BbsRegionPage;
 import org.jeecg.modules.system.entity.SysDepart;
 import org.jeecg.modules.system.entity.SysUser;
@@ -70,7 +71,8 @@ public class BbsRegionController {
     private ISysDepartService sysDepartService;
     @Autowired
     private BbsAuthController bbsAuthController;
-
+    @Autowired
+    private BbsAuthUtils bbsAuthUtils;
     /**
      * 分页列表查询
      *
@@ -343,7 +345,7 @@ public class BbsRegionController {
         SysDepart sysDepartServiceById = sysDepartService.getById(bbsRegion.getRegionDepartId());
         sysUserService.updateUserDepart(userByName.getUsername(), sysDepartServiceById.getOrgCode());   //设置用户当前部门
 
-        bbsAuthController.getMiNiStorageFromSql();
+        bbsAuthUtils.getMiNiStorageFromSql(userByName.getUsername());
         return Result.OK("切换区域成功");
     }
 

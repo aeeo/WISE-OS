@@ -19,6 +19,7 @@ import org.jeecg.modules.bbs.service.IBbsMessageBoardService;
 import org.jeecg.modules.bbs.service.IBbsUserRecordService;
 import org.jeecg.modules.bbs.service.impl.BbsRegionServiceImpl;
 import org.jeecg.modules.bbs.service.impl.BbsUserPraiseServiceImpl;
+import org.jeecg.modules.bbs.utils.BbsAuthUtils;
 import org.jeecg.modules.bbs.utils.ContentCheck;
 import org.jeecg.modules.system.entity.SysUser;
 import org.jeecg.modules.system.service.ISysUserService;
@@ -56,7 +57,8 @@ public class BbsMessageBoardController extends JeecgController<BbsMessageBoard, 
     private BbsRegionServiceImpl bbsRegionService;
     @Autowired
     private ISysUserService sysUserService;
-
+    @Autowired
+    private BbsAuthUtils bbsAuthUtils;
     /**
      * 分页列表查询
      *
@@ -251,7 +253,7 @@ public class BbsMessageBoardController extends JeecgController<BbsMessageBoard, 
     public Result<?> add(@RequestBody BbsMessageBoard bbsMessageBoard,
                          HttpServletRequest req) {
 
-        if(!bbsAuthController.judgeMiniUserAuth()) {
+        if(!bbsAuthUtils.judgeMiniUserAuth()) {
             return Result.error(1000, "未授权,无法发布。");
         }
         //内容审核

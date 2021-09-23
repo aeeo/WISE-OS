@@ -2,7 +2,7 @@
   wx:if="{{topicType==1 && topicItem.topicType==1 && (!hideAnon || (hideAnon && topicItem.anon==0))}}" wx:key="id"
   wx:for-index="bindex" data-topicitem='{{topicItem}}' class="cu-card dynamic" style="" bindtap="topicdetails"
   data-bindex="{{bindex}}">
-  <view class="cu-item solid-bottom" style="margin:0px 0px 0px 0px;border-radius:0rpx">
+  <view class="cu-item" style="margin:0px 0px 0px 0px;border-radius:0rpx">
     <view class="flex justify-between">
       <view class="flex align-center">
         <!-- 头像 -->
@@ -20,10 +20,12 @@
         <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}"
           data-topicitem="{{topicItem}}">
           <view class="flex align-center">
-            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon != undefined && topicItem.anon != 0}}">
+            <view style="color:#585858;font-weight:bold;font-size:34rpx;"
+              wx:if="{{topicItem.anon != undefined && topicItem.anon != 0}}">
               {{(topicItem.sex==1 ?
               '行星小伙' : '行星小妹')}}</view>
-            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon != undefined && topicItem.anon == 0}}">
+            <view style="color:#585858;font-weight:bold;font-size:34rpx;"
+              wx:if="{{topicItem.anon != undefined && topicItem.anon == 0}}">
               {{topicItem.bbsCreateByName}}</view>
             <!-- 角色 -->
             <view wx:if="{{showRole}}"
@@ -68,27 +70,28 @@
     <view class="text-content">
       <rich-text style="text-align: justify;" nodes="{{topicItem.content}}"></rich-text>
     </view>
-    <!-- Link链接 -->
-    <view class="flex align-center justify-center" wx-if="{{topicItem.bbsTopicLinkList.length > 0}}">
-      <view class="cuIcon-back"></view>
-      <scroll-view style="width:90%;" scroll-x="true">
-        <view class="flex">
-          <view class="padding-xs" wx:key="linkIndex" wx:for-item="linkIndex" wx:for-item="topicLinkItem"
-            wx:for="{{topicItem.bbsTopicLinkList}}">
-            <view class="cu-tag line-pink" catchtap="goTopicLink" hover-stop-propagation='true'
-              data-topicLinkItem="{{topicLinkItem}}">{{topicLinkItem.title}}</view>
-          </view>
-        </view>
-      </scroll-view>
-      <view class="cuIcon-right"></view>
-    </view>
+
   </view>
   <!-- 图片 -->
   <wise-topic-card-image imageList="{{topicItem.bbsTopicImageList}}" test="haha"></wise-topic-card-image>
-
+  <!-- Link链接 -->
+  <view class="flex bg-white align-center justify-center" wx-if="{{topicItem.bbsTopicLinkList.length > 0}}">
+    <view class="cuIcon-back"></view>
+    <scroll-view style="width:90%;" scroll-x="true">
+      <view class="flex">
+        <view class="padding-xs" wx:key="linkIndex" wx:for-item="linkIndex" wx:for-item="topicLinkItem"
+          wx:for="{{topicItem.bbsTopicLinkList}}">
+          <view class="cu-tag line-pink" catchtap="goTopicLink" hover-stop-propagation='true'
+            data-topicLinkItem="{{topicLinkItem}}">{{topicLinkItem.title}}</view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="cuIcon-right"></view>
+  </view>
   <!-- 卡片底部条 -->
-  <view class="bg-white text-gray text padding-xs"
-    style="padding:0 30rpx 0 30rpx;display:flex;justify-content:space-between" wx:if="{{showBottomBar}}">
+  <view class="bg-white text-gray text padding-xs  solid-bottom"
+    style="padding:0 30rpx 0 30rpx;display:flex;justify-content:space-between;align-items:center;"
+    wx:if="{{showBottomBar}}">
     <text class="" id="clickHitsCount" bindtap="clickHitsCount"
       style="background: #00000000;font-size:32rpx;">浏览{{topicItem.hitsCount}}次</text>
     <view class="text-right flex align-center" style="color:grey;">
@@ -96,21 +99,20 @@
         <button class="cuIcon-appreciatefill cu-btn animation-{{topicItem.exeCuteAnimation?'scale-down':''}}"
           catchtap="clickPraise" hover-stop-propagation='true' id="{{topicItem.id}}" data-class="{{animationItme.name}}"
           data-praiseCount="{{topicItem.praiseCount}}" data-bindex="{{bindex}}"
-          style="color:{{topicItem.userIsPraise?'#ec008c':'grey'}};background: #00000000;padding: 0rpx;font-size:40rpx;"></button>
+          style="color:{{topicItem.userIsPraise?'#ec008c':'grey'}};background: #00000000;padding: 0rpx;font-size:50rpx;"></button>
         <!-- cuIcon-自带样式，取不存在的图标，抵充样式 -->
-        <text class="cuIcon-messagefill123 cu-btn text " catchtap="clickPraise" hover-stop-propagation='true'
+        <!-- <text class="cuIcon-messagefill123 cu-btn text " catchtap="clickPraise" hover-stop-propagation='true'
           id="{{topicItem.id}}" data-praiseCount="{{topicItem.praiseCount}}" data-bindex="{{bindex}}" wx:key="id"
-          style="color:grey;background: #00000000;font-size:40rpx;padding: 0rpx;">{{topicItem.praiseCount}}</text>
+          style="color:grey;background: #00000000;font-size:50rpx;padding: 0rpx;">{{topicItem.praiseCount}}</text> -->
       </view>
       <view catchtap="clickReply" hover-stop-propagation='true' data-topicdetails="{{topicItem}}">
         <text class="cuIcon-messagefill text cu-btn"
-          style="background: #00000000; padding-left: 32rpx;padding-right:8rpx;font-size:40rpx">{{topicItem.replyCount}}</text>
+          style="background: #00000000; padding-left: 50rpx;padding-right:8rpx;font-size:50rpx"></text>
+        <!-- {{topicItem.replyCount}} -->
       </view>
-
     </view>
   </view>
 </view>
-
 
 
 <view wx:for="{{topicLists}}" wx:for-item="topicItem"
@@ -135,9 +137,11 @@
         <view catchtap="goUserInfo" hover-stop-propagation='true' data-username="{{topicItem.createBy}}"
           data-topicitem="{{topicItem}}">
           <view class="flex align-center">
-            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon != undefined && topicItem.anon != 0}}">
+            <view style="color:#585858;font-weight:bold;font-size:34rpx;"
+              wx:if="{{topicItem.anon != undefined && topicItem.anon != 0}}">
               {{(topicItem.sex==1 ? '行星小伙' : '行星小妹')}}</view>
-            <view style="color:black;font-weight:bold;" wx:if="{{topicItem.anon != undefined && topicItem.anon == 0}}">
+            <view style="color:#585858;font-weight:bold;font-size:34rpx;"
+              wx:if="{{topicItem.anon != undefined && topicItem.anon == 0}}">
               {{topicItem.bbsCreateByName}}</view>
             <!-- 角色 -->
             <view wx:if="{{showRole}}"
@@ -185,7 +189,8 @@
     <wise-topic-card-image imageList="{{topicItem.bbsTopicImageList}}" test="haha"></wise-topic-card-image>
 
     <!-- 卡片底部条 -->
-    <view class="text-gray text padding-xs" style="padding:0 30rpx 0 30rpx;display:flex;justify-content:space-between"
+    <view class="text-gray text padding-xs"
+      style="padding:0 30rpx 0 30rpx;display:flex;justify-content:space-between;align-items:center;"
       wx:if="{{showBottomBar}}">
       <text class="" id="clickHitsCount" bindtap="clickHitsCount"
         style="background: #00000000;font-size:32rpx;">浏览{{topicItem.hitsCount}}次</text>
@@ -194,17 +199,17 @@
           <button class="cuIcon-appreciatefill cu-btn animation-{{topicItem.exeCuteAnimation?'scale-down':''}}"
             catchtap="clickPraise" hover-stop-propagation='true' id="{{topicItem.id}}"
             data-class="{{animationItme.name}}" data-praiseCount="{{topicItem.praiseCount}}" data-bindex="{{bindex}}"
-            style="color:{{topicItem.userIsPraise?'#ec008c':'grey'}};background: #00000000;padding: 0rpx;font-size:40rpx;"></button>
+            style="color:{{topicItem.userIsPraise?'#ec008c':'grey'}};background: #00000000;padding: 0rpx;font-size:50rpx;"></button>
           <!-- cuIcon-自带样式，取不存在的图标，抵充样式 -->
-          <text class="cuIcon-messagefill123 cu-btn text " catchtap="clickPraise" hover-stop-propagation='true'
+          <!-- <text class="cuIcon-messagefill123 cu-btn text " catchtap="clickPraise" hover-stop-propagation='true'
             id="{{topicItem.id}}" data-praiseCount="{{topicItem.praiseCount}}" data-bindex="{{bindex}}" wx:key="id"
-            style="color:grey;background: #00000000;font-size:40rpx;padding: 0rpx;">{{topicItem.praiseCount}}</text>
+            style="color:grey;background: #00000000;font-size:50rpx;padding: 0rpx;">{{topicItem.praiseCount}}</text> -->
         </view>
         <view catchtap="clickReply" hover-stop-propagation='true' data-topicdetails="{{topicItem}}">
           <text class="cuIcon-messagefill text cu-btn"
-            style="background: #00000000; padding-left: 32rpx;padding-right:8rpx;font-size:40rpx">{{topicItem.replyCount}}</text>
+            style="background: #00000000; padding-left: 50rpx;padding-right:8rpx;font-size:50rpx"></text>
+          <!-- {{topicItem.replyCount}} -->
         </view>
-
       </view>
     </view>
   </view>
