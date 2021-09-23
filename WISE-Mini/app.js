@@ -21,9 +21,10 @@ App({
     // 主机开发本地环境  配置本地静态ip方便调试
     // HOSTURL: 'http://本机IP:10002/wise-dev',
     // HOSTURL: 'http://本机IP:10001/wise',
-    // HOSTURL: 'https://域名/wise',                  // 线上正式环境 
-    // HOSTURL: 'https://域名/wise-dev',              // 线上开发环境
+    // HOSTURL: 'https://域名/wise',                      // 线上正式环境 
+    // HOSTURL: 'https://域名/wise-dev',                  // 线上开发环境
     // ********************************************************
+
 
     SwitchRegion: false,
     ISAUTHORIZATION: false,
@@ -43,11 +44,13 @@ App({
   },
   //自定义头
   onLaunch: function (option) {
+    // this.clearPrepare()   //清空准备，除了有限几个标记，其他全部清除
+
     var that = this
     //自定义交易组件
     miniShopPlugin.initApp(this, wx);
     //自动版本更新
-    this.autoUpdata()
+    // this.autoUpdata()
     //获取分享参数
     wx.setStorageSync("OPTION", option)
     console.log("初始化接收参数：", option)
@@ -65,29 +68,19 @@ App({
       }
     })
   },
-  //mark: 检测用户是否授权个人信息
   HASUSERINFO() {
     var that = this
-    let SYSUSER = that.globalData.SYSUSER
-    if (SYSUSER == {}) {
-      wx.showToast({
-        title: '正在同步数据，请稍后再试。',
-        icon: 'none'
-      })
-      return 'wait'
-    } else {
-      if (undefined != SYSUSER.realname && "" != SYSUSER.realname && null != SYSUSER.realname) {
-        that.globalData.HASUSERINFO = true
-        if (that.globalData.firstLogin) {
-          // 如果已经授权信息，且第一次登陆，需要加载消息列表
-          that.initTim()
-          that.globalData.firstLogin = false
-        }
-      } else {
-        that.globalData.HASUSERINFO = false
+    let SYSUSER = wx.getStorageSync('ALLINFO').sysUser
+    if (SYSUSER.realname) {
+      that.globalData.HASUSERINFO = true
+      if (that.globalData.firstLogin) {
+        // 如果已经授权信息，且第一次登陆，需要加载消息列表
+        that.initTim()
+        that.globalData.firstLogin = false
       }
+    } else {
+      that.globalData.HASUSERINFO = false
     }
-
     console.log("用户授权状态：", that.globalData.HASUSERINFO)
     return that.globalData.HASUSERINFO
   },
@@ -105,14 +98,13 @@ App({
               url: that.globalData.HOSTURL + '/bbs/bbsAuth/wise/mini/getToken?code=' + res.code + '&regionCode=' + wx.getStorageSync('OPTION').query.regionCode,
               success(res) {
                 // console.log("请求结果：",res)
-                var body = res.data.result.result
+                var body = res.data.result
                 wx.setStorageSync('TOKEN', body.token)
+                wx.setStorageSync('ALLINFO', body)
                 wx.setStorageSync("LastLoginTime", new Date().getDate())
                 // 每次获取token后更新用户记录，信息，限制(否则在 第一次使用小程序的用户打开分享的活动和贴子详情后能够点赞，需要校验)
                 that.HASUSERINFO()
-                that.getSysUser()
-                that.userBehaviorLimit()
-                resolve(res)
+                resolve(body)
               },
               fail(err) {
                 console.log("Token获取失败")
@@ -124,6 +116,28 @@ App({
             reject('登录失败！')
           }
         }
+      })
+    })
+  },
+  // mark:获取用户所有数据
+  getUserAllInfo(e) {
+    var that = this
+    let data = {
+    }
+    if (e == "once") {
+      data.once = "once"
+    }
+    
+    return getToken = new Promise(function (resolve, reject) {
+      url = that.globalData.HOSTURL + '/bbs/bbsAuth/wise/mini/getUserAllInfo'
+      that.wxRequest("Get", url, data, null).then(res => {
+        // console.log("请求结果：",res)
+        var body = res.data.result
+        wx.setStorageSync('ALLINFO', body)
+        that.HASUSERINFO()      //更新本地授权标识
+        resolve(body)
+      }, err => {
+        reject(err)
       })
     })
   },
@@ -151,14 +165,23 @@ App({
           'content-type': method == 'GET' ? 'application/json' : 'application/json',
           'Accept': 'application/json',
           'X-Access-Token': wx.getStorageSync('TOKEN'),
-          'regioncode': wx.getStorageSync('USERRECORD').regionCode,
+          'regioncode': wx.getStorageSync('ALLINFO').bbsRegion.regionCode,
           'classCode': wx.getStorageSync('CURRENTCLASSCODE') // 当前版块  后台根据情况筛选
         },
         dataType: 'json',
         success: function (res) {
           console.log(res)
+          // if (data.once) {
+          //   that.getUserAllInfo("once").then(res => {
+          //     app.setTabbarBadge()
+          //   })
+          // }
           if (res.data.message == "Token失效，请重新登录") {
             console.log("本地Token失效,重新获取Token。")
+            wx.showToast({
+              title: '缓存失效，请重新进入！',
+              icon: 'none'
+            })
             that.getFirstLoginToken()
           }
           const code = res.data.code
@@ -223,10 +246,16 @@ App({
       wx.getUserProfile({
         desc: '此操作需要获取您的授权', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
         success: (resUserInfo) => {
-          console.log("获取权限成功")
-          that.getUserRecord()
-
-          wx.setStorageSync('USERINFO', resUserInfo.userInfo)
+          let avatar = resUserInfo.userInfo.avatarUrl
+          let avatarArr = avatar.split('/');
+          let avatarUrl = ''
+          for (let i = 0; i < avatarArr.length - 1; i++) {
+            avatarUrl += (avatarArr[i] + '/')
+          }
+          avatarUrl += '0'
+          resUserInfo.userInfo.avatarUrl = avatarUrl    //头像取高清图片
+          console.log("获取权限成功", resUserInfo.userInfo)
+          that.getUserAllInfo()
 
           let userInfo = resUserInfo.userInfo
           that.wxRequest('post', that.globalData.HOSTURL + '/bbs/bbsAuth/wise/mini/perfectUser', userInfo, '').then(res => {
@@ -238,12 +267,7 @@ App({
               "userInfo": resUserInfo.userInfo,
               "status": true //更新状态
             }
-            //拉取用户信息，否则HasUserInfo不更新，后面考虑合并到HasUserInfo里
-            that.getSysUser().then(res => {
-              // 获取用户限制
-              that.HASUSERINFO()
-            })
-            that.userBehaviorLimit()
+            that.HASUSERINFO()
             resolve(getUserProfile)
           }, err => {
             wx.showToast({
@@ -294,27 +318,8 @@ App({
     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
   },
 
-  //mark:获取用户Record
-  getUserRecord() {
-    var that = this
-    let url = that.globalData.HOSTURL + '/bbs/bbsUserRecord/wise/mini/list'
-    var getUserRecord = new Promise(function (resolve, reject) {
-      that.wxRequest('get', url, '',).then((res) => {
-        console.log("Auth----------获取用户Record", res)
-        wx.setStorageSync("LastLoginTime", new Date().getDate())
-        wx.setStorageSync('USERRECORD', res.data.result)
-        that.globalData.USERRECORD = res.data.result
-        // 检测用户是否授权个人信息
-        that.HASUSERINFO()
-        resolve(res.data.result)
-      }, (err) => {
-        reject(err)
-      })
-    })
-    return getUserRecord
-  },
   setTabbarBadge() {
-    let USERRECORD = wx.getStorageSync('USERRECORD')
+    let USERRECORD = wx.getStorageSync('ALLINFO').bbsUserRecord
     let conversationListData = this.globalData.conversationList
     // console.log(this.globalData.conversationList)
     let converationListUnReadCount = 0
@@ -370,43 +375,6 @@ App({
     updateManager.onUpdateFailed(function () {
       // 新版本下载失败
     })
-  },
-  // 用户行为限制，是否能够发布贴子，是否能够点赞，留言等
-  userBehaviorLimit() {
-    var that = this
-    var request = new Promise(function (resolve, reject) {
-      let url = that.globalData.HOSTURL + '/bbs/bbsAuth/wise/mini/userBehaviorLimit'
-      that.wxRequest('get', url).then(res => {
-        // console.log(res)
-        wx.setStorage({
-          data: res.data.result,
-          key: 'userBehaviorLimit',
-        })
-        resolve(res)
-      }, err => {
-        // console.log(err)
-        reject(err)
-      })
-    })
-    return request
-  },
-  //获取用户信息
-  getSysUser() {
-    var that = this
-    var request = new Promise(function (resolve, reject) {
-      that.wxGetRequest("/bbs/bbsAuth/wise/mini/querySysUser").then(res => {
-        console.log("Auth----------用户信息SysUser：", res)
-        wx.setStorage({
-          data: res,
-          key: 'SYSUSER',
-        })
-        that.globalData.SYSUSER = res
-        resolve(res)
-      }, err => {
-        reject(err)
-      })
-    })
-    return request
   },
   createTim() {
     let options = {
@@ -505,7 +473,7 @@ App({
     // });
     tim.on(TIM.EVENT.SDK_READY, function (event) {
       // 修改个人标配资料
-      let sysUser = wx.getStorageSync('SYSUSER')
+      let sysUser = wx.getStorageSync('ALLINFO').sysUser
       let promise = tim.updateMyProfile({
         nick: sysUser.realname,
         avatar: sysUser.avatar,
@@ -534,11 +502,11 @@ App({
     var that = this
     // 获取userSig
     that.wxRequest(API.user_sig.method, API.user_sig.url, {
-      "username": wx.getStorageSync('SYSUSER').username
+      "username": wx.getStorageSync('ALLINFO').sysUser.username
     }).then(res => {
       if (res.statusCode == 200) {
         tim.login({
-          userID: wx.getStorageSync('SYSUSER').username,
+          userID: wx.getStorageSync('ALLINFO').sysUser.username,
           userSig: res.data
         }).then(imResponse => {
           if (imResponse.data.repeatLogin === true) {
@@ -575,5 +543,14 @@ App({
     var conversationListTemp = JSON.parse(objString);
     this.globalData.conversationList = conversationListTemp.data
     this.setTabbarBadge()
+  },
+  //mark:清空无用缓存
+  clearPrepare() {
+    let DevAskFlag = wx.getStorageSync("DevAskFlag")
+    let YiYanFlag = wx.getStorageSync("YiYanFlag")
+    wx.clearStorageSync()
+    wx.setStorageSync("DevAskFlag", DevAskFlag)
+    wx.setStorageSync("YiYanFlag", YiYanFlag)
+    // console.log(DevAskFlag,YiYanFlag)
   }
 })
