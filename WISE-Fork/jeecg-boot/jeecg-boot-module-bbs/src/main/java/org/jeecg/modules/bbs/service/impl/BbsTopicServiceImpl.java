@@ -89,8 +89,6 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
     @Transactional
     public void saveMain(BbsTopic bbsTopic, List<BbsTopicImage> bbsTopicImageList, List<BbsTopicTag> bbsTopicTagList, List<BbsTopicLink> bbsTopicLinkList) {
         bbsTopicMapper.insert(bbsTopic);
-        //加入redis           redis中存的是BbsTopicFullDto，但本质上和BbsTopicPage一样
-        bbsRedisUtils.addTopic(bbsTopicFullDtoService.queryTopicFullDtoById(bbsTopic.getId()));
 
         if (bbsTopicImageList != null && bbsTopicImageList.size() > 0) {
             for (BbsTopicImage entity : bbsTopicImageList) {
@@ -113,14 +111,16 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
                 bbsTopicLinkMapper.insert(entity);
             }
         }
+
+        //加入redis           redis中存的是BbsTopicFullDto，但本质上和BbsTopicPage一样
+        bbsRedisUtils.addTopic(bbsTopicFullDtoService.queryTopicFullDtoById(bbsTopic.getId()));
     }
 
     @Override
     @Transactional
     public void updateMain(BbsTopic bbsTopic, List<BbsTopicImage> bbsTopicImageList, List<BbsTopicTag> bbsTopicTagList, List<BbsTopicLink> bbsTopicLinkList) {
         bbsTopicMapper.updateById(bbsTopic);
-        //加入redis           redis中存的是BbsTopicFullDto，但本质上和BbsTopicPage一样
-        bbsRedisUtils.addTopic(bbsTopicFullDtoService.queryTopicFullDtoById(bbsTopic.getId()));
+
         //1.先删除子表数据
         bbsTopicImageMapper.deleteByMainId(bbsTopic.getId());
         bbsTopicTagMapper.deleteByMainId(bbsTopic.getId());
@@ -148,6 +148,8 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
                 bbsTopicLinkMapper.insert(entity);
             }
         }
+        //加入redis           redis中存的是BbsTopicFullDto，但本质上和BbsTopicPage一样
+        bbsRedisUtils.addTopic(bbsTopicFullDtoService.queryTopicFullDtoById(bbsTopic.getId()));
     }
 
     @Override
