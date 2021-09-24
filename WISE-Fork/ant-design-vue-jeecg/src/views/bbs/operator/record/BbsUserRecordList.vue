@@ -150,11 +150,18 @@
               return parseInt(index)+1;
             }
           },
+          // {
+          //   title:'用户标识',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'createBy'
+          // },
           {
-            title:'用户标识',
+            title:'头像',
             align:"center",
             sorter: true,
-            dataIndex: 'createBy'
+            dataIndex: 'avatar',
+            scopedSlots: {customRender: 'imgSlot'}
           },
           {
             title:'用户名',
@@ -180,18 +187,18 @@
             sorter: true,
             dataIndex: 'topicCount'
           },
-          {
-            title:'留言数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'messageCount'
-          },
-          {
-            title:'消息数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'informationCount'
-          },
+          // {
+          //   title:'留言数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'messageCount'
+          // },
+          // {
+          //   title:'消息数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'informationCount'
+          // },
           {
             title:'收藏数',
             align:"center",
@@ -210,78 +217,78 @@
             sorter: true,
             dataIndex: 'clickTopicCount'
           },
-          {
-            title:'评论数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'commentCount'
-          },
-          {
-            title:'被评论数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'beCommentCount'
-          },
-          {
-            title:'点赞数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'praiseCount'
-          },
-          {
-            title:'被赞数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'bePraiseCount'
-          },
-          {
-            title:'当天发布贴子数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'dayPublishTopic'
-          },
-          {
-            title:'本周发布贴子数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'weekPublishTopic'
-          },
-          {
-            title:'当天发布留言数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'dayPublishMessage'
-          },
-          {
-            title:'本周发布留言数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'weekPublishMessage'
-          },
-          {
-            title:'当天点赞次数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'dayPublishPraise'
-          },
-          {
-            title:'本周点赞次数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'weekPublishPraise'
-          },
-          {
-            title:'当天评论次数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'dayPublishReply'
-          },
-          {
-            title:'本周评论次数',
-            align:"center",
-            sorter: true,
-            dataIndex: 'weekPublishReply'
-          },
+          // {
+          //   title:'评论数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'commentCount'
+          // },
+          // {
+          //   title:'被评论数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'beCommentCount'
+          // },
+          // {
+          //   title:'点赞数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'praiseCount'
+          // },
+          // {
+          //   title:'被赞数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'bePraiseCount'
+          // },
+          // {
+          //   title:'当天发布贴子数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'dayPublishTopic'
+          // },
+          // {
+          //   title:'本周发布贴子数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'weekPublishTopic'
+          // },
+          // {
+          //   title:'当天发布留言数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'dayPublishMessage'
+          // },
+          // {
+          //   title:'本周发布留言数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'weekPublishMessage'
+          // },
+          // {
+          //   title:'当天点赞次数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'dayPublishPraise'
+          // },
+          // {
+          //   title:'本周点赞次数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'weekPublishPraise'
+          // },
+          // {
+          //   title:'当天评论次数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'dayPublishReply'
+          // },
+          // {
+          //   title:'本周评论次数',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'weekPublishReply'
+          // },
           // {
           //   title:'当前区域编码',
           //   align:"center",
@@ -337,6 +344,7 @@
       getSuperFieldList(){
         let fieldList=[];
         fieldList.push({type:'string',value:'createBy',text:'用户',dictCode:''})
+        fieldList.push({type:'string',value:'avatar',text:'头像',dictCode:''})
         fieldList.push({type:'string',value:'createByName',text:'用户',dictCode:''})
         fieldList.push({type:'string',value:'userAccount',text:'用户账号',dictCode:''})
         fieldList.push({type:'int',value:'stoneCount',text:'陨石数',dictCode:''})

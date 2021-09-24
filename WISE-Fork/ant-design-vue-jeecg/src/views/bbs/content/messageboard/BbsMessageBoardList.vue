@@ -180,6 +180,19 @@
             }
           },
           {
+            title:'头像',
+            align:"center",
+            sorter: true,
+            dataIndex: 'avatar',
+            scopedSlots: {customRender: 'imgSlot'}
+          },
+          {
+            title:'用户',
+            align:"center",
+            sorter: true,
+            dataIndex: 'createByName'
+          },
+          {
             title:'内容',
             align:"center",
             sorter: true,
@@ -212,12 +225,6 @@
           //   sorter: true,
           //   dataIndex: 'createBy'
           // },
-          {
-            title:'用户',
-            align:"center",
-            sorter: true,
-            dataIndex: 'createByName'
-          },
           {
             title:'举报次数',
             align:"center",
@@ -270,6 +277,7 @@
         fieldList.push({type:'string',value:'regionCode',text:'区域编码',dictCode:''})
         fieldList.push({type:'string',value:'regionName',text:'区域',dictCode:''})
         fieldList.push({type:'string',value:'createBy',text:'创建人',dictCode:''})
+        fieldList.push({type:'string',value:'avatar',text:'头像',dictCode:''})
         fieldList.push({type:'string',value:'createByName',text:'用户',dictCode:''})
         fieldList.push({type:'int',value:'informCount',text:'举报次数',dictCode:''})
         fieldList.push({type:'datetime',value:'createTime',text:'创建时间'})

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.bbs.entity.*;
@@ -38,6 +39,8 @@ public class BbsUserRecordServiceImpl extends ServiceImpl<BbsUserRecordMapper, B
     private IBbsRegionService bbsRegionService;
     @Autowired
     private IBbsTopicFullDtoService bbsTopicFullDtoService;
+    @Autowired
+    private ISysBaseAPI sysBaseAPI;
 
     @Override
     public BbsUserRecord getFullUserRecord(String username) {
@@ -64,6 +67,9 @@ public class BbsUserRecordServiceImpl extends ServiceImpl<BbsUserRecordMapper, B
         //bbsUserRecord.setCreateByName(sysUser.getRealname());
         //bbsUserRecord.setAvatar(sysUser.getAvatar());
         //bbsUserRecord.setSex(sysUser.getSex());
+
+        //角色
+        bbsUserRecord.setRoleCodeList(sysBaseAPI.getUserRoleSet(username));
         return bbsUserRecord;
     }
 }

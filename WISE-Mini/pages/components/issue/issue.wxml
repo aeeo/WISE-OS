@@ -89,7 +89,7 @@
 		<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"
 			class="getPhoneNumber cu-btn bg-grey shadow">自动填充</button>
 	</view>
-	<view class="cu-form-group" bindtap="switchAnon">
+	<view class="cu-form-group" bindtap="switchAnon" wx:if="{{showAnonInput}}">
 		<view class="title">使用系统内置头像</view>
 		<checkbox-group>
 			<checkbox class="round" checked="{{isAnon}}"></checkbox>

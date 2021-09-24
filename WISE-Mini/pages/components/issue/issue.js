@@ -1,4 +1,5 @@
 const app = getApp();
+const API = require('../../../utils/API');
 const qiniuUploader = require("../../../utils/qiniuUploader");
 // 初始化七牛云相关配置
 function initQiniu() {
@@ -51,6 +52,7 @@ Page({
     UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE,
     THUMBNAIL: app.globalData.THUMBNAIL,
     isAnon: false, //是否匿名
+    showAnonInput: false,    //是否显示匿名选中框
 
     imageReturnList: [],
     // 图片上传（从相册）返回对象。上传完成后，此属性被赋值
@@ -69,6 +71,7 @@ Page({
     cancelTask: function () { },
   },
   onLoad(option) {
+    this.showAnonInput()
     wx.cloud.init()
     var that = this
     console.log(option)
@@ -85,6 +88,21 @@ Page({
     }
     this.setData({
       topicClassList: topicCodeListsTmp
+    })
+  },
+  showAnonInput() {
+    let that = this
+    app.wxRequest(API.sys_show_flag.method, API.sys_show_flag.url, { "sysKey": "showanoninput" }).then(res => {
+      if (res.data.result.string == "yes") {
+        that.setData({
+          showAnonInput: true
+        })
+      } else if (res.data.result.string == "no") {
+        that.setData({
+          showAnonInput: false
+        })
+      }
+    }, err => {
     })
   },
   // 草稿&编辑处理

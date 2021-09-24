@@ -1,109 +1,110 @@
 {
-    "description": "项目配置文件",
-    "packOptions": {
-        "ignore": []
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": false,
+    "enhance": false,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": false,
+    "coverView": true,
+    "nodeModules": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
     },
-    "setting": {
-        "urlCheck": false,
-        "es6": false,
-        "enhance": false,
-        "postcss": true,
-        "preloadBackgroundData": false,
-        "minified": true,
-        "newFeature": false,
-        "coverView": true,
-        "nodeModules": true,
-        "autoAudits": false,
-        "showShadowRootInWxmlPanel": true,
-        "scopeDataCheck": false,
-        "uglifyFileName": false,
-        "checkInvalidKey": true,
-        "checkSiteMap": true,
-        "uploadWithSourceMap": true,
-        "compileHotReLoad": false,
-        "lazyloadPlaceholderEnable": false,
-        "useMultiFrameRuntime": false,
-        "useApiHook": false,
-        "useApiHostProcess": false,
-        "babelSetting": {
-            "ignore": [],
-            "disablePlugins": [],
-            "outputPath": ""
-        },
-        "enableEngineNative": false,
-        "useIsolateContext": true,
-        "userConfirmedBundleSwitch": false,
-        "packNpmManually": false,
-        "packNpmRelationList": [],
-        "minifyWXSS": true,
-        "showES6CompileOption": false
+    "enableEngineNative": false,
+    "bundle": false,
+    "useIsolateContext": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.16.1",
+  "appid": "wx1c762e241bcb316c",
+  "projectname": "WISE-Mini",
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "scripts": {},
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "skeleton-config": {
+    "global": {
+      "loading": "shine",
+      "text": {
+        "color": "#EEEEEE"
+      },
+      "image": {
+        "shape": "",
+        "color": "#EFEFEF",
+        "shapeOpposite": []
+      },
+      "button": {
+        "color": "#EFEFEF",
+        "excludes": []
+      },
+      "pseudo": {
+        "color": "#EFEFEF",
+        "shape": "circle",
+        "shapeOpposite": []
+      },
+      "excludes": [],
+      "remove": [],
+      "empty": [],
+      "hide": [],
+      "grayBlock": [],
+      "showNative": false,
+      "backgroundColor": "transparent",
+      "mode": "fullscreen",
+      "templateName": "skeleton",
+      "cssUnit": "rpx",
+      "decimal": 4
     },
-    "compileType": "miniprogram",
-    "libVersion": "2.16.1",
-    "appid": "wx1c762e241bcb316c",
-    "projectname": "WISE-Mini",
-    "debugOptions": {
-        "hidedInDevtools": []
-    },
-    "scripts": {},
-    "isGameTourist": false,
-    "simulatorType": "wechat",
-    "simulatorPluginLibVersion": {},
-    "skeleton-config": {
-        "global": {
-            "loading": "shine",
-            "text": {
-                "color": "#EEEEEE"
-            },
-            "image": {
-                "shape": "",
-                "color": "#EFEFEF",
-                "shapeOpposite": []
-            },
-            "button": {
-                "color": "#EFEFEF",
-                "excludes": []
-            },
-            "pseudo": {
-                "color": "#EFEFEF",
-                "shape": "circle",
-                "shapeOpposite": []
-            },
-            "excludes": [],
-            "remove": [],
-            "empty": [],
-            "hide": [],
-            "grayBlock": [],
-            "showNative": false,
-            "backgroundColor": "transparent",
-            "mode": "fullscreen",
-            "templateName": "skeleton",
-            "cssUnit": "rpx",
-            "decimal": 4
-        },
-        "pages": {
-            "index/index": {}
-        }
-    },
-    "condition": {
-        "plugin": {
-            "list": []
-        },
-        "game": {
-            "list": []
-        },
-        "gamePlugin": {
-            "list": []
-        },
-        "miniprogram": {
-            "list": [
-                {
-                    "name": "index分享",
-                    "pathName": "pages/index/index",
-                    "query": "regionCode=xadzkjdx-1",
-                    "scene": 1007
-                }
-            ]
-        }
+    "pages": {
+      "index/index": {}
     }
+  },
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "index分享",
+          "pathName": "pages/index/index",
+          "query": "regionCode=xadzkjdx-1",
+          "scene": 1007
+        }
+      ]
+    }
+  }
 }

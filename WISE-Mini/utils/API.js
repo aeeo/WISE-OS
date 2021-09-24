@@ -39,6 +39,11 @@ const API = {
     'url': HOSTURL + '/bbs/bbsUserRecord/wise/mini/userAllInfo',
     'method': "get"
   },
+
+  "sys_show_flag": {
+    'url': HOSTURL + '/bbs/bbsSys/wise/mini/queryValueByKey/anon',
+    'method': "get"
+  },
 };
 
 //必须在这里暴露接口，以便被外界访问，不然就不能访问

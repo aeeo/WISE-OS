@@ -35,6 +35,10 @@
             <artifactId>tls-sig-api-v2</artifactId>
             <version>2.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.jeecgframework.boot</groupId>
+            <artifactId>jeecg-system-local-api</artifactId>
+        </dependency>
 
         <!-- 中文转拼音 -->
         <!--        <dependency>-->

@@ -324,6 +324,7 @@ public class BbsMessageBoardController extends JeecgController<BbsMessageBoard, 
             BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsMessageBoard1.getRegionCode()).one();
             SysUser userByName = sysUserService.getUserByName(bbsMessageBoard1.getCreateBy());
 
+            bbsMessageBoard1.setAvatar(userByName.getAvatar());
             bbsMessageBoard1.setRegionName(bbsRegion.getFullName());
             bbsMessageBoard1.setCreateByName(userByName.getRealname());
         }

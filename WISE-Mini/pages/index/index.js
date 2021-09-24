@@ -454,6 +454,9 @@ Page({
                 }
                 actionGroups.push(actionGroupItem)
             }
+            if(SYSUSER){
+
+            }
 
             // 举报按钮展示
             if (actionTopic.topicType == "0") {

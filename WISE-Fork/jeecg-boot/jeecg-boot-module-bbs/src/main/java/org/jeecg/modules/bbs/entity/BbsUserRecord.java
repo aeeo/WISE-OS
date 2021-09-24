@@ -15,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Description: 用户信息记录
@@ -240,5 +241,11 @@ public class BbsUserRecord implements Serializable {
      */
     @TableField(exist = false)
     private List<BbsTopicFullDto> bbsTopicFullDtoList;
+
+    /**
+     * 用户角色编码
+     */
+    @TableField(exist = false)
+    private Set<String> roleCodeList;
 
 }

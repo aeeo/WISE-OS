@@ -120,7 +120,7 @@
         bordered
         rowKey="id"
         class="j-table-force-nowrap"
-        :scroll="{x:2500}"
+        :scroll="{x:2300}"
         :columns="columns"
         :dataSource="dataSource"
         :pagination="ipagination"
@@ -212,7 +212,7 @@ export default {
           title: '#',
           dataIndex: '',
           key: 'rowIndex',
-          width: 60,
+          width: 50,
           align: "center",
           customRender: function (t, r, index) {
             return parseInt(index) + 1;
@@ -228,7 +228,7 @@ export default {
           title: '头像',
           align: "center",
           sorter: true,
-          width: 80,
+          width: 60,
           dataIndex: 'createByAvatar',
           scopedSlots: {customRender: 'imgSlot'}
         },
@@ -243,7 +243,9 @@ export default {
           title: '标题',
           align: "center",
           sorter: true,
-          dataIndex: 'title'
+          dataIndex: 'title',
+          width: 200,
+          ellipsis: true,
         },
         {
           title: '内容',
@@ -258,74 +260,83 @@ export default {
           title: '类型',
           align: "center",
           sorter: true,
-          width: 100,
+          width: 80,
           dataIndex: 'topicType_dictText'
         },
         {
           title: '访问总数',
           align: "center",
           sorter: true,
-          width: 100,
+          width: 80,
           dataIndex: 'hitsCount'
         },
         {
           title: '回复总数',
           align: "center",
           sorter: true,
-          width: 100,
+          width: 80,
           dataIndex: 'replyCount'
         },
         {
           title: '点赞总数',
           align: "center",
           sorter: true,
-          width: 100,
+          width: 80,
           dataIndex: 'praiseCount'
         },
         {
           title: '收藏总数',
           align: "center",
           sorter: true,
-          width: 100,
+          width: 80,
           dataIndex: 'starCount'
         },
         {
           title: '举报次数',
           align: "center",
           sorter: true,
-          width: 100,
+          width: 80,
           dataIndex: 'informCount'
         },
         {
           title: '区域全名',
           align: "center",
           sorter: true,
-          dataIndex: 'regionFullName'
+          dataIndex: 'regionFullName',
+          width: 150,
+          ellipsis: true,
         },
         {
-          title: '版块编码',
+          title: '版块',
           align: "center",
           sorter: true,
           width: 100,
-          dataIndex: 'classCode'
+          dataIndex: 'className'
         },
+        // {
+        //   title: '版块编码',
+        //   align: "center",
+        //   sorter: true,
+        //   width: 100,
+        //   dataIndex: 'classCode'
+        // },
         // {
         //   title: '所属部门',
         //   align: "center",
         //   dataIndex: 'sysOrgCode'
         // },
-        {
-          title: '发布时间',
-          align: "center",
-          sorter: true,
-          dataIndex: 'publicTime'
-        },
-        {
-          title: '编辑时间',
-          align: "center",
-          sorter: true,
-          dataIndex: 'editTime'
-        },
+        // {
+        //   title: '发布时间',
+        //   align: "center",
+        //   sorter: true,
+        //   dataIndex: 'publicTime'
+        // },
+        // {
+        //   title: '编辑时间',
+        //   align: "center",
+        //   sorter: true,
+        //   dataIndex: 'editTime'
+        // },
         {
           title: '操作',
           dataIndex: 'action',
@@ -389,8 +400,9 @@ export default {
       fieldList.push({type: 'int', value: 'praiseCount', text: '点赞总数', dictCode: ''})
       fieldList.push({type: 'int', value: 'starCount', text: '收藏总数', dictCode: ''})
       fieldList.push({type: 'string', value: 'regionCode', text: '区域编码', dictCode: ''})
-      fieldList.push({type: 'string', value: 'regionFullName', text: '区域全名', dictCode: ''})
+      fieldList.push({type: 'string', value: 'regionFullName', text: '区域', dictCode: ''})
       fieldList.push({type: 'int', value: 'informCount', text: '举报次数', dictCode: ''})
+      fieldList.push({type: 'string', value: 'className', text: '版块', dictCode: ''})
       fieldList.push({type: 'string', value: 'classCode', text: '版块编码', dictCode: ''})
       fieldList.push({type: 'string', value: 'sysOrgCode', text: '所属部门', dictCode: ''})
       fieldList.push({type: 'datetime', value: 'publicTime', text: '发布时间'})

@@ -274,6 +274,8 @@ public class BbsUserRecordController extends JeecgController<BbsUserRecord, IBbs
 
             SysUser userByName = sysUserService.getUserByName(userRecord.getCreateBy());
             BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, userRecord.getRegionCode()).one();
+
+            userRecord.setAvatar(userByName.getAvatar());
             userRecord.setCreateByName(userByName.getRealname());
             userRecord.setRegionFullName(bbsRegion.getFullName());
         }
