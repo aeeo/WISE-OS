@@ -1,6 +1,7 @@
 package org.jeecg.modules.bbs.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -254,4 +255,11 @@ public class BbsRegion implements Serializable {
     @Excel(name = "小商店ID", width = 15)
     @ApiModelProperty(value = "小商店ID")
     private java.lang.String miniStoreAppid;
+
+
+    /**
+     * 当前区域人数
+     */
+    @TableField(exist = false)
+    private java.lang.Integer regionPeopleNum;
 }

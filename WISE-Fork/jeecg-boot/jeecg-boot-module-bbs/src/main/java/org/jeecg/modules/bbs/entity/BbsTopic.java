@@ -216,6 +216,13 @@ public class BbsTopic implements Serializable {
     @ApiModelProperty(value = "编辑时间")
     private java.util.Date editTime;
 
+    /**
+     * 是否匿名
+     */
+    @Excel(name = "是否匿名", width = 15, dicCode = "bbs_topic_anon")
+    @Dict(dicCode = "bbs_topic_anon")
+    @ApiModelProperty(value = "是否匿名")
+    private java.lang.Integer anon;
 
 
     // ****行星万象修改位置戳****
@@ -235,11 +242,4 @@ public class BbsTopic implements Serializable {
     @TableField(exist = false)
     private java.lang.String className;
 
-    /**
-     * 是否匿名
-     */
-    @Excel(name = "是否匿名", width = 15, dicCode = "bbs_topic_anon")
-    @Dict(dicCode = "bbs_topic_anon")
-    @ApiModelProperty(value = "是否匿名")
-    private java.lang.Integer anon;
 }

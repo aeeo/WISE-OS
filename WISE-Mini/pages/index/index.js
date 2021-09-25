@@ -103,7 +103,7 @@ Page({
             })
         }
         wx.setStorageSync("DevAskFlag", "yes")
-        
+
     },
     onShow() {
         var that = this
@@ -441,6 +441,32 @@ Page({
             let actionGroups = []
 
             let SYSUSER = wx.getStorageSync('ALLINFO').sysUser
+            // let bbsUserRecord = wx.getStorageSync('ALLINFO').bbsUserRecord
+            // if (bbsUserRecord.roleCodeList && (bbsUserRecord.roleCodeList.includes("admin") ||
+            //     bbsUserRecord.roleCodeList.includes("bbs_operator_admin") ||
+            //     bbsUserRecord.roleCodeList.includes("bbs_admin"))) {
+            //     let actionGroupItem1 = {
+            //         text: '冻结贴子（管理员）',
+            //         value: -1
+            //     }
+            //     let actionGroupItem2 = {
+            //         text: '禁言用户3天（管理员）',
+            //         value: -1
+            //     }
+            //     let actionGroupItem3 = {
+            //         text: '永久禁言（管理员）',
+            //         value: -1
+            //     }
+            //     let actionGroupItem4 = {
+            //         text: '禁止用户登录（管理员）',
+            //         value: -1
+            //     }
+            //     actionGroups.push(actionGroupItem1)
+            //     actionGroups.push(actionGroupItem2)
+            //     actionGroups.push(actionGroupItem3)
+            //     actionGroups.push(actionGroupItem4)
+            // }
+
             if (actionTopic.userIsStar) {
                 let actionGroupItem = {
                     text: '取消收藏',
@@ -454,10 +480,6 @@ Page({
                 }
                 actionGroups.push(actionGroupItem)
             }
-            if(SYSUSER){
-
-            }
-
             // 举报按钮展示
             if (actionTopic.topicType == "0") {
                 if (SYSUSER.username != actionTopic.createBy) {

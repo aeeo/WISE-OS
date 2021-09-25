@@ -1,6 +1,11 @@
 const app = getApp();
 Page({
   data: {
+    UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE,
+    THUMBNAIL: app.globalData.THUMBNAIL,
+    ARTWORK: app.globalData.ARTWORK,
+    ARTWORKNOWATER: app.globalData.ARTWORKNOWATER, //原图无水印
+
     siteModalName: -1,
     scrollLeft: 0,
     latitude: 34.813803,
@@ -15,14 +20,15 @@ Page({
     regionList: [],
     userRecord: '',
     currentRegion: [
-      ['陕西省', '浙江省'],
-      ['西安市', '铜川市', '宝鸡市', '咸阳市', '渭南市', '延安市', '汉中市', '榆林市', '安康市', '商洛市'],
+      ['陕西省', '浙江省', '内蒙古'],
+      ['全部', '西安市', '铜川市', '宝鸡市', '咸阳市', '渭南市', '延安市', '汉中市', '榆林市', '安康市', '商洛市'],
     ],
     provinceCityList: [
-      ['西安市', '铜川市', '宝鸡市', '咸阳市', '渭南市', '延安市', '汉中市', '榆林市', '安康市', '商洛市'],
-      ['杭州市', '宁波市', '温州市']
+      ['全部', '西安市', '铜川市', '宝鸡市', '咸阳市', '渭南市', '延安市', '汉中市', '榆林市', '安康市', '商洛市'],
+      ['全部', '杭州市', '宁波市', '温州市'],
+      ['全部', '鄂尔多斯市'],
     ],
-    currentRegionIndex: [0, 0],
+    currentRegionIndex: [-1, -1],
 
   },
 
@@ -75,7 +81,7 @@ Page({
   //   console.log(res)
   // },
   //mark: onReady
-  onReady: function (e) { },
+  onReady: function (e) {},
   // 抽屉开始
   showModal(e) {
     var that = this
@@ -256,11 +262,25 @@ Page({
           // 当前区域高亮
           if (wx.getStorageSync('ALLINFO').bbsUserRecord.regionCode == item.regionCode) {
             // currentRegion = [item.province.split('-')[0], item.province.split('-')[1]]
-            circleTemItem.color = '#32CD3288' //描边的颜色
-            circleTemItem.fillColor = '#32CD3288' //填充颜色
+            // circleTemItem.color = '#32CD3288' //描边的颜色
+            // circleTemItem.fillColor = '#32CD3288' //填充颜色
+            if (item.scale > 8) {
+              circleTemItem.color = '#32CD3288' //描边的颜色
+              circleTemItem.fillColor = '#32CD3288' //填充颜色
+            } else if (item.scale > 3 && item.scale <= 7) {
+              circleTemItem.color = '#32CD3266' //描边的颜色
+              circleTemItem.fillColor = '#32CD3266' //填充颜色
+            }
           } else {
-            circleTemItem.color = '#7cb5ec44' //描边的颜色
-            circleTemItem.fillColor = '#7cb5ec44' //填充颜色
+            // circleTemItem.color = '#7cb5ec44' //描边的颜色
+            // circleTemItem.fillColor = '#7cb5ec44' //填充颜色
+            if (item.scale > 8) {
+              circleTemItem.color = '#7cb5ec44' //描边的颜色
+              circleTemItem.fillColor = '#7cb5ec44' //填充颜色
+            } else if (item.scale > 3 && item.scale <= 7) {
+              circleTemItem.color = '#7cb5ec22' //描边的颜色
+              circleTemItem.fillColor = '#7cb5ec22' //填充颜色
+            }
           }
           // 列表追加
           circleTem.push(circleTemItem)
@@ -307,7 +327,7 @@ Page({
   //切换区域
   switchRegion(region) {
     var that = this
-    let url = app.globalData.HOSTURL + '/bbs/bbsRegion/wise/mini/switchRegion';
+    let url = app.globalData.HOSTURL + '/bbs/bbsRegion/wise/mini/switchRegionAddCount';
     app.wxRequest('post', url, region, (res) => {
       resolve(res.data.result.records)
     }, (err) => {
@@ -367,7 +387,7 @@ Page({
         const {
           center,
           clusterId,
-          markerIds
+          markerIds //markerIds 存的当前坐标列表索引值，从1开始
         } = cluster
         return {
           ...center,
@@ -375,7 +395,8 @@ Page({
           height: 23,
           clusterId, // 必须
           label: {
-            content: that.data.markers[markerIds[0]].name.substring(0, 6),
+            // content: that.data.markers[markerIds[0]].name.substring(0, 6),
+            content: that.getMaxScaleMarkerName(markerIds),
             fontSize: 13,
             color: '#DC143C',
             // width: 100,
@@ -491,7 +512,12 @@ Page({
     var that = this
     let provinceCityListIndex = e.detail.value
     //provinceCityListValue为名称：陕西省-榆林市
-    let provinceCityListValue = that.data.currentRegion[0][provinceCityListIndex[0]] + '-' + that.data.provinceCityList[provinceCityListIndex[0]][provinceCityListIndex[1]]
+    let province = that.data.currentRegion[0][provinceCityListIndex[0]]
+    let city = that.data.provinceCityList[provinceCityListIndex[0]][provinceCityListIndex[1]]
+    if (city == "全部") {
+      city = ""
+    }
+    let provinceCityListValue = "*" + province + '-' + city + "*"
     console.log(provinceCityListIndex)
     that.getRegionList(provinceCityListValue)
     that.setData({
@@ -521,4 +547,30 @@ Page({
     }
     this.setData(data);
   },
+  //点击筛选块，选中第一个
+  clickRegionMulti() {
+    if (this.data.currentRegionIndex[0] == -1 && this.data.currentRegionIndex[1] == -1) {
+      this.setData({
+        currentRegionIndex: [0, 0]
+      })
+    }
+  },
+  getMaxScaleMarkerName(markersIndex) {
+    let markers = this.data.markers
+    let maxScale = 20
+    let maxName = ""
+    markersIndex.forEach(item => {
+      console.log(markers[Number(item) - 1])
+      console.log(markers[parseInt(item) - 1])
+      if (markers[parseInt(item) - 1].scale <= maxScale) {
+        maxName = markers[parseInt(item) - 1].name
+        maxScale = markers[parseInt(item) - 1].scale
+      } else {
+
+      }
+    })
+    console.log("maxName", maxName)
+
+    return maxName
+  }
 })

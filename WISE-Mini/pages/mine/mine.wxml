@@ -9,7 +9,8 @@
       <view style="width:250rpx"></view>
       <view class="mytop-avatar">
         <view wx:if="{{SYSUSER.avatar != '' && SYSUSER.avatar != null}}" class="cu-avatar"
-          style="background-image:url({{UPLOAD_IMAGE}}{{SYSUSER.avatar}});width:150rpx;height:150rpx"></view>
+          style="background-image:url({{UPLOAD_IMAGE}}{{SYSUSER.avatar}});width:150rpx;height:150rpx" data-imageurl="{{SYSUSER.avatar}}"
+            catchtap="clickTopicImage" hover-stop-propagation='true'></view>
         <open-data wx:if="{{SYSUSER.avatar == '' || SYSUSER.avatar == null}}" type="userAvatarUrl"></open-data>
       </view>
       <!-- 刷新用户信息 -->

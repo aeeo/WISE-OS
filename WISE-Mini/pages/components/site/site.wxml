@@ -16,7 +16,7 @@
   </view>
 </scroll-view>
 
-<view class="cu-modal {{switchSiteModal=='switchSiteModal'?'show':''}}">
+<!-- <view class="cu-modal {{switchSiteModal=='switchSiteModal'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white justify-end">
       <view class="content">切换区域</view>
@@ -37,7 +37,7 @@
       </view>
     </view>
   </view>
-</view>
+</view> -->
 
 <view class="DrawerClose {{modalName=='viewModal'?'show':''}}" bindtap="hideModal">
   <text class="cuIcon-pullright"></text>
@@ -50,17 +50,23 @@
         <view class="cuIcon-list" style="margin-right:16rpx;display:flex"></view>区域列表
       </view>
       <picker mode="multiSelector" bindchange="MultiChange" bindcolumnchange="MultiColumnChange"
-        value="{{currentRegionIndex}}" range="{{currentRegion}}">
+        value="{{currentRegionIndex}}" range="{{currentRegion}}" bindtap="clickRegionMulti">
         <view class="picker">
-          {{currentRegion[0][currentRegionIndex[0]]}}-{{currentRegion[1][currentRegionIndex[1]]}}
+          <text wx:if="{{currentRegionIndex[0] == -1 && currentRegionIndex[1] == -1 }}">点击筛选区域</text>
+          <text
+            wx:if="{{currentRegionIndex[0] != -1 || currentRegionIndex[1] != -1 }}">{{currentRegion[0][currentRegionIndex[0]]}}-{{currentRegion[1][currentRegionIndex[1]]}}
+          </text>
         </view>
       </picker>
     </view>
     <view class="cu-item arrow" wx:for="{{regionList}}" wx:key="id" wx:for-index="bindex" data-bindex="{{bindex}}"
       bindtap="selectSite">
-      <view class="content" style="display: flex;">
-        <text class="cuIcon-locationfill text-pink"></text>
-        <text class="text-grey">{{item.fullName}}</text>
+      <view class="content" style="display: flex;align-items: center;">
+        <!-- <text class="cuIcon-locationfill text-pink"></text> -->
+        <view class="cu-avatar sm round margin-right-sm"
+          style="background-image:url({{UPLOAD_IMAGE}}{{item.regionImage}}{{THUMBNAIL}});background-color:#00000000">
+        </view>
+        <text class="text-grey" style="width: 50vw;">{{item.fullName}}</text>
       </view>
     </view>
   </view>

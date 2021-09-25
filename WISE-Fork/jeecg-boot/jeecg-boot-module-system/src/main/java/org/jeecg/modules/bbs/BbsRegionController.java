@@ -14,10 +14,7 @@ import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.bbs.BbsAuthController;
-import org.jeecg.modules.bbs.entity.BbsClass;
-import org.jeecg.modules.bbs.entity.BbsRegion;
-import org.jeecg.modules.bbs.entity.BbsUserRecord;
-import org.jeecg.modules.bbs.entity.MiNiStorage;
+import org.jeecg.modules.bbs.entity.*;
 import org.jeecg.modules.bbs.service.IBbsClassService;
 import org.jeecg.modules.bbs.service.IBbsRegionService;
 import org.jeecg.modules.bbs.service.impl.BbsUserRecordServiceImpl;
@@ -42,10 +39,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -288,9 +282,16 @@ public class BbsRegionController {
     @GetMapping(value = "/wise/mini/queryList")
     public Result<?> queryList(BbsRegion bbsRegion, HttpServletRequest req) {
         QueryWrapper<BbsRegion> queryWrapper = QueryGenerator.initQueryWrapper(bbsRegion, req.getParameterMap());
+        Map<String, String[]> reqParameterMap = req.getParameterMap();
+        queryWrapper.orderBy(true, true, "create_time");
         //根据fullName首字符排序
         queryWrapper.orderBy(true, true, "convert(full_name USING gbk)");
         List<BbsRegion> list = bbsRegionService.list(queryWrapper);
+
+        for (BbsRegion region : list) {
+            region.setRegionPeopleNum(bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getRegionCode,region.getRegionCode()).count());
+        }
+        list.sort(Comparator.comparing(BbsRegion::getScale).thenComparing(Comparator.comparing(BbsRegion::getRegionPeopleNum).reversed()));
         return Result.OK(list);
     }
 
@@ -315,10 +316,50 @@ public class BbsRegionController {
      * @param username  用户在获取token的时候还可能会切换地区，但是此时shiro还取不到用户的信息，所以只能传username
      * @return
      */
-    @AutoLog(value = "地区-切换")
-    @ApiOperation(value = "地区-切换", notes = "地区-切换")
+    @AutoLog(value = "地区-切换-不增加区域切换次数")
+    @ApiOperation(value = "地区-切换", notes = "地区-切换-不增加区域切换次数")
     @PostMapping(value = "/wise/mini/switchRegion")
     public Result<?> switchRegion(@RequestBody BbsRegion bbsRegion, @RequestParam(name = "username", defaultValue = "") String username) {
+        BbsUserRecord bbsUserRecord = new BbsUserRecord();
+
+        String currentUsername = "";
+        if (!"".equals(username)) {
+            bbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, username).one();
+            currentUsername = username;
+        } else {
+            LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+            bbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, sysUser.getUsername()).one();
+            currentUsername = sysUser.getUsername();
+        }
+        bbsUserRecordService.lambdaUpdate().eq(BbsUserRecord::getCreateBy, currentUsername)
+                .set(BbsUserRecord::getRegionCode, bbsRegion.getRegionCode())
+                .set(BbsUserRecord::getSysOrgCode, bbsRegion.getSysOrgCode())
+                .update();
+        //用户记录regionSwitchCount+1，region_switch_date当前月，region_code当前区域编码，region_fullname当前区域名
+        if (bbsUserRecord.getRegionCode().equals(bbsRegion.getRegionCode())) {
+            return Result.OK("已经在此区域，无需切换！");
+        }
+        SysUser userByName = sysUserService.getUserByName(currentUsername);
+
+        sysUserService.addUserWithDepart(userByName, bbsRegion.getRegionDepartId());    //修改用户在区域对应的部门,追加
+        SysDepart sysDepartServiceById = sysDepartService.getById(bbsRegion.getRegionDepartId());
+        sysUserService.updateUserDepart(userByName.getUsername(), sysDepartServiceById.getOrgCode());   //设置用户当前部门
+
+        bbsAuthUtils.getMiNiStorageFromSql(userByName.getUsername());
+        return Result.OK("切换区域成功");
+    }
+
+    /**
+     * 地区-切换
+     *
+     * @param bbsRegion
+     * @param username  用户在获取token的时候还可能会切换地区，但是此时shiro还取不到用户的信息，所以只能传username
+     * @return
+     */
+    @AutoLog(value = "地区-切换-增加区域切换次数")
+    @ApiOperation(value = "地区-切换", notes = "地区-切换")
+    @PostMapping(value = "/wise/mini/switchRegionAddCount")
+    public Result<?> switchRegionAddCount(@RequestBody BbsRegion bbsRegion, @RequestParam(name = "username", defaultValue = "") String username) {
         BbsUserRecord bbsUserRecord = new BbsUserRecord();
 
         String currentUsername = "";
