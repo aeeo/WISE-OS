@@ -157,5 +157,15 @@ Page({
             console.log("用户取消授权")
         })
     },
-
+    //点击topic图片放大预览
+    clickTopicImage(event) {
+        let currentImageUrl = this.data.UPLOAD_IMAGE + event.currentTarget.dataset.imageurl
+        wx.previewImage({
+            urls: [currentImageUrl], //需要预览的图片http链接列表，注意是数组
+            current: currentImageUrl, // 当前显示图片的http链接，默认是第一个
+            success: function (res) { },
+            fail: function (res) { },
+            complete: function (res) { },
+        })
+    },
 })
