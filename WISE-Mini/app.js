@@ -50,7 +50,7 @@ App({
     //自定义交易组件
     miniShopPlugin.initApp(this, wx);
     //自动版本更新
-    // this.autoUpdata()
+    this.autoUpdata()
     //获取分享参数
     wx.setStorageSync("OPTION", option)
     console.log("初始化接收参数：", option)
