@@ -89,7 +89,7 @@ public class BbsAuthUtils {
         miNiStorage.setBbsUserRecord(bbsUserRecord);
         BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecord.getRegionCode()).one();
         miNiStorage.setBbsRegion(bbsRegion);
-        List<BbsClass> bbsClassList = bbsClassService.lambdaQuery().eq(BbsClass::getRegionCode, bbsRegion.getRegionCode()).list();
+        List<BbsClass> bbsClassList = bbsClassService.selectBbsClassListSort(bbsRegion.getRegionCode());
         miNiStorage.setBbsClassList(bbsClassList);
         miNiStorage.setUserBehaviorLimit(convertLimit(bbsRegion, bbsUserRecord));
 
@@ -121,7 +121,7 @@ public class BbsAuthUtils {
         miNiStorage.setBbsUserRecord(bbsUserRecord);
         BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecord.getRegionCode()).one();
         miNiStorage.setBbsRegion(bbsRegion);
-        List<BbsClass> bbsClassList = bbsClassService.lambdaQuery().eq(BbsClass::getRegionCode, bbsRegion.getRegionCode()).list();
+        List<BbsClass> bbsClassList = bbsClassService.selectBbsClassListSort(bbsRegion.getRegionCode());
         miNiStorage.setBbsClassList(bbsClassList);
         miNiStorage.setUserBehaviorLimit(convertLimit(bbsRegion, bbsUserRecord));
 
@@ -150,7 +150,7 @@ public class BbsAuthUtils {
         miNiStorage.setBbsUserRecord(bbsUserRecord);
         BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecord.getRegionCode()).one();
         miNiStorage.setBbsRegion(bbsRegion);
-        List<BbsClass> bbsClassList = bbsClassService.lambdaQuery().eq(BbsClass::getRegionCode, bbsRegion.getRegionCode()).list();
+        List<BbsClass> bbsClassList = bbsClassService.selectBbsClassListSort(bbsRegion.getRegionCode());
         miNiStorage.setBbsClassList(bbsClassList);
         miNiStorage.setUserBehaviorLimit(convertLimit(bbsRegion, bbsUserRecord));
         setMiNiStorage(miNiStorage);

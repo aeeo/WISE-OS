@@ -10,11 +10,13 @@ import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.vo.LoginUser;
+import org.jeecg.common.util.RedisUtil;
 import org.jeecg.common.util.oss.QiNiuUtil;
 import org.jeecg.modules.bbs.entity.*;
 import org.jeecg.modules.bbs.mapper.*;
 import org.jeecg.modules.bbs.service.*;
 import org.jeecg.modules.cache.BbsRedisUtils;
+import org.jeecg.modules.cache.LoadDataRedis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,6 +86,8 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
     private IBbsInformService bbsInformService;
     @Autowired
     private BbsRedisUtils bbsRedisUtils;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     @Transactional
@@ -148,7 +152,7 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
                 bbsTopicLinkMapper.insert(entity);
             }
         }
-        //加入redis           redis中存的是BbsTopicFullDto，但本质上和BbsTopicPage一样
+        //加入redis
         bbsRedisUtils.addTopic(bbsTopicFullDtoService.queryTopicFullDtoById(bbsTopic.getId()));
     }
 
@@ -159,6 +163,8 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
         bbsTopicTagMapper.deleteByMainId(id);
         bbsTopicLinkMapper.deleteByMainId(id);
         bbsTopicMapper.deleteById(id);
+
+        bbsRedisUtils.deleteTopicById(id);
     }
 
     @Override
@@ -169,6 +175,8 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
             bbsTopicTagMapper.deleteByMainId(id.toString());
             bbsTopicLinkMapper.deleteByMainId(id.toString());
             bbsTopicMapper.deleteById(id);
+
+            bbsRedisUtils.deleteTopicById(id.toString());
         }
     }
 
@@ -220,8 +228,7 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
         //removeTopicImageMap.put("topic_id", topicId);
         //bbsTopicImageService.removeByMap(removeTopicImageMap);
 
-
-
+        bbsRedisUtils.deleteTopicById(topicId);
         return Result.OK("删除成功!");
     }
 

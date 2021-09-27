@@ -128,9 +128,9 @@ Page({
     // this.data.topicdetails = ''
     this.data.fullReplys = []
     this.data.isPullRefresh = true
-    if(this.data.isAnon == ""){
+    if (this.data.isAnon == "") {
       this.getBbsTopicById(that.data.SHAREHOSTURL)
-    }else{
+    } else {
       this.getBbsTopicByIdAnon(that.data.SHAREHOSTURL)
     }
   },
@@ -433,7 +433,8 @@ Page({
   onShareTimeline: function () {
     var that = this
     let topicdetails = that.data.topicdetails
-    let shareTitle = "【" + topicdetails.title + "】" + topicdetails.content.replace(/<.*?>/g, "")    //去除所有html标签
+    let topicTitle = (topicdetails.title == "" || null == topicdetails.title) ? "" : "『" + topicdetails.title + "』"
+    let shareTitle = topicTitle + topicdetails.content.replace(/<.*?>/g, "")    //去除所有html标签
     console.log(shareTitle)
     let imageList = that.data.topicdetails.bbsTopicImageList
     let imageUrl = ""

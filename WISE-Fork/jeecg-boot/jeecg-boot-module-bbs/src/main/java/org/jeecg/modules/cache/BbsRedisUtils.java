@@ -2,6 +2,7 @@ package org.jeecg.modules.cache;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.util.RedisUtil;
+import org.jeecg.modules.bbs.entity.BbsTopic;
 import org.jeecg.modules.bbs.entity.BbsTopicFullDto;
 import org.jeecg.modules.bbs.service.IBbsClassService;
 import org.jeecg.modules.bbs.service.IBbsRegionService;
@@ -45,6 +46,7 @@ public class BbsRedisUtils {
 
     /**
      * 新增贴子，加入redis
+     *
      * @param bbsTopic
      */
     public void addTopic(BbsTopicFullDto bbsTopic) {
@@ -56,16 +58,21 @@ public class BbsRedisUtils {
                 Integer.MAX_VALUE - precision,
                 0,
                 1);
-        Iterator<ZSetOperations.TypedTuple<Object>> iterator = typedTuples1.iterator();
-        //置顶帖排到最顶部
-        if ("1".equals(bbsTopic.getTopicType())) {
-            redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_" + bbsTopic.getClassCode(), bbsTopic.getId(), Integer.MAX_VALUE);
-            return;
-        }
-        if (iterator.hasNext()) {
-            ZSetOperations.TypedTuple<Object> next = iterator.next();
-            Double score = next.getScore();
-            redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_" + bbsTopic.getClassCode(), bbsTopic.getId(), score + precision);
+        //如果此板块为空，则typedTuples1 为null，则会无法添加，加判断
+        if (null != typedTuples1) {
+            Iterator<ZSetOperations.TypedTuple<Object>> iterator = typedTuples1.iterator();
+            //置顶帖排到最顶部
+            if ("1".equals(bbsTopic.getTopicType())) {
+                redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_" + bbsTopic.getClassCode(), bbsTopic.getId(), Integer.MAX_VALUE);
+                return;
+            }
+            if (iterator.hasNext()) {
+                ZSetOperations.TypedTuple<Object> next = iterator.next();
+                Double score = next.getScore();
+                redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_" + bbsTopic.getClassCode(), bbsTopic.getId(), score + precision);
+            } else {
+                redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_" + bbsTopic.getClassCode(), bbsTopic.getId(), Integer.MAX_VALUE - 1);
+            }
         } else {
             redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_" + bbsTopic.getClassCode(), bbsTopic.getId(), Integer.MAX_VALUE - 1);
         }
@@ -93,17 +100,17 @@ public class BbsRedisUtils {
     /**
      * 贴子浏览量
      */
-    public void updateTopicHitCount(List<String> topicIds,int count) {
+    public void updateTopicHitCount(List<String> topicIds, int count) {
         List<Object> objectList = redisUtil.getRedisTemplate().executePipelined(new RedisCallback<Object>() {
             @Override
             public Object doInRedis(RedisConnection redisConnection) throws DataAccessException {
                 for (int i = 0; i < topicIds.size(); i++) {
-                    topicIds.set(i,LoadDataRedis.BBS_TOPIC_TOPICID + "" + topicIds.get(i));
+                    topicIds.set(i, LoadDataRedis.BBS_TOPIC_TOPICID + "" + topicIds.get(i));
                 }
                 List<Object> objectList1 = redisUtil.mget(topicIds);
 
                 for (Object bbsTopicFullDtoItem : objectList1) {
-                    BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto)bbsTopicFullDtoItem;
+                    BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto) bbsTopicFullDtoItem;
                     bbsTopicFullDto.setHitsCount(bbsTopicFullDto.getHitsCount() + count);
                     redisUtil.set(LoadDataRedis.BBS_TOPIC_TOPICID + bbsTopicFullDto.getId(), bbsTopicFullDto, LoadDataRedis.BBS_TOPIC_TOPICID_TIME);
                 }
@@ -115,17 +122,17 @@ public class BbsRedisUtils {
     /**
      * 贴子点赞量
      */
-    public void updateTopicPraiseCount(List<String> topicIds,int count) {
+    public void updateTopicPraiseCount(List<String> topicIds, int count) {
         List<Object> objectList = redisUtil.getRedisTemplate().executePipelined(new RedisCallback<Object>() {
             @Override
             public Object doInRedis(RedisConnection redisConnection) throws DataAccessException {
                 for (int i = 0; i < topicIds.size(); i++) {
-                    topicIds.set(i,LoadDataRedis.BBS_TOPIC_TOPICID + "" + topicIds.get(i));
+                    topicIds.set(i, LoadDataRedis.BBS_TOPIC_TOPICID + "" + topicIds.get(i));
                 }
                 List<Object> objectList1 = redisUtil.mget(topicIds);
 
                 for (Object bbsTopicFullDtoItem : objectList1) {
-                    BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto)bbsTopicFullDtoItem;
+                    BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto) bbsTopicFullDtoItem;
                     bbsTopicFullDto.setPraiseCount(bbsTopicFullDto.getPraiseCount() + count);
                     redisUtil.set(LoadDataRedis.BBS_TOPIC_TOPICID + bbsTopicFullDto.getId(), bbsTopicFullDto, LoadDataRedis.BBS_TOPIC_TOPICID_TIME);
                 }
@@ -133,25 +140,42 @@ public class BbsRedisUtils {
             }
         });
     }
+
     /**
      * 贴子收藏量+1
      */
-    public void updateTopicStarCount(List<String> topicIds,int count) {
+    public void updateTopicStarCount(List<String> topicIds, int count) {
         List<Object> objectList = redisUtil.getRedisTemplate().executePipelined(new RedisCallback<Object>() {
             @Override
             public Object doInRedis(RedisConnection redisConnection) throws DataAccessException {
                 for (int i = 0; i < topicIds.size(); i++) {
-                    topicIds.set(i,LoadDataRedis.BBS_TOPIC_TOPICID + "" + topicIds.get(i));
+                    topicIds.set(i, LoadDataRedis.BBS_TOPIC_TOPICID + "" + topicIds.get(i));
                 }
                 List<Object> objectList1 = redisUtil.mget(topicIds);
 
                 for (Object bbsTopicFullDtoItem : objectList1) {
-                    BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto)bbsTopicFullDtoItem;
+                    BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto) bbsTopicFullDtoItem;
                     bbsTopicFullDto.setStarCount(bbsTopicFullDto.getStarCount() + count);
                     redisUtil.set(LoadDataRedis.BBS_TOPIC_TOPICID + bbsTopicFullDto.getId(), bbsTopicFullDto, LoadDataRedis.BBS_TOPIC_TOPICID_TIME);
                 }
                 return null;
             }
         });
+    }
+
+    /**
+     * 根据id查询帖子
+     */
+    public BbsTopicFullDto getTopicById(String topicId) {
+        return (BbsTopicFullDto) redisUtil.get(LoadDataRedis.BBS_TOPIC_TOPICID + topicId);
+    }
+
+    /**
+     * 删除帖子
+     */
+    public void deleteTopicById(String topicId) {
+        BbsTopicFullDto topicById = this.getTopicById(topicId);
+        redisUtil.zRemove(LoadDataRedis.BBS_RANK_REGION_CLASS + topicById.getRegionCode() + "_" + topicById.getClassCode());
+        redisUtil.del(LoadDataRedis.BBS_TOPIC_TOPICID + topicId);
     }
 }
