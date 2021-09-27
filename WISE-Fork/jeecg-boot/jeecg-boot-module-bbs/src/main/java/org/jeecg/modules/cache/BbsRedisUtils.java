@@ -167,6 +167,7 @@ public class BbsRedisUtils {
      * 根据id查询帖子
      */
     public BbsTopicFullDto getTopicById(String topicId) {
+        log.info("Redis--根据id查询帖子：" + topicId);
         return (BbsTopicFullDto) redisUtil.get(LoadDataRedis.BBS_TOPIC_TOPICID + topicId);
     }
 
@@ -175,7 +176,8 @@ public class BbsRedisUtils {
      */
     public void deleteTopicById(String topicId) {
         BbsTopicFullDto topicById = this.getTopicById(topicId);
-        redisUtil.zRemove(LoadDataRedis.BBS_RANK_REGION_CLASS + topicById.getRegionCode() + "_" + topicById.getClassCode());
+        log.info("Redis--删除帖子：" + topicById);
+        redisUtil.zRemove(LoadDataRedis.BBS_RANK_REGION_CLASS + topicById.getRegionCode() + "_" + topicById.getClassCode(),topicId);
         redisUtil.del(LoadDataRedis.BBS_TOPIC_TOPICID + topicId);
     }
 }

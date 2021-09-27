@@ -227,8 +227,6 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
         //HashMap<String, Object> removeTopicImageMap = new HashMap<>();
         //removeTopicImageMap.put("topic_id", topicId);
         //bbsTopicImageService.removeByMap(removeTopicImageMap);
-
-        bbsRedisUtils.deleteTopicById(topicId);
         return Result.OK("删除成功!");
     }
 
