@@ -2,28 +2,19 @@ package org.jeecg.modules.cache;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.util.RedisUtil;
-import org.jeecg.modules.bbs.entity.BbsTopic;
 import org.jeecg.modules.bbs.entity.BbsTopicFullDto;
 import org.jeecg.modules.bbs.service.IBbsClassService;
 import org.jeecg.modules.bbs.service.IBbsRegionService;
 import org.jeecg.modules.bbs.service.IBbsTopicFullDtoService;
 import org.jeecg.modules.bbs.service.impl.BbsUserRecordServiceImpl;
-import org.jeecg.modules.bbs.vo.BbsTopicPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Pipeline;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * 启动项目后, 加载数据库数据到redis中
@@ -70,18 +61,18 @@ public class BbsRedisUtils {
                 ZSetOperations.TypedTuple<Object> next = iterator.next();
                 Double score = next.getScore();
                 //如果该帖子是别的版块的，同时更新到index版块
-                if(!"index".equals(bbsTopic.getClassCode())){
+                if (!"index".equals(bbsTopic.getClassCode())) {
                     redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_index", bbsTopic.getId(), score + precision);
                 }
                 redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_" + bbsTopic.getClassCode(), bbsTopic.getId(), score + precision);
             } else {
-                if(!"index".equals(bbsTopic.getClassCode())){
+                if (!"index".equals(bbsTopic.getClassCode())) {
                     redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_index", bbsTopic.getId(), Integer.MAX_VALUE - 1);
                 }
                 redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_" + bbsTopic.getClassCode(), bbsTopic.getId(), Integer.MAX_VALUE - 1);
             }
         } else {
-            if(!"index".equals(bbsTopic.getClassCode())){
+            if (!"index".equals(bbsTopic.getClassCode())) {
                 redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_index", bbsTopic.getId(), Integer.MAX_VALUE - 1);
             }
             redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_" + bbsTopic.getClassCode(), bbsTopic.getId(), Integer.MAX_VALUE - 1);
@@ -92,7 +83,7 @@ public class BbsRedisUtils {
     }
 
     /**
-     * 贴子全量更新
+     * 更新redis中存在的帖子
      */
     public void updateTopic(List<BbsTopicFullDto> bbsTopicFullDtoList) {
         //创建Pipeline对象
@@ -108,9 +99,17 @@ public class BbsRedisUtils {
     }
 
     /**
-     * 贴子浏览量
+     * 持久化帖子
+     * @param allTopic
      */
-    public void updateTopicHitCount(List<String> topicIds, int count) {
+    public void saveTopicToSql(Set<String> allTopic) {
+    }
+
+    /**
+     * 贴子浏览量
+     * stopUpdate,浏览量达到多少后禁止增加，主要用于定时任务,费定时任务传入int.maxvalue
+     */
+    public void updateTopicHitCount(List<String> topicIds, int count, int stopUpdate) {
         List<Object> objectList = redisUtil.getRedisTemplate().executePipelined(new RedisCallback<Object>() {
             @Override
             public Object doInRedis(RedisConnection redisConnection) throws DataAccessException {
@@ -121,8 +120,10 @@ public class BbsRedisUtils {
 
                 for (Object bbsTopicFullDtoItem : objectList1) {
                     BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto) bbsTopicFullDtoItem;
-                    bbsTopicFullDto.setHitsCount(bbsTopicFullDto.getHitsCount() + count);
-                    redisUtil.set(LoadDataRedis.BBS_TOPIC_TOPICID + bbsTopicFullDto.getId(), bbsTopicFullDto, LoadDataRedis.BBS_TOPIC_TOPICID_TIME);
+                    if (bbsTopicFullDto.getHitsCount() < stopUpdate) {
+                        bbsTopicFullDto.setHitsCount(bbsTopicFullDto.getHitsCount() + count);
+                        redisUtil.set(LoadDataRedis.BBS_TOPIC_TOPICID + bbsTopicFullDto.getId(), bbsTopicFullDto, LoadDataRedis.BBS_TOPIC_TOPICID_TIME);
+                    }
                 }
                 return null;
             }
@@ -172,7 +173,17 @@ public class BbsRedisUtils {
             }
         });
     }
-
+    /**
+     * 根据ids查询帖子
+     */
+    public List<BbsTopicFullDto> getAllTopic(List<String> topicIds) {
+        List<BbsTopicFullDto> topicFullDtos = new ArrayList<>();
+        List<Object> mget = redisUtil.mget(topicIds);
+        for (Object item : mget) {
+            topicFullDtos.add((BbsTopicFullDto) item);
+        }
+        return topicFullDtos;
+    }
     /**
      * 根据id查询帖子
      */
@@ -187,7 +198,47 @@ public class BbsRedisUtils {
     public void deleteTopicById(String topicId) {
         BbsTopicFullDto topicById = this.getTopicById(topicId);
         log.info("Redis--删除帖子：" + topicById);
-        redisUtil.zRemove(LoadDataRedis.BBS_RANK_REGION_CLASS + topicById.getRegionCode() + "_" + topicById.getClassCode(),topicId);
+        redisUtil.zRemove(LoadDataRedis.BBS_RANK_REGION_CLASS + topicById.getRegionCode() + "_" + topicById.getClassCode(), topicId);
         redisUtil.del(LoadDataRedis.BBS_TOPIC_TOPICID + topicId);
     }
+
+    /**
+     * 获取全部排行榜
+     *
+     * @return
+     */
+    public Set<String> getAllRank() {
+        log.info("Redis--获取全部排行榜");
+        return redisUtil.keys(LoadDataRedis.BBS_RANK_REGION_CLASS + "*");
+    }
+
+    /**
+     * 获取全部帖子
+     * @return
+     */
+    public Set<String> getAllTopic() {
+        log.info("Redis--获取全部排行榜");
+        return redisUtil.keys(LoadDataRedis.BBS_TOPIC_TOPICID + "*");
+    }
+
+    /**
+     * 获取排行榜下的帖子
+     *
+     * @return
+     */
+    public List<String> getRankTopic(List<String> rankNames, int size) {
+        log.info("Redis--获取排行榜下的帖子");
+
+        List<String> topicIds = new ArrayList<>();
+        for (String rankName : rankNames) {
+            //获取除score不为Integer.MAX_VALUE的最大值
+            Set<Object> objects = redisUtil.zReverseRange(rankName, 0, size);
+            for (Object item : objects) {
+                topicIds.add((String) item);
+            }
+        }
+        return topicIds;
+    }
+
+
 }

@@ -97,6 +97,10 @@ public class RedisUtil {
         }
     }
 
+    public Set<String> keys(String pattern){
+        return redisTemplate.keys(pattern);
+    }
+
     // ============================String=============================
 
     /**
