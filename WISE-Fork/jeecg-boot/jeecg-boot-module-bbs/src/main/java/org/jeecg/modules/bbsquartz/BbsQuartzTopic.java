@@ -63,7 +63,13 @@ public class BbsQuartzTopic implements Job {
         }
         //获取榜单下排名前20的帖子
         List<String> rankTopic = bbsRedisUtils.getRankTopic(ranks, randomRange * 3);
+
+        //随机限制
+        int random1 = new Random().nextInt(random);
+        int random2 = new Random().nextInt(random1);
+        int random3 = new Random().nextInt(random2);
+        int random4 = new Random().nextInt(random3);
         //所有帖子浏览量随机增加
-        bbsRedisUtils.updateTopicHitCount(rankTopic, random,expetHitCount + random * random * random * random);
+        bbsRedisUtils.updateTopicHitCount(rankTopic, random,expetHitCount + random1 * random2 * random3 * random4);
     }
 }
