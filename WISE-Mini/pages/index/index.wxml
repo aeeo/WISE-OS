@@ -23,7 +23,7 @@
           <!-- 版块分类 -->
           <view class="cu-item {{index==currentClass?'':''}}" wx:for="{{REGIONCLASS}}" wx:key="id" bindtap="tabSelect"
             data-id="{{index}}">
-            <view class="{{index==currentClass?'text-pink thisClass':''}}">{{item.className}}</view>
+            <view class="{{index==currentClass?'text-pink thisClass':'text-black'}}">{{item.className}}</view>
           </view>
         </view>
       </scroll-view>

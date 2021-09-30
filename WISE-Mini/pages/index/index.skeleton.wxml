@@ -199,7 +199,7 @@
                             data-bindex="1" data-class="scale-down" data-praisecount="0" hover-stop-propagation="true"
                             style="color:grey;background: #00000000;padding: 0px;font-size:19px;"></button>
                           <text
-                            class="cuIcon-messagefill123 topiccard--cuIcon-messagefill123 cu-btn topiccard--cu-btn text topiccard--text sk-transparent sk-opacity"
+                            class="cu-btn topiccard--cu-btn text topiccard--text sk-transparent sk-opacity"
                             data-bindex="1" data-praisecount="0"
                             style="color:grey;background: #00000000;font-size:19px;padding: 0px;">0</text>
                         </view>
@@ -265,7 +265,7 @@
                             data-bindex="1" data-class="scale-down" data-praisecount="0" hover-stop-propagation="true"
                             style="color:grey;background: #00000000;padding: 0px;font-size:19px;"></button>
                           <text
-                            class="cuIcon-messagefill123 topiccard--cuIcon-messagefill123 cu-btn topiccard--cu-btn text topiccard--text sk-transparent sk-opacity"
+                            class="cu-btn topiccard--cu-btn text topiccard--text sk-transparent sk-opacity"
                             data-bindex="1" data-praisecount="0"
                             style="color:grey;background: #00000000;font-size:19px;padding: 0px;">0</text>
                         </view>
@@ -329,7 +329,7 @@
                             data-bindex="2" data-class="scale-down" data-praisecount="0" hover-stop-propagation="true"
                             style="color:grey;background: #00000000;padding: 0px;font-size:19px;"></button>
                           <text
-                            class="cuIcon-messagefill123 topiccard--cuIcon-messagefill123 cu-btn topiccard--cu-btn text topiccard--text sk-transparent sk-opacity"
+                            class="cu-btn topiccard--cu-btn text topiccard--text sk-transparent sk-opacity"
                             data-bindex="2" data-praisecount="0"
                             style="color:grey;background: #00000000;font-size:19px;padding: 0px;">0</text>
                         </view>
@@ -393,7 +393,7 @@
                             data-bindex="3" data-class="scale-down" data-praisecount="0" hover-stop-propagation="true"
                             style="color:grey;background: #00000000;padding: 0px;font-size:19px;"></button>
                           <text
-                            class="cuIcon-messagefill123 topiccard--cuIcon-messagefill123 cu-btn topiccard--cu-btn text topiccard--text sk-transparent sk-opacity"
+                            class="cu-btn topiccard--cu-btn text topiccard--text sk-transparent sk-opacity"
                             data-bindex="3" data-praisecount="0"
                             style="color:grey;background: #00000000;font-size:19px;padding: 0px;">0</text>
                         </view>

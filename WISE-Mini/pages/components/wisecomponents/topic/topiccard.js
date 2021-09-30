@@ -167,14 +167,16 @@ Component({
       var that = this
       // 查询用户是否授权
       if (app.globalData.HASUSERINFO) {
+        console.log(e)
+        let currentTarget = e.currentTarget.dataset
         // console.log(that.data.currentClass)
         // console.log(that.data.topicLists)
         //若果没有点赞  点赞并展示动画
-        if (!that.data.topicLists[e.target.dataset.bindex].userIsPraise) {
+        if (!that.data.topicLists[currentTarget.bindex].userIsPraise) {
           var topicListTem = that.data.topicLists
-          topicListTem[e.target.dataset.bindex].userIsPraise = true
-          topicListTem[e.target.dataset.bindex].exeCuteAnimation = true
-          topicListTem[e.target.dataset.bindex].praiseCount = topicListTem[e.target.dataset.bindex].praiseCount + 1
+          topicListTem[currentTarget.bindex].userIsPraise = true
+          topicListTem[currentTarget.bindex].exeCuteAnimation = true
+          topicListTem[currentTarget.bindex].praiseCount = topicListTem[currentTarget.bindex].praiseCount + 1
           that.setData({
             topicLists: topicListTem,
           })
@@ -189,9 +191,9 @@ Component({
           })
         } else {
           var topicListTem = that.data.topicLists
-          topicListTem[e.target.dataset.bindex].userIsPraise = false
-          topicListTem[e.target.dataset.bindex].exeCuteAnimation = false
-          topicListTem[e.target.dataset.bindex].praiseCount = topicListTem[e.target.dataset.bindex].praiseCount - 1
+          topicListTem[currentTarget.bindex].userIsPraise = false
+          topicListTem[currentTarget.bindex].exeCuteAnimation = false
+          topicListTem[currentTarget.bindex].praiseCount = topicListTem[currentTarget.bindex].praiseCount - 1
           that.setData({
             topicLists: topicListTem,
           })

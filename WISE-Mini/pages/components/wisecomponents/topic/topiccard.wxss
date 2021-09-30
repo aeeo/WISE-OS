@@ -1,0 +1,6 @@
+.cardBottomText {
+  font-size: 28rpx;
+}
+.topicContent{
+  color: #000000;
+}

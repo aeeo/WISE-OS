@@ -69,11 +69,21 @@ public class BbsRedisUtils {
             if (iterator.hasNext()) {
                 ZSetOperations.TypedTuple<Object> next = iterator.next();
                 Double score = next.getScore();
+                //如果该帖子是别的版块的，同时更新到index版块
+                if(!"index".equals(bbsTopic.getClassCode())){
+                    redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_index", bbsTopic.getId(), score + precision);
+                }
                 redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_" + bbsTopic.getClassCode(), bbsTopic.getId(), score + precision);
             } else {
+                if(!"index".equals(bbsTopic.getClassCode())){
+                    redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_index", bbsTopic.getId(), Integer.MAX_VALUE - 1);
+                }
                 redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_" + bbsTopic.getClassCode(), bbsTopic.getId(), Integer.MAX_VALUE - 1);
             }
         } else {
+            if(!"index".equals(bbsTopic.getClassCode())){
+                redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_index", bbsTopic.getId(), Integer.MAX_VALUE - 1);
+            }
             redisUtil.zAdd(LoadDataRedis.BBS_RANK_REGION_CLASS + bbsTopic.getRegionCode() + "_" + bbsTopic.getClassCode(), bbsTopic.getId(), Integer.MAX_VALUE - 1);
         }
 

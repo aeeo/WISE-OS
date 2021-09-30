@@ -103,7 +103,7 @@
             data-topicid="{{topicdetails.id}}" data-praiseCount="{{topicdetails.praiseCount}}" data-bindex="{{bindex}}"
             wx:key="id">
             <button
-              class="cuIcon-messagefill123 praiseCount cuIcon-appreciatefill cu-btn animation-{{topicdetails.exeCuteAnimation?'scale-down':''}}"
+              class="praiseCount cuIcon-appreciatefill cu-btn animation-{{topicdetails.exeCuteAnimation?'scale-down':''}}"
               style="color:{{topicdetails.userIsPraise?'#ec008c':'grey'}};background: #00000000;">
               <text class="praiseCount cu-btn"
                 style="color:grey;background: #00000000;padding-right:16rpx;font-size:36rpx">{{topicdetails.praiseCount}}</text>
