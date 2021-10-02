@@ -24,10 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description: 帖子
@@ -123,6 +120,14 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
     @Override
     @Transactional
     public void updateMain(BbsTopic bbsTopic, List<BbsTopicImage> bbsTopicImageList, List<BbsTopicTag> bbsTopicTagList, List<BbsTopicLink> bbsTopicLinkList) {
+        updataTopic(bbsTopic,bbsTopicImageList, bbsTopicTagList,bbsTopicLinkList);
+        //更新redis
+        List<BbsTopicFullDto> bbsTopicFullDtos = new ArrayList<>();
+        bbsTopicFullDtos.add(bbsTopicFullDtoService.queryTopicFullDtoById(bbsTopic.getId()));
+        bbsRedisUtils.updateTopic(bbsTopicFullDtos);
+    }
+
+    public void updataTopic(BbsTopic bbsTopic, List<BbsTopicImage> bbsTopicImageList, List<BbsTopicTag> bbsTopicTagList, List<BbsTopicLink> bbsTopicLinkList) {
         bbsTopicMapper.updateById(bbsTopic);
 
         //1.先删除子表数据
@@ -152,8 +157,6 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
                 bbsTopicLinkMapper.insert(entity);
             }
         }
-        //加入redis
-        bbsRedisUtils.addTopic(bbsTopicFullDtoService.queryTopicFullDtoById(bbsTopic.getId()));
     }
 
     @Override

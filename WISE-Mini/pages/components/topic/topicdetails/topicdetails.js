@@ -56,7 +56,8 @@ Page({
       that.data.SHAREHOSTURL = app.globalData.HOSTURL
       that.data.isAnon = '/anon'
       that.getBbsTopicByIdAnon(that.data.SHAREHOSTURL)
-    } else {
+
+      } else {
       that.data.SHAREHOSTURL = app.globalData.HOSTURL
       // url传参检测
       if (undefined != options.topicId) {

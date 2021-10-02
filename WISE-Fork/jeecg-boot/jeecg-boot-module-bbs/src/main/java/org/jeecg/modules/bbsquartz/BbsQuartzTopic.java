@@ -46,12 +46,12 @@ public class BbsQuartzTopic implements Job {
      */
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         log.info(String.format("定时任务增加帖子浏览量。"));
-        int randomRange = 10;
+        int randomRange = 9;
         int expetHitCount = 7000;           //期望点击量
         int random = 0;
         Date date = new Date();
         if (date.getHours() > 8 && date.getHours() < 23) {
-            random = new Random().nextInt(randomRange);
+            random = new Random().nextInt(randomRange) + 1;
         }
 
         Set<String> allRank = bbsRedisUtils.getAllRank();
@@ -65,9 +65,9 @@ public class BbsQuartzTopic implements Job {
         List<String> rankTopic = bbsRedisUtils.getRankTopic(ranks, randomRange * 3);
 
         //随机限制
-        int random1 = new Random().nextInt(random);
-        int random2 = new Random().nextInt(random1);
-        int random3 = new Random().nextInt(random2);
+        int random1 = new Random().nextInt(random) + 1;
+        int random2 = new Random().nextInt(random1) + 1;
+        int random3 = new Random().nextInt(random2) + 1;
         int random4 = new Random().nextInt(random3);
         //所有帖子浏览量随机增加
         bbsRedisUtils.updateTopicHitCount(rankTopic, random,expetHitCount + random1 * random2 * random3 * random4);

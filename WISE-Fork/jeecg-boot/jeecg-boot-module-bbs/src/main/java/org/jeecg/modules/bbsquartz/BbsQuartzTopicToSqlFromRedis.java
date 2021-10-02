@@ -55,7 +55,7 @@ public class BbsQuartzTopicToSqlFromRedis implements Job {
         for (BbsTopicFullDto bbsTopicFullDtoItem : allTopicList) {
             BbsTopic topic = new BbsTopic();
             BeanUtils.copyProperties(bbsTopicFullDtoItem,topic);
-            bbsTopicService.updateMain(topic, bbsTopicFullDtoItem.getBbsTopicImageList(), bbsTopicFullDtoItem.getBbsTopicTagList(), bbsTopicFullDtoItem.getBbsTopicLinkList());
+            bbsTopicService.updataTopic(topic, bbsTopicFullDtoItem.getBbsTopicImageList(), bbsTopicFullDtoItem.getBbsTopicTagList(), bbsTopicFullDtoItem.getBbsTopicLinkList());
         }
     }
 }

@@ -232,8 +232,16 @@ Page({
                         topicLists: tempList,
                         showSkelton: false, //隐藏骨架屏
                         isPull: false,
-                        // startFooterLoading: false
                     })
+
+                    // 没有更多数据停止加载提示
+                    let count = res.data.result.records.length
+                    let resultSize = res.data.result.size
+                    if(count < resultSize){
+                        that.setData({
+                            startFooterLoading: false
+                        })
+                    }
                 } else {
                     // 没有更多数据
                     let topicListsTmp = that.data.topicLists

@@ -23,6 +23,7 @@ import org.jeecg.common.system.vo.SysUserCacheInfo;
 import org.jeecg.common.util.PasswordUtil;
 import org.jeecg.common.util.UUIDGenerator;
 import org.jeecg.common.util.oConvertUtils;
+import org.jeecg.modules.bbs.utils.BbsAuthUtils;
 import org.jeecg.modules.system.entity.*;
 import org.jeecg.modules.system.mapper.*;
 import org.jeecg.modules.system.model.SysUserSysDepartModel;
@@ -90,6 +91,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private ISysUserService sysUserService;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private BbsAuthUtils bbsAuthUtils;
 
     @Override
     @CacheEvict(value = {CacheConstant.SYS_USERS_CACHE}, allEntries = true)
@@ -602,7 +605,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         //更新redis中的用户信息
         redisUtil.set(CacheConstant.SYS_USERS_CACHE + sysUser.getUsername(), sysUser);
-
+        bbsAuthUtils.getMiNiStorageFromSql(sysUser.getUsername());
         return Result.OK("更新用户信息成功");
     }
 

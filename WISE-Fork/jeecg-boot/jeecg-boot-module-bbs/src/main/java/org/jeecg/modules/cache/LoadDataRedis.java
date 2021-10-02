@@ -66,11 +66,19 @@ public class LoadDataRedis {
      */
     @PostConstruct // 是java注解，在方法上加该注解会在项目启动的时候执行该方法，也可以理解为在spring容器初始化的时候执行该方法。
     public void reload() {
-        loadRegion();               //加载区域
-        loadTopicRank();            //加载帖子排行榜
+        loadData();               //加载数据
     }
 
-    public void loadRegion() {
+    /**
+     * 此方法用于启动加载数据到redis，redis中的数据分为两部分管理
+     * 一部分为JeecgBoot权限部门用户等信息
+     * 另一部分为行星万象的区域，帖子，板块排行和用户等数据
+     *
+     * 区域，板块等信息加载后基本不变，修改后Reids和mysql同步
+     * 帖子保持redis中最新，每天用定时任务去回写到mysql，在系统加载时如果redis中已经存在则不加载
+     * redis会自动持久化（会丢失十分钟左右的数据）,这样在系统重启后就不会丢失topic数据。
+     */
+    public void loadData() {
         List<BbsRegion> bbsRegions = bbsRegionService.lambdaQuery().list();
         for (BbsRegion bbsRegion : bbsRegions) {
             //BbsRegion regionCode = (BbsRegion) redisUtil.get(BBS_REGION_REGIONCODE + bbsRegion.getRegionCode());
@@ -98,16 +106,15 @@ public class LoadDataRedis {
                     redisUtil.zAdd(BBS_RANK_REGION_CLASS + bbsRegion.getRegionCode() + "_" + bbsClass.getClassCode(), topicFullDto.getId(), score);
                     log.info("行星万象缓存加载排行：" + bbsClass.getClassCode() + topicFullDto.getContent());
 
-                    //贴子
-                    redisUtil.set(BBS_TOPIC_TOPICID + topicFullDto.getId(), topicFullDto, BBS_TOPIC_TOPICID_TIME);
+                    //贴子，已经存在于redis的帖子不做更新，保证redis中的帖子是最新的
+                    Object topic = redisUtil.get(BBS_TOPIC_TOPICID + topicFullDto.getId());
+                    if (null == topic) {
+                        redisUtil.set(BBS_TOPIC_TOPICID + topicFullDto.getId(), topicFullDto, BBS_TOPIC_TOPICID_TIME);
+                    }
                     log.info("行星万象缓存加载贴子：" + topicFullDto.getContent());
                     score--;
                 }
             }
         }
-    }
-
-    public void loadTopicRank() {
-
     }
 }

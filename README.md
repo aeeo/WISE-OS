@@ -141,6 +141,12 @@
 找到项目目录下文件package.json文件，鼠标右键选择Show npm Scripts，点击命令 serve 启动项目，看到如下日志则启动成功。
 ![请添加图片描述](https://img-blog.csdnimg.cn/ea3e9854e55a4b49b8ecdd4a0bb86df2.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25iY3Nkbg==,size_16,color_FFFFFF,t_70)
 点击链接自动打开浏览器，默认账号密码： admin/123456。
+### 小程序启动
+在WISE-MINI根目录下
+```shell
+npm install
+```
+打开微信开发者工具：工具->构建npm，完成。
 
 # 优势
 1. 小程序界面精美，从我开始开发一直遵循的宗旨，大可拿去和市面上的同类产品去对比。

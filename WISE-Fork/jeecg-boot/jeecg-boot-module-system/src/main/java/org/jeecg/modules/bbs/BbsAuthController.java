@@ -98,7 +98,7 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
         sysLoginModel.setUsername(openid);
         sysLoginModel.setPassword(openid);
         String token = bbsAuthUtils.minilogin(sysLoginModel);       //小程序登录，无验证码
-        if (!token.isEmpty()) {
+        if (null != token && !token.isEmpty()) {
             //之前历史原因，如果没有部门，添加默认部门，部门关联在区域编码上，如果有部门，就不管了
             SysUser userByName = sysUserService.getUserByName(openid);
             ArrayList<String> list = new ArrayList<>();
@@ -106,8 +106,10 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
             Map<String, String> depNamesByUserIds = sysUserService.getDepNamesByUserIds(list);
             if (depNamesByUserIds.size() == 0) {
                 //部门分为用户部门和当前所在部门
-                sysUserService.addUserWithDepart(userByName, "4ed96f554f9f4a219a7e282b7005e26f");//默认设置用户部门西安文理学院
-                sysUserService.updateUserDepart(userByName.getUsername(), "A03A03A01A01");  //设置用户当前所在部门
+                //sysUserService.addUserWithDepart(userByName, "4ed96f554f9f4a219a7e282b7005e26f");//默认设置用户部门西安文理学院
+                //sysUserService.updateUserDepart(userByName.getUsername(), "A03A03A01A01");  //设置用户当前所在部门
+                sysUserService.addUserWithDepart(userByName, "71dfb9906d1649d88513122807f86ee6");//默认设置用户部门陕西省
+                sysUserService.updateUserDepart(userByName.getUsername(), "A03A02");  //设置用户当前所在部门
             }
 
             //用户如果是通过分享进入，所在区域为分享链接中的区域，否则，不做设置
@@ -139,9 +141,13 @@ public class BbsAuthController extends JeecgController<BbsReply, IBbsReplyServic
         user.setActivitiSync(CommonConstant.ACT_SYNC_0);
 
         sysUserService.addUserWithRole(user, "1345343571064266754");//默认设置角色为BBS_普通用户 1345343571064266754
-        sysUserService.addUserWithDepart(user, "4ed96f554f9f4a219a7e282b7005e26f");//默认设置用户部门西安文理学院
+
+        //sysUserService.addUserWithDepart(user, "4ed96f554f9f4a219a7e282b7005e26f");//默认设置用户部门西安文理学院
+        sysUserService.addUserWithDepart(user, "71dfb9906d1649d88513122807f86ee6");//默认设置用户部门陕西省
+
         SysUser userByName = sysUserService.getUserByName(user.getUsername());
-        sysUserService.updateUserDepart(userByName.getUsername(), "A03A03A01A01");  //设置用户当前所在部门
+        //sysUserService.updateUserDepart(userByName.getUsername(), "A03A03A01A01");  //设置用户当前所在部门
+        sysUserService.updateUserDepart(userByName.getUsername(), "A03A02");  //设置用户当前所在部门
 
         //在创建用户的同时创建用户信息记录表
         BbsUserRecord bbsUserRecord = new BbsUserRecord();
