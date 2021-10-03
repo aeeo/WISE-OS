@@ -499,6 +499,21 @@ public class BbsTopicController {
         if (null == bbsTopicFullDto) {
             return Result.error(1005, "id为" + topicId + "的贴子不存在。");
         }
+        //只有1条，但还是封装list
+        List<String> topicIdList = new ArrayList<>();
+        topicIdList.add(bbsTopicFullDto.getId());
+        //根据用户进行数据封装
+        if (topicIdList.size() != 0) {
+            List<BbsUserStar> bbsUserStars = bbsTopicFullDtoService.queryTopicFullDtoUserStar(topicIdList, loginUser.getUsername());
+            List<BbsUserPraise> bbsUserPraises = bbsTopicFullDtoService.queryTopicFullDtoUserPraise(topicIdList, loginUser.getUsername());
+            //封装用户点赞和收藏信息
+            if (!bbsUserStars.isEmpty()) {
+                bbsTopicFullDto.setUserIsStar(true);
+            }
+            if (!bbsUserPraises.isEmpty()) {
+                bbsTopicFullDto.setUserIsPraise(true);
+            }
+        }
         bbsAuthUtils.getMiNiStorageFromSql(loginUser.getUsername());
         return Result.OK(bbsTopicFullDto);
     }

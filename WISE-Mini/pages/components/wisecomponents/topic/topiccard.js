@@ -276,7 +276,7 @@ Component({
       console.log(e.target.dataset.topiclinkitem)
       if (linkItem.linkType == 0) {
         wx.navigateTo({
-          url: '/pages/components/topic/topicdetails/topicdetails?topicId=' + linkItem.linkUrl
+          url: '/pages/components/topic/topicdetails/topicdetails?topicId=' + linkItem.linkUrl + "&forbidSkip=true"
         })
       } else if (linkItem.linkType == 1) {
         wx.navigateTo({

@@ -71,7 +71,8 @@ Page({
         showActionsheet: false,
         actionGroups: [],
         showReply: false, //展示评论弹框
-        fullReplys: []
+        fullReplys: [],
+        forbidSkip:true             //分享跳转，第一次为true，之后设置为false，否则每次都认为是分享
     },
     onLoad(options) {
         this.setData({
@@ -88,10 +89,14 @@ Page({
             that.setData({
                 USERRECORD: res.bbsUserRecord,
             })
-            // 通过其他分享渠道跳转至别的页面,需要准备好后再跳转
-            that.shareNavigateTo(that.data.options)
             that.getRegionClass(res.bbsClassList)
-            that.waitTopicList()
+            that.waitTopicList().then(res => {
+                console.log("==========================================================")
+                // 通过其他分享渠道跳转至别的页面,需要准备好后再跳转
+                that.shareNavigateTo(that.data.options)
+            }, err => {
+
+            })
         })
     },
     onReady() {
@@ -177,9 +182,14 @@ Page({
         that.setData({
             startFooterLoading: true,
         })
-
-        that.getBbsTopicLists()
-        wx.stopPullDownRefresh()
+        return new Promise(function (resolve, reject) {
+            that.getBbsTopicLists().then(res => {
+                wx.stopPullDownRefresh()
+                resolve(true)
+            }, err => {
+                reject(false)
+            })
+        })
     },
     // mark: 获取帖子列表
     getBbsTopicLists() {
@@ -200,108 +210,111 @@ Page({
         //加载贴子类型，普通加载只能加载到0,1,2 普通，置顶，精华。5代表为公共隐藏类型，只能通过单独加载
         let topicType = [0, 1, 2]
         url += "&topicType=" + topicType
-        app.wxRequest('get', url, '', 5000).then(res => {
-            if (res.data.code == 200) {
-                if (res.data.result.records.length > 0) {
-                    res.data.result.records.forEach((item) => {
-                        item.userRole = item.userRole.substring(4)
-                        // 添加动画属性
-                        item.exeCuteAnimation = item.userIsPraise
-                        item.createTime = formatUtil.showDate(new Date(item.createTime.replace(/-/g, '/')))
-                        // item.updateTime = formatUtil.showDate(new Date(item.updateTime.replace(/-/g, '/')))
-                        item.publicTime = formatUtil.showDate(new Date(item.publicTime.replace(/-/g, '/')))
-                        item.editTime = formatUtil.showDate(new Date(item.editTime.replace(/-/g, '/')))
-                        // 正则去除html标签
-                        let contentString = item.content.replace(/<\/?.+?\/?>/g, '')
-                        // 富文本不换行
-                        if(item.content == contentString){
-                            // 普通文本换行
-                            item.content = item.content.replace(/\n/g,"<br>")
+        return result = new Promise(function (resolve, reject) {
+            app.wxRequest('get', url, '', 5000).then(res => {
+                if (res.data.code == 200) {
+                    if (res.data.result.records.length > 0) {
+                        res.data.result.records.forEach((item) => {
+                            item.userRole = item.userRole.substring(4)
+                            // 添加动画属性
+                            item.exeCuteAnimation = item.userIsPraise
+                            item.createTime = formatUtil.showDate(new Date(item.createTime.replace(/-/g, '/')))
+                            // item.updateTime = formatUtil.showDate(new Date(item.updateTime.replace(/-/g, '/')))
+                            item.publicTime = formatUtil.showDate(new Date(item.publicTime.replace(/-/g, '/')))
+                            item.editTime = formatUtil.showDate(new Date(item.editTime.replace(/-/g, '/')))
+                            // 正则去除html标签
+                            let contentString = item.content.replace(/<\/?.+?\/?>/g, '')
+                            // 富文本不换行
+                            if (item.content == contentString) {
+                                // 普通文本换行
+                                item.content = item.content.replace(/\n/g, "<br>")
+                            }
+
+                            // 去除跳转标签
+                            // item.content = item.content.replace(/(?=!_).+(?:_!)/g, '')
+                        })
+                        //列表追加
+                        let tempList = that.data.topicLists
+                        var recordList = res.data.result.records
+                        for (var item in recordList) {
+                            let itemTopic = recordList[item]
+                            tempList[thisCurrentClass].topicList.push(itemTopic)
                         }
-                        
-                        // 去除跳转标签
-                        // item.content = item.content.replace(/(?=!_).+(?:_!)/g, '')
-                    })
-                    //列表追加
-                    let tempList = that.data.topicLists
-                    var recordList = res.data.result.records
-                    for (var item in recordList) {
-                        let itemTopic = recordList[item]
-                        tempList[thisCurrentClass].topicList.push(itemTopic)
-                    }
-                    // 设置页面属性
-                    tempList[thisCurrentClass].needLoad = false //设置不需要再次加载,隐藏骨架屏
-                    that.data.getTopicFlag = true
-                    that.data.isFirstGetTopicFlag = false
+                        // 设置页面属性
+                        tempList[thisCurrentClass].needLoad = false //设置不需要再次加载,隐藏骨架屏
+                        that.data.getTopicFlag = true
+                        that.data.isFirstGetTopicFlag = false
 
-                    that.setData({
-                        topicLists: tempList,
-                        showSkelton: false, //隐藏骨架屏
-                        isPull: false,
-                    })
-
-                    // 没有更多数据停止加载提示
-                    let count = res.data.result.records.length
-                    let resultSize = res.data.result.size
-                    if(count < resultSize){
                         that.setData({
-                            startFooterLoading: false
+                            topicLists: tempList,
+                            showSkelton: false, //隐藏骨架屏
+                            isPull: false,
+                        })
+
+                        // 没有更多数据停止加载提示
+                        let count = res.data.result.records.length
+                        let resultSize = res.data.result.size
+                        if (count < resultSize) {
+                            that.setData({
+                                startFooterLoading: false
+                            })
+                        }
+                    } else {
+                        // 没有更多数据
+                        let topicListsTmp = that.data.topicLists
+                        topicListsTmp[thisCurrentClass].pageNo = topicListsTmp[thisCurrentClass].pageNo - 1
+                        topicListsTmp[thisCurrentClass].needLoad = false //设置不需要再次加载，隐藏骨架屏
+
+                        that.data.getTopicFlag = true
+                        that.setData({
+                            topicLists: topicListsTmp,
+                            showSkelton: false, //隐藏骨架屏
+
+                            startFooterLoading: false,
+                            isPull: false
                         })
                     }
+                    that.data.dataVerify.isGetTopicFinsh[thisCurrentClass] = true
+                    // 获取用户Record，刷新tabbar提示
+                    app.getUserAllInfo().then(res => {
+                        that.setData({
+                            USERRECORD: res.bbsUserRecord
+                        })
+                        app.setTabbarBadge()
+                    })
+                    //数据加载成功
+                    if (!that.data.isFirstGetTopicFlag && app.globalData.needReloadTopicList) {
+                        wx.showToast({
+                            title: '刷新成功',
+                            icon: 'success'
+                        })
+                        app.globalData.needReloadTopicList = false
+                    } else {
+                        wx.hideLoading() //如果不是下拉刷新，则可能是第一次加载，显示loding
+                    }
+
                 } else {
-                    // 没有更多数据
-                    let topicListsTmp = that.data.topicLists
-                    topicListsTmp[thisCurrentClass].pageNo = topicListsTmp[thisCurrentClass].pageNo - 1
-                    topicListsTmp[thisCurrentClass].needLoad = false //设置不需要再次加载，隐藏骨架屏
-
-                    that.data.getTopicFlag = true
-                    that.setData({
-                        topicLists: topicListsTmp,
-                        showSkelton: false, //隐藏骨架屏
-
-                        startFooterLoading: false,
-                        isPull: false
+                    // 首次打开需要判断token是否过期
+                    if (res.data.code == 500 && res.data.message == "Token失效，请重新登录") {
+                        console.log("本地token失效,请求token")
+                        that.getBbsTopicLists()
+                    }
+                    wx.showToast({
+                        title: '获取信息出错',
+                        icon: "none"
                     })
                 }
                 that.data.dataVerify.isGetTopicFinsh[thisCurrentClass] = true
-                // 获取用户Record，刷新tabbar提示
-                app.getUserAllInfo().then(res => {
-                    that.setData({
-                        USERRECORD: res.bbsUserRecord
-                    })
-                    app.setTabbarBadge()
+                resolve(true)
+            }, err => {
+                that.data.getTopicFlag = false
+                that.setData({
+                    topicLists: res.data.result.records,
+                    isPull: false
                 })
-                //数据加载成功
-                if (!that.data.isFirstGetTopicFlag && app.globalData.needReloadTopicList) {
-                    wx.showToast({
-                        title: '刷新成功',
-                        icon: 'success'
-                    })
-                    app.globalData.needReloadTopicList = false
-                } else {
-                    wx.hideLoading() //如果不是下拉刷新，则可能是第一次加载，显示loding
-                }
-            } else {
-                // 首次打开需要判断token是否过期
-                if (res.data.code == 500 && res.data.message == "Token失效，请重新登录") {
-                    console.log("本地token失效,请求token")
-                    that.getBbsTopicLists()
-                }
-                wx.showToast({
-                    title: '获取信息出错',
-                    icon: "none"
-                })
-            }
-            that.data.dataVerify.isGetTopicFinsh[thisCurrentClass] = true
-
-        }, err => {
-            that.data.getTopicFlag = false
-            that.setData({
-                topicLists: res.data.result.records,
-                isPull: false
+                that.data.dataVerify.isGetTopicFinsh[thisCurrentClass] = true
+                reject(false)
             })
-
-            that.data.dataVerify.isGetTopicFinsh[thisCurrentClass] = true
         })
     },
 

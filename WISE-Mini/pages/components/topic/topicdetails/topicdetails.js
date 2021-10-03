@@ -40,12 +40,12 @@ Page({
   },
   onLoad(options) {
 
-    console.log(options)
+    console.log("options:" , options)
     var that = this
     let topicdetailsTmp = {}
 
     var obj = wx.getLaunchOptionsSync()
-    console.log(obj)
+    console.log("getLaunchOptionsSync",obj)
     if (obj.scene == 1154) { //从朋友圈看到的单页面
       topicdetailsTmp.id = options.topicId
       that.data.topicId = options.topicId
@@ -62,10 +62,11 @@ Page({
       // url传参检测
       if (undefined != options.topicId) {
         topicdetailsTmp.id = options.topicId
-        if (obj.scene == 1155) {      //从朋友圈单页打开左上角显示返回主页
-          if (options.forbidSkip == 'true') {
+        if (obj.scene == 1155) {
+          if (options.forbidSkip == 'true') {//禁止再次返回首页
 
-          } else {
+          } else {    //从朋友圈进来，需要重新启动跳转进来
+            console.log("==========================reLaunch.")
             wx.reLaunch({
               url: '/pages/index/index?topicId=' + options.topicId + "&regionCode=" + options.regionCode,
             })

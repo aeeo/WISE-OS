@@ -282,7 +282,7 @@ Page({
 
     var that = this
     let actionType = formData.detail.target.dataset.type
-    // mark:新增发布
+    // mark: 新增发布
     if (actionType == 1) {
       // 保存表单
       data.anon = that.data.isAnon
@@ -416,7 +416,7 @@ Page({
         })
       }
     } else if (actionType == 2) {
-      // mark:编辑发布
+      // mark: 编辑发布
       // 编辑，包括可能新增或修改信息
       var uploadFinished = true
       that.data.imgList.forEach((item) => {
@@ -608,7 +608,7 @@ function didPressChooesImage(that) {
     }
   })
 }
-// mark:选择后上传
+// mark: 选择后上传
 function wiseUpload(that, filePath) {
   console.log(filePath)
   // 生成文件名

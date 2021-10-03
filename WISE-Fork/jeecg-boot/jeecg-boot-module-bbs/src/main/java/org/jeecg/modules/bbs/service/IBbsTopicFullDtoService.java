@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.bbs.entity.BbsTopicFullDto;
+import org.jeecg.modules.bbs.entity.BbsUserPraise;
+import org.jeecg.modules.bbs.entity.BbsUserStar;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Description: 帖子
@@ -44,4 +47,8 @@ public interface IBbsTopicFullDtoService extends IService<BbsTopicFullDto> {
     IPage<BbsTopicFullDto> queryUserPublishTopicFullDto(Page<BbsTopicFullDto> page, HttpServletRequest req, int[] topicType, String username);
 
     BbsTopicFullDto queryTopicFullDtoByIdAnon(String topicId);
+
+    List<BbsUserStar> queryTopicFullDtoUserStar(List<String> topicIdList, String username);
+    List<BbsUserPraise> queryTopicFullDtoUserPraise(List<String> topicIdList, String username);
+
 }

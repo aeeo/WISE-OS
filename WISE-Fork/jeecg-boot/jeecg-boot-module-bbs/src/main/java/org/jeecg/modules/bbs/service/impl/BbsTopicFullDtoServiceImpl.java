@@ -107,6 +107,7 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         //
         List<String> topicIdList = new ArrayList<>();
         for (BbsTopicFullDto record : bbsTopicFullDtosList) {
+            record.getBbsTopicLinkList().sort((l,r)->l.getSort().compareTo(r.getSort()));
             topicIdList.add(record.getId());
         }
         //根据用户进行数据封装
@@ -165,6 +166,9 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
             }
             if (1 == bbsTopicFullDtosList.get(i).getBbsTopicTagList().size() && null == bbsTopicFullDtosList.get(i).getBbsTopicTagList().get(0).getId()) {
                 bbsTopicFullDtosList.get(i).setBbsTopicTagList(null);
+            }
+            if (1 == bbsTopicFullDtosList.get(i).getBbsTopicLinkList().size() && null == bbsTopicFullDtosList.get(i).getBbsTopicLinkList().get(0).getId()) {
+                bbsTopicFullDtosList.get(i).setBbsTopicLinkList(null);
             }
         }
 
@@ -261,20 +265,20 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         redisUtil.set(LoadDataRedis.BBS_TOPIC_TOPICID + topicId,bbsTopicFullDtosList);
         bbsTopicFullDtosList.getBbsTopicLinkList().sort((l, r) -> l.getSort().compareTo(r.getSort()));
         //只有1条，但还是封装list
-        List<String> topicIdList = new ArrayList<>();
-        topicIdList.add(bbsTopicFullDtosList.getId());
-        //根据用户进行数据封装
-        if (topicIdList.size() != 0) {
-            List<BbsUserStar> bbsUserStars = bbsTopicFullDtoMapper.queryTopicFullDtoUserStar(topicIdList, sysUser.getUsername());
-            List<BbsUserPraise> bbsUserPraises = bbsTopicFullDtoMapper.queryTopicFullDtoUserPraise(topicIdList, sysUser.getUsername());
-            //封装用户点赞和收藏信息
-            if (!bbsUserStars.isEmpty()) {
-                bbsTopicFullDtosList.setUserIsStar(true);
-            }
-            if (!bbsUserPraises.isEmpty()) {
-                bbsTopicFullDtosList.setUserIsPraise(true);
-            }
-        }
+//        List<String> topicIdList = new ArrayList<>();
+//        topicIdList.add(bbsTopicFullDtosList.getId());
+//        //根据用户进行数据封装
+//        if (topicIdList.size() != 0) {
+//            List<BbsUserStar> bbsUserStars = bbsTopicFullDtoMapper.queryTopicFullDtoUserStar(topicIdList, sysUser.getUsername());
+//            List<BbsUserPraise> bbsUserPraises = bbsTopicFullDtoMapper.queryTopicFullDtoUserPraise(topicIdList, sysUser.getUsername());
+//            //封装用户点赞和收藏信息
+//            if (!bbsUserStars.isEmpty()) {
+//                bbsTopicFullDtosList.setUserIsStar(true);
+//            }
+//            if (!bbsUserPraises.isEmpty()) {
+//                bbsTopicFullDtosList.setUserIsPraise(true);
+//            }
+//        }
         return bbsTopicFullDtosList;
     }
 
@@ -294,5 +298,15 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         BbsTopicFullDto bbsTopicFullDtosList = bbsTopicFullDtoMapper.queryTopicFullDtoFixById(topicId);
         bbsTopicFullDtosList.getBbsTopicLinkList().sort((l, r) -> l.getSort().compareTo(r.getSort()));
         return bbsTopicFullDtosList;
+    }
+
+    @Override
+    public List<BbsUserStar> queryTopicFullDtoUserStar(List<String> topicIdList, String username) {
+        return bbsTopicFullDtoMapper.queryTopicFullDtoUserStar(topicIdList, username);
+    }
+
+    @Override
+    public List<BbsUserPraise> queryTopicFullDtoUserPraise(List<String> topicIdList, String username) {
+        return bbsTopicFullDtoMapper.queryTopicFullDtoUserPraise(topicIdList, username);
     }
 }

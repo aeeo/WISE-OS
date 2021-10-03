@@ -27,6 +27,7 @@
         b.topic_image AS topicImage,
         c.id AS tagId,
         c.tag AS tag,
+        g.id AS linkId,
         g.title AS linkTitle,
         g.link_type AS linkType,
         g.link_url AS linkUrl,
@@ -124,7 +125,6 @@
         b.topic_image AS topicImage,
         c.id AS tagId,
         c.tag AS tag,
-
         g.id AS linkId,
         g.title AS linkTitle,
         g.link_type AS linkType,
@@ -132,7 +132,6 @@
         g.topic_id AS topicId,
         g.parameter AS parameter,
         g.sort AS linkSort,
-
         e.role_name AS userRole,
         a.STATUS AS STATUS,
         a.contact AS contact,
@@ -193,7 +192,6 @@
         LEFT JOIN bbs_topic_image AS b ON a.id = b.topic_id
         LEFT JOIN bbs_topic_tag AS c ON a.id = c.topic_id
         LEFT JOIN bbs_topic_link AS g ON a.id = g.topic_id
-
         LEFT JOIN sys_user AS f ON a.create_by = f.username
         LEFT JOIN sys_user_role AS d ON f.id = d.user_id
         LEFT JOIN sys_role AS e ON d.role_id = e.id
@@ -222,7 +220,6 @@
                b.topic_image      AS topicImage,
                c.id               AS tagId,
                c.tag              AS tag,
-
                g.id               AS linkId,
                g.title            AS linkTitle,
                g.link_type        AS linkType,
@@ -230,8 +227,6 @@
                g.topic_id         AS topicId,
                g.parameter        AS parameter,
                g.sort             AS linkSort,
-
-
                e.role_name        AS userRole,
                a.STATUS           AS STATUS,
                a.contact          AS contact,
@@ -251,9 +246,7 @@
         FROM bbs_topic as a
                  LEFT JOIN bbs_topic_image AS b ON a.id = b.topic_id
                  LEFT JOIN bbs_topic_tag AS c ON a.id = c.topic_id
-
                  LEFT JOIN bbs_topic_link AS g ON a.id = g.topic_id
-
                  LEFT JOIN sys_user AS f ON a.create_by = f.username
                  LEFT JOIN sys_user_role AS d ON f.id = d.user_id
                  LEFT JOIN sys_role AS e ON d.role_id = e.id
