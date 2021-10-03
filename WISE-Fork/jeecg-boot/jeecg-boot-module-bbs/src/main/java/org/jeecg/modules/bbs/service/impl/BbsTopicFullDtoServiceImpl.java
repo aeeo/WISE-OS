@@ -13,6 +13,7 @@ import org.jeecg.modules.bbs.entity.BbsUserStar;
 import org.jeecg.modules.bbs.mapper.BbsTopicFullDtoMapper;
 import org.jeecg.modules.bbs.mapper.BbsTopicMapper;
 import org.jeecg.modules.bbs.service.IBbsTopicFullDtoService;
+import org.jeecg.modules.cache.BbsRedisUtils;
 import org.jeecg.modules.cache.LoadDataRedis;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,8 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
     private BbsTopicFullDtoMapper bbsTopicFullDtoMapper;
     @Autowired
     private RedisUtil redisUtil;
-
+    @Autowired
+    private BbsRedisUtils bbsRedisUtils;
 
 
     @Override
@@ -56,7 +58,21 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         }
         List<Object> bbsTopicFullDto1 = (List<Object>)redisUtil.mget(topicIdList1);
         for (Object o : bbsTopicFullDto1) {
-            bbsTopicFullDtosList.add((BbsTopicFullDto) o);
+            //如果帖子在redis中不存在，则需要查库
+            if (null == o) {
+                BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto) o;
+                BbsTopicFullDto bbsTopicFullDto2 = queryTopicFullDtoById(bbsTopicFullDto.getId());
+                if(null!=bbsTopicFullDto2){
+                    bbsTopicFullDtosList.add(bbsTopicFullDto2);
+                }else{
+//                    如果库里也没有应该删除redis排行榜中的记录，但是zset删除没看懂，先留空，不重要
+//                    Set<Object> objects = new HashSet<>();
+//                    objects.add(bbsTopicFullDto.getId());
+//                    redisUtil.zRmove(LoadDataRedis.BBS_RANK_REGION_CLASS + regionCode + "_" + classCode,objects);
+                }
+            } else {
+                bbsTopicFullDtosList.add((BbsTopicFullDto) o);
+            }
         }
         page.setRecords(bbsTopicFullDtosList);
         page.setTotal(zSize);
@@ -222,11 +238,18 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
     public BbsTopicFullDto queryTopicFullDtoById(String topicId) {
         BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto)redisUtil.get(LoadDataRedis.BBS_TOPIC_TOPICID + topicId);
         if (null != bbsTopicFullDto) {
+            List<String> bbsTopicFullDtos = new ArrayList<>();
+            bbsTopicFullDtos.add(topicId);
+            bbsRedisUtils.updateTopicHitCount(bbsTopicFullDtos, 1, Integer.MAX_VALUE);
+            bbsTopicFullDto.setHitsCount(bbsTopicFullDto.getHitsCount() + 1);
             return bbsTopicFullDto;
         }
-
+        BbsTopicFullDto bbsTopicFullDto1 = queryTopicFullDtoByIdFromSql(topicId);
+        return bbsTopicFullDto1;
+    }
+    @Override
+    public BbsTopicFullDto queryTopicFullDtoByIdFromSql(String topicId) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-
         //查出固定不变的数据（已审核的贴子）
         //手动分页，先筛选帖子，再封装数据
         BbsTopicFullDto bbsTopicFullDtosList = bbsTopicFullDtoMapper.queryTopicFullDtoFixById(topicId);
@@ -234,8 +257,8 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
             return null;
         }
         //更新redis
+        bbsTopicFullDtosList.setHitsCount(bbsTopicFullDtosList.getHitsCount() + 1);
         redisUtil.set(LoadDataRedis.BBS_TOPIC_TOPICID + topicId,bbsTopicFullDtosList);
-
         bbsTopicFullDtosList.getBbsTopicLinkList().sort((l, r) -> l.getSort().compareTo(r.getSort()));
         //只有1条，但还是封装list
         List<String> topicIdList = new ArrayList<>();
@@ -259,6 +282,10 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
     public BbsTopicFullDto queryTopicFullDtoByIdAnon(String topicId) {
         BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto)redisUtil.get(LoadDataRedis.BBS_TOPIC_TOPICID + topicId);
         if (null != bbsTopicFullDto) {
+            List<String> bbsTopicFullDtos = new ArrayList<>();
+            bbsTopicFullDtos.add(topicId);
+            bbsRedisUtils.updateTopicHitCount(bbsTopicFullDtos, 1, Integer.MAX_VALUE);
+            bbsTopicFullDto.setHitsCount(bbsTopicFullDto.getHitsCount() + 1);
             return bbsTopicFullDto;
         }
 
@@ -266,7 +293,6 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         //手动分页，先筛选帖子，再封装数据
         BbsTopicFullDto bbsTopicFullDtosList = bbsTopicFullDtoMapper.queryTopicFullDtoFixById(topicId);
         bbsTopicFullDtosList.getBbsTopicLinkList().sort((l, r) -> l.getSort().compareTo(r.getSort()));
-
         return bbsTopicFullDtosList;
     }
 }

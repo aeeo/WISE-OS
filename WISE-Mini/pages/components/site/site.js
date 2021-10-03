@@ -237,6 +237,12 @@ Page({
           // 当前区域文字提示
           if (wx.getStorageSync('ALLINFO').bbsUserRecord.regionCode == item.regionCode) {
             callout.content = "当前区域：" + item.content
+
+            that.setData({
+              latitude: markerTemItem.latitude,
+              longitude: markerTemItem.longitude,
+              scale: markerTemItem.scale
+            })
           } else {
             callout.content = "Go：" + item.content
           }
@@ -265,11 +271,11 @@ Page({
             // circleTemItem.color = '#32CD3288' //描边的颜色
             // circleTemItem.fillColor = '#32CD3288' //填充颜色
             if (item.scale > 8) {
-              circleTemItem.color = '#32CD3288' //描边的颜色
-              circleTemItem.fillColor = '#32CD3288' //填充颜色
+              circleTemItem.color = '#32CD3255' //描边的颜色
+              circleTemItem.fillColor = '#32CD3255' //填充颜色
             } else if (item.scale > 3 && item.scale <= 7) {
-              circleTemItem.color = '#32CD3266' //描边的颜色
-              circleTemItem.fillColor = '#32CD3266' //填充颜色
+              circleTemItem.color = '#32CD3222' //描边的颜色
+              circleTemItem.fillColor = '#32CD3222' //填充颜色
             }
           } else {
             // circleTemItem.color = '#7cb5ec44' //描边的颜色

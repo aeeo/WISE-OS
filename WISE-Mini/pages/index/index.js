@@ -211,10 +211,16 @@ Page({
                         // item.updateTime = formatUtil.showDate(new Date(item.updateTime.replace(/-/g, '/')))
                         item.publicTime = formatUtil.showDate(new Date(item.publicTime.replace(/-/g, '/')))
                         item.editTime = formatUtil.showDate(new Date(item.editTime.replace(/-/g, '/')))
-                        //正则去除html标签
-                        item.content = item.content.replace(/<\/?.+?\/?>/g, '')
+                        // 正则去除html标签
+                        let contentString = item.content.replace(/<\/?.+?\/?>/g, '')
+                        // 富文本不换行
+                        if(item.content == contentString){
+                            // 普通文本换行
+                            item.content = item.content.replace(/\n/g,"<br>")
+                        }
+                        
                         // 去除跳转标签
-                        item.content = item.content.replace(/(?=!_).+(?:_!)/g, '')
+                        // item.content = item.content.replace(/(?=!_).+(?:_!)/g, '')
                     })
                     //列表追加
                     let tempList = that.data.topicLists

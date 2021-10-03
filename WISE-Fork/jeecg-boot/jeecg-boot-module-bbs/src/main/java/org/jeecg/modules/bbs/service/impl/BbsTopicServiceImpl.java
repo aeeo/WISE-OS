@@ -114,19 +114,19 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
         }
 
         //加入redis           redis中存的是BbsTopicFullDto，但本质上和BbsTopicPage一样
-        bbsRedisUtils.addTopic(bbsTopicFullDtoService.queryTopicFullDtoById(bbsTopic.getId()));
+        bbsRedisUtils.addTopic(bbsTopicFullDtoService.queryTopicFullDtoByIdFromSql(bbsTopic.getId()));
     }
 
     @Override
-    @Transactional
     public void updateMain(BbsTopic bbsTopic, List<BbsTopicImage> bbsTopicImageList, List<BbsTopicTag> bbsTopicTagList, List<BbsTopicLink> bbsTopicLinkList) {
         updataTopic(bbsTopic,bbsTopicImageList, bbsTopicTagList,bbsTopicLinkList);
         //更新redis
         List<BbsTopicFullDto> bbsTopicFullDtos = new ArrayList<>();
-        bbsTopicFullDtos.add(bbsTopicFullDtoService.queryTopicFullDtoById(bbsTopic.getId()));
-        bbsRedisUtils.updateTopic(bbsTopicFullDtos);
+        bbsTopicFullDtos.add(bbsTopicFullDtoService.queryTopicFullDtoByIdFromSql(bbsTopic.getId()));
+//        bbsRedisUtils.updateTopic(bbsTopicFullDtos);      上面查询已经更新
     }
 
+    @Transactional
     public void updataTopic(BbsTopic bbsTopic, List<BbsTopicImage> bbsTopicImageList, List<BbsTopicTag> bbsTopicTagList, List<BbsTopicLink> bbsTopicLinkList) {
         bbsTopicMapper.updateById(bbsTopic);
 

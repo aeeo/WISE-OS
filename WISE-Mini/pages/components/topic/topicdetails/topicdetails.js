@@ -200,6 +200,13 @@ Page({
     var that = this
     if (res.data.result != null) {
       let result = res.data.result
+      // 正则去除html标签
+      let contentString = result.content.replace(/<\/?.+?\/?>/g, '')
+      // 富文本不换行
+      if(result.content == contentString){
+          // 普通文本换行
+          result.content = result.content.replace(/\n/g,"<br>")
+      }
       result.userRole = result.userRole.substring(4)
       // 添加动画属性
       result.exeCuteAnimation = result.userIsPraise
@@ -409,25 +416,32 @@ Page({
    */
   onShareAppMessage: function () {
     var that = this
-    let shareUrl = '/pages/index/index?topicId=' + that.data.topicId
-    let shareTitle = ""
     let topicdetails = that.data.topicdetails
-    if (null == topicdetails.title || "" == topicdetails.title) {
+    let shareUrl = '/pages/index/index?topicId=' + topicdetails.id
+    let shareTitle = ""
+    if (topicdetails.title) {
       shareTitle = topicdetails.title
     } else {
-      shareTitle = topicdetails.content
+      shareTitle = topicdetails.content.replace(/<.*?>/g, "")   //去除html标签
     }
+    let imageList = that.data.topicdetails.bbsTopicImageList
+    let imageUrl = ''
+    let sysUser = wx.getStorageSync('ALLINFO').sysUser
+    if (0 != imageList.length && imageList[0].topicImage) {
+      imageUrl = that.data.UPLOAD_IMAGE + imageList[0].topicImage + that.data.THUMBNAIL
+    }else if(sysUser.avatar){
+      imageUrl = that.data.UPLOAD_IMAGE + sysUser.avatar + that.data.THUMBNAIL
+    }else if(that.topicdetails.avatar){
+      imageUrl = that.data.UPLOAD_IMAGE + that.topicdetails.avatar + that.data.THUMBNAIL
+    }
+    // console.log(shareUrl)
+    // console.log(shareTitle)
 
-    let shareImageUrl = ''
-    if (that.data.topicdetails.bbsTopicImageList.length != 0 && null != that.data.topicdetails.bbsTopicImageList[0].topicImage && "" != that.data.topicdetails.bbsTopicImageList[0].topicImage) {
-      shareImageUrl = that.data.UPLOAD_IMAGE + that.data.topicdetails.bbsTopicImageList[0].topicImage + that.data.ARTWORKNOWATER
-    }
-    console.log(shareUrl)
     // /pages/index/index?topicId=1350415381262532609
     return {
       title: shareTitle,
       path: shareUrl,
-      imageUrl: shareImageUrl
+      imageUrl: imageUrl
     }
   },
   // mark:分享朋友圈
@@ -439,10 +453,13 @@ Page({
     console.log(shareTitle)
     let imageList = that.data.topicdetails.bbsTopicImageList
     let imageUrl = ""
-    if (0 == imageList.length || null == imageList[0].topicImage) {
-      imageUrl = that.data.UPLOAD_IMAGE + wx.getStorageSync('ALLINFO').bbsRegion.regionImage + that.data.THUMBNAIL
-    } else {
+    let sysUser = wx.getStorageSync('ALLINFO').sysUser
+    if (0 != imageList.length && imageList[0].topicImage) {
       imageUrl = that.data.UPLOAD_IMAGE + imageList[0].topicImage + that.data.THUMBNAIL
+    }else if(sysUser.avatar){
+      imageUrl = that.data.UPLOAD_IMAGE + sysUser.avatar + that.data.THUMBNAIL
+    }else if(that.topicdetails.avatar){
+      imageUrl = that.data.UPLOAD_IMAGE + that.topicdetails.avatar + that.data.THUMBNAIL
     }
     // console.log(imageUrl)
     return {

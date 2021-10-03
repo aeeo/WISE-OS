@@ -55,6 +55,12 @@
   </view>
 </view>
 <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+  <navigator wx:if="{{userRoles.includes('admin') || userRoles.includes('bbs_admin') || userRoles.includes('bbs_operator_admin')}}" class="cu-item arrow" url="../components/mine/admin/admin">
+    <view class="content" hover-class="none">
+      <text class="cuIcon-timefill text-green"></text>
+      <text class="text-grey">小程序管理</text>
+    </view>
+  </navigator>
   <navigator class="cu-item arrow" url="../components/mine/scanntopics/scanntopics">
     <view class="content" hover-class="none">
       <text class="cuIcon-timefill text-green"></text>

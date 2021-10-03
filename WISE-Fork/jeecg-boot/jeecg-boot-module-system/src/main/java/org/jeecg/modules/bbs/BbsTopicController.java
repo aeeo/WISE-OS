@@ -518,6 +518,9 @@ public class BbsTopicController {
     public Result<?> fullListByIdAnon(@RequestParam(value = "topicId") String topicId,
                                       HttpServletRequest req) {
         BbsTopicFullDto bbsTopicFullDto = bbsTopicFullDtoService.queryTopicFullDtoByIdAnon(topicId);
+        if (null == bbsTopicFullDto) {
+            return Result.error(1005, "id为" + topicId + "的贴子不存在。");
+        }
         return Result.OK(bbsTopicFullDto);
     }
 

@@ -4,6 +4,7 @@ Page({
         userInfo: '',
         USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
         SYSUSER: wx.getStorageSync('ALLINFO').susUser,
+        // userRoles: wx.getStorageSync('ALLINFO').bbsUserRecord.roleCodeList,
         UPLOAD_IMAGE: app.globalData.UPLOAD_IMAGE
     },
     onLoad() {

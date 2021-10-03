@@ -107,7 +107,7 @@ public class BbsRedisUtils {
 
     /**
      * 贴子浏览量
-     * stopUpdate,浏览量达到多少后禁止增加，主要用于定时任务,费定时任务传入int.maxvalue
+     * stopUpdate,浏览量达到多少后禁止增加，主要用于定时任务,非定时任务传入int.maxvalue
      */
     public void updateTopicHitCount(List<String> topicIds, int count, int stopUpdate) {
         List<Object> objectList = redisUtil.getRedisTemplate().executePipelined(new RedisCallback<Object>() {

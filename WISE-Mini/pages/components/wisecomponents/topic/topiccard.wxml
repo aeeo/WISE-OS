@@ -35,12 +35,12 @@
             <!-- 性别 -->
             <view class="{{topicItem.sex==1?'cuIcon-male text-blue':'cuIcon-female text-pink'}}"
               style="margin-left:5px;border-radius:25px;"></view>
-            <!-- 角色 -->
-            <view wx:if="{{showRole}}"
-              class="cu-tag bg-{{topicItem.userRole=='开发者'?'yellow':(topicItem.userRole=='官方'?'red':'grey')}} sm radius"
+            <!-- 角色 置顶帖不需要角色-->
+            <!-- <view wx:if="{{showRole}}"
+              class="cu-tag bg-{{topicItem.userRole=='开发者'?'yellow':(topicItem.userRole=='官方'?'red':'yellow')}} sm radius"
               style="display:{{topicItem.userRole=='用户'?'none':''}};margin-left:5px;">
               {{topicItem.userRole}}
-            </view>
+            </view> -->
             <!-- 类型 -->
             <view class="cu-tag bg-{{topicItem.topicType=='1'?'green':'grey'}} sm radius"
               style="display:{{topicItem.topicType!='1'?'none':''}};margin-left:5px;">
@@ -197,7 +197,7 @@
       </view>
     </view>
     <view class="text-content topicContent">
-      <rich-text nodes="{{topicItem.content}}"></rich-text>
+      <rich-text style="text-align: justify;word-break:break-word;" nodes="{{topicItem.content}}"></rich-text>
     </view>
     <!-- 图片 -->
     <wise-topic-card-image imageList="{{topicItem.bbsTopicImageList}}" test="haha"></wise-topic-card-image>

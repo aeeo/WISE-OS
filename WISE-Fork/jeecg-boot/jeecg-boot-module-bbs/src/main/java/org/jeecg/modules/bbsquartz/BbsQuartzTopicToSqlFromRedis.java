@@ -40,7 +40,7 @@ public class BbsQuartzTopicToSqlFromRedis implements Job {
      * 定时任务，从redis读取数据持久化到数据库
      */
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        log.info(String.format("持久化Redis帖子到数据库。"));
+        log.info(String.format("持久化Redis帖子到数据库----开始"));
 
         Set<String> allTopic = bbsRedisUtils.getAllTopic();
         Iterator<String> iterator = allTopic.iterator();
@@ -57,5 +57,6 @@ public class BbsQuartzTopicToSqlFromRedis implements Job {
             BeanUtils.copyProperties(bbsTopicFullDtoItem,topic);
             bbsTopicService.updataTopic(topic, bbsTopicFullDtoItem.getBbsTopicImageList(), bbsTopicFullDtoItem.getBbsTopicTagList(), bbsTopicFullDtoItem.getBbsTopicLinkList());
         }
+        log.info(String.format("持久化Redis帖子到数据库----完成"));
     }
 }

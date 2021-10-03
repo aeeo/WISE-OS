@@ -39,16 +39,16 @@ public class BbsQuartzTopic implements Job {
     @Override
     //@AutoLog(value = "定时任务增加帖子浏览量")
     /**
-     * 10分钟一次，每次1-10个浏览量
+     * 10分钟一次，每次1-25个浏览量
      * 1小时50个
      * 1天1200个
      * 1周7000个
      */
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        log.info(String.format("定时任务增加帖子浏览量。"));
-        int randomRange = 9;
+        log.info(String.format("定时任务增加帖子浏览量----开始"));
+        int randomRange = 25;
         int expetHitCount = 7000;           //期望点击量
-        int random = 0;
+        int random = 1;
         Date date = new Date();
         if (date.getHours() > 8 && date.getHours() < 23) {
             random = new Random().nextInt(randomRange) + 1;
@@ -70,6 +70,7 @@ public class BbsQuartzTopic implements Job {
         int random3 = new Random().nextInt(random2) + 1;
         int random4 = new Random().nextInt(random3);
         //所有帖子浏览量随机增加
-        bbsRedisUtils.updateTopicHitCount(rankTopic, random,expetHitCount + random1 * random2 * random3 * random4);
+        bbsRedisUtils.updateTopicHitCount(rankTopic, random, expetHitCount + random1 * random2 * random3 * random4);
+        log.info(String.format("定时任务增加帖子浏览量----完成"));
     }
 }

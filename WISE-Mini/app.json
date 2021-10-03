@@ -25,6 +25,7 @@
     "pages/components/mine/star/star",
     "pages/components/mine/circlefriends/circlefriends",
     "pages/components/mine/userinfo/userinfo",
+    "pages/components/mine/admin/admin",
     "pages/components/msg/sysmessage/sysmessage",
     "pages/components/msg/savemoney/savemoney",
     "pages/components/msg/usermessage/usermessage",

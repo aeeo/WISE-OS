@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -624,6 +625,16 @@ public class RedisUtil {
      */
     public Long zAdd(String key, Set<TypedTuple<Object>> values) {
         return redisTemplate.opsForZSet().add(key, values);
+    }
+
+    /**
+     * 删除zset指定元素
+     * @param key
+     * @param values
+     * @return
+     */
+    public Long zRmove(String key, Set<TypedTuple<Object>> values) {
+        return redisTemplate.opsForZSet().remove(key, values);
     }
 
     /**

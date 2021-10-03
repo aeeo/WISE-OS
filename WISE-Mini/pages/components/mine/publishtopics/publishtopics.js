@@ -66,10 +66,15 @@ Page({
                 item.userRole = item.userRole.substring(4)
                 // 添加动画属性
                 item.exeCuteAnimation = item.userIsPraise
-                //正则去除html标签
-                item.content = item.content.replace(/<\/?.+?\/?>/g, '')
+                // 正则去除html标签
+                let contentString = item.content.replace(/<\/?.+?\/?>/g, '')
+                // 富文本不换行
+                if(item.content == contentString){
+                    // 普通文本换行
+                    item.content = item.content.replace(/\n/g,"<br>")
+                }
                 // 去除跳转标签
-                item.content = item.content.replace(/(?=!_).+(?:_!)/g, '')
+                // item.content = item.content.replace(/(?=!_).+(?:_!)/g, '')
                 item.createTime = formatUtil.showDate(new Date(item.createTime.replace(/-/g, '/')))
                 // item.updateTime = formatUtil.showDate(new Date(item.updateTime.replace(/-/g, '/')))
                 item.publicTime = formatUtil.showDate(new Date(item.publicTime.replace(/-/g, '/')))
@@ -88,11 +93,13 @@ Page({
                 isLoad: true,
                 onReachBottomLoading: true
             })
+            wx.stopPullDownRefresh()
         }, err => {
             that.setData({
                 topicLists: res.data.result.records,
                 getTopicFlag: false
             })
+            wx.stopPullDownRefresh()
         })
     },
 

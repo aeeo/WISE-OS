@@ -35,7 +35,11 @@ public interface IBbsTopicFullDtoService extends IService<BbsTopicFullDto> {
      */
     IPage<BbsTopicFullDto> queryTopicFullDtoFix(Page<BbsTopicFullDto> page, String regionCode, String classCode, int[] topicType);
 
+    //先redis后库
     BbsTopicFullDto queryTopicFullDtoById(String topicId);
+
+    //直接库
+    BbsTopicFullDto queryTopicFullDtoByIdFromSql(String topicId);
 
     IPage<BbsTopicFullDto> queryUserPublishTopicFullDto(Page<BbsTopicFullDto> page, HttpServletRequest req, int[] topicType, String username);
 
