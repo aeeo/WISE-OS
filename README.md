@@ -428,3 +428,9 @@ docker run -p 3306:3306 --name wise-mysql -v ~/mysql/data:/var/lib/mysql -e  MYS
 如果有docker仓库的权限，则可以直接将第1步生成的快照镜像push到docker仓库，然后在另一台主机上pull镜像并运行为容器即可。
 ```xxxxxxxxxx mysql提交容器快照生成新的镜像docker commit -p wise-mysql wise-mysql-image将镜像保存成一个tar压缩包docker save -o wise-mysql-image.tar wise-mysql-image将tar压缩包复制到另一台主机scp wise-mysql-image.tar root@47.108.201.102:/root/docker/在另一台主机上加载镜像的tar压缩包docker load -i wise-mysql-image.tar使用这个加载的镜像运行容器docker run -p 3306:3306 --name wise-mysql -v ~/mysql/data:/var/lib/mysql -e  MYSQL_ROOT_PASSWORD=123456  -d wise-mysql-image如果有docker仓库的权限，则可以直接将第1步生成的快照镜像push到docker仓库，然后在另一台主机上pull镜像并运行为容器即可。
 ````
+
+
+<div><img alt="系统截图" width="200" height="290" src="https://gitee.com/liuhangjun/mina_social_business/raw/master/resources/images/1.jpeg">
+<img alt="系统截图" width="200" height="290" src="https://gitee.com/liuhangjun/mina_social_business/raw/master/resources/images/2.jpeg">
+<img alt="系统截图" width="200" height="290" src="https://gitee.com/liuhangjun/mina_social_business/raw/master/resources/images/3.png">
+<img alt="系统截图" width="200" height="290" src="https://gitee.com/liuhangjun/mina_social_business/raw/master/resources/images/4.jpeg"></div>
