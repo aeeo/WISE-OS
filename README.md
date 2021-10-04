@@ -1,25 +1,26 @@
-````
 # 简介
 一个信息发布类型的微信小程序，可以在线发布需求，例如寻人、寻物、打听，表白等。可改造表白墙、校园信息发布、帮打听、城市交流圈、大型朋友圈，废话不说，扫码查看小程序演示：
-<div><img src="https://img-blog.csdnimg.cn/2c761508b0db4afa9d2616e3f4b43886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25iY3Nkbg==,size_16,color_FFFFFF,t_70" width="23%">
-<img src="https://img-blog.csdnimg.cn/a99544c2dc0f440590507e7de0754de7.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
-<img src="https://img-blog.csdnimg.cn/e63e808515f345e89e1a8c85df222899.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
-<img src="https://img-blog.csdnimg.cn/f2102f0283064212ae65dc789446e930.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
-</div>
-<div class="half">
+<center>
+    <img  src="https://img-blog.csdnimg.cn/2c761508b0db4afa9d2616e3f4b43886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25iY3Nkbg==,size_16,color_FFFFFF,t_70" width="23%"/>
+    <img src="https://img-blog.csdnimg.cn/a99544c2dc0f440590507e7de0754de7.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
+    <img src="https://img-blog.csdnimg.cn/e63e808515f345e89e1a8c85df222899.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
+    <img src="https://img-blog.csdnimg.cn/f2102f0283064212ae65dc789446e930.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
+</center>
+<center class="half">
     <img src="https://img-blog.csdnimg.cn/d213a187254b437ca96a2b1bd76b9792.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
     <img src="https://img-blog.csdnimg.cn/36cdc955824f4a2abae6285ff91ba1f4.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
     <img src="https://img-blog.csdnimg.cn/3987892dc7524932b9cc773f7f803e39.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
     <img src="https://img-blog.csdnimg.cn/1f3237f34a104d3b80ca380168bf7791.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
-</div>
+</center>
 
 
 好项目应该被顶起来，可以的话给个**Star**鼓励下：
 
 > Gitee：
 > > [https://gitee.com/vtep/WISE-OS.git](https://gitee.com/vtep/WISE-OS.git)
-> 
+>
 > Github：
+>
 > > [https://github.com/geneedyou/WISE-OS.git](https://github.com/geneedyou/WISE-OS.git)
 
 行星万象后台管理系统，第一次加载会比较慢，正式地址，不提供体验账号密码：
@@ -49,7 +50,7 @@
 ## 需要具备的知识
  1. 微信小程序基本常识，例如怎样新建一个小程序、输出Hello、发送HTTP请求。
  2. 对JeecgBoot等快速开发平台有一定了解，因为本平台后台基于JeecgBoot搭建，在项目使用过程中大部分问题都可以在[**JeecgBoot开发文档**](http://doc.jeecg.com/2043872)中找到答案，各位也可以去给点个Star，吃水不忘挖井人。
- 
+
 ## 基础开发环境
  1. JDK: 1.8 Maven: 3.5+
  2. MySql: 5.7+
@@ -70,24 +71,25 @@
 
 > Gitee：
 > > [Gitee：https://gitee.com/vtep/WISE-OS.git](https://gitee.com/vtep/WISE-OS.git)
-> 
+>
 > Github：
+>
 > > [https://github.com/geneedyou/WISE-OS.git](https://github.com/geneedyou/WISE-OS.git)
 
 2. 初始化数据库
 
 初始化数据库，要求mysql5.7+，新建数据库wised，手工执行Sql脚本初始化数据。
 
-<div>
+<center>
 <img src="https://img-blog.csdnimg.cn/0c33d1ce33e74e928262a4cce8fc4d9b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_14,color_FFFFFF,t_70,g_se,x_16" width="40%"/>
-</div>
+</center>
 
 > WISE-OS\数据库脚本（在mysql中执行即可）\wised.sql
 
 3. 项目结构
 > WISE-Mini（小程序）
 > WISE-Fork（后台管理系统和后台服务）
-> 
+>
 
 > ant-design-vue-jeecg（后台管理系统）
 > jeecg-boot-parent（父POM： 项目依赖、modules组织） 
@@ -114,12 +116,12 @@
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/207ef38d834d482aaecd2d4855982e4e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16)
   - Redis配置（配置redis的host和port）
-  
+
   ![在这里插入图片描述](https://img-blog.csdnimg.cn/b4ac8f3defd84d2190ac2c45e857ea56.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16)
 
-  
+
   - 七牛OSS配置
-  
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/f521c12d8f8a48c2aa15d9528c2c0d16.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16)
 - 小程序配置
 
@@ -181,9 +183,9 @@ npm install
 一般大部分问题都可以在[**微信官网文档**](https://developers.weixin.qq.com/miniprogram/dev/framework/)和[**JeecgBoot开发文档**](http://doc.jeecg.com/2043872)中找到答案，请确保吃透官方文档，如果仍旧无法解决或无从下手可以进QQ群，重点说明： 申请进群时提供的是GitHub或码云Star显示的名字(列如下图)，管理员会挨个审核是否已Star，乱填的不允许进群：
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/c9ab2406659b41d79722d33bfb5e2f38.png)
-<div>
+<center>
 <img src="https://img-blog.csdnimg.cn/19be061167b248cd9b87ed11c7b37860.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="40%"/>
-</div>
+</center>
 
 # 附录
 ## 表设计规范
@@ -425,11 +427,4 @@ docker load -i wise-mysql-image.tar
 使用这个加载的镜像运行容器
 docker run -p 3306:3306 --name wise-mysql -v ~/mysql/data:/var/lib/mysql -e  MYSQL_ROOT_PASSWORD=123456  -d wise-mysql-image
 如果有docker仓库的权限，则可以直接将第1步生成的快照镜像push到docker仓库，然后在另一台主机上pull镜像并运行为容器即可。
-```xxxxxxxxxx mysql提交容器快照生成新的镜像docker commit -p wise-mysql wise-mysql-image将镜像保存成一个tar压缩包docker save -o wise-mysql-image.tar wise-mysql-image将tar压缩包复制到另一台主机scp wise-mysql-image.tar root@47.108.201.102:/root/docker/在另一台主机上加载镜像的tar压缩包docker load -i wise-mysql-image.tar使用这个加载的镜像运行容器docker run -p 3306:3306 --name wise-mysql -v ~/mysql/data:/var/lib/mysql -e  MYSQL_ROOT_PASSWORD=123456  -d wise-mysql-image如果有docker仓库的权限，则可以直接将第1步生成的快照镜像push到docker仓库，然后在另一台主机上pull镜像并运行为容器即可。
-````
-
-
-<div><img alt="系统截图" width="200" height="290" src="https://img-blog.csdnimg.cn/2c761508b0db4afa9d2616e3f4b43886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25iY3Nkbg==,size_16,color_FFFFFF,t_70">
-<img alt="系统截图" width="200" height="290" src="https://gitee.com/liuhangjun/mina_social_business/raw/master/resources/images/2.jpeg">
-<img alt="系统截图" width="200" height="290" src="https://gitee.com/liuhangjun/mina_social_business/raw/master/resources/images/3.png">
-<img alt="系统截图" width="200" height="290" src="https://gitee.com/liuhangjun/mina_social_business/raw/master/resources/images/4.jpeg"></div>
+```
