@@ -1,11 +1,10 @@
 ````
 # 简介
 一个信息发布类型的微信小程序，可以在线发布需求，例如寻人、寻物、打听，表白等。可改造表白墙、校园信息发布、帮打听、城市交流圈、大型朋友圈，废话不说，扫码查看小程序演示：
-<div>
-    <img src="https://img-blog.csdnimg.cn/2c761508b0db4afa9d2616e3f4b43886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25iY3Nkbg==,size_16,color_FFFFFF,t_70" width="23%"/>
-    <img src="https://img-blog.csdnimg.cn/a99544c2dc0f440590507e7de0754de7.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
-    <img src="https://img-blog.csdnimg.cn/e63e808515f345e89e1a8c85df222899.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
-    <img src="https://img-blog.csdnimg.cn/f2102f0283064212ae65dc789446e930.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
+<div><img src="https://img-blog.csdnimg.cn/2c761508b0db4afa9d2616e3f4b43886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25iY3Nkbg==,size_16,color_FFFFFF,t_70" width="23%"/>
+<img src="https://img-blog.csdnimg.cn/a99544c2dc0f440590507e7de0754de7.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
+<img src="https://img-blog.csdnimg.cn/e63e808515f345e89e1a8c85df222899.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
+<img src="https://img-blog.csdnimg.cn/f2102f0283064212ae65dc789446e930.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
 </div>
 <div class="half">
     <img src="https://img-blog.csdnimg.cn/d213a187254b437ca96a2b1bd76b9792.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
