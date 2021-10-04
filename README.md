@@ -1,18 +1,18 @@
 ````
 # 简介
 一个信息发布类型的微信小程序，可以在线发布需求，例如寻人、寻物、打听，表白等。可改造表白墙、校园信息发布、帮打听、城市交流圈、大型朋友圈，废话不说，扫码查看小程序演示：
-<center>
+<div>
     <img src="https://img-blog.csdnimg.cn/2c761508b0db4afa9d2616e3f4b43886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25iY3Nkbg==,size_16,color_FFFFFF,t_70" width="23%"/>
     <img src="https://img-blog.csdnimg.cn/a99544c2dc0f440590507e7de0754de7.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
     <img src="https://img-blog.csdnimg.cn/e63e808515f345e89e1a8c85df222899.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
     <img src="https://img-blog.csdnimg.cn/f2102f0283064212ae65dc789446e930.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
-</center>
-<center class="half">
+</div>
+<div class="half">
     <img src="https://img-blog.csdnimg.cn/d213a187254b437ca96a2b1bd76b9792.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
     <img src="https://img-blog.csdnimg.cn/36cdc955824f4a2abae6285ff91ba1f4.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
     <img src="https://img-blog.csdnimg.cn/3987892dc7524932b9cc773f7f803e39.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
     <img src="https://img-blog.csdnimg.cn/1f3237f34a104d3b80ca380168bf7791.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
-</center>
+</div>
 
 
 好项目应该被顶起来，可以的话给个**Star**鼓励下：
@@ -79,9 +79,9 @@
 
 初始化数据库，要求mysql5.7+，新建数据库wised，手工执行Sql脚本初始化数据。
 
-<center>
+<div>
 <img src="https://img-blog.csdnimg.cn/0c33d1ce33e74e928262a4cce8fc4d9b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_14,color_FFFFFF,t_70,g_se,x_16" width="40%"/>
-</center>
+</div>
 
 > WISE-OS\数据库脚本（在mysql中执行即可）\wised.sql
 
@@ -182,9 +182,9 @@ npm install
 一般大部分问题都可以在[**微信官网文档**](https://developers.weixin.qq.com/miniprogram/dev/framework/)和[**JeecgBoot开发文档**](http://doc.jeecg.com/2043872)中找到答案，请确保吃透官方文档，如果仍旧无法解决或无从下手可以进QQ群，重点说明： 申请进群时提供的是GitHub或码云Star显示的名字(列如下图)，管理员会挨个审核是否已Star，乱填的不允许进群：
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/c9ab2406659b41d79722d33bfb5e2f38.png)
-<center>
+<div>
 <img src="https://img-blog.csdnimg.cn/19be061167b248cd9b87ed11c7b37860.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="40%"/>
-</center>
+</div>
 
 # 附录
 ## 表设计规范
