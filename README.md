@@ -180,12 +180,16 @@ npm install
 3. 技术
 从我的角度这是一个对学生以及毕业生非常好的练手项目，因为在开始做这个项目的时候我还是一名西安文理学院的在校生，从架构从逻辑都是我一步步走过来的，用这个项目练手一是有我做的基础在不会无聊，二是各方面技术都有涉猎，三是系统可上线。
 # 常见问题
-一般大部分问题都可以在[**微信官网文档**](https://developers.weixin.qq.com/miniprogram/dev/framework/)和[**JeecgBoot开发文档**](http://doc.jeecg.com/2043872)中找到答案，请确保吃透官方文档，如果仍旧无法解决或无从下手可以进QQ群，重点说明： 申请进群时提供的是GitHub或码云Star显示的名字(列如下图)，管理员会挨个审核是否已Star，乱填的不允许进群：
-
-![在这里插入图片描述](https://img-blog.csdnimg.cn/c9ab2406659b41d79722d33bfb5e2f38.png)
+一般大部分问题都可以在[**微信官网文档**](https://developers.weixin.qq.com/miniprogram/dev/framework/)和[**JeecgBoot开发文档**](http://doc.jeecg.com/2043872)中找到答案，请确保吃透官方文档，如果仍旧无法解决或无从下手可以进QQ群：
 <center>
 <img src="https://img-blog.csdnimg.cn/19be061167b248cd9b87ed11c7b37860.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="40%"/>
 </center>
+
+# 赞赏支持
+<center>
+<img src="https://img-blog.csdnimg.cn/5eac762468ed45dfaae52870942ed6b1.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="40%"/>
+</center>
+
 
 # 附录
 ## 表设计规范
