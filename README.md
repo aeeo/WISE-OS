@@ -1,5 +1,5 @@
 # 简介
-一个信息发布类型的微信小程序，可以在线发布需求，例如寻人、寻物、打听，表白等。可改造表白墙、校园信息发布、帮打听、城市交流圈、大型朋友圈，废话不说，扫码查看小程序演示：
+中国目前大概有5000个表白墙，累计用户近3000万，是一个庞大的群体，但现在大都以微信朋友圈为基础进行信息中转，但是这种模式经营者和用户都不友好，尤其是经营者无法变现，用户无法公开评论，这些种种问题就造就了行星万象的诞生。这是一个信息发布类型的微信小程序，可以发布例如吐槽、找对象等信息。甚至能轻易改造为论坛小程序，废话不说，扫码查看小程序演示：
 <center>
     <img  src="https://img-blog.csdnimg.cn/2c761508b0db4afa9d2616e3f4b43886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25iY3Nkbg==,size_16,color_FFFFFF,t_70" width="23%"/>
     <img src="https://img-blog.csdnimg.cn/a99544c2dc0f440590507e7de0754de7.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
@@ -14,6 +14,8 @@
 </center>
 
 
+
+
 好项目应该被顶起来，可以的话给个**Star**鼓励下：
 
 > Gitee：
@@ -23,26 +25,26 @@
 >
 > > [https://github.com/geneedyou/WISE-OS.git](https://github.com/geneedyou/WISE-OS.git)
 
-行星万象后台管理系统，第一次加载会比较慢，正式地址，不提供体验账号密码：
+小程序的后台，正式地址，不提供体验账号密码：
 
 > [行星万象后台管理系统：https://www.vtep.cn](https://www.vtep.cn)
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/b6074f3633774fa5b0505d187e032072.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16)
 
-很遗憾虽然行星万象的后台没有办法让你体验，但是JeecgBoot提供了一个体验地址，大体一样可以借鉴：
+很遗憾行星万象的后台没有办法让你体验，但是JeecgBoot提供了一个体验地址，大体一样可以借鉴：
 
 > [JeecgBoot演示](http://boot.jeecg.com/user/login)
 > 账户/密码：jeecg/123456
 
-在此说一下，行星万象项目陆陆续续开发了一年时间，到现在为止基本功能已经开发完毕，有时间的话把即时聊天功能集成进去，同时也保证会维护下去，继续丰满功能。只是我有工作，一个人精力有限不能对不起自己的老板，所以进展可能会比较慢，但请放心绝不会烂尾，有下图为证：
+在此说一下，行星万象项目陆陆续续开发了一年时间，到现在为止基本功能已经开发完毕，有时间的话把即时聊天功能集成进去，同时也保证会维护下去，继续丰满功能。只是精力有限，所以进展可能会比较慢，但放心绝不会烂尾，有下图为证：
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/434583ce50984a038b697e89edc3d4ea.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16)
 
 为了让新人快速上手，我会在开发文档这边花比较多的精力，保证拿到代码先能跑起来。
 
-本项目所有的代码都可以拿去修改部署，免费使用，但是你必须要注明：
+行星万象开源版任何人都可以拿去修改部署，免费使用，但是你必须在明确注明：
 
-> [PowerBy Https://gitee.com/vtep/WISE-OS](https://gitee.com/vtep/WISE-OS.git)
+> [行星万象提供技术支持](https://gitee.com/vtep/WISE-OS.git)
 
 如果只是需要使用本小程序可以联系我，我帮你开通一个区域和后台，你自行去运营，但是硬件和资源成本还是希望能分担一下，我不凭借这个系统赚钱，但是也不想成为我的经济负担，具体联系：18700871300（同微信），也可商业合作。
 
@@ -67,7 +69,7 @@
 ## 准备工作
 请先确保浏览过[JeecgBoot](http://doc.jeecg.com/2043872)。
 
-1. 下载源码，开源不易，务必Star。
+1. Fork源码，开源不易，务必Star。Fork后可以持续获得本项目功能更新，但是注意别被覆盖。
 
 > Gitee：
 > > [Gitee：https://gitee.com/vtep/WISE-OS.git](https://gitee.com/vtep/WISE-OS.git)
@@ -160,6 +162,9 @@ npm install
 ```
 打开微信开发者工具：工具->构建npm，完成。
 
+# 新功能
+如果你有好的创意或想法，可以直接提交代码到Gitee的仓库，经过我的测试后会合并到主线上，也可以在Gitee上提Issues，我会经常翻看，有意义的Issues我会去实现。
+
 # 优势
 1. 小程序界面精美，从我开始开发一直遵循的宗旨，大可拿去和市面上的同类产品去对比。
 2. 后台管理系统完善，界面精美。
@@ -168,8 +173,8 @@ npm install
 5. **开源**。
 6. **长期维护**。
 
-# 你能得到什么
-这里我不谈意义，只谈得失，熟悉此项目你会获得以下好处。
+## 你能得到什么
+只谈得失，熟悉此项目你会获得以下好处。
 
 1. 项目
 如果你是一名在校生，你可以拿着这套代码去部署、去创业、去参加大创、挑战杯各类比赛申请经费都没有问题，甚至毕业面试也是一份不错的履历。
@@ -185,7 +190,7 @@ npm install
 <img src="https://img-blog.csdnimg.cn/19be061167b248cd9b87ed11c7b37860.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="40%"/>
 </center>
 
-# 赞赏支持
+# 赞赏
 <center>
 <img src="https://img-blog.csdnimg.cn/5eac762468ed45dfaae52870942ed6b1.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="40%"/>
 </center>
