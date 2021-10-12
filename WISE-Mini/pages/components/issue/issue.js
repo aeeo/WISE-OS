@@ -547,23 +547,19 @@ Page({
     wx.showLoading({
       title: '请稍等...',
     })
+    // 开放数据校验与解密 https://developers.weixin.qq.com/minigame/dev/guide/open-ability/signature.html
     wx.cloud.callFunction({
       name: 'getOpenData',
       data: {
+        action: "getPhoneNumber",
         weRunData: wx.cloud.CloudID(cloudID),
         obj: {
           shareInfo: wx.cloud.CloudID(cloudID)
         }
       }
     }).then(res => {
-      console.log('云函数获取开放数据：', res)
-      // let formDataTemp = that.data.formData
-      // formDataTemp.contact = res.result.weRunData.data.phoneNumber
-      // that.setData({
-      //   formData: formDataTemp
-      // })
       that.setData({
-        contact: res.result.weRunData.data.phoneNumber
+        contact: res.result
       })
       wx.hideLoading()
     }).catch(err => {
