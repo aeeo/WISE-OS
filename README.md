@@ -1,8 +1,8 @@
-# 更多文档请在Wiki查看：
+## 更多文档请在Wiki查看：
 
 > [Go Wiki](https://gitee.com/vtep/WISE-OS/wikis/pages)
 
-# 简介
+## 简介
 
 目前中国大概有5000个表白墙，是一个累计用户近3000万的庞大群体，但现有表白墙大都以微信朋友圈为基础进行信息中转，这种模式对经营者和用户都不够友好，例如经营者无法盈利，用户无法沟通等。因此行星万象应运而生，你可以将行星万象看做是一个信息发布类型的微信小程序，用户在上面可以发布吐槽、找对象等信息。废话不说，扫码查看小程序演示：
 <center>
@@ -50,24 +50,24 @@
 如果只是需要使用本小程序可以联系我，我帮你开通一个区域和后台，你自行去运营，但是硬件和资源成本还是希望能分担一下，我不凭借这个系统赚钱，但是也不想成为我的经济负担，具体联系：18700871300（同微信），也可商业合作。
 
 最后，如果你没有任何基础又或者仅准备用一两天时间来摸透这个系统，建议还是立刻关闭这个标签页，当你有了心理准备，那就可以往下看了。
-## 需要具备的知识
+### 需要具备的知识
  1. 微信小程序基本常识，例如怎样新建一个小程序、输出Hello、发送HTTP请求。
  2. 对JeecgBoot等快速开发平台有一定了解，因为本平台后台基于JeecgBoot搭建，在项目使用过程中大部分问题都可以在[**JeecgBoot开发文档**](http://doc.jeecg.com/2043872)中找到答案，各位也可以去给点个Star，吃水不忘挖井人。
 
-## 基础开发环境
+### 基础开发环境
  1. JDK: 1.8 Maven: 3.5+
  2. MySql: 5.7+
  3. Redis: 3.2 +
  4. Node Js: 10.0 +
  5. Npm: 5.6.0+
 
-# 超级起步
-## 环境搭建
+## 超级起步
+### 环境搭建
 环境搭建参考JeecgBoot官方文档：
 
 > [http://doc.jeecg.com/2043873](http://doc.jeecg.com/2043873)
 
-## 准备工作
+### 准备工作
 请先确保浏览过[JeecgBoot](http://doc.jeecg.com/2043872)。
 
 1. Fork源码，开源不易，务必Star。Fork后可以持续获得本项目功能更新，但是注意别被覆盖。
@@ -140,15 +140,15 @@
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/7630b59e9ce8476e823dd54e784c037c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16)
 
 
-## 启动项目
-### 后端服务启动
+### 启动项目
+#### 后端服务启动
 确认好配置修改完成后可直接右键启动
 
 > jeecg-boot-module-system/src/main/java/org/jeecg/JeecgSystemApplication.java
 
 右键执行启动，通过 http://localhost:8080/jeecg-boot/doc.html 访问后台，默认进入swagger文档首页
 
-### 管理系统启动
+#### 管理系统启动
 在ant-design-jeecg-vue目录下执行命令下载依赖，执行命令 
 
 > yarn install
@@ -165,7 +165,7 @@ npm install
 
 2. 开通小程序云开发。
 
-# 新功能
+## 新功能
 想获取持续更新最好Fork项目，合并代码会很方便。
 
 如果你优化了某部分功能，可以直接提交代码到Gitee的仓库，经过我的测试后会合并到主线上，感谢列表也会出现你的名字。
@@ -174,7 +174,7 @@ npm install
 
 后续更新计划会在Issues。
 
-# 优势
+## 优势
 1. 小程序界面精美，从我开始开发一直遵循的宗旨，大可拿去和市面上的同类产品去对比。
 2. 后台管理系统完善，界面精美。
 3. 小程序运行稳定，可以快速上线，与微信结合紧密，在开发阶段已经考虑到内容分享，管理员可以将小程序内容分享至个人朋友圈，打通生态。
@@ -182,7 +182,7 @@ npm install
 5. **开源**。
 6. **长期维护**。
 
-# 收获
+## 收获
 
 只谈得失，熟悉此项目你会获得以下好处。
 
@@ -194,14 +194,13 @@ npm install
 
 3. 技术
 从我的角度这是一个对学生以及毕业生非常好的练手项目，因为在开始做这个项目的时候我还是一名西安文理学院的在校生，从架构从逻辑都是我一步步走过来的，用这个项目练手一是有我做的基础在不会无聊，二是各方面技术都有涉猎，三是系统可上线。
-# 常见问题
+## 常见问题
 一般大部分问题都可以在[**微信官网文档**](https://developers.weixin.qq.com/miniprogram/dev/framework/)和[**JeecgBoot开发文档**](http://doc.jeecg.com/2043872)中找到答案，请确保吃透官方文档，如果仍旧无法解决或无从下手可以进QQ群：
 <center>
 <img src="https://img-blog.csdnimg.cn/19be061167b248cd9b87ed11c7b37860.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="40%"/>
 </center>
 
-# 赞赏
+## 赞赏
 <center>
 <img src="https://img-blog.csdnimg.cn/5eac762468ed45dfaae52870942ed6b1.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="40%"/>
 </center>
-
