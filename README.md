@@ -96,11 +96,17 @@
 
 > ant-design-vue-jeecg（后台管理系统）
 > jeecg-boot-parent（父POM： 项目依赖、modules组织） 
+>
 > │  ├─jeecg-boot-base（共通模块： 工具类、config、权限、查询过滤器、注解、接口等） 
+>
 > │  ├─jeecg-boot-module-bbs    微信小程序代码包
+>
 > │  ├─jeecg-boot-module-demo    示例代码
-> │  ├─jeecg-boot-module-system （系统管理权限等功能） -- 默认作为启动项目  
+>
+> │  ├─jeecg-boot-module-system （系统管理权限等功能） -- 默认作为启动项目
+>
 > │  ├─jeecg-boot-starter（微服务starter模块，不需要微服务可以删掉）
+>
 > │  ├─jeecg-cloud-module（微服务生态模块，不需要微服务可以删掉）
 
 3. 打开项目
