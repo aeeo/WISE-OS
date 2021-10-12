@@ -1,10 +1,13 @@
 ## 更多文档请在Wiki查看：
 
-> [Go Wiki](https://gitee.com/vtep/WISE-OS/wikis/pages)
+> [新标签页Go Wiki](https://gitee.com/vtep/WISE-OS/wikis/pages)
 
 ## 简介
 
-目前中国大概有5000个表白墙，是一个累计用户近3000万的庞大群体，但现有表白墙大都以微信朋友圈为基础进行信息中转，这种模式对经营者和用户都不够友好，例如经营者无法盈利，用户无法沟通等。因此行星万象应运而生，你可以将行星万象看做是一个信息发布类型的微信小程序，用户在上面可以发布吐槽、找对象等信息。废话不说，扫码查看小程序演示：
+目前中国大概有5000个表白墙，是一个累计用户近3000万的庞大群体，但现有表白墙大都以微信朋友圈为基础进行信息中转，这种模式对经营者和用户都不够友好，例如经营者无法盈利，用户无法沟通等。因此行星万象应运而生，你可以将行星万象看做是一个信息发布类型的微信小程序，用户在上面可以发布吐槽、找对象等信息。
+
+废话不说，扫码查看小程序演示：
+
 <center>
     <img  src="https://img-blog.csdnimg.cn/2c761508b0db4afa9d2616e3f4b43886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L25iY3Nkbg==,size_16,color_FFFFFF,t_70" width="23%"/>
     <img src="https://img-blog.csdnimg.cn/a99544c2dc0f440590507e7de0754de7.jpg?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16" width="23%"/>
