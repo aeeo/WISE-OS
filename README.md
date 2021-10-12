@@ -92,7 +92,6 @@
 3. 项目结构
 > WISE-Mini（小程序）
 > WISE-Fork（后台管理系统和后台服务）
->
 
 > ant-design-vue-jeecg（后台管理系统）
 > jeecg-boot-parent（父POM： 项目依赖、modules组织） 
@@ -112,12 +111,15 @@
 3. 打开项目
 
 > 微信开发者工具打开：WISE-OS\WISE-Mini
+>
 > 后台服务：WISE-OS\WISE-Fork\jeecg-boot
+>
 > 后台管理系统：WISE-OS\WISE-Fork\ant-design-vue-jeecg
 
 4. 修改项目配置文件（数据库配置、redis配置）
 
 >  配置文件（本地）： jeecg-boot-module-system/src/main/resources/application-dev.yml
+>
 >  配置文件（线上）： jeecg-boot-module-system/src/main/resources/application-dev.yml
 
 
