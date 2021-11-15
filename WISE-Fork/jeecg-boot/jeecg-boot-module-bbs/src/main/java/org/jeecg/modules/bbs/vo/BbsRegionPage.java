@@ -177,7 +177,8 @@ public class BbsRegionPage {
 	@ApiModelProperty(value = "小商店ID")
     private java.lang.String miniStoreAppid;
 	/**私有区域*/
-	@Excel(name = "私有区域", width = 15)
+	@Excel(name = "私有区域", width = 15, dicCode = "bbs_region_is_private")
+    @Dict(dicCode = "bbs_region_is_private")
 	@ApiModelProperty(value = "私有区域")
     private java.lang.Integer isPrivate;
 

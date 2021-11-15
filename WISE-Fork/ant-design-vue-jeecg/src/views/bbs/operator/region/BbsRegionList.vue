@@ -164,6 +164,7 @@
 
 import {JeecgListMixin} from '@/mixins/JeecgListMixin'
 import BbsRegionModal from './modules/BbsRegionModal'
+import {filterMultiDictText} from '@/components/dict/JDictSelectUtil'
 import '@/assets/less/TableExpand.less'
 
 export default {
@@ -354,6 +355,7 @@ export default {
       fieldList.push({type: 'int', value: 'regionStatus', text: '状态', dictCode: 'bbs_region_region_status'})
       fieldList.push({type: 'string', value: 'regionDepartId', text: '区域关联部门ID', dictCode: ''})
       fieldList.push({type: 'string', value: 'miniStoreAppid', text: '小商店ID', dictCode: ''})
+      fieldList.push({type: 'int', value: 'isPrivate', text: '私有区域', dictCode: 'bbs_region_is_private'})
       this.superFieldList = fieldList
     }
   }

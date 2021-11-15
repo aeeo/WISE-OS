@@ -267,7 +267,9 @@ public class BbsRegion implements Serializable {
     /**
      * 私有区域
      */
-    @Excel(name = "私有区域", width = 15)
+    /**私有区域*/
+    @Excel(name = "私有区域", width = 15, dicCode = "bbs_region_is_private")
+    @Dict(dicCode = "bbs_region_is_private")
     @ApiModelProperty(value = "私有区域")
     private java.lang.Integer isPrivate;
 }

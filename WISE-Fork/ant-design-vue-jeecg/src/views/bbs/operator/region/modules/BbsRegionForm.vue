@@ -136,6 +136,12 @@
               <a-input v-model="model.miniStoreAppid" placeholder="请输入小商店ID"></a-input>
             </a-form-model-item>
           </a-col>
+          <a-col :span="12">
+            <a-form-model-item label="私有区域" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="isPrivate">
+              <j-dict-select-tag type="list" v-model="model.isPrivate" dictCode="bbs_region_is_private"
+                                 placeholder="请选择私有区域"/>
+            </a-form-model-item>
+          </a-col>
         </a-row>
       </a-form-model>
     </j-form-container>
@@ -159,6 +165,7 @@
 
 <script>
 
+import {getAction} from '@/api/manage'
 import {FormTypes, getRefPromise, VALIDATE_NO_PASSED} from '@/utils/JEditableTableUtil'
 import {JEditableTableModelMixin} from '@/mixins/JEditableTableModelMixin'
 import {validateDuplicateValue} from '@/utils/util'
