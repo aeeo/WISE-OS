@@ -35,10 +35,14 @@ Component({
       type: String,
       default: ''
     },
-    showHome:{
+    showHome: {
       type: [Boolean, String],
       default: false
     },
+    isPrivateRegion: {  //是否私有区域
+      type: Boolean,
+      default: true
+    }
   },
   /**
    * 组件的初始数据
@@ -57,7 +61,7 @@ Component({
         delta: 1
       });
     },
-    GoHome(){
+    GoHome() {
       // wx.switchTab({
       //   url: '/pages/index/index'
       // })
@@ -72,6 +76,13 @@ Component({
     },
     //展示定位地址
     showSite(e) {
+      if (this.data.isPrivateRegion) {
+        wx.showToast({
+          title: '本区域是私有区域哦。',
+          icon: 'none'
+        })
+        return
+      }
       wx.navigateTo({
         url: '/pages/components/site/site',
       })

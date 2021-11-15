@@ -2,7 +2,7 @@
 <import src="index.skeleton.wxml" />
 <!-- index.wxml -->
 <!-- 　内测中 -->
-<cu-custom bgColor="bg-gradual-pink" isBack="{{false}}" showSite="{{true}}">
+<cu-custom bgColor="bg-gradual-pink" isBack="{{false}}" showSite="{{true}}" isPrivateRegion="{{true}}">
   <view slot="backText"></view>
   <view slot="siteText" bindtap="showSiteIndex"
     style="width: 20em;overflow: hidden;text-overflow:ellipsis;white-space:nowrap;">

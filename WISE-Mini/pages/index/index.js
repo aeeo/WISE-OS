@@ -23,6 +23,7 @@ Page({
         windowHeight: app.globalData.windowHeight,
         screenHeight: app.globalData.screenHeight,
 
+        BBSREGION:  wx.getStorageSync('ALLINFO').bbsRegion,
         USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
         REGIONCLASS: wx.getStorageSync('ALLINFO').bbsClassList,
         CURRENTCLASSCODE: wx.getStorageSync('CURRENTCLASSCODE'), //当前所在版块Code
