@@ -286,6 +286,8 @@ public class BbsRegionController {
         queryWrapper.orderBy(true, true, "create_time");
         //根据fullName首字符排序
         queryWrapper.orderBy(true, true, "convert(full_name USING gbk)");
+        //公开区域
+        queryWrapper.eq("is_private",0);
         List<BbsRegion> list = bbsRegionService.list(queryWrapper);
 
         for (BbsRegion region : list) {

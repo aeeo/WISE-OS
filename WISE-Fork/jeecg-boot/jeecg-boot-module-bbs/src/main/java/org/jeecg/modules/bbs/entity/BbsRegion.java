@@ -1,23 +1,25 @@
 package org.jeecg.modules.bbs.entity;
 
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.jeecgframework.poi.excel.annotation.Excel;
+import org.jeecg.common.aspect.annotation.Dict;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import org.jeecg.common.aspect.annotation.Dict;
-import org.jeecgframework.poi.excel.annotation.Excel;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
 
 /**
  * @Description: 地区
  * @Author: jeecg-boot
- * @Date: 2021-09-19
+ * @Date: 2021-11-15
  * @Version: V1.0
  */
 @ApiModel(value = "bbs_region对象", description = "地区")
@@ -262,4 +264,10 @@ public class BbsRegion implements Serializable {
      */
     @TableField(exist = false)
     private java.lang.Integer regionPeopleNum;
+    /**
+     * 私有区域
+     */
+    @Excel(name = "私有区域", width = 15)
+    @ApiModelProperty(value = "私有区域")
+    private java.lang.Integer isPrivate;
 }
