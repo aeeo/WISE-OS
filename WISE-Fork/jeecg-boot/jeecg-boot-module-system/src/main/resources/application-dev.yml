@@ -143,7 +143,7 @@ spring:
           #driver-class-name: com.mysql.cj.jdbc.Driver
   #redis 配置
   redis:
-    database: 1
+    database: 2
     host: 地址
     lettuce:
       pool:
