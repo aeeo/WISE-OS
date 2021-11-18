@@ -2,7 +2,7 @@ const app = getApp();
 const formatUtil = require('../../utils/formatutil.js');
 const API = require('../../utils/API');
 const DevAsk = `<p class="MsoNormal" align="left" style="text-align:left;text-indent:21.0pt;">
-行星万象是行星环绕工作室开发的本地生活小程序，用户可以在当下区域浏览发布各类信息，如话题、吐槽、找对象、失物招领等等。我们希望建立一个良性的交流环境，任何恶意发布反动、色情、租赁、诱导等信息的用户都将被永久封禁！ <span></span>
+行星万象是行星环绕工作室开发的本地生活小程序，小伙伴可以在当下区域浏览发布各类如话题、吐槽、找对象、失物招领等信息。我们希望建立一个良性的交流环境，任何恶意发布反动、色情、租赁、诱导等信息的用户都将被永久封禁！ <span></span>
 </p>
 <p class="MsoNormal" align="left" style="text-align:left;text-indent:21.0pt;">
 每个人经历不同，自然会想法不同，看到三观不合的人或事，尽量理解，选择性接受，禁止互喷，否则管理员容易误伤。<span></span>
@@ -23,7 +23,7 @@ Page({
         windowHeight: app.globalData.windowHeight,
         screenHeight: app.globalData.screenHeight,
 
-        BBSREGION:  wx.getStorageSync('ALLINFO').bbsRegion,
+        BBSREGION: wx.getStorageSync('ALLINFO').bbsRegion,
         USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
         REGIONCLASS: wx.getStorageSync('ALLINFO').bbsClassList,
         CURRENTCLASSCODE: wx.getStorageSync('CURRENTCLASSCODE'), //当前所在版块Code
@@ -73,7 +73,7 @@ Page({
         actionGroups: [],
         showReply: false, //展示评论弹框
         fullReplys: [],
-        forbidSkip:true             //分享跳转，第一次为true，之后设置为false，否则每次都认为是分享
+        forbidSkip: true             //分享跳转，第一次为true，之后设置为false，否则每次都认为是分享
     },
     onLoad(options) {
         this.setData({
@@ -222,7 +222,9 @@ Page({
                             item.createTime = formatUtil.showDate(new Date(item.createTime.replace(/-/g, '/')))
                             // item.updateTime = formatUtil.showDate(new Date(item.updateTime.replace(/-/g, '/')))
                             item.publicTime = formatUtil.showDate(new Date(item.publicTime.replace(/-/g, '/')))
-                            item.editTime = formatUtil.showDate(new Date(item.editTime.replace(/-/g, '/')))
+                            if (item.editTime) {
+                                item.editTime = formatUtil.showDate(new Date(item.editTime.replace(/-/g, '/')))
+                            }
                             // 正则去除html标签
                             let contentString = item.content.replace(/<\/?.+?\/?>/g, '')
                             // 富文本不换行

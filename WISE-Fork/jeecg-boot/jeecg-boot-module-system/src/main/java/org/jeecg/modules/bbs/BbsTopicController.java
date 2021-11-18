@@ -830,6 +830,8 @@ public class BbsTopicController {
             try {
                 Date d = sdf.parse("2100-01-01 00:00:00");
                 bbsTopic.setPublicTime(d);
+
+                bbsTopic.setEditTime(new Date());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -850,7 +852,27 @@ public class BbsTopicController {
         return Result.OK("添加成功！");
     }
 
-
+    /**
+     * 编辑
+     *
+     * @param bbsTopicPage
+     * @return
+     */
+    @AutoLog(value = "帖子-编辑")
+    @ApiOperation(value = "帖子-编辑", notes = "帖子-编辑")
+    @PutMapping(value = "/wise/back/edit")
+    public Result<?> editWiseBack(@RequestBody BbsTopicPage bbsTopicPage) {
+        BbsTopic bbsTopic = new BbsTopic();
+        BeanUtils.copyProperties(bbsTopicPage, bbsTopic);
+        BbsTopic bbsTopicEntity = bbsTopicService.getById(bbsTopic.getId());
+        if (bbsTopicEntity == null) {
+            return Result.error("未找到对应数据");
+        }
+        //编辑时间默认和发布时间相同
+        bbsTopic.setEditTime(new Date());
+        bbsTopicService.updateMain(bbsTopic, bbsTopicPage.getBbsTopicImageList(), bbsTopicPage.getBbsTopicTagList(), bbsTopicPage.getBbsTopicLinkList());
+        return Result.OK("编辑成功!");
+    }
 
 
     /**

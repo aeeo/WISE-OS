@@ -357,7 +357,8 @@ export default {
         // ****行星万象修改位置戳****
         // add: "/bbs/bbsTopic/add",
         add: "/bbs/bbsTopic/wise/back/add",
-        edit: "/bbs/bbsTopic/edit",
+        // edit: "/bbs/bbsTopic/edit",
+        edit: "/bbs/bbsTopic/wise/back/edit",
         queryById: "/bbs/bbsTopic/queryById",
         bbsTopicImage: {
           list: '/bbs/bbsTopic/queryBbsTopicImageByMainId'

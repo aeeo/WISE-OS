@@ -20,13 +20,14 @@ Page({
     regionList: [],
     userRecord: '',
     currentRegion: [
-      ['陕西省', '浙江省', '内蒙古'],
+      ['陕西省', '浙江省', '内蒙古', '辽宁省'],
       ['全部', '西安市', '铜川市', '宝鸡市', '咸阳市', '渭南市', '延安市', '汉中市', '榆林市', '安康市', '商洛市'],
     ],
     provinceCityList: [
       ['全部', '西安市', '铜川市', '宝鸡市', '咸阳市', '渭南市', '延安市', '汉中市', '榆林市', '安康市', '商洛市'],
       ['全部', '杭州市', '宁波市', '温州市'],
       ['全部', '鄂尔多斯市'],
+      ['全部', '大连市'],
     ],
     currentRegionIndex: [-1, -1],
 
@@ -81,7 +82,7 @@ Page({
   //   console.log(res)
   // },
   //mark: onReady
-  onReady: function (e) {},
+  onReady: function (e) { },
   // 抽屉开始
   showModal(e) {
     var that = this
