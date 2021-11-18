@@ -842,7 +842,7 @@ public class BbsTopicController {
                 .eq(BbsUserRecord::getCreateBy, sysUser.getUsername())
                 .one();
         BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecord.getRegionCode()).one();
-        if (bbsTopic.getClassCode().isEmpty()) {
+        if (null == bbsTopic.getClassCode() || bbsTopic.getClassCode().isEmpty()) {
             bbsTopic.setClassCode("index");
         }
         bbsTopic.setRegionCode(bbsUserRecord.getRegionCode());
