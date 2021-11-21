@@ -77,6 +77,12 @@
           "pathName": "pages/index/index",
           "query": "regionCode=sxs-1",
           "scene": null
+        },
+        {
+          "name": "区域列表",
+          "pathName": "pages/components/site/site",
+          "query": "",
+          "scene": null
         }
       ]
     }

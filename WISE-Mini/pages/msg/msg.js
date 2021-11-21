@@ -451,7 +451,7 @@ Page({
       //     }
       //   })
       // }
-      let appId = 'wx65d148a2004f8ff0'
+      let appId = wx.getStorageSync('ALLINFO').bbsRegion.miniStoreAppid
 
       if (!appId) {
         appId = 'wx65d148a2004f8ff0'

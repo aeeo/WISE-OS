@@ -160,7 +160,7 @@ Page({
     // console.log('@@@ callouttap', e)
   },
 
-  //mark: 初始化获取region数据
+  //mark: 获取region数据
   getRegionList(parameter) {
     var that = this
     wx.showLoading({
@@ -174,11 +174,7 @@ Page({
       province: parameter,
       regionStatus: 2
     }
-    app.wxRequest('get', url, bbsRegion, (res) => {
-      resolve(res.data.result.records)
-    }, (err) => {
-      reject(err)
-    }).then(res => {
+    app.wxRequest('get', url, bbsRegion).then(res => {
       var data = res.data.result
       var markerTem = []
       var showMarkerTem = []
@@ -299,6 +295,16 @@ Page({
           //   showCircleTem.push(circleTemItem)
           // }
         })
+        if (!that.data.publicRegionCount) {
+          let publicRegionCount = data.filter((item) => {
+            return item.isPrivate == 0;
+          }).length;
+          that.setData({
+            publicRegionCount: publicRegionCount,
+            privateRegionCount: publicRegionCount + 45,
+          })
+        }
+
         that.setData({
           markers: markerTem,
           // showMarkers: showMarkerTem,
@@ -540,17 +546,25 @@ Page({
     data.currentRegionIndex[e.detail.column] = e.detail.value;
     switch (e.detail.column) {
       case 0:
-        switch (data.currentRegionIndex[0]) {
-          case 0:
-            data.currentRegion[1] = that.data.provinceCityList[0];
-            break;
-          case 1:
-            data.currentRegion[1] = that.data.provinceCityList[1];
-            break;
-        }
-        data.currentRegionIndex[1] = 0;
-        data.currentRegionIndex[2] = 0;
-        break;
+        data.currentRegion[1] = that.data.provinceCityList[data.currentRegionIndex[0]];
+      // switch (data.currentRegionIndex[0]) {
+      //   case 0:
+      //     data.currentRegion[1] = that.data.provinceCityList[0];
+      //     break;
+      //   case 1:
+      //     data.currentRegion[1] = that.data.provinceCityList[1];
+      //     break;
+      //   case 2:
+      //     data.currentRegion[1] = that.data.provinceCityList[2];
+      //     break;
+      //   case 3:
+      //     data.currentRegion[1] = that.data.provinceCityList[3];
+      //     break;
+      //   default:
+      //     data.currentRegionIndex[1] = 0;
+      //     data.currentRegionIndex[2] = 0;
+      //     break;
+      // }
     }
     this.setData(data);
   },
@@ -579,5 +593,23 @@ Page({
     console.log("maxName", maxName)
 
     return maxName
+  },
+  clickRegionQuestion(e) {
+    let type = e.currentTarget.dataset.question
+    console.log(e)
+    console.log(type)
+    if (type == "private") {
+      wx.showModal({
+        title: "私有区域",
+        content: "私有区域不在此列表显示，私有区域内用户无法查看并切换到任何区域。",
+        showCancel: false
+      })
+    } else if (type == "public") {
+      wx.showModal({
+        title: "公共区域",
+        content: "此列表显示所有公共区域，公共区域内的用户可以自由切换至其他公共区域进行信息浏览与发布。",
+        showCancel: false
+      })
+    }
   }
 })

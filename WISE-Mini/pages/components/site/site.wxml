@@ -45,6 +45,16 @@
 <!-- 选择列表 -->
 <scroll-view scroll-y class="DrawerWindow {{modalName=='viewModal'?'show':''}}">
   <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg" style="margin-top: 84rpx;">
+    <view class="cu-item">
+      <view class="title" style="margin-left:14rpx;display:flex" data-question="public" bindtap="clickRegionQuestion">
+        <view>公共区域：{{publicRegionCount}}个</view>
+        <view class="cuIcon-question" style="margin-left:8rpx;display:flex"></view>
+      </view>
+      <view class="title" style="margin-left:14rpx;display:flex" data-question="private" bindtap="clickRegionQuestion">
+        <view>私有区域：{{privateRegionCount}}个</view>
+        <view class="cuIcon-question" style="margin-left:8rpx;display:flex"></view>
+      </view>
+    </view>
     <view class="cu-item arrow">
       <view class="title" style="margin-left:14rpx;font-weight: 900;display:flex">
         <view class="cuIcon-list" style="margin-right:16rpx;display:flex"></view>区域列表
@@ -59,7 +69,8 @@
         </view>
       </picker>
     </view>
-    <view class="cu-item arrow" wx:for="{{regionList}}" wx:key="id" wx:for-index="bindex" data-bindex="{{bindex}}"
+
+    <view class="cu-item arrow" wx:for="{{regionList}}" wx:if="{{item.isPrivate == 0}}" wx:key="id" wx:for-index="bindex" data-bindex="{{bindex}}"
       bindtap="selectSite">
       <view class="content" style="display: flex;align-items: center;">
         <!-- <text class="cuIcon-locationfill text-pink"></text> -->
