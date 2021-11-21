@@ -172,10 +172,10 @@ public class QiNiuUtil {
         Configuration cfg = new Configuration(Region.region0());
         //...其他参数参考类注释
         //String key = "https://" + doMain + "/" +file;
-        String key = file;
-        Auth auth = Auth.create(accessKey, secretKey);
-        BucketManager bucketManager = new BucketManager(auth, cfg);
         try {
+            String key = file;
+            Auth auth = Auth.create(accessKey, secretKey);
+            BucketManager bucketManager = new BucketManager(auth, cfg);
             bucketManager.delete(bucket, key);
         } catch (QiniuException ex) {
             //如果遇到异常，说明删除失败

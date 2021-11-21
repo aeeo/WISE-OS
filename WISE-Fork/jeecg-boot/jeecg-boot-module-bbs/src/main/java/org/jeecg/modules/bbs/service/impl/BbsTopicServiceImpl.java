@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.poi.ss.formula.functions.T;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -16,7 +15,6 @@ import org.jeecg.modules.bbs.entity.*;
 import org.jeecg.modules.bbs.mapper.*;
 import org.jeecg.modules.bbs.service.*;
 import org.jeecg.modules.cache.BbsRedisUtils;
-import org.jeecg.modules.cache.LoadDataRedis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Description: 帖子
@@ -119,7 +120,7 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
 
     @Override
     public void updateMain(BbsTopic bbsTopic, List<BbsTopicImage> bbsTopicImageList, List<BbsTopicTag> bbsTopicTagList, List<BbsTopicLink> bbsTopicLinkList) {
-        updataTopic(bbsTopic,bbsTopicImageList, bbsTopicTagList,bbsTopicLinkList);
+        updataTopic(bbsTopic, bbsTopicImageList, bbsTopicTagList, bbsTopicLinkList);
         //更新redis
         List<BbsTopicFullDto> bbsTopicFullDtos = new ArrayList<>();
         bbsTopicFullDtos.add(bbsTopicFullDtoService.queryTopicFullDtoByIdFromSql(bbsTopic.getId()));
@@ -226,6 +227,7 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
         this.deleteTopicDependData(topicId);
         //1.根据id删除帖子、2.根据帖子图片id删除帖子图片           删除标签、删除链接
         this.delMain(topicId);
+
         //boolean removeTopicFlag = bbsTopicService.removeById(topicId);
         //HashMap<String, Object> removeTopicImageMap = new HashMap<>();
         //removeTopicImageMap.put("topic_id", topicId);
@@ -249,6 +251,11 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
         BbsUserRecord userRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, byId.getCreateBy()).one();
         bbsUserRecordService.lambdaUpdate().eq(BbsUserRecord::getCreateBy, byId.getCreateBy()).set(BbsUserRecord::getTopicCount, userRecord.getTopicCount() - 1).update();
 
+        //获取贴子下所有Reply
+        QueryWrapper<BbsReply> eqReply = new QueryWrapper<>();
+        eqReply.eq("topic_id", topicId);
+        List<String> replyIdList = bbsReplyService.list(eqReply).stream().map(BbsReply::getId).collect(Collectors.toList());
+
         QueryWrapper<BbsUserTopicClick> eq = new QueryWrapper<>();
         eq.eq("topic_id", topicId);
         bbsUserTopicClickService.remove(eq);
@@ -261,13 +268,30 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
         eq2.eq("topic_id", topicId);
         bbsUserPraiseService.remove(eq2);
 
-        QueryWrapper<BbsReply> eq3 = new QueryWrapper<>();
-        eq3.eq("topic_id", topicId);
-        bbsReplyService.remove(eq3);
-
         QueryWrapper<BbsUserMessage> eq4 = new QueryWrapper<>();
         eq4.eq("topic_id", topicId);
         bbsUserMessageService.remove(eq4);
+
+        QueryWrapper<BbsInform> eq5 = new QueryWrapper<>();
+        eq5.eq("topic_id", topicId);
+        bbsInformService.remove(eq5);
+
+        replyIdList.forEach(replyId -> {
+            QueryWrapper<BbsUserPraise> eqReply2 = new QueryWrapper<>();
+            eqReply2.eq("reply_id", replyId);
+            bbsUserPraiseService.remove(eqReply2);
+
+            QueryWrapper<BbsUserMessage> eqReply4 = new QueryWrapper<>();
+            eqReply4.eq("reply_id", replyId);
+            bbsUserMessageService.remove(eqReply4);
+
+            QueryWrapper<BbsInform> eqReply5 = new QueryWrapper<>();
+            eqReply5.eq("reply_id", replyId);
+            bbsInformService.remove(eqReply5);
+        });
+        QueryWrapper<BbsReply> eq3 = new QueryWrapper<>();
+        eq3.eq("topic_id", topicId);
+        bbsReplyService.remove(eq3);
 
 
         //系统消息推送关联的是帖子也要删除，暂时不管，如果关联，提示无法删除
@@ -279,9 +303,6 @@ public class BbsTopicServiceImpl extends ServiceImpl<BbsTopicMapper, BbsTopic> i
         //eq7.eq("topic_id", topicId);
         //bbsUserSysMessageService.remove(eq7);
 
-        QueryWrapper<BbsInform> eq5 = new QueryWrapper<>();
-        eq5.eq("topic_id", topicId);
-        bbsInformService.remove(eq5);
         return true;
     }
 }

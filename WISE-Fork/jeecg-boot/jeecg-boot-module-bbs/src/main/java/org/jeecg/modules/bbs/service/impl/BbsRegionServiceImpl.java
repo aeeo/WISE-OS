@@ -18,6 +18,7 @@ import org.jeecg.modules.bbs.service.IBbsClassService;
 import org.jeecg.modules.bbs.service.IBbsRegionService;
 import org.jeecg.modules.bbs.service.IBbsTopicImageService;
 import org.jeecg.modules.bbs.service.IBbsTopicService;
+import org.jeecg.modules.cache.BbsRedisUtils;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,8 @@ public class BbsRegionServiceImpl extends ServiceImpl<BbsRegionMapper, BbsRegion
     private IBbsTopicService bbsTopicService;
     @Autowired
     private IBbsTopicImageService bbsTopicImageService;
+    @Autowired
+    private BbsRedisUtils bbsRedisUtils;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -253,6 +256,9 @@ public class BbsRegionServiceImpl extends ServiceImpl<BbsRegionMapper, BbsRegion
     @Transactional
     public void updateMain(BbsRegion bbsRegion, List<BbsClass> bbsClassList) {
         bbsRegionMapper.updateById(bbsRegion);
+        ArrayList<BbsRegion> bbsRegions = new ArrayList<>();
+        bbsRegions.add(bbsRegion);
+        bbsRedisUtils.updateRegion(bbsRegions);
 
         //1.先删除子表数据(版块无法删除，只能新增)
         //bbsClassMapper.deleteByMainId(bbsRegion.getId());
@@ -267,6 +273,7 @@ public class BbsRegionServiceImpl extends ServiceImpl<BbsRegionMapper, BbsRegion
                 bbsClassMapper.insert(item);
             }
         }
+
         //2.子表数据重新插入
         //if (bbsClassList != null && bbsClassList.size() > 0) {
         //    for (BbsClass entity : bbsClassList) {

@@ -373,17 +373,18 @@ public class BbsRegionController {
             bbsUserRecord = bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getCreateBy, sysUser.getUsername()).one();
             currentUsername = sysUser.getUsername();
         }
-        bbsUserRecordService.lambdaUpdate().eq(BbsUserRecord::getCreateBy, currentUsername)
-                .set(BbsUserRecord::getRegionCode, bbsRegion.getRegionCode())
-                .set(BbsUserRecord::getSysOrgCode, bbsRegion.getSysOrgCode())
-                .set(BbsUserRecord::getRegionSwitchCount, bbsUserRecord.getRegionSwitchCount() + 1)
-                .update();
+
         //用户记录regionSwitchCount+1，region_switch_date当前月，region_code当前区域编码，region_fullname当前区域名
         if (bbsUserRecord.getRegionCode().equals(bbsRegion.getRegionCode())) {
             return Result.OK("已经在此区域，无需切换！");
         }
-        SysUser userByName = sysUserService.getUserByName(currentUsername);
 
+        bbsUserRecord.setRegionCode(bbsRegion.getRegionCode());
+        bbsUserRecord.setSysOrgCode(bbsRegion.getSysOrgCode());
+        bbsUserRecord.setRegionSwitchCount( bbsUserRecord.getRegionSwitchCount() + 1);
+        bbsUserRecordService.setUserRecord(bbsUserRecord);
+
+        SysUser userByName = sysUserService.getUserByName(currentUsername);
         sysUserService.addUserWithDepart(userByName, bbsRegion.getRegionDepartId());    //修改用户在区域对应的部门,追加
         SysDepart sysDepartServiceById = sysDepartService.getById(bbsRegion.getRegionDepartId());
         sysUserService.updateUserDepart(userByName.getUsername(), sysDepartServiceById.getOrgCode());   //设置用户当前部门

@@ -13,4 +13,6 @@ import org.jeecg.modules.bbs.entity.BbsUserRecord;
 public interface IBbsUserRecordService extends IService<BbsUserRecord> {
 
     BbsUserRecord getFullUserRecord(String username);
+
+    BbsUserRecord setUserRecord(BbsUserRecord bbsUserRecord);
 }

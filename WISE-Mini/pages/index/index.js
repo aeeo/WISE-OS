@@ -24,8 +24,8 @@ Page({
         screenHeight: app.globalData.screenHeight,
 
         BBSREGION: wx.getStorageSync('ALLINFO').bbsRegion,
-        USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
         REGIONCLASS: wx.getStorageSync('ALLINFO').bbsClassList,
+        USERRECORD: wx.getStorageSync('ALLINFO').bbsUserRecord,
         CURRENTCLASSCODE: wx.getStorageSync('CURRENTCLASSCODE'), //当前所在版块Code
         getTopicFlag: false,
         isFirstGetTopicFlag: true,
@@ -89,6 +89,8 @@ Page({
         app.getFirstLoginToken().then(res => {
             that.setData({
                 USERRECORD: res.bbsUserRecord,
+                BBSREGION: res.bbsRegion,
+                REGIONCLASS: res.bbsClassList,
             })
             that.getRegionClass(res.bbsClassList)
             that.waitTopicList().then(res => {
@@ -129,6 +131,8 @@ Page({
             app.getUserAllInfo().then(res => {
                 that.setData({
                     USERRECORD: res.bbsUserRecord,
+                    BBSREGION: res.bbsRegion,
+                    REGIONCLASS: res.bbsClassList,
                 })
                 let currentClass = that.data.currentClass
                 that.getRegionClass(res.bbsClassList)
@@ -166,7 +170,9 @@ Page({
         var that = this
         app.getUserAllInfo().then(res => {
             that.setData({
-                USERRECORD: res.bbsUserRecord
+                USERRECORD: res.bbsUserRecord,
+                BBSREGION: res.bbsRegion,
+                REGIONCLASS: res.bbsClassList,
             })
             app.setTabbarBadge()
         })
@@ -281,7 +287,9 @@ Page({
                     // 获取用户Record，刷新tabbar提示
                     app.getUserAllInfo().then(res => {
                         that.setData({
-                            USERRECORD: res.bbsUserRecord
+                            USERRECORD: res.bbsUserRecord,
+                            BBSREGION: res.bbsRegion,
+                            REGIONCLASS: res.bbsClassList,
                         })
                         app.setTabbarBadge()
                     })

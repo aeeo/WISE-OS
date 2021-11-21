@@ -72,4 +72,10 @@ public class BbsUserRecordServiceImpl extends ServiceImpl<BbsUserRecordMapper, B
         bbsUserRecord.setRoleCodeList(sysBaseAPI.getUserRoleSet(username));
         return bbsUserRecord;
     }
+
+    @Override
+    public BbsUserRecord setUserRecord(BbsUserRecord bbsUserRecord) {
+        bbsUserRecordService.updateById(bbsUserRecord);
+        return bbsUserRecord;
+    }
 }

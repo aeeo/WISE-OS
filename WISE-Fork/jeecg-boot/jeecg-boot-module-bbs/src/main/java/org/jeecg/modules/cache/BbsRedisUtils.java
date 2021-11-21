@@ -2,6 +2,7 @@ package org.jeecg.modules.cache;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.util.RedisUtil;
+import org.jeecg.modules.bbs.entity.BbsRegion;
 import org.jeecg.modules.bbs.entity.BbsTopicFullDto;
 import org.jeecg.modules.bbs.service.IBbsClassService;
 import org.jeecg.modules.bbs.service.IBbsRegionService;
@@ -83,6 +84,47 @@ public class BbsRedisUtils {
     }
 
     /**
+     * 获取redis中存在的区域    未测试
+     */
+    public BbsRegion queryRegion(String regionCode) {
+        BbsRegion bbsRegion = (BbsRegion) redisUtil.get(LoadDataRedis.BBS_REGION_REGIONCODE + regionCode);
+        return bbsRegion;
+    }
+    /**
+     * 获取redis中存在的区域    未测试
+     */
+    public List<BbsRegion> queryRegionList(List<BbsRegion> bbsRegionList) {
+        //创建Pipeline对象
+        List<Object> objectList = redisUtil.getRedisTemplate().executePipelined(new RedisCallback<Object>() {
+            @Override
+            public Object doInRedis(RedisConnection redisConnection) throws DataAccessException {
+                ArrayList<BbsRegion> bbsRegions = new ArrayList<>();
+                for (BbsRegion bbsRegion : bbsRegionList) {
+                    Object o = redisUtil.get(LoadDataRedis.BBS_REGION_REGIONCODE + bbsRegion.getRegionCode());
+                    bbsRegions.add((BbsRegion) o);
+                }
+                return bbsRegions;
+            }
+        });
+        return null;
+    }
+    /**
+     * 更新redis中存在的区域
+     */
+    public void updateRegion(List<BbsRegion> bbsRegionList) {
+        //创建Pipeline对象
+        List<Object> objectList = redisUtil.getRedisTemplate().executePipelined(new RedisCallback<Object>() {
+            @Override
+            public Object doInRedis(RedisConnection redisConnection) throws DataAccessException {
+                for (BbsRegion bbsRegion : bbsRegionList) {
+                    redisUtil.set(LoadDataRedis.BBS_REGION_REGIONCODE + bbsRegion.getRegionCode(), bbsRegion, LoadDataRedis.BBS_REGION_REGIONCODE_TIME);
+                }
+                return null;
+            }
+        });
+    }
+
+    /**
      * 更新redis中存在的帖子
      */
     public void updateTopic(List<BbsTopicFullDto> bbsTopicFullDtoList) {
@@ -103,6 +145,7 @@ public class BbsRedisUtils {
      * @param allTopic
      */
     public void saveTopicToSql(Set<String> allTopic) {
+
     }
 
     /**
