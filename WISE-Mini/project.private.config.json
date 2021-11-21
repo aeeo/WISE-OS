@@ -65,6 +65,18 @@
           "pathName": "pages/index/index",
           "query": "",
           "scene": 1007
+        },
+        {
+          "name": "海洋大学（私有区域）",
+          "pathName": "pages/index/index",
+          "query": "regionCode=dlhydx-1",
+          "scene": null
+        },
+        {
+          "name": "陕西省",
+          "pathName": "pages/index/index",
+          "query": "regionCode=sxs-1",
+          "scene": null
         }
       ]
     }
