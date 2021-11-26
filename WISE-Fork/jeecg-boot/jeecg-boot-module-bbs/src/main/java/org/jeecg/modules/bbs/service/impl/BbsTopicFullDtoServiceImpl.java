@@ -59,20 +59,20 @@ public class BbsTopicFullDtoServiceImpl extends ServiceImpl<BbsTopicFullDtoMappe
         List<Object> bbsTopicFullDto1 = (List<Object>)redisUtil.mget(topicIdList1);
         for (Object o : bbsTopicFullDto1) {
             //如果帖子在redis中不存在，则需要查库
-            if (null == o) {
-                BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto) o;
-                BbsTopicFullDto bbsTopicFullDto2 = queryTopicFullDtoById(bbsTopicFullDto.getId());
-                if(null!=bbsTopicFullDto2){
-                    bbsTopicFullDtosList.add(bbsTopicFullDto2);
-                }else{
-//                    如果库里也没有应该删除redis排行榜中的记录，但是zset删除没看懂，先留空，不重要
-//                    Set<Object> objects = new HashSet<>();
-//                    objects.add(bbsTopicFullDto.getId());
-//                    redisUtil.zRmove(LoadDataRedis.BBS_RANK_REGION_CLASS + regionCode + "_" + classCode,objects);
-                }
-            } else {
+//            if (null == o) {
+//                BbsTopicFullDto bbsTopicFullDto = (BbsTopicFullDto) o;
+//                BbsTopicFullDto bbsTopicFullDto2 = queryTopicFullDtoById(bbsTopicFullDto.getId());
+//                if(null!=bbsTopicFullDto2){
+//                    bbsTopicFullDtosList.add(bbsTopicFullDto2);
+//                }else{
+////                    如果库里也没有应该删除redis排行榜中的记录，但是zset删除没看懂，先留空，不重要
+////                    Set<Object> objects = new HashSet<>();
+////                    objects.add(bbsTopicFullDto.getId());
+////                    redisUtil.zRmove(LoadDataRedis.BBS_RANK_REGION_CLASS + regionCode + "_" + classCode,objects);
+//                }
+//            } else {
                 bbsTopicFullDtosList.add((BbsTopicFullDto) o);
-            }
+//            }
         }
         page.setRecords(bbsTopicFullDtosList);
         page.setTotal(zSize);
