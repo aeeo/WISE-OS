@@ -1,0 +1,1 @@
+ALTER TABLE `wiseos`.`bbs_region` ADD COLUMN `is_private` int(10) NULL DEFAULT 1 COMMENT '是否私有' AFTER `mini_store_appid`;
