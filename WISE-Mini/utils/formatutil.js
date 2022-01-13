@@ -289,7 +289,12 @@ function timestampToDate(timestamp) {
  * 256天
  */
 function dateToDayCount(dateStr) {
-  let date = stringToDate(dateStr)
+  let date
+  if (typeof (dateStr) == "string" || !dateStr) {
+    date = stringToDate(dateStr)
+  } else {
+    date = dateStr
+  }
   var currentDateStamp = (new Date()).getTime()
   var dateStamp = date.getTime()
   const oneHour = 3600000
@@ -306,7 +311,11 @@ function showCount(count) {
 }
 
 function stringToDate(dateStr) {
-  return new Date(dateStr.replace(/-/g, '/'))//兼容ios
+  if(dateStr){
+    return new Date(dateStr.replace(/-/g, '/'))//兼容ios
+  }else{
+    return new Date()
+  }
 }
 //必须在这里暴露接口，以便被外界访问，不然就不能访问
 module.exports = {
