@@ -87,6 +87,7 @@ public class BbsAuthUtils {
         miNiStorage.setSysUser(sysUserService.getUserByName(username));
         BbsUserRecord bbsUserRecord = bbsUserRecordService.getFullUserRecord(username);
         miNiStorage.setBbsUserRecord(bbsUserRecord);
+        log.info("getMiNiTokenStorage:username=" + username);
         BbsRegion bbsRegion = bbsRegionService.lambdaQuery().eq(BbsRegion::getRegionCode, bbsUserRecord.getRegionCode()).one();
         miNiStorage.setBbsRegion(bbsRegion);
         List<BbsClass> bbsClassList = bbsClassService.selectBbsClassListSort(bbsRegion.getRegionCode());
