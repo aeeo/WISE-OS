@@ -59,5 +59,15 @@ Component({
         complete: function (res) { },
       })
     },
+    imageError: function(e) {
+      // console.error(e)
+      // console.error('image3发生error事件，携带值为', e.detail.errMsg)
+      let imageListTemp = this.data.imageList
+      // 找不到资源的图片不显示
+      imageListTemp[e.target.dataset.index].hidden = true
+      this.setData({
+        imageList: imageListTemp
+      })
+    }
   }
 })

@@ -17,7 +17,8 @@
 <view class="page" style="height:calc(100% - {{CustomBar}}px - 35px);">
   <!-- 背景 -->
   <view class="bg-gradual-pink flex justify-between" style="width:100%;height:35px;">
-    <view class="" style="width:90%;height:40px;overflow:hidden;border-radius: 26rpx 0rpx 0rpx 0rpx;">
+  <!-- width:91%;是因为如果90%和下面10%拼接在ios上会有一小条缝隙，不知道原因，如此修复 -->
+    <view class="" style="width:91%;height:40px;overflow:hidden;border-radius: 26rpx 0rpx 0rpx 0rpx;">
       <scroll-view scroll-x class="bg-white nav" style="height:40px;" scroll-with-animation scroll-anchoring
         scroll-left="{{scrollLeft}}">
         <view class="flex align-center">
