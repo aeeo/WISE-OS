@@ -225,11 +225,11 @@ Page({
                             item.userRole = item.userRole.substring(4)
                             // 添加动画属性
                             item.exeCuteAnimation = item.userIsPraise
-                            item.createTime = formatUtil.showDate(new Date(item.createTime.replace(/-/g, '/')))
-                            // item.updateTime = formatUtil.showDate(new Date(item.updateTime.replace(/-/g, '/')))
-                            item.publicTime = formatUtil.showDate(new Date(item.publicTime.replace(/-/g, '/')))
+                            item.createTime = formatUtil.showDate(item.createTime)
+                            // item.updateTime = formatUtil.showDate(item.updateTime)
+                            item.publicTime = formatUtil.showDate(item.publicTime)
                             if (item.editTime) {
-                                item.editTime = formatUtil.showDate(new Date(item.editTime.replace(/-/g, '/')))
+                                item.editTime = formatUtil.showDate(item.editTime)
                             }
                             // 正则去除html标签
                             let contentString = item.content.replace(/<\/?.+?\/?>/g, '')

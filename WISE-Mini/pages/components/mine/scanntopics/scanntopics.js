@@ -161,8 +161,8 @@ Page({
                         item.userRole = item.userRole.substring(4)
                         // 添加动画属性
                         item.exeCuteAnimation = item.userIsPraise
-                        item.createTime = formatUtil.showDate(new Date(item.createTime.replace(/-/g, '/')))
-                        item.updateTime = formatUtil.showDate(new Date(item.updateTime.replace(/-/g, '/')))
+                        item.createTime = formatUtil.showDate(item.createTime)
+                        item.updateTime = formatUtil.showDate(item.updateTime)
                         //正则去除html标签
                         item.content = item.content.replace(/<\/?.+?\/?>/g, '')
                         // 去除跳转标签

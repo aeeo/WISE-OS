@@ -213,16 +213,16 @@ Page({
       result.exeCuteAnimation = result.userIsPraise
 
       if (result.createTime) {
-        result.createTime = formatUtil.showDate(new Date(result.createTime.replace(/-/g, '/')))
+        result.createTime = formatUtil.showDate(result.createTime)
       }
       if (result.updateTime) {
-        result.updateTime = formatUtil.showDate(new Date(result.updateTime.replace(/-/g, '/')))
+        result.updateTime = formatUtil.showDate(result.updateTime)
       }
       if (result.publicTime) {
-        result.publicTime = formatUtil.showDate(new Date(result.publicTime.replace(/-/g, '/')))
+        result.publicTime = formatUtil.showDate(result.publicTime)
       }
       if (result.editTime) {
-        result.editTime = formatUtil.showDate(new Date(result.editTime.replace(/-/g, '/')))
+        result.editTime = formatUtil.showDate(result.editTime)
       }
       that.setData({
         topicdetails: result,

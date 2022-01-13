@@ -445,7 +445,7 @@ Component({
         })
         res.data.result.records.forEach(item => {
           // 评论时间格式化
-          item.createTime = formatUtil.showReplyDate(new Date(item.createTime))
+          item.createTime = formatUtil.showReplyDate(item.createTime)
           // 添加动画属性
           item.exeCuteAnimation = item.userIsPraise
           // 评论背景色
@@ -457,7 +457,7 @@ Component({
           if (item.childFullReply.length != 0) {
             item.childFullReply.forEach(itemChild => {
               // 子评论时间格式化
-              itemChild.createTime = formatUtil.showReplyDate(new Date(itemChild.createTime))
+              itemChild.createTime = formatUtil.showReplyDate(itemChild.createTime)
               // 添加动画属性
               itemChild.exeCuteAnimation = itemChild.userIsPraise
               // 评论头像url拼接，这里不能在wxml里面拼接，因为在发布评论的时候拿的是微信的头像接口，微信返回的是全连接
@@ -506,7 +506,7 @@ Component({
             })
             res.data.result.records.forEach(item => {
               // 评论时间格式化
-              item.createTime = formatUtil.showReplyDate(new Date(item.createTime))
+              item.createTime = formatUtil.showReplyDate(item.createTime)
               // 添加动画属性
               item.exeCuteAnimation = item.userIsPraise
               // 评论背景色
@@ -518,7 +518,7 @@ Component({
               if (item.childFullReply.length != 0) {
                 item.childFullReply.forEach(itemChild => {
                   // 子评论时间格式化
-                  itemChild.createTime = formatUtil.showReplyDate(new Date(itemChild.createTime))
+                  itemChild.createTime = formatUtil.showReplyDate(itemChild.createTime)
                   // 添加动画属性
                   itemChild.exeCuteAnimation = itemChild.userIsPraise
                   // 评论头像url拼接，这里不能在wxml里面拼接，因为在发布评论的时候拿的是微信的头像接口，微信返回的是全连接
