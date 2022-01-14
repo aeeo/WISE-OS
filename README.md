@@ -44,7 +44,7 @@
 
 在此说明，行星万象项目陆陆续续开发了一年时间，到现在为止基本功能已经开发完毕，有时间的话把即时聊天功能集成进去，也保证会维护下去，继续丰满功能。只是精力有限，进展可能会比较慢，但放心绝不会烂尾。
 
-行星万象开源版任何人都可以拿去修改部署，免费使用，但是你必须在明确注明：
+行星万象开源版任何人都可以拿去修改部署，免费使用，但务必注明：
 
 > [行星万象提供技术支持](https://gitee.com/vtep/WISE-OS.git)
 
@@ -55,7 +55,7 @@
 ### 需要具备的知识
 
   1. 微信小程序基本常识，例如怎样新建一个小程序、输出Hello、发送HTTP请求。
-  2. 对JeecgBoot等快速开发平台有一定了解，因为本平台后台基于JeecgBoot搭建，在项目使用过程中大部分问题都可以在[**JeecgBoot开发文档**](http://doc.jeecg.com/2043872)中找到答案，各位也可以去给点个Star，吃水不忘挖井人。
+  2. 对JeecgBoot等快速开发平台有一定了解。因为本项目后台基于JeecgBoot搭建，在使用过程中大部分问题都可以在[**JeecgBoot开发文档**](http://doc.jeecg.com/2043872)中找到答案，各位可以去给点个Star，吃水不忘挖井人。
 
 ### 基础开发环境
 
@@ -77,7 +77,7 @@
 
 请先确保浏览过[JeecgBoot](http://doc.jeecg.com/2043872)。
 
-1. Fork源码，开源不易，务必Star。Fork后可以持续获得本项目功能更新，但是注意别被覆盖。
+1. Fork源码，务必Star。开源不易，Fork后可以持续获得本项目功能更新，但是注意别被覆盖。
 
 > Gitee：
 >
@@ -89,7 +89,14 @@
 
 2. 初始化数据库
 
-初始化数据库，要求mysql5.7+，新建数据库wised，手工执行Sql脚本初始化数据。
+初始化数据库，要求mysql5.7+，数据库需要配置不区分大小写，在mysql.conf中加入：
+
+```conf
+[mysqld]
+lower_case_table_name=1
+```
+
+新建数据库wised，注意字符集如图，手工执行sql脚本初始化数据。
 
 <center>
 <img src="https://img-blog.csdnimg.cn/0c33d1ce33e74e928262a4cce8fc4d9b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_14,color_FFFFFF,t_70,g_se,x_16" width="40%"/>
