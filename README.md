@@ -1,5 +1,8 @@
 ## 简介
 
+
+> 官网：[行星万象官网](https://www.vtep.cn)
+> 
 > 全部文档请在Wiki查看：[Go Wiki](https://gitee.com/vtep/WISE-OS/wikis/pages)
 
 目前中国大概有5000个表白墙，是一个累计用户近3000万的庞大群体，但现有表白墙大都以微信朋友圈为基础进行信息中转，这种模式对经营者和用户都不够友好，例如经营者无法盈利，用户无法沟通等。因此行星万象应运而生，你可以将行星万象看做是一个信息发布类型的微信小程序，用户在上面可以发布吐槽、找对象等信息，支持广告、外卖变现，更支持匿名发布哦（同类产品都无法匿名），功能层面与朋友圈深度融合（这点很重要）。废话不说，扫码查看小程序演示：
@@ -75,7 +78,7 @@
 
 ### 准备工作
 
-请先确保浏览过[JeecgBoot](http://doc.jeecg.com/2043872)。
+请确保浏览过[JeecgBoot](http://doc.jeecg.com/2043872)。
 
 1. Fork源码，务必Star。开源不易，Fork后可以持续获得本项目功能更新，但是注意别被覆盖。如果不需要获取更新可直接下载最新发行版。
 
@@ -89,7 +92,7 @@
 
 2. 初始化数据库
 
-初始化数据库，要求mysql5.7+，数据库需要配置不区分大小写，在mysql.conf中加入：
+初始化数据库，要求mysql5.7+，数据库需要配置为不区分大小写，在mysql.conf中加入：
 
 ```conf
 [mysqld]
@@ -103,15 +106,15 @@ lower_case_table_name=1
 </center>
 
 
-> WISE-OS\数据库脚本（在mysql中执行即可）\wised.sql
+> WISE-OS\数据库脚本\wised.sql
 
 3. 项目结构
 
 > WISE-Mini（小程序）
-> WISE-Fork（后台管理系统和后台服务）
+> 		WISE-Fork（后台管理系统和后台服务）
 
 > ant-design-vue-jeecg（后台管理系统）
-> jeecg-boot-parent（父POM： 项目依赖、modules组织） 
+> 		jeecg-boot-parent（父POM： 项目依赖、modules组织） 
 >
 > │  ├─jeecg-boot-base（共通模块： 工具类、config、权限、查询过滤器、注解、接口等） 
 >
