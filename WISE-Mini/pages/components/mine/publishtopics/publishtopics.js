@@ -75,10 +75,10 @@ Page({
                 }
                 // 去除跳转标签
                 // item.content = item.content.replace(/(?=!_).+(?:_!)/g, '')
-                item.createTime = formatUtil.showDate(new Date(item.createTime.replace(/-/g, '/')))
-                // item.updateTime = formatUtil.showDate(new Date(item.updateTime.replace(/-/g, '/')))
-                item.publicTime = formatUtil.showDate(new Date(item.publicTime.replace(/-/g, '/')))
-                item.editTime = formatUtil.showDate(new Date(item.editTime.replace(/-/g, '/')))
+                item.createTime = formatUtil.showDate(item.createTime)
+                // item.updateTime = formatUtil.showDate(item.updateTime)
+                item.publicTime = formatUtil.showDate(item.publicTime)
+                item.editTime = formatUtil.showDate(item.editTime)
             })
             //列表追加
             let tempList = that.data.topicLists

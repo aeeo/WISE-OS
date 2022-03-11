@@ -14,7 +14,9 @@ import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.bbs.BbsAuthController;
-import org.jeecg.modules.bbs.entity.*;
+import org.jeecg.modules.bbs.entity.BbsClass;
+import org.jeecg.modules.bbs.entity.BbsRegion;
+import org.jeecg.modules.bbs.entity.BbsUserRecord;
 import org.jeecg.modules.bbs.service.IBbsClassService;
 import org.jeecg.modules.bbs.service.IBbsRegionService;
 import org.jeecg.modules.bbs.service.impl.BbsUserRecordServiceImpl;
@@ -67,6 +69,7 @@ public class BbsRegionController {
     private BbsAuthController bbsAuthController;
     @Autowired
     private BbsAuthUtils bbsAuthUtils;
+
     /**
      * 分页列表查询
      *
@@ -291,7 +294,7 @@ public class BbsRegionController {
         List<BbsRegion> list = bbsRegionService.list(queryWrapper);
 
         for (BbsRegion region : list) {
-            region.setRegionPeopleNum(bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getRegionCode,region.getRegionCode()).count());
+            region.setRegionPeopleNum(bbsUserRecordService.lambdaQuery().eq(BbsUserRecord::getRegionCode, region.getRegionCode()).count());
         }
         list.sort(Comparator.comparing(BbsRegion::getScale).thenComparing(Comparator.comparing(BbsRegion::getRegionPeopleNum).reversed()));
         return Result.OK(list);
@@ -337,6 +340,7 @@ public class BbsRegionController {
                 .set(BbsUserRecord::getRegionCode, bbsRegion.getRegionCode())
                 .set(BbsUserRecord::getSysOrgCode, bbsRegion.getSysOrgCode())
                 .update();
+        log.info("getMiNiTokenStorage:username=" + username);
         //用户记录regionSwitchCount+1，region_switch_date当前月，region_code当前区域编码，region_fullname当前区域名
         if (bbsUserRecord.getRegionCode().equals(bbsRegion.getRegionCode())) {
             return Result.OK("已经在此区域，无需切换！");
@@ -381,7 +385,7 @@ public class BbsRegionController {
 
         bbsUserRecord.setRegionCode(bbsRegion.getRegionCode());
         bbsUserRecord.setSysOrgCode(bbsRegion.getSysOrgCode());
-        bbsUserRecord.setRegionSwitchCount( bbsUserRecord.getRegionSwitchCount() + 1);
+        bbsUserRecord.setRegionSwitchCount(bbsUserRecord.getRegionSwitchCount() + 1);
         bbsUserRecordService.setUserRecord(bbsUserRecord);
 
         SysUser userByName = sysUserService.getUserByName(currentUsername);

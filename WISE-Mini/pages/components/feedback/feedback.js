@@ -212,7 +212,7 @@ Page({
             // item.userRole = item.userRole.substring(4)
             // 添加动画属性
             item.exeCuteAnimation = item.userIsPraise
-            item.createTime = formatUtil.showDate(new Date(item.createTime))
+            item.createTime = formatUtil.showDate(item.createTime)
             item.userAvatar = that.data.UPLOAD_IMAGE + item.userAvatar
             item.disposeUserAvatar = that.data.UPLOAD_IMAGE + item.disposeUserAvatar
             item.imageUrl.forEach((itemImage) => {

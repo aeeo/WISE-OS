@@ -1,3 +1,4 @@
+<!-- 置顶 -->
 <view wx:for="{{topicLists}}" wx:for-item="topicItem"
   wx:if="{{topicType==1 && topicItem.topicType==1 && (!hideAnon || (hideAnon && topicItem.anon==0))}}" wx:key="id"
   wx:for-index="bindex" data-topicitem='{{topicItem}}' class="cu-card dynamic bg-white" style="" bindtap="topicdetails"
@@ -26,11 +27,11 @@
           data-topicitem="{{topicItem}}">
           <view class="flex align-center">
             <view style="color:#585858;font-weight:bold;font-size:34rpx;"
-              wx:if="{{topicItem.anon != undefined && topicItem.anon != 0}}">
+              wx:if="{{topicItem.anon != undefined && topicItem.anon != 0}}" data-topicitem="{{topicItem}}">
               {{(topicItem.sex==1 ?
               '行星小伙' : '行星小妹')}}</view>
             <view style="color:#585858;font-weight:bold;font-size:34rpx;"
-              wx:if="{{topicItem.anon != undefined && topicItem.anon == 0}}">
+              wx:if="{{topicItem.anon != undefined && topicItem.anon == 0}}" data-topicitem="{{topicItem}}">
               {{topicItem.bbsCreateByName}}</view>
             <!-- 性别 -->
             <view class="{{topicItem.sex==1?'cuIcon-male text-blue':'cuIcon-female text-pink'}}"
@@ -127,7 +128,7 @@
     </view>
 </view>
 
-
+<!-- 普通 -->
 <view wx:for="{{topicLists}}" wx:for-item="topicItem"
   wx:if="{{topicType!=1 && topicItem.topicType!=1 && (!hideAnon || (hideAnon && topicItem.anon==0))}}" wx:key="id"
   wx:for-index="bindex" data-topicitem='{{topicItem}}' class="cu-card dynamic bg-white" style="" bindtap="topicdetails"
@@ -151,10 +152,10 @@
           data-topicitem="{{topicItem}}">
           <view class="flex align-center">
             <view style="color:#585858;font-weight:bold;font-size:34rpx;"
-              wx:if="{{topicItem.anon != undefined && topicItem.anon != 0}}">
+              wx:if="{{topicItem.anon != undefined && topicItem.anon != 0}}" data-topicitem="{{topicItem}}">
               {{(topicItem.sex==1 ? '行星小伙' : '行星小妹')}}</view>
             <view style="color:#585858;font-weight:bold;font-size:34rpx;"
-              wx:if="{{topicItem.anon != undefined && topicItem.anon == 0}}">
+              wx:if="{{topicItem.anon != undefined && topicItem.anon == 0}}" data-topicitem="{{topicItem}}">
               {{topicItem.bbsCreateByName}}</view>
             <!-- 性别 -->
             <view class="{{topicItem.sex==1?'cuIcon-male text-blue':'cuIcon-female text-pink'}}"

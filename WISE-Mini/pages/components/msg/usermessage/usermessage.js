@@ -112,22 +112,22 @@ Page({
             }
             if (item.messageType == 1) {
               item.center = item.replyContent
-              item.createTime = "赞了你的留言  " + formatUtil.showDate(new Date(item.createTime))
+              item.createTime = "赞了你的留言  " + formatUtil.showDate(item.createTime)
             }
             if (item.messageType == 2) {
               item.center = "赞了你的发布"
-              item.createTime = formatUtil.showDate(new Date(item.createTime))
+              item.createTime = formatUtil.showDate(item.createTime)
               that.setData({
                 showUserMessageImage: false
               })
             }
             if (item.messageType == 3) {
               item.center = item.replyContent
-              item.createTime = "回复了你的发布  " + formatUtil.showDate(new Date(item.createTime))
+              item.createTime = "回复了你的发布  " + formatUtil.showDate(item.createTime)
             }
             if (item.messageType == 4) {
               item.center = "赞了你的评论"
-              item.createTime = formatUtil.showDate(new Date(item.createTime))
+              item.createTime = formatUtil.showDate(item.createTime)
               that.setData({
                 showUserMessageImage: false
               })

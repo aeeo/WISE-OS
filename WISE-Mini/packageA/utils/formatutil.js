@@ -1,4 +1,11 @@
-function dateFormat(fmt, date) {
+function dateFormat(fmt, dateStr) {
+  let date
+  if (typeof (dateStr) == "string") {
+    date = stringToDate(dateStr)
+  } else {
+    date = dateStr
+  }
+
   let ret
   const opt = {
     "Y+": date.getFullYear().toString(), // 年
@@ -18,7 +25,13 @@ function dateFormat(fmt, date) {
   return fmt;
 }
 // 贴子 
-function showDate(date) {
+function showDate(dateStr) {
+  let date
+  if (typeof (dateStr) == "string") {
+    date = stringToDate(dateStr)
+  } else {
+    date = dateStr
+  }
   const opt = {
     "Y+": date.getFullYear().toString(), // 年
     "m+": (date.getMonth() + 1).toString(), // 月
@@ -76,7 +89,14 @@ function showDate(date) {
  * 昨天20:41
  * 05月20日
  */
-function showReplyDate(date) {
+function showReplyDate(dateStr) {
+  let date
+  if (typeof (dateStr) == "string") {
+    date = stringToDate(dateStr)
+  } else {
+    date = dateStr
+  }
+
   const opt = {
     "Y+": date.getFullYear().toString(), // 年
     "m+": (date.getMonth() + 1).toString(), // 月
@@ -166,6 +186,7 @@ function showReplyDate(date) {
 
 // mark: 时间戳转日期
 /**
+ * timestamp:毫秒
  * 刚刚
  * 3分钟前
  * 59分钟前
@@ -267,7 +288,8 @@ function timestampToDate(timestamp) {
 /**
  * 256天
  */
-function dateToDayCount(date) {
+function dateToDayCount(dateStr) {
+  let date = stringToDate(dateStr)
   var currentDateStamp = (new Date()).getTime()
   var dateStamp = date.getTime()
   const oneHour = 3600000
@@ -283,17 +305,8 @@ function showCount(count) {
 
 }
 
-// 格式化活动
-function activityFormat(date) {
-  const year = date.getFullYear()
-
-  var currentDate = new Date()
-  const yearCurrent = currentDate.getFullYear()
-
-  if (year == yearCurrent) {
-    return this.dateFormat("mm月dd日", date);
-  }
-  return this.dateFormat("YYYY年mm月dd日", date);
+function stringToDate(dateStr) {
+  return new Date(dateStr.replace(/-/g, '/'))//兼容ios
 }
 //必须在这里暴露接口，以便被外界访问，不然就不能访问
 module.exports = {
@@ -302,6 +315,5 @@ module.exports = {
   showReplyDate: showReplyDate,
   showCount: showCount,
   timestampToDate: timestampToDate,
-  dateToDayCount: dateToDayCount,
-  activityFormat: activityFormat
+  dateToDayCount: dateToDayCount
 }

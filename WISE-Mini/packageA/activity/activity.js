@@ -94,8 +94,8 @@ Page({
         if (res.data.result.records.length > 0) {
           let activityList = res.data.result.records
           activityList.forEach(item => {
-            item.startTime = formatUtil.activityFormat(new Date(item.startTime.replace(/-/g, '/')))
-            item.endTime = formatUtil.activityFormat(new Date(item.endTime.replace(/-/g, '/')))
+            item.startTime = formatUtil.activityFormat(item.startTime)
+            item.endTime = formatUtil.activityFormat(item.endTime)
           })
           that.setData({
             pageNo: that.data.pageNo + 1,
