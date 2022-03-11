@@ -1,7 +1,7 @@
 ## 简介
 
 
-> 官网：[行星万象官网](https://www.vtep.cn)
+> 官网（正在建设）：[行星万象官网](https://www.vtep.cn)
 > 
 > 全部文档请在Wiki查看：[Go Wiki](https://gitee.com/vtep/WISE-OS/wikis/pages)
 
@@ -36,7 +36,7 @@
 
 小程序的后台，正式地址，不提供体验账号密码：
 
-> [行星万象后台管理系统：https://www.vtep.cn](https://www.vtep.cn)
+> [行星万象后台管理系统：http://admin.vtep.cn](http://admin.vtep.cn)
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/b6074f3633774fa5b0505d187e032072.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5LiJ5bKB5pe26LaF5biF5ZOm,size_20,color_FFFFFF,t_70,g_se,x_16)
 

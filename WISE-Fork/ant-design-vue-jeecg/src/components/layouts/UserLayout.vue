@@ -23,7 +23,7 @@
           <a href="#" target="_blank">条款</a>
         </div>
         <div class="copyright">
-          Copyright &copy; 2021 <a href="https://blog.csdn.net/nbcsdn" target="_blank">陕西行星环绕信息科技有限公司</a> 出品&nbsp;&nbsp;&nbsp;ICP备案：<a href="//www.beian.miit.gov.cn" target="_blank" rel="nofollow">陕ICP备2021002020号-1</a>
+          Copyright &copy; 2021 <a href="https://blog.csdn.net/nbcsdn" target="_blank">陕西行星环绕信息科技有限公司</a> 出品&nbsp;&nbsp;&nbsp;ICP备案：<a href="https://beian.miit.gov.cn" target="_blank" rel="nofollow">陕ICP备2021002020号</a>
         </div>
         
       </div>
